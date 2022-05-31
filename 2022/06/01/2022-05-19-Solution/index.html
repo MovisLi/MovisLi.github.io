@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>LeetCode 191 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="191. 位1的个数首先来个循环检查每一位是否为1。 12345678class Solution:    def hammingWeight(self, n: int) -&gt; int:        bin_str &#x3D; bin(n)[2:]        res &#x3D; 0        for i in bin_str:            if i &#x3D;&#x3D; &amp;#x27;1&amp;#x27;:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 191">
+<meta property="og:url" content="http://example.com/2022/06/01/2022-05-19-Solution/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="191. 位1的个数首先来个循环检查每一位是否为1。 12345678class Solution:    def hammingWeight(self, n: int) -&gt; int:        bin_str &#x3D; bin(n)[2:]        res &#x3D; 0        for i in bin_str:            if i &#x3D;&#x3D; &amp;#x27;1&amp;#x27;:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T16:31:31.417Z">
+<meta property="article:modified_time" content="2022-05-19T17:10:00.341Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="mypost-2022-05-19-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/06/01/2022-05-19-Solution/" class="article-date">
+  <time datetime="2022-05-31T16:31:31.417Z" itemprop="datePublished">2022-06-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/algorithm/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LeetCode 191
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="191-位1的个数"><a href="#191-位1的个数" class="headerlink" title="191. 位1的个数"></a>191. 位1的个数</h1><p>首先来个循环检查每一位是否为1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">hammingWeight</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        bin_str = <span class="built_in">bin</span>(n)[<span class="number">2</span>:]</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> bin_str:</span><br><span class="line">            <span class="keyword">if</span> i == <span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">                res += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<p>当然显然这道题考察的是位运算，所以我们可以用位运算检查循环，逐位右移，判断最低位是不是1， python 的右移运算符<code>&gt;&gt;</code>就是高位补0，低位舍去。所以移动32次，就可以得到结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">hammingWeight</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> n:</span><br><span class="line">            res += <span class="number">1</span></span><br><span class="line">            n &gt;&gt;= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<p>但是在位运算里，还有个神奇的做法，可以通过<code>n&amp;(n-1)</code>把二进制中最后一个1改写成0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">hammingWeight</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> n:</span><br><span class="line">            res += <span class="number">1</span></span><br><span class="line">            n &amp;= n-<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<p>参考<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-1-bits/solution/fu-xue-ming-zhu-xiang-jie-wei-yun-suan-f-ci7i/">【负雪明烛】详解位运算，附本题躲坑指南 - 位1的个数 - 力扣（LeetCode）</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/01/2022-05-19-Solution/" data-id="cl3udnfd2000ip0utf1410se8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/01/2022-05-24-%E3%80%8A%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E5%B7%A5%E5%85%B7%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%A1%E7%94%A8%E7%AE%A1%E7%90%86%E7%9A%84%E7%90%86%E8%AE%BA%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          《信用评分工具：自动化信用管理的理论与实践》 - 读书笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/01/2022-05-18-Solution/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LeetCode 190</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Jekyll/">Jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/python/">python</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/risk-control/">risk control</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-09-Solution/">LeetCode 58</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-06-Solution/">LeetCode 26</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-07-Solution/">LeetCode 27 28 35 53</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-05-Solution/">LeetCode 13</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-04-Solution/">LeetCode 14 20 21</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>LeetCode 27 28 35 53 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="27. 移除元素双指针，一个指针index控制循环遍历，另一个指针k控制将正确的数填到正确的位置。 1234567891011class Solution:    def removeElement(self, nums: List[int], val: int) -&gt; int:        index &#x3D; 0        k &#x3D; 0        length &#x3D; len(nums)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 27 28 35 53">
+<meta property="og:url" content="http://example.com/2022/06/01/2022-05-07-Solution/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="27. 移除元素双指针，一个指针index控制循环遍历，另一个指针k控制将正确的数填到正确的位置。 1234567891011class Solution:    def removeElement(self, nums: List[int], val: int) -&gt; int:        index &#x3D; 0        k &#x3D; 0        length &#x3D; len(nums)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T16:31:31.428Z">
+<meta property="article:modified_time" content="2022-05-07T15:10:51.996Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="mypost-2022-05-07-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/06/01/2022-05-07-Solution/" class="article-date">
+  <time datetime="2022-05-31T16:31:31.428Z" itemprop="datePublished">2022-06-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/algorithm/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LeetCode 27 28 35 53
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="27-移除元素"><a href="#27-移除元素" class="headerlink" title="27. 移除元素"></a>27. 移除元素</h1><p>双指针，一个指针<code>index</code>控制循环遍历，另一个指针<code>k</code>控制将正确的数填到正确的位置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeElement</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], val: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        index = <span class="number">0</span></span><br><span class="line">        k = <span class="number">0</span></span><br><span class="line">        length = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">while</span> index&lt;length:</span><br><span class="line">            <span class="keyword">if</span> nums[index] != val:</span><br><span class="line">                nums[k] = nums[index]</span><br><span class="line">                k+=<span class="number">1</span></span><br><span class="line">            index += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> k</span><br></pre></td></tr></table></figure>
+
+<h1 id="28-实现strStr"><a href="#28-实现strStr" class="headerlink" title="28. 实现strStr()"></a>28. 实现strStr()</h1><p>只是用的话，调用python字符串的find函数就行了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">strStr</span>(<span class="params">self, haystack: <span class="built_in">str</span>, needle: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">return</span> haystack.find(needle)</span><br></pre></td></tr></table></figure>
+
+<p>思路就是逐位比较。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">strStr</span>(<span class="params">self, haystack: <span class="built_in">str</span>, needle: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        length = <span class="built_in">len</span>(needle)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(haystack)-length+<span class="number">1</span>):</span><br><span class="line">            j = i</span><br><span class="line">            k = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> k&lt;length <span class="keyword">and</span> haystack[j] == needle[k]:</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> j-i == length:</span><br><span class="line">                <span class="keyword">return</span> i</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="35-搜索插入位置"><a href="#35-搜索插入位置" class="headerlink" title="35. 搜索插入位置"></a>35. 搜索插入位置</h1><p>时间复杂度<code>O(log n)</code>，经典二分查找。但是这题如果没找到要返回插入的位置，当 $left&lt;x&lt;right$ 时，很明显该插入的位置是<code>right_index</code>，然后看一下经典二分查找代码，因为没找到的话<code>left</code>还是会加1，所以其实没找到的话<code>left</code>就是<code>right_index</code>，所以没找到返回<code>left</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">searchInsert</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(nums)-<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> left&lt;=right:</span><br><span class="line">            mid = (right+left)//<span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> nums[mid] &lt; target:</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">                right = mid-<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> mid</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h1 id="53-最大子数组和"><a href="#53-最大子数组和" class="headerlink" title="53. 最大子数组和"></a>53. 最大子数组和</h1><p>动态规划，首先数组里至少有一个数，那么最大子数组和肯定大于等于<code>nums[0]</code>，然后从左往右遍历，创建一个变量<code>temp_sum</code>用于记录遍历过程中某一段的最大和，如果此值大于0那么往后的数还可以在此值上加，如果小于等于0那对某一段的下一段来讲算最大和时就不太需要这个<code>temp_sum</code>了。每找出一段<code>temp_sum</code>都与<code>result</code>比较取大的作为新的<code>result</code>。遍历完成后，就可以得到最大的<code>result</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxSubArray</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        res = nums[<span class="number">0</span>]</span><br><span class="line">        temp_sum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">            temp_sum += i</span><br><span class="line">            <span class="keyword">if</span> temp_sum &gt; res:</span><br><span class="line">                res = temp_sum</span><br><span class="line">            <span class="keyword">if</span> temp_sum &lt; <span class="number">0</span>:</span><br><span class="line">                temp_sum = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>时间复杂度 O(n)</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/01/2022-05-07-Solution/" data-id="cl3udnfcw0007p0ut157dg1di" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/01/2022-05-06-Solution/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          LeetCode 26
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/01/2022-05-05-Solution/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LeetCode 13</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Jekyll/">Jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/python/">python</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/risk-control/">risk control</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-09-Solution/">LeetCode 58</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-06-Solution/">LeetCode 26</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-07-Solution/">LeetCode 27 28 35 53</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-05-Solution/">LeetCode 13</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-04-Solution/">LeetCode 14 20 21</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

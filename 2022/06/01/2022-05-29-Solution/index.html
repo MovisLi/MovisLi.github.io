@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>LeetCode 228 231 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="228. 汇总区间双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0        l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 228 231">
+<meta property="og:url" content="http://example.com/2022/06/01/2022-05-29-Solution/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="228. 汇总区间双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0        l">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T16:31:31.422Z">
+<meta property="article:modified_time" content="2022-05-29T12:40:37.416Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="mypost-2022-05-29-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/06/01/2022-05-29-Solution/" class="article-date">
+  <time datetime="2022-05-31T16:31:31.422Z" itemprop="datePublished">2022-06-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/algorithm/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LeetCode 228 231
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="228-汇总区间"><a href="#228-汇总区间" class="headerlink" title="228. 汇总区间"></a>228. 汇总区间</h1><p>双指针 <code>start</code> 和 <code>end</code> ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">summaryRanges</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        start = <span class="number">0</span></span><br><span class="line">        length = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">while</span> start &lt; length:</span><br><span class="line">            end = start</span><br><span class="line">            <span class="keyword">while</span> end &lt; length-<span class="number">1</span> <span class="keyword">and</span> (nums[end+<span class="number">1</span>]-nums[end])==<span class="number">1</span>:</span><br><span class="line">                end += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> start == end:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start]))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start])+<span class="string">&#x27;-&gt;&#x27;</span>+<span class="built_in">str</span>(nums[end]))</span><br><span class="line">            start = end+<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h1 id="231-2-的幂"><a href="#231-2-的幂" class="headerlink" title="231. 2 的幂"></a>231. 2 的幂</h1><p>先来个 c 的幂的万能解法，就是在定义域（但是必须是正整数）内 c 的幂的最大值设为 $x$ ，必有 $x%c=0$ ，其实就是判断是不是最大值的约数。比如说这道题 2 的定义域内的最大值是  <code>2&lt;&lt;30</code> ，就可以写成如下代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">2</span>&lt;&lt;<span class="number">30</span>)%n == <span class="number">0</span> <span class="keyword">if</span> n &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p> 当然正规军的做法是位运算。首先 2 的幂的二进制表示有个规律就是所有位只有一个 1 ，所以可以通过查找次数是否二进制只有一个 1 来确定它是不是 2 的幂。这里有个小技巧<a target="_blank" rel="noopener" href="https://movisli.github.io/posts/2022/05/19/Solution.html">LeetCode 191</a> ，<code>n &amp; (n - 1) </code> 可以将最后一个 1 去掉，既然只有一个 1 所以去掉之后就没有了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> n &gt; <span class="number">0</span> <span class="keyword">and</span> n &amp; (n - <span class="number">1</span>) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/01/2022-05-29-Solution/" data-id="cl3udnfdh0024p0utfpdyg14s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/01/2022-05-27-Solution/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          LeetCode 217 219
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/01/2022-05-26-Solution/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LeetCode 206</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Jekyll/">Jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/python/">python</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/risk-control/">risk control</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-09-Solution/">LeetCode 58</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-06-Solution/">LeetCode 26</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-07-Solution/">LeetCode 27 28 35 53</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-05-Solution/">LeetCode 13</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-04-Solution/">LeetCode 14 20 21</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

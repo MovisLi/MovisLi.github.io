@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>LeetCode 83 88 94 118 119 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="83. 删除排序链表中的重复元素基本链表操作。 1234567891011class Solution:    def deleteDuplicates(self, head: ListNode) -&gt; ListNode:        if not head:            return head        node &#x3D; head        while node.next:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 83 88 94 118 119">
+<meta property="og:url" content="http://example.com/2022/06/01/2022-05-13-Solution/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="83. 删除排序链表中的重复元素基本链表操作。 1234567891011class Solution:    def deleteDuplicates(self, head: ListNode) -&gt; ListNode:        if not head:            return head        node &#x3D; head        while node.next:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T16:31:31.413Z">
+<meta property="article:modified_time" content="2022-05-13T16:28:49.013Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="mypost-2022-05-13-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/06/01/2022-05-13-Solution/" class="article-date">
+  <time datetime="2022-05-31T16:31:31.413Z" itemprop="datePublished">2022-06-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/algorithm/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LeetCode 83 88 94 118 119
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="83-删除排序链表中的重复元素"><a href="#83-删除排序链表中的重复元素" class="headerlink" title="83. 删除排序链表中的重复元素"></a>83. 删除排序链表中的重复元素</h1><p>基本链表操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">deleteDuplicates</span>(<span class="params">self, head: ListNode</span>) -&gt; ListNode:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head:</span><br><span class="line">            <span class="keyword">return</span> head</span><br><span class="line">        node = head</span><br><span class="line">        <span class="keyword">while</span> node.<span class="built_in">next</span>:</span><br><span class="line">            <span class="keyword">if</span> node.val == node.<span class="built_in">next</span>.val:</span><br><span class="line">                node.<span class="built_in">next</span> = node.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                node = node.<span class="built_in">next</span></span><br><span class="line">        <span class="keyword">return</span> head</span><br></pre></td></tr></table></figure>
+
+<h1 id="88-合并两个有序数组"><a href="#88-合并两个有序数组" class="headerlink" title="88. 合并两个有序数组"></a>88. 合并两个有序数组</h1><p>本题要求<code>inplace</code>，但是我们仍然可以用<code>不inplace</code>的思想做<code>inplace</code>的事情。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], m: <span class="built_in">int</span>, nums2: <span class="type">List</span>[<span class="built_in">int</span>], n: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="number">0</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">while</span> (left+right)&lt;(m+n):</span><br><span class="line">            <span class="keyword">if</span> left&gt;=m:</span><br><span class="line">                res.append(nums2[right])</span><br><span class="line">                right += <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> right&gt;=n:</span><br><span class="line">                res.append(nums1[left])</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> nums1[left] &lt;= nums2[right]:</span><br><span class="line">                res.append(nums1[left])</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(nums2[right])</span><br><span class="line">                right += <span class="number">1</span></span><br><span class="line">        nums1[:]=res</span><br></pre></td></tr></table></figure>
+
+<p>当然我们也可以逆向开始放数，空间复杂度会更低。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], m: <span class="built_in">int</span>, nums2: <span class="type">List</span>[<span class="built_in">int</span>], n: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        tail = m+n-<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> m&gt;=<span class="number">1</span> <span class="keyword">or</span> n&gt;=<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> m&lt;<span class="number">1</span>:</span><br><span class="line">                nums1[tail] = nums2[n-<span class="number">1</span>]</span><br><span class="line">                tail -= <span class="number">1</span></span><br><span class="line">                n -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> n&lt;<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> nums1[m-<span class="number">1</span>] &gt;= nums2[n-<span class="number">1</span>]:</span><br><span class="line">                nums1[tail] = nums1[m-<span class="number">1</span>]</span><br><span class="line">                m -= <span class="number">1</span></span><br><span class="line">                tail -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                nums1[tail] = nums2[n-<span class="number">1</span>]</span><br><span class="line">                n -= <span class="number">1</span></span><br><span class="line">                tail -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="94-二叉树的中序遍历"><a href="#94-二叉树的中序遍历" class="headerlink" title="94. 二叉树的中序遍历"></a>94. 二叉树的中序遍历</h1><p>递归：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inorderTraversal</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">if</span> root:</span><br><span class="line">            res.extend(self.inorderTraversal(root.left))</span><br><span class="line">            res.append(root.val)</span><br><span class="line">            res.extend(self.inorderTraversal(root.right))</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<p>非递归：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inorderTraversal</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        node = root</span><br><span class="line">        stack = []</span><br><span class="line">        <span class="keyword">while</span> node <span class="keyword">or</span> stack:</span><br><span class="line">            <span class="keyword">if</span> node:</span><br><span class="line">                stack.append(node)</span><br><span class="line">                node = node.left</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                node = stack.pop()</span><br><span class="line">                res.append(node.val)</span><br><span class="line">                node = node.right</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h1 id="118-杨辉三角"><a href="#118-杨辉三角" class="headerlink" title="118. 杨辉三角"></a>118. 杨辉三角</h1><p>就按照杨辉三角的样子，从第三行开始，除了左右两个1，其他数等于上一行的邻近两个数的和。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate</span>(<span class="params">self, numRows: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        <span class="keyword">if</span> numRows == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> [[<span class="number">1</span>]]</span><br><span class="line">        res = [[<span class="number">1</span>],[<span class="number">1</span>,<span class="number">1</span>]]</span><br><span class="line">        curRow = <span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span> curRow&lt;numRows:</span><br><span class="line">            temp = [<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(res[curRow-<span class="number">1</span>])-<span class="number">1</span>):</span><br><span class="line">                temp.append(res[curRow-<span class="number">1</span>][i]+res[curRow-<span class="number">1</span>][i+<span class="number">1</span>])</span><br><span class="line">            temp.append(<span class="number">1</span>)</span><br><span class="line">            res.append(temp)</span><br><span class="line">            curRow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h1 id="119-杨辉三角-II"><a href="#119-杨辉三角-II" class="headerlink" title="119. 杨辉三角 II"></a>119. 杨辉三角 II</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getRow</span>(<span class="params">self, rowIndex: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        res = [<span class="number">1</span>]</span><br><span class="line">        cal_num = (rowIndex)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, cal_num+<span class="number">1</span>, <span class="number">1</span>):</span><br><span class="line">            res.append(<span class="built_in">int</span>(res[i-<span class="number">1</span>]*(rowIndex-i+<span class="number">1</span>)/i))</span><br><span class="line">        <span class="keyword">if</span> rowIndex%<span class="number">2</span> != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(cal_num,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">                res.append(res[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(cal_num-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">                res.append(res[i])</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/01/2022-05-13-Solution/" data-id="cl3udnfd0000ep0ut1v7q85ph" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/01/2022-05-11-Solution/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          LeetCode 70
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/01/2022-05-10-Solution/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LeetCode 66 67 69</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Jekyll/">Jekyll</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/python/">python</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/risk-control/">risk control</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-09-Solution/">LeetCode 58</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-06-Solution/">LeetCode 26</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-07-Solution/">LeetCode 27 28 35 53</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-05-Solution/">LeetCode 13</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/01/2022-05-04-Solution/">LeetCode 14 20 21</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
