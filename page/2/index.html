@@ -64,6 +64,55 @@
       <div class="outer">
         <section id="main">
   
+    <article id="mypost-2022-05-29-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/06/01/2022-05-29-Solution/" class="article-date">
+  <time datetime="2022-05-31T16:31:31.422Z" itemprop="datePublished">2022-06-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/algorithm/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/06/01/2022-05-29-Solution/">LeetCode 228 231</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="228-汇总区间"><a href="#228-汇总区间" class="headerlink" title="228. 汇总区间"></a>228. 汇总区间</h1><p>双指针 <code>start</code> 和 <code>end</code> ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">summaryRanges</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        start = <span class="number">0</span></span><br><span class="line">        length = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">while</span> start &lt; length:</span><br><span class="line">            end = start</span><br><span class="line">            <span class="keyword">while</span> end &lt; length-<span class="number">1</span> <span class="keyword">and</span> (nums[end+<span class="number">1</span>]-nums[end])==<span class="number">1</span>:</span><br><span class="line">                end += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> start == end:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start]))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start])+<span class="string">&#x27;-&gt;&#x27;</span>+<span class="built_in">str</span>(nums[end]))</span><br><span class="line">            start = end+<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h1 id="231-2-的幂"><a href="#231-2-的幂" class="headerlink" title="231. 2 的幂"></a>231. 2 的幂</h1><p>先来个 c 的幂的万能解法，就是在定义域（但是必须是正整数）内 c 的幂的最大值设为 $x$ ，必有 $x%c=0$ ，其实就是判断是不是最大值的约数。比如说这道题 2 的定义域内的最大值是  <code>2&lt;&lt;30</code> ，就可以写成如下代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">2</span>&lt;&lt;<span class="number">30</span>)%n == <span class="number">0</span> <span class="keyword">if</span> n &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p> 当然正规军的做法是位运算。首先 2 的幂的二进制表示有个规律就是所有位只有一个 1 ，所以可以通过查找次数是否二进制只有一个 1 来确定它是不是 2 的幂。这里有个小技巧<a target="_blank" rel="noopener" href="https://movisli.github.io/posts/2022/05/19/Solution.html">LeetCode 191</a> ，<code>n &amp; (n - 1) </code> 可以将最后一个 1 去掉，既然只有一个 1 所以去掉之后就没有了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> n &gt; <span class="number">0</span> <span class="keyword">and</span> n &amp; (n - <span class="number">1</span>) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/01/2022-05-29-Solution/" data-id="cl3udnfdh0024p0utfpdyg14s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="mypost-2022-05-26-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/06/01/2022-05-26-Solution/" class="article-date">
@@ -624,66 +673,6 @@
 
 
   
-    <article id="mypost-2022-05-13-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/06/01/2022-05-13-Solution/" class="article-date">
-  <time datetime="2022-05-31T16:31:31.413Z" itemprop="datePublished">2022-06-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/algorithm/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/06/01/2022-05-13-Solution/">LeetCode 83 88 94 118 119</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="83-删除排序链表中的重复元素"><a href="#83-删除排序链表中的重复元素" class="headerlink" title="83. 删除排序链表中的重复元素"></a>83. 删除排序链表中的重复元素</h1><p>基本链表操作。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">deleteDuplicates</span>(<span class="params">self, head: ListNode</span>) -&gt; ListNode:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head:</span><br><span class="line">            <span class="keyword">return</span> head</span><br><span class="line">        node = head</span><br><span class="line">        <span class="keyword">while</span> node.<span class="built_in">next</span>:</span><br><span class="line">            <span class="keyword">if</span> node.val == node.<span class="built_in">next</span>.val:</span><br><span class="line">                node.<span class="built_in">next</span> = node.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                node = node.<span class="built_in">next</span></span><br><span class="line">        <span class="keyword">return</span> head</span><br></pre></td></tr></table></figure>
-
-<h1 id="88-合并两个有序数组"><a href="#88-合并两个有序数组" class="headerlink" title="88. 合并两个有序数组"></a>88. 合并两个有序数组</h1><p>本题要求<code>inplace</code>，但是我们仍然可以用<code>不inplace</code>的思想做<code>inplace</code>的事情。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], m: <span class="built_in">int</span>, nums2: <span class="type">List</span>[<span class="built_in">int</span>], n: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="number">0</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">while</span> (left+right)&lt;(m+n):</span><br><span class="line">            <span class="keyword">if</span> left&gt;=m:</span><br><span class="line">                res.append(nums2[right])</span><br><span class="line">                right += <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> right&gt;=n:</span><br><span class="line">                res.append(nums1[left])</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> nums1[left] &lt;= nums2[right]:</span><br><span class="line">                res.append(nums1[left])</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(nums2[right])</span><br><span class="line">                right += <span class="number">1</span></span><br><span class="line">        nums1[:]=res</span><br></pre></td></tr></table></figure>
-
-<p>当然我们也可以逆向开始放数，空间复杂度会更低。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], m: <span class="built_in">int</span>, nums2: <span class="type">List</span>[<span class="built_in">int</span>], n: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        tail = m+n-<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> m&gt;=<span class="number">1</span> <span class="keyword">or</span> n&gt;=<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> m&lt;<span class="number">1</span>:</span><br><span class="line">                nums1[tail] = nums2[n-<span class="number">1</span>]</span><br><span class="line">                tail -= <span class="number">1</span></span><br><span class="line">                n -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> n&lt;<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> nums1[m-<span class="number">1</span>] &gt;= nums2[n-<span class="number">1</span>]:</span><br><span class="line">                nums1[tail] = nums1[m-<span class="number">1</span>]</span><br><span class="line">                m -= <span class="number">1</span></span><br><span class="line">                tail -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                nums1[tail] = nums2[n-<span class="number">1</span>]</span><br><span class="line">                n -= <span class="number">1</span></span><br><span class="line">                tail -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="94-二叉树的中序遍历"><a href="#94-二叉树的中序遍历" class="headerlink" title="94. 二叉树的中序遍历"></a>94. 二叉树的中序遍历</h1><p>递归：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inorderTraversal</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">if</span> root:</span><br><span class="line">            res.extend(self.inorderTraversal(root.left))</span><br><span class="line">            res.append(root.val)</span><br><span class="line">            res.extend(self.inorderTraversal(root.right))</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-<p>非递归：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inorderTraversal</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        node = root</span><br><span class="line">        stack = []</span><br><span class="line">        <span class="keyword">while</span> node <span class="keyword">or</span> stack:</span><br><span class="line">            <span class="keyword">if</span> node:</span><br><span class="line">                stack.append(node)</span><br><span class="line">                node = node.left</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                node = stack.pop()</span><br><span class="line">                res.append(node.val)</span><br><span class="line">                node = node.right</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-<h1 id="118-杨辉三角"><a href="#118-杨辉三角" class="headerlink" title="118. 杨辉三角"></a>118. 杨辉三角</h1><p>就按照杨辉三角的样子，从第三行开始，除了左右两个1，其他数等于上一行的邻近两个数的和。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate</span>(<span class="params">self, numRows: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        <span class="keyword">if</span> numRows == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> [[<span class="number">1</span>]]</span><br><span class="line">        res = [[<span class="number">1</span>],[<span class="number">1</span>,<span class="number">1</span>]]</span><br><span class="line">        curRow = <span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span> curRow&lt;numRows:</span><br><span class="line">            temp = [<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(res[curRow-<span class="number">1</span>])-<span class="number">1</span>):</span><br><span class="line">                temp.append(res[curRow-<span class="number">1</span>][i]+res[curRow-<span class="number">1</span>][i+<span class="number">1</span>])</span><br><span class="line">            temp.append(<span class="number">1</span>)</span><br><span class="line">            res.append(temp)</span><br><span class="line">            curRow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-<h1 id="119-杨辉三角-II"><a href="#119-杨辉三角-II" class="headerlink" title="119. 杨辉三角 II"></a>119. 杨辉三角 II</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getRow</span>(<span class="params">self, rowIndex: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        res = [<span class="number">1</span>]</span><br><span class="line">        cal_num = (rowIndex)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, cal_num+<span class="number">1</span>, <span class="number">1</span>):</span><br><span class="line">            res.append(<span class="built_in">int</span>(res[i-<span class="number">1</span>]*(rowIndex-i+<span class="number">1</span>)/i))</span><br><span class="line">        <span class="keyword">if</span> rowIndex%<span class="number">2</span> != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(cal_num,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">                res.append(res[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(cal_num-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">                res.append(res[i])</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/06/01/2022-05-13-Solution/" data-id="cl3udnfd0000ep0ut1v7q85ph" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -727,6 +716,10 @@
       <ul>
         
           <li>
+            <a href="/2022/06/01/article-title/">article title</a>
+          </li>
+        
+          <li>
             <a href="/2022/06/01/2022-05-09-Solution/">LeetCode 58</a>
           </li>
         
@@ -740,10 +733,6 @@
         
           <li>
             <a href="/2022/06/01/2022-05-05-Solution/">LeetCode 13</a>
-          </li>
-        
-          <li>
-            <a href="/2022/06/01/2022-05-04-Solution/">LeetCode 14 20 21</a>
           </li>
         
       </ul>

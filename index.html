@@ -64,6 +64,42 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-article-title" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/06/01/article-title/" class="article-date">
+  <time datetime="2022-05-31T16:34:38.000Z" itemprop="datePublished">2022-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/06/01/article-title/">article title</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/01/article-title/" data-id="cl3udvbz10000ncutbr3r962c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="mypost-2022-05-09-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/06/01/2022-05-09-Solution/" class="article-date">
@@ -692,55 +728,6 @@
 
 
   
-    <article id="mypost-2022-05-29-Solution" class="article article-type-mypost" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/06/01/2022-05-29-Solution/" class="article-date">
-  <time datetime="2022-05-31T16:31:31.422Z" itemprop="datePublished">2022-06-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/algorithm/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/06/01/2022-05-29-Solution/">LeetCode 228 231</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="228-汇总区间"><a href="#228-汇总区间" class="headerlink" title="228. 汇总区间"></a>228. 汇总区间</h1><p>双指针 <code>start</code> 和 <code>end</code> ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">summaryRanges</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        start = <span class="number">0</span></span><br><span class="line">        length = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">while</span> start &lt; length:</span><br><span class="line">            end = start</span><br><span class="line">            <span class="keyword">while</span> end &lt; length-<span class="number">1</span> <span class="keyword">and</span> (nums[end+<span class="number">1</span>]-nums[end])==<span class="number">1</span>:</span><br><span class="line">                end += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> start == end:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start]))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start])+<span class="string">&#x27;-&gt;&#x27;</span>+<span class="built_in">str</span>(nums[end]))</span><br><span class="line">            start = end+<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-<h1 id="231-2-的幂"><a href="#231-2-的幂" class="headerlink" title="231. 2 的幂"></a>231. 2 的幂</h1><p>先来个 c 的幂的万能解法，就是在定义域（但是必须是正整数）内 c 的幂的最大值设为 $x$ ，必有 $x%c=0$ ，其实就是判断是不是最大值的约数。比如说这道题 2 的定义域内的最大值是  <code>2&lt;&lt;30</code> ，就可以写成如下代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">2</span>&lt;&lt;<span class="number">30</span>)%n == <span class="number">0</span> <span class="keyword">if</span> n &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-
-<p> 当然正规军的做法是位运算。首先 2 的幂的二进制表示有个规律就是所有位只有一个 1 ，所以可以通过查找次数是否二进制只有一个 1 来确定它是不是 2 的幂。这里有个小技巧<a target="_blank" rel="noopener" href="https://movisli.github.io/posts/2022/05/19/Solution.html">LeetCode 191</a> ，<code>n &amp; (n - 1) </code> 可以将最后一个 1 去掉，既然只有一个 1 所以去掉之后就没有了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> n &gt; <span class="number">0</span> <span class="keyword">and</span> n &amp; (n - <span class="number">1</span>) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/06/01/2022-05-29-Solution/" data-id="cl3udnfdh0024p0utfpdyg14s" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -784,6 +771,10 @@
       <ul>
         
           <li>
+            <a href="/2022/06/01/article-title/">article title</a>
+          </li>
+        
+          <li>
             <a href="/2022/06/01/2022-05-09-Solution/">LeetCode 58</a>
           </li>
         
@@ -797,10 +788,6 @@
         
           <li>
             <a href="/2022/06/01/2022-05-05-Solution/">LeetCode 13</a>
-          </li>
-        
-          <li>
-            <a href="/2022/06/01/2022-05-04-Solution/">LeetCode 14 20 21</a>
           </li>
         
       </ul>
