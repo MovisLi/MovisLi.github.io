@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm">
   
-    <meta name="description" content="58. 最后一个单词的长度反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 123456789101112class Solution:    def lengthOfLastWord(self, s: str) -&gt; int:        res &#x3D; 0        start &#x3D; False        for i in range(len(s)-1, -1, -">
+    <meta name="description" content="58. 最后一个单词的长度 反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 123456789101112class Solution:    def lengthOfLastWord(self, s: str) -&gt; int:        res &#x3D; 0        start &#x3D; False        for i in range(len(s)-1, -1,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 58">
 <meta property="og:url" content="https://movisli.github.io/2022/05/09/2022-05-09-Solution/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="58. 最后一个单词的长度反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 123456789101112class Solution:    def lengthOfLastWord(self, s: str) -&gt; int:        res &#x3D; 0        start &#x3D; False        for i in range(len(s)-1, -1, -">
+<meta property="og:description" content="58. 最后一个单词的长度 反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 123456789101112class Solution:    def lengthOfLastWord(self, s: str) -&gt; int:        res &#x3D; 0        start &#x3D; False        for i in range(len(s)-1, -1,">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-09T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T17:50:37.792Z">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          undefined words
+          257 words
         
       </span>
     
@@ -267,9 +267,9 @@
             
             <div class="markdown-body">
               
-              <h1 id="58-最后一个单词的长度"><a href="#58-最后一个单词的长度" class="headerlink" title="58. 最后一个单词的长度"></a>58. 最后一个单词的长度</h1><p>反向遍历，用一个<code>flag</code>稍微控制下流程就行了，注意几个<code>if</code>的顺序。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">lengthOfLastWord</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        start = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)-<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> s[i] != <span class="string">&#x27; &#x27;</span> <span class="keyword">and</span> <span class="keyword">not</span> start:</span><br><span class="line">                start = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">if</span> s[i] == <span class="string">&#x27; &#x27;</span> <span class="keyword">and</span> start:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> start:</span><br><span class="line">                res += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
+              <h1 id="58-最后一个单词的长度"><a class="markdownIt-Anchor" href="#58-最后一个单词的长度"></a> 58. 最后一个单词的长度</h1>
+<p>反向遍历，用一个<code>flag</code>稍微控制下流程就行了，注意几个<code>if</code>的顺序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        res = <span class="hljs-number">0</span><br>        start = <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(s)-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">if</span> s[i] != <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> start:<br>                start = <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">if</span> s[i] == <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-keyword">and</span> start:<br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">if</span> start:<br>                res += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
 
               
             </div>
@@ -445,13 +445,6 @@
 
 
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.13.10/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-  });
-</script>
 
 
 

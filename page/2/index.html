@@ -186,7 +186,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="An elegant Material-Design theme for Hexo"></span>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行。"></span>
           
         </div>
 
@@ -232,7 +232,7 @@
       <a class="index-excerpt" href="/2022/05/15/2022-05-15-Solution/" target="_self">
         <div>
           
-          121. 买卖股票的最佳时机遍历一次数组，更新数组的最小值min_pcp与当前值与数组最小值差的最大值max_pft。遍历完成后，当前值与数组最小值差的最大值就是交易的最大利润。 1234567891011class Solution:  def maxProfit(self, prices: List[int]) -&gt; int:    max_pft &#x3D; 0    min_pcp &#x3D; pr
+          121. 买卖股票的最佳时机 遍历一次数组，更新数组的最小值min_pcp与当前值与数组最小值差的最大值max_pft。遍历完成后，当前值与数组最小值差的最大值就是交易的最大利润。 1234567891011class Solution:  def maxProfit(self, prices: List[int]) -&gt; int:    max_pft &#x3D; 0    min_pcp &#x3D;
         </div>
       </a>
 
@@ -313,7 +313,7 @@
       <a class="index-excerpt" href="/2022/05/13/2022-05-13-Solution/" target="_self">
         <div>
           
-          83. 删除排序链表中的重复元素基本链表操作。 1234567891011class Solution:    def deleteDuplicates(self, head: ListNode) -&gt; ListNode:        if not head:            return head        node &#x3D; head        while node.next:
+          83. 删除排序链表中的重复元素 基本链表操作。 1234567891011class Solution:    def deleteDuplicates(self, head: ListNode) -&gt; ListNode:        if not head:            return head        node &#x3D; head        while node.nex
         </div>
       </a>
 
@@ -394,7 +394,7 @@
       <a class="index-excerpt" href="/2022/05/11/2022-05-11-Solution/" target="_self">
         <div>
           
-          70. 爬楼梯斐波那契数列，一个数等于他上一个数和上上的数的和。分为递归解和非递归解，如果有空间限制可以把列表看作一个栈。 123456class Solution:    def climbStairs(self, n: int) -&gt; int:        lst &#x3D; [1, 1]        for i in range(0, n-1):            lst.append
+          70. 爬楼梯 斐波那契数列，一个数等于他上一个数和上上的数的和。分为递归解和非递归解，如果有空间限制可以把列表看作一个栈。 123456class Solution:    def climbStairs(self, n: int) -&gt; int:        lst &#x3D; [1, 1]        for i in range(0, n-1):            lst.appe
         </div>
       </a>
 
@@ -473,7 +473,7 @@
       <a class="index-excerpt" href="/2022/05/10/2022-05-10-Solution/" target="_self">
         <div>
           
-          66. 加一从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 123456789101112131415class Solution:    def plusOne(self, digits: List[int]) -&gt; List[int
+          66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 123456789101112131415class Solution:    def plusOne(self, digits: List[int]) -&gt; List[i
         </div>
       </a>
 
@@ -554,7 +554,7 @@
       <a class="index-excerpt" href="/2022/05/09/2022-05-09-Solution/" target="_self">
         <div>
           
-          58. 最后一个单词的长度反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 123456789101112class Solution:    def lengthOfLastWord(self, s: str) -&gt; int:        res &#x3D; 0        start &#x3D; False        for i in range(len(s)-1, -1, -
+          58. 最后一个单词的长度 反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 123456789101112class Solution:    def lengthOfLastWord(self, s: str) -&gt; int:        res &#x3D; 0        start &#x3D; False        for i in range(len(s)-1, -1,
         </div>
       </a>
 
@@ -631,7 +631,7 @@
       <a class="index-excerpt" href="/2022/05/07/2022-05-07-Solution/" target="_self">
         <div>
           
-          27. 移除元素双指针，一个指针index控制循环遍历，另一个指针k控制将正确的数填到正确的位置。 1234567891011class Solution:    def removeElement(self, nums: List[int], val: int) -&gt; int:        index &#x3D; 0        k &#x3D; 0        length &#x3D; len(nums)
+          27. 移除元素 双指针，一个指针index控制循环遍历，另一个指针k控制将正确的数填到正确的位置。 1234567891011class Solution:    def removeElement(self, nums: List[int], val: int) -&gt; int:        index &#x3D; 0        k &#x3D; 0        length &#x3D; len(nums
         </div>
       </a>
 
@@ -712,7 +712,7 @@
       <a class="index-excerpt" href="/2022/05/06/2022-05-06-Solution/" target="_self">
         <div>
           
-          26. 删除有序数组中的重复项暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; int:
+          26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; in
         </div>
       </a>
 
@@ -789,7 +789,7 @@
       <a class="index-excerpt" href="/2022/05/05/2022-05-05-Solution/" target="_self">
         <div>
           
-          13. 罗马数字转整数比较直接的解法，一个指针指当前位，另一个指针指下一位。如果当前位和下一位凑成了4、9等数，就在结果中加上，然后当前指针指向下下位。如果当前位和下一位没有凑成特殊情况，就在结果中加上当前位的数，并把当前位指针指向下一位。 1234567891011121314151617181920212223242526272829303132333435363738394041424344
+          13. 罗马数字转整数 比较直接的解法，一个指针指当前位，另一个指针指下一位。如果当前位和下一位凑成了4、9等数，就在结果中加上，然后当前指针指向下下位。如果当前位和下一位没有凑成特殊情况，就在结果中加上当前位的数，并把当前位指针指向下一位。 12345678910111213141516171819202122232425262728293031323334353637383940414243
         </div>
       </a>
 
@@ -868,7 +868,7 @@
       <a class="index-excerpt" href="/2022/05/04/2022-05-04-Solution/" target="_self">
         <div>
           
-          14. 最长公共前缀首先最长公共前缀肯定小于等于最短字符串长度，所以先找出最短字符串长度，然后双循环比较字符串每个位置的值，都相等就记录，不相等直接返回当前记录。 1234567891011121314class Solution:    def longestCommonPrefix(self, strs: List[str]) -&gt; str:        res &#x3D; &quot;&amp;qu
+          14. 最长公共前缀 首先最长公共前缀肯定小于等于最短字符串长度，所以先找出最短字符串长度，然后双循环比较字符串每个位置的值，都相等就记录，不相等直接返回当前记录。 1234567891011121314class Solution:    def longestCommonPrefix(self, strs: List[str]) -&gt; str:        res &#x3D; &quot;&amp;
         </div>
       </a>
 
@@ -947,7 +947,7 @@
       <a class="index-excerpt" href="/2022/05/03/2022-05-03-Solution/" target="_self">
         <div>
           
-          1. 两数之和建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#123;&amp;
+          1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#123
         </div>
       </a>
 

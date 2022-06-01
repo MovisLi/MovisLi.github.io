@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm">
   
-    <meta name="description" content="228. 汇总区间双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0        l">
+    <meta name="description" content="228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 228 231">
 <meta property="og:url" content="https://movisli.github.io/2022/05/29/2022-05-29-Solution/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="228. 汇总区间双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0        l">
+<meta property="og:description" content="228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-29T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T18:24:11.854Z">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          undefined words
+          814 words
         
       </span>
     
@@ -268,15 +268,14 @@
             
             <div class="markdown-body">
               
-              <h1 id="228-汇总区间"><a href="#228-汇总区间" class="headerlink" title="228. 汇总区间"></a>228. 汇总区间</h1><p>双指针 <code>start</code> 和 <code>end</code> ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">summaryRanges</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        start = <span class="number">0</span></span><br><span class="line">        length = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">while</span> start &lt; length:</span><br><span class="line">            end = start</span><br><span class="line">            <span class="keyword">while</span> end &lt; length-<span class="number">1</span> <span class="keyword">and</span> (nums[end+<span class="number">1</span>]-nums[end])==<span class="number">1</span>:</span><br><span class="line">                end += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> start == end:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start]))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(<span class="built_in">str</span>(nums[start])+<span class="string">&#x27;-&gt;&#x27;</span>+<span class="built_in">str</span>(nums[end]))</span><br><span class="line">            start = end+<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-
-<h1 id="231-2-的幂"><a href="#231-2-的幂" class="headerlink" title="231. 2 的幂"></a>231. 2 的幂</h1><p>先来个 c 的幂的万能解法，就是在定义域（但是必须是正整数）内 c 的幂的最大值设为 $x$ ，必有 $x%c=0$ ，其实就是判断是不是最大值的约数。比如说这道题 2 的定义域内的最大值是  <code>2&lt;&lt;30</code> ，就可以写成如下代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">2</span>&lt;&lt;<span class="number">30</span>)%n == <span class="number">0</span> <span class="keyword">if</span> n &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-
-<p> 当然正规军的做法是位运算。首先 2 的幂的二进制表示有个规律就是所有位只有一个 1 ，所以可以通过查找次数是否二进制只有一个 1 来确定它是不是 2 的幂。这里有个小技巧<a href="https://movisli.github.io/posts/2022/05/19/Solution.html">LeetCode 191</a> ，<code>n &amp; (n - 1) </code> 可以将最后一个 1 去掉，既然只有一个 1 所以去掉之后就没有了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPowerOfTwo</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> n &gt; <span class="number">0</span> <span class="keyword">and</span> n &amp; (n - <span class="number">1</span>) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
+              <h1 id="228-汇总区间"><a class="markdownIt-Anchor" href="#228-汇总区间"></a> 228. 汇总区间</h1>
+<p>双指针 <code>start</code> 和 <code>end</code> ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">summaryRanges</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:<br>        res = []<br>        start = <span class="hljs-number">0</span><br>        length = <span class="hljs-built_in">len</span>(nums)<br>        <span class="hljs-keyword">while</span> start &lt; length:<br>            end = start<br>            <span class="hljs-keyword">while</span> end &lt; length-<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> (nums[end+<span class="hljs-number">1</span>]-nums[end])==<span class="hljs-number">1</span>:<br>                end += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">if</span> start == end:<br>                res.append(<span class="hljs-built_in">str</span>(nums[start]))<br>            <span class="hljs-keyword">else</span>:<br>                res.append(<span class="hljs-built_in">str</span>(nums[start])+<span class="hljs-string">&#x27;-&gt;&#x27;</span>+<span class="hljs-built_in">str</span>(nums[end]))<br>            start = end+<span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+<h1 id="231-2-的幂"><a class="markdownIt-Anchor" href="#231-2-的幂"></a> 231. 2 的幂</h1>
+<p>先来个 c 的幂的万能解法，就是在定义域（但是必须是正整数）内 c 的幂的最大值设为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> ，必有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">%</mi><mi>c</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x\%c=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord mathdefault">x</span><span class="mord">%</span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，其实就是判断是不是最大值的约数。比如说这道题 2 的定义域内的最大值是  <code>2&lt;&lt;30</code> ，就可以写成如下代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfTwo</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">return</span> (<span class="hljs-number">2</span>&lt;&lt;<span class="hljs-number">30</span>)%n == <span class="hljs-number">0</span> <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+<p>当然正规军的做法是位运算。首先 2 的幂的二进制表示有个规律就是所有位只有一个 1 ，所以可以通过查找次数是否二进制只有一个 1 来确定它是不是 2 的幂。这里有个小技巧<a href="https://movisli.github.io/posts/2022/05/19/Solution.html">LeetCode 191</a> ，<code>n &amp; (n - 1)</code> 可以将最后一个 1 去掉，既然只有一个 1 所以去掉之后就没有了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfTwo</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">return</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> n &amp; (n - <span class="hljs-number">1</span>) == <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
 
               
             </div>
@@ -454,13 +453,6 @@
 
 
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.13.10/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-  });
-</script>
 
 
 

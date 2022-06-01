@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm">
   
-    <meta name="description" content="26. 删除有序数组中的重复项暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; int:">
+    <meta name="description" content="26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 26">
 <meta property="og:url" content="https://movisli.github.io/2022/05/06/2022-05-06-Solution/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="26. 删除有序数组中的重复项暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; int:">
+<meta property="og:description" content="26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; in">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-06T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T17:53:16.408Z">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          undefined words
+          817 words
         
       </span>
     
@@ -267,15 +267,14 @@
             
             <div class="markdown-body">
               
-              <h1 id="26-删除有序数组中的重复项"><a href="#26-删除有序数组中的重复项" class="headerlink" title="26. 删除有序数组中的重复项"></a>26. 删除有序数组中的重复项</h1><p>暴力解法，创建<code>set</code>用于记录出现过的唯一元素，创建<code>drop_lst</code>用于记录要删的位置，删元素的时候注意下<code>python</code>的<code>del</code>会更改后续元素的下标，所以建立一个<code>k</code>辅助找到真正的下标再删。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        hashset = <span class="built_in">set</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        drop_lst = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[i] <span class="keyword">not</span> <span class="keyword">in</span> hashset:</span><br><span class="line">                hashset.add(nums[i])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                drop_lst.append(i)</span><br><span class="line">        k = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> drop_lst:</span><br><span class="line">            <span class="keyword">del</span> nums[i-k]</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(hashset)</span><br></pre></td></tr></table></figure>
-
+              <h1 id="26-删除有序数组中的重复项"><a class="markdownIt-Anchor" href="#26-删除有序数组中的重复项"></a> 26. 删除有序数组中的重复项</h1>
+<p>暴力解法，创建<code>set</code>用于记录出现过的唯一元素，创建<code>drop_lst</code>用于记录要删的位置，删元素的时候注意下<code>python</code>的<code>del</code>会更改后续元素的下标，所以建立一个<code>k</code>辅助找到真正的下标再删。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        hashset = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br>        drop_lst = []<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)):<br>            <span class="hljs-keyword">if</span> nums[i] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashset:<br>                hashset.add(nums[i])<br>            <span class="hljs-keyword">else</span>:<br>                drop_lst.append(i)<br>        k = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> drop_lst:<br>            <span class="hljs-keyword">del</span> nums[i-k]<br>            k += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(hashset)<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>1068 ms</p>
 </blockquote>
 <p>核心在于前探指针，每次循环时生成一个前探指针<code>next_index</code>找寻下一个不重复的元素的<code>index</code>，用指针<code>k</code>代表下一个不重复元素（假如有）正确的位置，所以在找到正确的<code>next_index</code>后，将其赋值给<code>k</code>就行了，同时将<code>index</code>变为<code>next_index</code>，最后返回<code>k-1</code>因为多算了一次<code>k</code>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        index = <span class="number">0</span></span><br><span class="line">        length = <span class="built_in">len</span>(nums)</span><br><span class="line">        k = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> index &lt; length:</span><br><span class="line">            next_index = index+<span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> next_index&lt;length:</span><br><span class="line">                <span class="keyword">if</span> nums[next_index] != nums[index]:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                next_index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> next_index != length:</span><br><span class="line">                nums[k] = nums[next_index]</span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">            index = next_index</span><br><span class="line">        <span class="keyword">return</span> k-<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        index = <span class="hljs-number">0</span><br>        length = <span class="hljs-built_in">len</span>(nums)<br>        k = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">while</span> index &lt; length:<br>            next_index = index+<span class="hljs-number">1</span><br>            <span class="hljs-keyword">while</span> next_index&lt;length:<br>                <span class="hljs-keyword">if</span> nums[next_index] != nums[index]:<br>                    <span class="hljs-keyword">break</span><br>                next_index += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">if</span> next_index != length:<br>                nums[k] = nums[next_index]<br>            k += <span class="hljs-number">1</span><br>            index = next_index<br>        <span class="hljs-keyword">return</span> k-<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>28 ms</p>
 </blockquote>
@@ -454,13 +453,6 @@
 
 
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.13.10/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-  });
-</script>
 
 
 

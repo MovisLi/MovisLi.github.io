@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm">
   
-    <meta name="description" content="206. 反转链表常见的用栈反转。 123456789101112131415161718# Definition for singly-linked list.# class ListNode:#     def __init__(self, val&#x3D;0, next&#x3D;None):#         self.val &#x3D; val#         self.next &#x3D; nextclass Sol">
+    <meta name="description" content="206. 反转链表 常见的用栈反转。 123456789101112131415161718# Definition for singly-linked list.# class ListNode:#     def __init__(self, val&#x3D;0, next&#x3D;None):#         self.val &#x3D; val#         self.next &#x3D; nextclass S">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 206">
 <meta property="og:url" content="https://movisli.github.io/2022/05/26/2022-05-26-Solution/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="206. 反转链表常见的用栈反转。 123456789101112131415161718# Definition for singly-linked list.# class ListNode:#     def __init__(self, val&#x3D;0, next&#x3D;None):#         self.val &#x3D; val#         self.next &#x3D; nextclass Sol">
+<meta property="og:description" content="206. 反转链表 常见的用栈反转。 123456789101112131415161718# Definition for singly-linked list.# class ListNode:#     def __init__(self, val&#x3D;0, next&#x3D;None):#         self.val &#x3D; val#         self.next &#x3D; nextclass S">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-26T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T18:22:44.789Z">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          undefined words
+          370 words
         
       </span>
     
@@ -267,9 +267,9 @@
             
             <div class="markdown-body">
               
-              <h1 id="206-反转链表"><a href="#206-反转链表" class="headerlink" title="206. 反转链表"></a>206. 反转链表</h1><p>常见的用栈反转。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, next=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.next = next</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseList</span>(<span class="params">self, head: ListNode</span>) -&gt; ListNode:</span><br><span class="line">        stack = []</span><br><span class="line">        node = head</span><br><span class="line">        <span class="keyword">while</span> node:</span><br><span class="line">            stack.append(node.val)</span><br><span class="line">            node = node.<span class="built_in">next</span></span><br><span class="line">        res = ListNode()</span><br><span class="line">        node = res</span><br><span class="line">        <span class="keyword">while</span> stack:</span><br><span class="line">            node.<span class="built_in">next</span> = ListNode(stack.pop())</span><br><span class="line">            node = node.<span class="built_in">next</span></span><br><span class="line">        <span class="keyword">return</span> res.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
-
+              <h1 id="206-反转链表"><a class="markdownIt-Anchor" href="#206-反转链表"></a> 206. 反转链表</h1>
+<p>常见的用栈反转。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Definition for singly-linked list.</span><br><span class="hljs-comment"># class ListNode:</span><br><span class="hljs-comment">#     def __init__(self, val=0, next=None):</span><br><span class="hljs-comment">#         self.val = val</span><br><span class="hljs-comment">#         self.next = next</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reverseList</span>(<span class="hljs-params">self, head: ListNode</span>) -&gt; ListNode:<br>        stack = []<br>        node = head<br>        <span class="hljs-keyword">while</span> node:<br>            stack.append(node.val)<br>            node = node.<span class="hljs-built_in">next</span><br>        res = ListNode()<br>        node = res<br>        <span class="hljs-keyword">while</span> stack:<br>            node.<span class="hljs-built_in">next</span> = ListNode(stack.pop())<br>            node = node.<span class="hljs-built_in">next</span><br>        <span class="hljs-keyword">return</span> res.<span class="hljs-built_in">next</span><br></code></pre></td></tr></table></figure>
 
               
             </div>
@@ -445,13 +445,6 @@
 
 
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.13.10/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-  });
-</script>
 
 
 
