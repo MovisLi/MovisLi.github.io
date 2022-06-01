@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm">
   
-    <meta name="description" content="26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; in">
+    <meta name="description" content="26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 26">
 <meta property="og:url" content="https://movisli.github.io/2022/05/06/2022-05-06-Solution/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; in">
+<meta property="og:description" content="26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 1234567891011121314class Solution:    def removeDuplicates(self, nums: List[int]) -&gt; i">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-06T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T17:53:16.408Z">
@@ -267,7 +267,7 @@
             
             <div class="markdown-body">
               
-              <h1 id="26-删除有序数组中的重复项"><a class="markdownIt-Anchor" href="#26-删除有序数组中的重复项"></a> 26. 删除有序数组中的重复项</h1>
+              <h1 id="删除有序数组中的重复项">26. 删除有序数组中的重复项</h1>
 <p>暴力解法，创建<code>set</code>用于记录出现过的唯一元素，创建<code>drop_lst</code>用于记录要删的位置，删元素的时候注意下<code>python</code>的<code>del</code>会更改后续元素的下标，所以建立一个<code>k</code>辅助找到真正的下标再删。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removeDuplicates</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        hashset = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br>        drop_lst = []<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)):<br>            <span class="hljs-keyword">if</span> nums[i] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashset:<br>                hashset.add(nums[i])<br>            <span class="hljs-keyword">else</span>:<br>                drop_lst.append(i)<br>        k = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> drop_lst:<br>            <span class="hljs-keyword">del</span> nums[i-k]<br>            k += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(hashset)<br></code></pre></td></tr></table></figure>
 <blockquote>
@@ -721,7 +721,7 @@
       </script>
     
 
-  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

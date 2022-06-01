@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm">
   
-    <meta name="description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#123">
+    <meta name="description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 1 9">
 <meta property="og:url" content="https://movisli.github.io/2022/05/03/2022-05-03-Solution/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#123">
+<meta property="og:description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#12">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-03T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T17:53:07.681Z">
@@ -268,13 +268,13 @@
             
             <div class="markdown-body">
               
-              <h1 id="1-两数之和"><a class="markdownIt-Anchor" href="#1-两数之和"></a> 1. 两数之和</h1>
+              <h1 id="两数之和">1. 两数之和</h1>
 <p>建立一个<code>dict</code>(map)，遍历一次数组，判断<code>目标值-当前值</code>是否在<code>dict</code>的<code>key</code>里，在就输出对应的<code>value</code>(index)与当前的<code>index</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">twoSum</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], target: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        hashmap = &#123;&#125;<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)):<br>            temp_target = target - nums[i]<br>            <span class="hljs-keyword">if</span> temp_target <span class="hljs-keyword">in</span> hashmap:<br>                <span class="hljs-keyword">return</span> [hashmap[temp_target], i]<br>            <span class="hljs-keyword">else</span>:<br>                hashmap[nums[i]] = i<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
-<h1 id="9-回文数"><a class="markdownIt-Anchor" href="#9-回文数"></a> 9. 回文数</h1>
+<h1 id="回文数">9. 回文数</h1>
 <p>转字符串判断正序和逆序是否相等。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]==<span class="hljs-built_in">str</span>(x)<br></code></pre></td></tr></table></figure>
-<p>左右指针逐步向中间移动判断每一步是否相等。</p>
+<p> 左右指针逐步向中间移动判断每一步是否相等。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        string = <span class="hljs-built_in">str</span>(x)<br>        left = <span class="hljs-number">0</span><br>        right = <span class="hljs-built_in">len</span>(string)-<span class="hljs-number">1</span><br>        <span class="hljs-keyword">while</span> left&lt;right:<br>            <span class="hljs-keyword">if</span> string[left] != string[right]:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                left += <span class="hljs-number">1</span><br>                right -= <span class="hljs-number">1</span><br>        <br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
 
               
@@ -721,7 +721,7 @@
       </script>
     
 
-  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

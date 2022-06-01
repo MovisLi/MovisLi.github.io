@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm">
   
-    <meta name="description" content="168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 12345678class Solution:    def convertToTitle(self, columnNumber: in">
+    <meta name="description" content="168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 12345678class Solution:    def convertToTitle(self, columnNumber: i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 168 171 175 181 182 183">
 <meta property="og:url" content="https://movisli.github.io/2022/05/16/2022-05-16-Solution/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 12345678class Solution:    def convertToTitle(self, columnNumber: in">
+<meta property="og:description" content="168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 12345678class Solution:    def convertToTitle(self, columnNumber: i">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-16T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T18:16:08.170Z">
@@ -268,24 +268,24 @@
             
             <div class="markdown-body">
               
-              <h1 id="168-excel表列名称"><a class="markdownIt-Anchor" href="#168-excel表列名称"></a> 168. Excel表列名称</h1>
+              <h1 id="excel表列名称">168. Excel表列名称</h1>
 <p>此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面<code>temp = (columnNumber-1)%26+1</code>这行代码。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">convertToTitle</span>(<span class="hljs-params">self, columnNumber: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        res = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">while</span> columnNumber != <span class="hljs-number">0</span>:<br>            temp = (columnNumber-<span class="hljs-number">1</span>)%<span class="hljs-number">26</span>+<span class="hljs-number">1</span><br>            res += <span class="hljs-built_in">chr</span>(temp+<span class="hljs-number">64</span>)<br>            columnNumber = (columnNumber-temp)//<span class="hljs-number">26</span><br>        <span class="hljs-keyword">return</span> res[::-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
-<h1 id="171-excel-表列序号"><a class="markdownIt-Anchor" href="#171-excel-表列序号"></a> 171. Excel 表列序号</h1>
+<h1 id="excel-表列序号">171. Excel 表列序号</h1>
 <p>与上题差不多，上题的逆向。本质上还是个进制转换。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">titleToNumber</span>(<span class="hljs-params">self, columnTitle: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        res = <span class="hljs-number">0</span><br>        n = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> columnTitle[::-<span class="hljs-number">1</span>]:<br>            res += (<span class="hljs-built_in">ord</span>(i)-<span class="hljs-number">64</span>)*n<br>            n *= <span class="hljs-number">26</span><br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
-<h1 id="175-组合两个表"><a class="markdownIt-Anchor" href="#175-组合两个表"></a> 175. 组合两个表</h1>
+<h1 id="组合两个表">175. 组合两个表</h1>
 <p>依题意做一个简单左链接就行了。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT<br>	t1.firstName,<br>	t1.lastName,<br>	t2.city,<br>	t2.state <br>FROM<br>	Person t1<br>	LEFT JOIN Address t2 ON t1.personId = t2.personId<br></code></pre></td></tr></table></figure>
-<h1 id="181-超过经理收入的员工"><a class="markdownIt-Anchor" href="#181-超过经理收入的员工"></a> 181. 超过经理收入的员工</h1>
+<h1 id="超过经理收入的员工">181. 超过经理收入的员工</h1>
 <p>表自链接就行了。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT<br>	l.NAME AS Employee <br>FROM<br>	Employee l<br>	INNER JOIN Employee r ON l.managerId = r.id <br>WHERE<br>	l.salary &gt; r.salary<br></code></pre></td></tr></table></figure>
-<h1 id="182-查找重复的电子邮箱"><a class="markdownIt-Anchor" href="#182-查找重复的电子邮箱"></a> 182. 查找重复的电子邮箱</h1>
+<h1 id="查找重复的电子邮箱">182. 查找重复的电子邮箱</h1>
 <p>自链接</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT DISTINCT<br>	t1.Email <br>FROM<br>	Person t1<br>	JOIN Person t2 ON t1.Email = t2.Email <br>	AND t1.Id != t2.Id<br></code></pre></td></tr></table></figure>
 <p>子表查询</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT<br>	Email <br>FROM<br>	( SELECT Email, count( 1 ) AS ec FROM Person GROUP BY Email ) tec <br>WHERE<br>	tec.ec &gt; 1<br></code></pre></td></tr></table></figure>
-<h1 id="183-从不订购的客户"><a class="markdownIt-Anchor" href="#183-从不订购的客户"></a> 183. 从不订购的客户</h1>
+<h1 id="从不订购的客户">183. 从不订购的客户</h1>
 <p>子表查询</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT<br>	n.NAME AS Customers <br>FROM<br>	( SELECT t1.NAME, t2.Id FROM Customers t1 LEFT JOIN Orders t2 ON t1.Id = t2.CustomerId ) n <br>WHERE<br>	n.id IS NULL<br></code></pre></td></tr></table></figure>
 <p>子表查询和<code>NOT IN</code>语句</p>
@@ -737,7 +737,7 @@
       </script>
     
 
-  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
