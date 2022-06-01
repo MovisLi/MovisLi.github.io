@@ -16,23 +16,22 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 1234class Solution:    def isAnagram(self, s: str, t: str) -&gt; bool:        import operator        return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行">
+    <meta name="description" content="2015年，第一次听闻过 python 这门语言。直至2018年，在一门叫做《数字图像处理》的选修课上第一次真正在用 python ，当时 matlab 也是工具之一，所以并没有把 python 作为唯一主力语言。在之后的2018年的比赛里，更加深入地了解了 python 。之后2019年，做项目需要，粗略地学习了一下基本语法。因为有 java 和 c 的基础，学得挺快。仔细回想过去，还没有系统地">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 242">
-<meta property="og:url" content="https://movisli.github.io/2022/06/01/leetcode20220601/index.html">
+<meta property="og:title" content="again_study_python">
+<meta property="og:url" content="https://movisli.github.io/2022/06/02/again-study-python/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 1234class Solution:    def isAnagram(self, s: str, t: str) -&gt; bool:        import operator        return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行">
+<meta property="og:description" content="2015年，第一次听闻过 python 这门语言。直至2018年，在一门叫做《数字图像处理》的选修课上第一次真正在用 python ，当时 matlab 也是工具之一，所以并没有把 python 作为唯一主力语言。在之后的2018年的比赛里，更加深入地了解了 python 。之后2019年，做项目需要，粗略地学习了一下基本语法。因为有 java 和 c 的基础，学得挺快。仔细回想过去，还没有系统地">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-01T14:41:34.000Z">
-<meta property="article:modified_time" content="2022-06-01T15:12:49.206Z">
+<meta property="article:published_time" content="2022-06-01T16:11:57.000Z">
+<meta property="article:modified_time" content="2022-06-01T17:00:11.998Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="hash">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LeetCode 242 - movis</title>
+  <title>again_study_python - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LeetCode 242"></span>
+            <span id="subtitle" data-typed-text="again_study_python"></span>
           
         </div>
 
@@ -211,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-01 22:41" pubdate>
-          June 1, 2022 pm
+        <time datetime="2022-06-02 00:11" pubdate>
+          June 2, 2022 am
         </time>
       </span>
     
@@ -223,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          428 words
+          26 words
         
       </span>
     
@@ -273,15 +272,15 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LeetCode 242</h1>
+            <h1 style="display: none">again_study_python</h1>
             
             <div class="markdown-body">
               
-              <h1 id="有效的字母异位词">242. 有效的字母异位词</h1>
-<p>排序，比较两个字符串排序后是否相同。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">import</span> operator<br>        <span class="hljs-keyword">return</span> operator.eq(<span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(s)), <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(t)))<br></code></pre></td></tr></table></figure>
-<p>哈希，用<code>dict</code>进行计数。比上一种快。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        hashmap = &#123;&#125;<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:<br>                hashmap[i] = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                hashmap[i] += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t:<br>            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                hashmap[i] -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> hashmap.values():<br>            <span class="hljs-keyword">if</span> v != <span class="hljs-number">0</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+              <blockquote>
+<p>以下内容全部基于<a
+target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400">Python教程 -
+廖雪峰的官方网站</a>。</p>
+</blockquote>
 
               
             </div>
@@ -299,22 +298,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/algorithm/" class="category-chain-item">algorithm</a>
+  <a href="/categories/python/" class="category-chain-item">python</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/algorithm/leetcode-answer/" class="category-chain-item">leetcode answer</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/algorithm/leetcode-answer/easy/" class="category-chain-item">easy</a>
-  
-  
-
-  
-
   
 
       </span>
@@ -330,8 +315,6 @@
       
         <a href="/tags/python/">#python</a>
       
-        <a href="/tags/hash/">#hash</a>
-      
     </div>
   
 </div>
@@ -342,8 +325,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LeetCode 242</div>
-      <div>https://movisli.github.io/2022/06/01/leetcode20220601/</div>
+      <div>again_study_python</div>
+      <div>https://movisli.github.io/2022/06/02/again-study-python/</div>
     </div>
     <div class="license-meta">
       
@@ -355,7 +338,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>June 1, 2022</div>
+          <div>June 2, 2022</div>
         </div>
       
       
@@ -385,18 +368,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/02/again-study-python/" title="again_study_python">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">again_study_python</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/29/leetcode20220529/" title="LeetCode 228 231">
-                        <span class="hidden-mobile">LeetCode 228 231</span>
+                      <a href="/2022/06/01/leetcode20220601/" title="LeetCode 242">
+                        <span class="hidden-mobile">LeetCode 242</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
