@@ -4,9 +4,9 @@
   
   
   <entry>
-    <title>again_study_python</title>
-    <link href="/2022/06/02/again-study-python/"/>
-    <url>/2022/06/02/again-study-python/</url>
+    <title>再次学习python</title>
+    <link href="/2022/06/02/%E5%86%8D%E6%AC%A1%E5%AD%A6%E4%B9%A0python/"/>
+    <url>/2022/06/02/%E5%86%8D%E6%AC%A1%E5%AD%A6%E4%B9%A0python/</url>
     
     <content type="html"><![CDATA[<blockquote><p>以下内容全部基于<ahref="https://www.liaoxuefeng.com/wiki/1016959663602400">Python教程 -廖雪峰的官方网站</a>。</p></blockquote>]]></content>
     
@@ -177,9 +177,9 @@
       
       <tag>python</tag>
       
-      <tag>hash</tag>
-      
       <tag>linked_list</tag>
+      
+      <tag>hash</tag>
       
     </tags>
     
