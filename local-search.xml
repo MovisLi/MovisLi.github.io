@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>leetcode 258</title>
+    <link href="/2022/06/04/leetcode20220603/"/>
+    <url>/2022/06/04/leetcode20220603/</url>
+    
+    <content type="html"><![CDATA[<h1 id="各位相加">258. 各位相加</h1><p>简单循环，模拟题目中描述的过程逐位相加直到<code>num</code>小于10。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addDigits</span>(<span class="hljs-params">self, num: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:        <span class="hljs-keyword">while</span> num &gt;= <span class="hljs-number">10</span>:            num_str = <span class="hljs-built_in">str</span>(num)            num = <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">int</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> num_str])        <span class="hljs-keyword">return</span> num</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>recursion</tag>
+      
+      <tag>math</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>再次学习python</title>
     <link href="/2022/06/02/%E5%86%8D%E6%AC%A1%E5%AD%A6%E4%B9%A0python/"/>
     <url>/2022/06/02/%E5%86%8D%E6%AC%A1%E5%AD%A6%E4%B9%A0python/</url>
@@ -470,7 +503,7 @@
       
       <tag>stack</tag>
       
-      <tag>recurse</tag>
+      <tag>recursion</tag>
       
     </tags>
     
