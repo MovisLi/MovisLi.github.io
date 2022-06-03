@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0">
+    <meta name="description" content="228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 class Solution:     def summaryRanges(self, nums: List[int]) -&gt; List[str]:         res &#x3D; []         start &#x3D; 0         length &#x3D; len(n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 228 231">
 <meta property="og:url" content="https://movisli.github.io/2022/05/29/leetcode20220529/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0">
+<meta property="og:description" content="228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 class Solution:     def summaryRanges(self, nums: List[int]) -&gt; List[str]:         res &#x3D; []         start &#x3D; 0         length &#x3D; len(n">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-29T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T18:24:11.854Z">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          810 words
+          783 words
         
       </span>
     
@@ -281,14 +281,30 @@
               <h1 id="汇总区间">228. 汇总区间</h1>
 <p>双指针 <code>start</code> 和 <code>end</code>
 ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">summaryRanges</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:<br>        res = []<br>        start = <span class="hljs-number">0</span><br>        length = <span class="hljs-built_in">len</span>(nums)<br>        <span class="hljs-keyword">while</span> start &lt; length:<br>            end = start<br>            <span class="hljs-keyword">while</span> end &lt; length-<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> (nums[end+<span class="hljs-number">1</span>]-nums[end])==<span class="hljs-number">1</span>:<br>                end += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">if</span> start == end:<br>                res.append(<span class="hljs-built_in">str</span>(nums[start]))<br>            <span class="hljs-keyword">else</span>:<br>                res.append(<span class="hljs-built_in">str</span>(nums[start])+<span class="hljs-string">&#x27;-&gt;&#x27;</span>+<span class="hljs-built_in">str</span>(nums[end]))<br>            start = end+<span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">summaryRanges</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:
+        res = []
+        start = <span class="hljs-number">0</span>
+        length = <span class="hljs-built_in">len</span>(nums)
+        <span class="hljs-keyword">while</span> start &lt; length:
+            end = start
+            <span class="hljs-keyword">while</span> end &lt; length-<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> (nums[end+<span class="hljs-number">1</span>]-nums[end])==<span class="hljs-number">1</span>:
+                end += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> start == end:
+                res.append(<span class="hljs-built_in">str</span>(nums[start]))
+            <span class="hljs-keyword">else</span>:
+                res.append(<span class="hljs-built_in">str</span>(nums[start])+<span class="hljs-string">&#x27;-&gt;&#x27;</span>+<span class="hljs-built_in">str</span>(nums[end]))
+            start = end+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
 <h1 id="的幂">231. 2 的幂</h1>
 <p>先来个 c 的幂的万能解法，就是在定义域（但是必须是正整数）内 c
 的幂的最大值设为 <span class="math inline">\(x\)</span> ，必有 <span
 class="math inline">\(x\%c=0\)</span>
 ，其实就是判断是不是最大值的约数。比如说这道题 2 的定义域内的最大值是
 <code>2&lt;&lt;30</code> ，就可以写成如下代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfTwo</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">return</span> (<span class="hljs-number">2</span>&lt;&lt;<span class="hljs-number">30</span>)%n == <span class="hljs-number">0</span> <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfTwo</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> (<span class="hljs-number">2</span>&lt;&lt;<span class="hljs-number">30</span>)%n == <span class="hljs-number">0</span> <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-literal">False</span></code></pre></div>
 <p>当然正规军的做法是位运算。首先 2
 的幂的二进制表示有个规律就是所有位只有一个 1
 ，所以可以通过查找次数是否二进制只有一个 1 来确定它是不是 2
@@ -296,7 +312,9 @@ class="math inline">\(x\%c=0\)</span>
 href="https://movisli.github.io/posts/2022/05/19/Solution.html">LeetCode
 191</a> ，<code>n &amp; (n - 1)</code> 可以将最后一个 1
 去掉，既然只有一个 1 所以去掉之后就没有了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfTwo</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">return</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> n &amp; (n - <span class="hljs-number">1</span>) == <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfTwo</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> n &amp; (n - <span class="hljs-number">1</span>) == <span class="hljs-number">0</span></code></pre></div>
 
               
             </div>

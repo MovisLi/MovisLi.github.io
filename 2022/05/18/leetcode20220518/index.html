@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： 123class Solution:    def reverseBits(self, n: int) -&gt; int:        return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)">
+    <meta name="description" content="190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： class Solution:     def reverseBits(self, n: int) -&gt; int:         return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 190">
 <meta property="og:url" content="https://movisli.github.io/2022/05/18/leetcode20220518/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： 123class Solution:    def reverseBits(self, n: int) -&gt; int:        return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)">
+<meta property="og:description" content="190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： class Solution:     def reverseBits(self, n: int) -&gt; int:         return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-18T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T18:16:47.119Z">
@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          161 words
+          158 words
         
       </span>
     
@@ -279,7 +279,9 @@
               
               <h1 id="颠倒二进制位">190. 颠倒二进制位</h1>
 <p>注意下题目中的32位无符号整数。暴力解：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reverseBits</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-built_in">str</span>(<span class="hljs-string">&#x27;0&#x27;</span>*(<span class="hljs-number">32</span>-<span class="hljs-built_in">len</span>(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">bin</span>(n))[<span class="hljs-number">2</span>:]))+<span class="hljs-built_in">str</span>(<span class="hljs-built_in">bin</span>(n))[<span class="hljs-number">2</span>:])[::-<span class="hljs-number">1</span>], <span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reverseBits</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-built_in">str</span>(<span class="hljs-string">&#x27;0&#x27;</span>*(<span class="hljs-number">32</span>-<span class="hljs-built_in">len</span>(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">bin</span>(n))[<span class="hljs-number">2</span>:]))+<span class="hljs-built_in">str</span>(<span class="hljs-built_in">bin</span>(n))[<span class="hljs-number">2</span>:])[::-<span class="hljs-number">1</span>], <span class="hljs-number">2</span>)</code></pre></div>
 
               
             </div>

@@ -61,7 +61,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -293,7 +293,7 @@
       <a class="index-excerpt" href="/2022/06/01/leetcode20220601/" target="_self">
         <div>
           
-          242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 1234class Solution:    def isAnagram(self, s: str, t: str) -&gt; bool:        import operator        return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行
+          242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 class Solution:     def isAnagram(self, s: str, t: str) -&gt; bool:         import operator         return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行计
         </div>
       </a>
 
@@ -370,7 +370,7 @@
       <a class="index-excerpt" href="/2022/05/29/leetcode20220529/" target="_self">
         <div>
           
-          228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 123456789101112131415class Solution:    def summaryRanges(self, nums: List[int]) -&gt; List[str]:        res &#x3D; []        start &#x3D; 0
+          228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 class Solution:     def summaryRanges(self, nums: List[int]) -&gt; List[str]:         res &#x3D; []         start &#x3D; 0         length &#x3D; len(n
         </div>
       </a>
 
@@ -449,7 +449,7 @@
       <a class="index-excerpt" href="/2022/05/27/leetcode20220527/" target="_self">
         <div>
           
-          217. 存在重复元素 简单hash，建立一个set，遍历数组，如果元素不在里面就添加，如果在里面就返回True。 123456789class Solution:    def containsDuplicate(self, nums: List[int]) -&gt; bool:        hashset &#x3D; set(&amp;#x27;&amp;#x27;)        for i in nums
+          217. 存在重复元素 简单hash，建立一个set，遍历数组，如果元素不在里面就添加，如果在里面就返回True。 class Solution:     def containsDuplicate(self, nums: List[int]) -&gt; bool:         hashset &#x3D; set(&amp;#x27;&amp;#x27;)         for i in nums:
         </div>
       </a>
 
@@ -526,7 +526,7 @@
       <a class="index-excerpt" href="/2022/05/26/leetcode20220526/" target="_self">
         <div>
           
-          206. 反转链表 常见的用栈反转。 123456789101112131415161718# Definition for singly-linked list.# class ListNode:#     def __init__(self, val&#x3D;0, next&#x3D;None):#         self.val &#x3D; val#         self.next &#x3D; nextclass
+          206. 反转链表 常见的用栈反转。 # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, next&#x3D;None): #         self.val &#x3D; val #         self.next &#x3D; next class Solution:     def reve
         </div>
       </a>
 
@@ -603,7 +603,7 @@
       <a class="index-excerpt" href="/2022/05/25/leetcode20220525/" target="_self">
         <div>
           
-          203. 移除链表元素 一道基础删链表节点的问题，需要注意的是头节点如果不做特殊处理就得在前面再加个新的头节点，方便头节点重复时删除。 12345678910111213141516# Definition for singly-linked list.# class ListNode:#     def __init__(self, val&#x3D;0, next&#x3D;None):#         s
+          203. 移除链表元素 一道基础删链表节点的问题，需要注意的是头节点如果不做特殊处理就得在前面再加个新的头节点，方便头节点重复时删除。 # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, next&#x3D;None): #         self.val &#x3D; val #
         </div>
       </a>
 
@@ -682,7 +682,7 @@
       <a class="index-excerpt" href="/2022/05/24/leetcode20220524/" target="_self">
         <div>
           
-          202. 快乐数 首先简单找了下10以内的，满足快乐数定义的只有1和7。然后直接采取暴力解法，循环查找，如果当某次结果跳到10以内却不等于1或7时，就是False，否则就是True。 12345678910111213class Solution:    def isHappy(self, n: int) -&gt; bool:        if n &#x3D;&#x3D; 1 or n &#x3D;&#x3D; 7:
+          202. 快乐数 首先简单找了下10以内的，满足快乐数定义的只有1和7。然后直接采取暴力解法，循环查找，如果当某次结果跳到10以内却不等于1或7时，就是False，否则就是True。 class Solution:     def isHappy(self, n: int) -&gt; bool:         if n &#x3D;&#x3D; 1 or n &#x3D;&#x3D; 7:             return
         </div>
       </a>
 
@@ -759,7 +759,7 @@
       <a class="index-excerpt" href="/2022/05/19/leetcode20220519/" target="_self">
         <div>
           
-          191. 位1的个数 首先来个循环检查每一位是否为1。 12345678class Solution:    def hammingWeight(self, n: int) -&gt; int:        bin_str &#x3D; bin(n)[2:]        res &#x3D; 0        for i in bin_str:            if i &#x3D;&#x3D; &amp;#x27;1&amp;#x27;
+          191. 位1的个数 首先来个循环检查每一位是否为1。 class Solution:     def hammingWeight(self, n: int) -&gt; int:         bin_str &#x3D; bin(n)[2:]         res &#x3D; 0         for i in bin_str:             if i &#x3D;&#x3D; &amp;#x27;1&amp;#x27;:
         </div>
       </a>
 
@@ -836,7 +836,7 @@
       <a class="index-excerpt" href="/2022/05/18/leetcode20220518/" target="_self">
         <div>
           
-          190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： 123class Solution:    def reverseBits(self, n: int) -&gt; int:        return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)
+          190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： class Solution:     def reverseBits(self, n: int) -&gt; int:         return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)
         </div>
       </a>
 
@@ -913,7 +913,7 @@
       <a class="index-excerpt" href="/2022/05/16/leetcode20220516/" target="_self">
         <div>
           
-          168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 12345678class Solution:    def convertToTitle(self, columnNumber: i
+          168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 class Solution:     def convertToTitle(self, columnNumber: int) -&amp;g
         </div>
       </a>
 

@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 123456789101112131415class Solution:    def plusOne(self, digits: List[int]) -&gt; List[">
+    <meta name="description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 class Solution:     def plusOne(self, digits: List[int]) -&gt; List[int]:         carry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 66 67 69">
 <meta property="og:url" content="https://movisli.github.io/2022/05/10/leetcode20220510/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 123456789101112131415class Solution:    def plusOne(self, digits: List[int]) -&gt; List[">
+<meta property="og:description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 class Solution:     def plusOne(self, digits: List[int]) -&gt; List[int]:         carry">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-10T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-06-01T08:11:08.507Z">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -281,10 +281,26 @@
               
               <h1 id="加一">66. 加一</h1>
 <p>从后往前加就行了，需要用一个<code>carry flag</code>控制是否进位，加一对末位来说就是进位的，所以当<code>carry flag</code>变为<code>False</code>时，跳出循环。如果循环走完还需进位，则需要在<code>list</code>第0个位置增添个元素1。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        carry = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(digits)-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">if</span> carry:<br>                digits[i] += <span class="hljs-number">1</span><br>                <span class="hljs-keyword">if</span> digits[i] &gt;= <span class="hljs-number">10</span>:<br>                    digits[i] %= <span class="hljs-number">10</span><br>                <span class="hljs-keyword">else</span>:<br>                    carry = <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">if</span> carry:<br>            digits.insert(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">return</span> digits<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        carry = <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(digits)-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> carry:
+                digits[i] += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">if</span> digits[i] &gt;= <span class="hljs-number">10</span>:
+                    digits[i] %= <span class="hljs-number">10</span>
+                <span class="hljs-keyword">else</span>:
+                    carry = <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">if</span> carry:
+            digits.insert(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> digits</code></pre></div>
 <h1 id="二进制求和">67.二进制求和</h1>
 <p>直接用内置函数就行了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addBinary</span>(<span class="hljs-params">self, a: <span class="hljs-built_in">str</span>, b: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">bin</span>(<span class="hljs-built_in">int</span>(a,<span class="hljs-number">2</span>)+<span class="hljs-built_in">int</span>(b,<span class="hljs-number">2</span>)))[<span class="hljs-number">2</span>:]<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addBinary</span>(<span class="hljs-params">self, a: <span class="hljs-built_in">str</span>, b: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">bin</span>(<span class="hljs-built_in">int</span>(a,<span class="hljs-number">2</span>)+<span class="hljs-built_in">int</span>(b,<span class="hljs-number">2</span>)))[<span class="hljs-number">2</span>:]</code></pre></div>
 <h1 id="x-的平方根">69. x 的平方根</h1>
 <p>牛顿迭代法：</p>
 <p>为了方便区别问题写为求n的平方根，即 <span class="math display">\[
@@ -307,12 +323,30 @@ x_1=x_0-\frac{x_0}{2}+\frac{n}{2x_0}
 \varepsilon = |x0-x1|
 \]</span> 当误差小于0.1时跳出就行了。</p>
 <p><strong>初值不能为0。</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        res = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>            last = res<br>            res = res - res/<span class="hljs-number">2</span> + x/<span class="hljs-number">2</span>/res<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">abs</span>(last-res) &lt; <span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(res)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+            last = res
+            res = res - res/<span class="hljs-number">2</span> + x/<span class="hljs-number">2</span>/res
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">abs</span>(last-res) &lt; <span class="hljs-number">1</span>:
+                <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(res)</code></pre></div>
 <p>二分查找：</p>
 <p><span class="math inline">\(x\)</span>的平方根整数部分是满足<span
 class="math inline">\(k^2\leq x\)</span>的最大<span
 class="math inline">\(k\)</span>值，所以只要保证这个条件可以进行赋值。经典二分查找代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        left, right, res = <span class="hljs-number">0</span>, x, -<span class="hljs-number">1</span><br>        <span class="hljs-keyword">while</span> left &lt;= right:<br>            mid = (left+right)//<span class="hljs-number">2</span><br>            <span class="hljs-keyword">if</span> mid*mid &lt;= x:<br>                res = mid<br>                left = mid+<span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                right = mid-<span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mySqrt</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        left, right, res = <span class="hljs-number">0</span>, x, -<span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> left &lt;= right:
+            mid = (left+right)//<span class="hljs-number">2</span>
+            <span class="hljs-keyword">if</span> mid*mid &lt;= x:
+                res = mid
+                left = mid+<span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right = mid-<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
 
               
             </div>

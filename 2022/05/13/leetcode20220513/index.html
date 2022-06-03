@@ -16,20 +16,20 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="83. 删除排序链表中的重复元素 基本链表操作。 1234567891011class Solution:    def deleteDuplicates(self, head: ListNode) -&gt; ListNode:        if not head:            return head        node &#x3D; head        while node.ne">
+    <meta name="description" content="83. 删除排序链表中的重复元素 基本链表操作。 class Solution:     def deleteDuplicates(self, head: ListNode) -&gt; ListNode:         if not head:             return head         node &#x3D; head         while node.next:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 83 88 94 118 119">
 <meta property="og:url" content="https://movisli.github.io/2022/05/13/leetcode20220513/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="83. 删除排序链表中的重复元素 基本链表操作。 1234567891011class Solution:    def deleteDuplicates(self, head: ListNode) -&gt; ListNode:        if not head:            return head        node &#x3D; head        while node.ne">
+<meta property="og:description" content="83. 删除排序链表中的重复元素 基本链表操作。 class Solution:     def deleteDuplicates(self, head: ListNode) -&gt; ListNode:         if not head:             return head         node &#x3D; head         while node.next:">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-13T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-06-03T10:27:56.597Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
+<meta property="article:tag" content="linked list">
 <meta property="article:tag" content="array">
 <meta property="article:tag" content="binary tree">
-<meta property="article:tag" content="linked list">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k words
+          2k words
         
       </span>
     
@@ -281,22 +281,117 @@
               
               <h1 id="删除排序链表中的重复元素">83. 删除排序链表中的重复元素</h1>
 <p>基本链表操作。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">deleteDuplicates</span>(<span class="hljs-params">self, head: ListNode</span>) -&gt; ListNode:<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> head:<br>            <span class="hljs-keyword">return</span> head<br>        node = head<br>        <span class="hljs-keyword">while</span> node.<span class="hljs-built_in">next</span>:<br>            <span class="hljs-keyword">if</span> node.val == node.<span class="hljs-built_in">next</span>.val:<br>                node.<span class="hljs-built_in">next</span> = node.<span class="hljs-built_in">next</span>.<span class="hljs-built_in">next</span><br>            <span class="hljs-keyword">else</span>:<br>                node = node.<span class="hljs-built_in">next</span><br>        <span class="hljs-keyword">return</span> head<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">deleteDuplicates</span>(<span class="hljs-params">self, head: ListNode</span>) -&gt; ListNode:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> head:
+            <span class="hljs-keyword">return</span> head
+        node = head
+        <span class="hljs-keyword">while</span> node.<span class="hljs-built_in">next</span>:
+            <span class="hljs-keyword">if</span> node.val == node.<span class="hljs-built_in">next</span>.val:
+                node.<span class="hljs-built_in">next</span> = node.<span class="hljs-built_in">next</span>.<span class="hljs-built_in">next</span>
+            <span class="hljs-keyword">else</span>:
+                node = node.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">return</span> head</code></pre></div>
 <h1 id="合并两个有序数组">88. 合并两个有序数组</h1>
 <p>本题要求<code>inplace</code>，但是我们仍然可以用<code>不inplace</code>的思想做<code>inplace</code>的事情。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        left = <span class="hljs-number">0</span><br>        right = <span class="hljs-number">0</span><br>        res = []<br>        <span class="hljs-keyword">while</span> (left+right)&lt;(m+n):<br>            <span class="hljs-keyword">if</span> left&gt;=m:<br>                res.append(nums2[right])<br>                right += <span class="hljs-number">1</span><br>                <span class="hljs-keyword">continue</span><br>            <span class="hljs-keyword">if</span> right&gt;=n:<br>                res.append(nums1[left])<br>                left += <span class="hljs-number">1</span><br>                <span class="hljs-keyword">continue</span><br>            <span class="hljs-keyword">if</span> nums1[left] &lt;= nums2[right]:<br>                res.append(nums1[left])<br>                left += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                res.append(nums2[right])<br>                right += <span class="hljs-number">1</span><br>        nums1[:]=res<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        left = <span class="hljs-number">0</span>
+        right = <span class="hljs-number">0</span>
+        res = []
+        <span class="hljs-keyword">while</span> (left+right)&lt;(m+n):
+            <span class="hljs-keyword">if</span> left&gt;=m:
+                res.append(nums2[right])
+                right += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> right&gt;=n:
+                res.append(nums1[left])
+                left += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> nums1[left] &lt;= nums2[right]:
+                res.append(nums1[left])
+                left += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                res.append(nums2[right])
+                right += <span class="hljs-number">1</span>
+        nums1[:]=res</code></pre></div>
 <p>当然我们也可以逆向开始放数，空间复杂度会更低。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        tail = m+n-<span class="hljs-number">1</span><br>        <span class="hljs-keyword">while</span> m&gt;=<span class="hljs-number">1</span> <span class="hljs-keyword">or</span> n&gt;=<span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">if</span> m&lt;<span class="hljs-number">1</span>:<br>                nums1[tail] = nums2[n-<span class="hljs-number">1</span>]<br>                tail -= <span class="hljs-number">1</span><br>                n -= <span class="hljs-number">1</span><br>                <span class="hljs-keyword">continue</span><br>            <span class="hljs-keyword">if</span> n&lt;<span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">if</span> nums1[m-<span class="hljs-number">1</span>] &gt;= nums2[n-<span class="hljs-number">1</span>]:<br>                nums1[tail] = nums1[m-<span class="hljs-number">1</span>]<br>                m -= <span class="hljs-number">1</span><br>                tail -= <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                nums1[tail] = nums2[n-<span class="hljs-number">1</span>]<br>                n -= <span class="hljs-number">1</span><br>                tail -= <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], m: <span class="hljs-built_in">int</span>, nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        tail = m+n-<span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> m&gt;=<span class="hljs-number">1</span> <span class="hljs-keyword">or</span> n&gt;=<span class="hljs-number">1</span>:
+            <span class="hljs-keyword">if</span> m&lt;<span class="hljs-number">1</span>:
+                nums1[tail] = nums2[n-<span class="hljs-number">1</span>]
+                tail -= <span class="hljs-number">1</span>
+                n -= <span class="hljs-number">1</span>
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> n&lt;<span class="hljs-number">1</span>:
+                <span class="hljs-keyword">break</span>
+            <span class="hljs-keyword">if</span> nums1[m-<span class="hljs-number">1</span>] &gt;= nums2[n-<span class="hljs-number">1</span>]:
+                nums1[tail] = nums1[m-<span class="hljs-number">1</span>]
+                m -= <span class="hljs-number">1</span>
+                tail -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                nums1[tail] = nums2[n-<span class="hljs-number">1</span>]
+                n -= <span class="hljs-number">1</span>
+                tail -= <span class="hljs-number">1</span></code></pre></div>
 <h1 id="二叉树的中序遍历">94. 二叉树的中序遍历</h1>
 <p>递归：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inorderTraversal</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        res = []<br>        <span class="hljs-keyword">if</span> root:<br>            res.extend(self.inorderTraversal(root.left))<br>            res.append(root.val)<br>            res.extend(self.inorderTraversal(root.right))<br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inorderTraversal</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        res = []
+        <span class="hljs-keyword">if</span> root:
+            res.extend(self.inorderTraversal(root.left))
+            res.append(root.val)
+            res.extend(self.inorderTraversal(root.right))
+        <span class="hljs-keyword">return</span> res</code></pre></div>
 <p>非递归：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inorderTraversal</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        res = []<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:<br>            <span class="hljs-keyword">return</span> res<br>        node = root<br>        stack = []<br>        <span class="hljs-keyword">while</span> node <span class="hljs-keyword">or</span> stack:<br>            <span class="hljs-keyword">if</span> node:<br>                stack.append(node)<br>                node = node.left<br>            <span class="hljs-keyword">else</span>:<br>                node = stack.pop()<br>                res.append(node.val)<br>                node = node.right<br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inorderTraversal</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        res = []
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+            <span class="hljs-keyword">return</span> res
+        node = root
+        stack = []
+        <span class="hljs-keyword">while</span> node <span class="hljs-keyword">or</span> stack:
+            <span class="hljs-keyword">if</span> node:
+                stack.append(node)
+                node = node.left
+            <span class="hljs-keyword">else</span>:
+                node = stack.pop()
+                res.append(node.val)
+                node = node.right
+        <span class="hljs-keyword">return</span> res</code></pre></div>
 <h1 id="杨辉三角">118. 杨辉三角</h1>
 <p>就按照杨辉三角的样子，从第三行开始，除了左右两个1，其他数等于上一行的邻近两个数的和。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">generate</span>(<span class="hljs-params">self, numRows: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]:<br>        <span class="hljs-keyword">if</span> numRows == <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">return</span> [[<span class="hljs-number">1</span>]]<br>        res = [[<span class="hljs-number">1</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">1</span>]]<br>        curRow = <span class="hljs-number">2</span><br>        <span class="hljs-keyword">while</span> curRow&lt;numRows:<br>            temp = [<span class="hljs-number">1</span>]<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(res[curRow-<span class="hljs-number">1</span>])-<span class="hljs-number">1</span>):<br>                temp.append(res[curRow-<span class="hljs-number">1</span>][i]+res[curRow-<span class="hljs-number">1</span>][i+<span class="hljs-number">1</span>])<br>            temp.append(<span class="hljs-number">1</span>)<br>            res.append(temp)<br>            curRow += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">generate</span>(<span class="hljs-params">self, numRows: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]:
+        <span class="hljs-keyword">if</span> numRows == <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> [[<span class="hljs-number">1</span>]]
+        res = [[<span class="hljs-number">1</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">1</span>]]
+        curRow = <span class="hljs-number">2</span>
+        <span class="hljs-keyword">while</span> curRow&lt;numRows:
+            temp = [<span class="hljs-number">1</span>]
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(res[curRow-<span class="hljs-number">1</span>])-<span class="hljs-number">1</span>):
+                temp.append(res[curRow-<span class="hljs-number">1</span>][i]+res[curRow-<span class="hljs-number">1</span>][i+<span class="hljs-number">1</span>])
+            temp.append(<span class="hljs-number">1</span>)
+            res.append(temp)
+            curRow += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
 <h1 id="杨辉三角-ii">119. 杨辉三角 II</h1>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getRow</span>(<span class="hljs-params">self, rowIndex: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        res = [<span class="hljs-number">1</span>]<br>        cal_num = (rowIndex)//<span class="hljs-number">2</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, cal_num+<span class="hljs-number">1</span>, <span class="hljs-number">1</span>):<br>            res.append(<span class="hljs-built_in">int</span>(res[i-<span class="hljs-number">1</span>]*(rowIndex-i+<span class="hljs-number">1</span>)/i))<br>        <span class="hljs-keyword">if</span> rowIndex%<span class="hljs-number">2</span> != <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(cal_num,-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>):<br>                res.append(res[i])<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(cal_num-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>):<br>                res.append(res[i])<br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getRow</span>(<span class="hljs-params">self, rowIndex: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        res = [<span class="hljs-number">1</span>]
+        cal_num = (rowIndex)//<span class="hljs-number">2</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, cal_num+<span class="hljs-number">1</span>, <span class="hljs-number">1</span>):
+            res.append(<span class="hljs-built_in">int</span>(res[i-<span class="hljs-number">1</span>]*(rowIndex-i+<span class="hljs-number">1</span>)/i))
+        <span class="hljs-keyword">if</span> rowIndex%<span class="hljs-number">2</span> != <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(cal_num,-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>):
+                res.append(res[i])
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(cal_num-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>):
+                res.append(res[i])
+        <span class="hljs-keyword">return</span> res</code></pre></div>
 
               
             </div>
@@ -345,11 +440,11 @@
       
         <a href="/tags/python/">#python</a>
       
+        <a href="/tags/linked-list/">#linked list</a>
+      
         <a href="/tags/array/">#array</a>
       
         <a href="/tags/binary-tree/">#binary tree</a>
-      
-        <a href="/tags/linked-list/">#linked list</a>
       
     </div>
   

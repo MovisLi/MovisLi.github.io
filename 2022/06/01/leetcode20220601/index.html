@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 1234class Solution:    def isAnagram(self, s: str, t: str) -&gt; bool:        import operator        return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行">
+    <meta name="description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 class Solution:     def isAnagram(self, s: str, t: str) -&gt; bool:         import operator         return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 242">
 <meta property="og:url" content="https://movisli.github.io/2022/06/01/leetcode20220601/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 1234class Solution:    def isAnagram(self, s: str, t: str) -&gt; bool:        import operator        return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行">
+<meta property="og:description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 class Solution:     def isAnagram(self, s: str, t: str) -&gt; bool:         import operator         return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行计">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-06-01T14:41:34.000Z">
 <meta property="article:modified_time" content="2022-06-01T15:12:49.206Z">
@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          428 words
+          399 words
         
       </span>
     
@@ -279,9 +279,28 @@
               
               <h1 id="有效的字母异位词">242. 有效的字母异位词</h1>
 <p>排序，比较两个字符串排序后是否相同。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">import</span> operator<br>        <span class="hljs-keyword">return</span> operator.eq(<span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(s)), <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(t)))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">import</span> operator
+        <span class="hljs-keyword">return</span> operator.eq(<span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(s)), <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(t)))</code></pre></div>
 <p>哈希，用<code>dict</code>进行计数。比上一种快。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        hashmap = &#123;&#125;<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:<br>            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:<br>                hashmap[i] = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                hashmap[i] += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t:<br>            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                hashmap[i] -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> hashmap.values():<br>            <span class="hljs-keyword">if</span> v != <span class="hljs-number">0</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:
+            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                hashmap[i] = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                hashmap[i] += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t:
+            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">else</span>:
+                hashmap[i] -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> hashmap.values():
+            <span class="hljs-keyword">if</span> v != <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
 
               
             </div>

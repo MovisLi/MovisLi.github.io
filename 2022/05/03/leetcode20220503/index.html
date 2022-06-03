@@ -16,12 +16,12 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#12">
+    <meta name="description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 class Solution:     def twoSum(self, nums: List[int], target: int) -&gt; List[int]:         hashmap &#x3D; &amp;#123;&amp;#125;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 1 9">
 <meta property="og:url" content="https://movisli.github.io/2022/05/03/leetcode20220503/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 1234567891011class Solution:    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:        hashmap &#x3D; &amp;#12">
+<meta property="og:description" content="1. 两数之和 建立一个dict(map)，遍历一次数组，判断目标值-当前值是否在dict的key里，在就输出对应的value(index)与当前的index。 class Solution:     def twoSum(self, nums: List[int], target: int) -&gt; List[int]:         hashmap &#x3D; &amp;#123;&amp;#125;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-03T04:00:00.000Z">
 <meta property="article:modified_time" content="2022-05-31T17:53:07.681Z">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          634 words
+          601 words
         
       </span>
     
@@ -280,12 +280,36 @@
               
               <h1 id="两数之和">1. 两数之和</h1>
 <p>建立一个<code>dict</code>(map)，遍历一次数组，判断<code>目标值-当前值</code>是否在<code>dict</code>的<code>key</code>里，在就输出对应的<code>value</code>(index)与当前的<code>index</code>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">twoSum</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], target: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        hashmap = &#123;&#125;<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)):<br>            temp_target = target - nums[i]<br>            <span class="hljs-keyword">if</span> temp_target <span class="hljs-keyword">in</span> hashmap:<br>                <span class="hljs-keyword">return</span> [hashmap[temp_target], i]<br>            <span class="hljs-keyword">else</span>:<br>                hashmap[nums[i]] = i<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">twoSum</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], target: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)):
+            temp_target = target - nums[i]
+            <span class="hljs-keyword">if</span> temp_target <span class="hljs-keyword">in</span> hashmap:
+                <span class="hljs-keyword">return</span> [hashmap[temp_target], i]
+            <span class="hljs-keyword">else</span>:
+                hashmap[nums[i]] = i
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div>
 <h1 id="回文数">9. 回文数</h1>
 <p>转字符串判断正序和逆序是否相等。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]==<span class="hljs-built_in">str</span>(x)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(x)[::-<span class="hljs-number">1</span>]==<span class="hljs-built_in">str</span>(x)</code></pre></div>
 <p> 左右指针逐步向中间移动判断每一步是否相等。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        string = <span class="hljs-built_in">str</span>(x)<br>        left = <span class="hljs-number">0</span><br>        right = <span class="hljs-built_in">len</span>(string)-<span class="hljs-number">1</span><br>        <span class="hljs-keyword">while</span> left&lt;right:<br>            <span class="hljs-keyword">if</span> string[left] != string[right]:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">else</span>:<br>                left += <span class="hljs-number">1</span><br>                right -= <span class="hljs-number">1</span><br>        <br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPalindrome</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        string = <span class="hljs-built_in">str</span>(x)
+        left = <span class="hljs-number">0</span>
+        right = <span class="hljs-built_in">len</span>(string)-<span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> left&lt;right:
+            <span class="hljs-keyword">if</span> string[left] != string[right]:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">else</span>:
+                left += <span class="hljs-number">1</span>
+                right -= <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
 
               
             </div>
