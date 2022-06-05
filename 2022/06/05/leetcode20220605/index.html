@@ -16,24 +16,24 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="258. 各位相加 简单循环，模拟题目中描述的过程逐位相加直到num小于10。 class Solution:     def addDigits(self, num: int) -&gt; int:         while num &gt;&#x3D; 10:             num_str &#x3D; str(num)             num &#x3D; sum([int(i) for i in">
+    <meta name="description" content="263. 丑数 根据丑数的定义，1是第一个丑数，而且质因数只有2、3、5，就有如下代码。优化的地方就是除2可以用位运算。 class Solution:     def isUgly(self, n: int) -&gt; bool:         if n &lt;&#x3D; 0:             return False         while n%2 &#x3D;&#x3D; 0:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 258">
-<meta property="og:url" content="https://movisli.github.io/2022/06/04/leetcode20220603/index.html">
+<meta property="og:title" content="leetcode 263 268">
+<meta property="og:url" content="https://movisli.github.io/2022/06/05/leetcode20220605/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="258. 各位相加 简单循环，模拟题目中描述的过程逐位相加直到num小于10。 class Solution:     def addDigits(self, num: int) -&gt; int:         while num &gt;&#x3D; 10:             num_str &#x3D; str(num)             num &#x3D; sum([int(i) for i in">
+<meta property="og:description" content="263. 丑数 根据丑数的定义，1是第一个丑数，而且质因数只有2、3、5，就有如下代码。优化的地方就是除2可以用位运算。 class Solution:     def isUgly(self, n: int) -&gt; bool:         if n &lt;&#x3D; 0:             return False         while n%2 &#x3D;&#x3D; 0:">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-03T17:28:10.000Z">
-<meta property="article:modified_time" content="2022-06-05T07:12:01.902Z">
+<meta property="article:published_time" content="2022-06-05T07:20:12.000Z">
+<meta property="article:modified_time" content="2022-06-05T07:52:25.037Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="recursion">
+<meta property="article:tag" content="hash">
 <meta property="article:tag" content="math">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>leetcode 258 - movis</title>
+  <title>leetcode 263 268 - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="leetcode 258"></span>
+            <span id="subtitle" data-typed-text="leetcode 263 268"></span>
           
         </div>
 
@@ -212,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-04 01:28" pubdate>
-          June 4, 2022 am
+        <time datetime="2022-06-05 15:20" pubdate>
+          June 5, 2022 pm
         </time>
       </span>
     
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          589 words
+          638 words
         
       </span>
     
@@ -274,39 +274,39 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">leetcode 258</h1>
+            <h1 style="display: none">leetcode 263 268</h1>
             
             <div class="markdown-body">
               
-              <h1 id="各位相加">258. 各位相加</h1>
-<p>简单循环，模拟题目中描述的过程逐位相加直到<code>num</code>小于10。</p>
+              <h1 id="丑数">263. 丑数</h1>
+<p>根据丑数的定义，1是第一个丑数，而且质因数只有2、3、5，就有如下代码。优化的地方就是除2可以用位运算。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addDigits</span>(<span class="hljs-params">self, num: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
-        <span class="hljs-keyword">while</span> num &gt;= <span class="hljs-number">10</span>:
-            num_str = <span class="hljs-built_in">str</span>(num)
-            num = <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">int</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> num_str])
-        <span class="hljs-keyword">return</span> num</code></pre></div>
-<p>但是题目中提到了有<code>O(1)</code>时间复杂度的解法，按照题目中所描述的思路，其实第一次各位相加之后相同位数和最大的情况就是所有位上都为9。因此有：</p>
-<div class="code-wrapper"><pre><code class="hljs livescript"><span class="hljs-number">9</span>-&gt;<span class="hljs-number">9</span>
-<span class="hljs-number">99</span>-&gt;<span class="hljs-number">18</span>-&gt;<span class="hljs-number">9</span>
-<span class="hljs-number">999</span>-&gt;<span class="hljs-number">27</span>-&gt;<span class="hljs-number">9</span>
-...
-假设
-<span class="hljs-number">9.</span>..<span class="hljs-number">9</span><span class="hljs-function"><span class="hljs-params">(n位)</span>-&gt;</span><span class="hljs-number">9</span>
-那么
-<span class="hljs-number">9.</span>..<span class="hljs-number">9</span><span class="hljs-function"><span class="hljs-params">(n+<span class="hljs-number">1</span>位)</span>-&gt;</span><span class="hljs-number">9</span>(n+<span class="hljs-number">1</span>)=<span class="hljs-number">9</span>*n+<span class="hljs-number">9</span>=<span class="hljs-number">18</span>-&gt;<span class="hljs-number">9</span>
-所以假设成立</code></pre></div>
-<p>通过数学归纳法可以发现9的倍数各位相加的最终和都是9。那么当其中一个9变成8时，其实各位相加的和就由9变成8。所以可以得：
-<span class="math display">\[
-\begin{cases}
-    result=0,\ when\ n=0 \\
-    result=9,\ when\ n\%9=0\ and\ n\neq 0 \\
-    result=n\%9,\ when\ n\%9\neq0\\
-\end{cases}
-\]</span></p>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isUgly</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">while</span> n%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+            n &gt;&gt;= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> n%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>:
+            n /= <span class="hljs-number">3</span>
+        <span class="hljs-keyword">while</span> n%<span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            n /= <span class="hljs-number">5</span>
+        <span class="hljs-keyword">return</span> n == <span class="hljs-number">1</span></code></pre></div>
+<h1 id="丢失的数字">268. 丢失的数字</h1>
+<p>读题可以知道要找的那个数是在<code>[0, len(nums)]</code>里的，所以可以用<code>range</code>生成器生成一个未丢失的数组来遍历查找是否在<code>nums</code>里面确定那个丢失的数。然后发现很慢，很容易可以想到用<code>set</code>替代查找范围<code>list</code>会快一点。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addDigits</span>(<span class="hljs-params">self, num: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
-        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> <span class="hljs-keyword">if</span> num==<span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">9</span> <span class="hljs-keyword">if</span> num%<span class="hljs-number">9</span>==<span class="hljs-number">0</span> <span class="hljs-keyword">else</span> num%<span class="hljs-number">9</span></code></pre></div>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">missingNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        nums_set = <span class="hljs-built_in">set</span>(nums)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)+<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> nums_set:
+                <span class="hljs-keyword">return</span> i</code></pre></div>
+<p>当然像这种对应关系很容易想到<code>enumerate</code>这个<code>python</code>内置的函数，也就是用排序的方法解决。值得注意的就是，如果恰好是<code>n</code>是丢失的数字，需要最后返回一下<code>n</code>。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">missingNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        nums.sort()
+        <span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(nums):
+            <span class="hljs-keyword">if</span> i != v:
+                <span class="hljs-keyword">return</span> i
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(nums)</code></pre></div>
 
               
             </div>
@@ -355,7 +355,7 @@
       
         <a href="/tags/python/">#python</a>
       
-        <a href="/tags/recursion/">#recursion</a>
+        <a href="/tags/hash/">#hash</a>
       
         <a href="/tags/math/">#math</a>
       
@@ -369,8 +369,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>leetcode 258</div>
-      <div>https://movisli.github.io/2022/06/04/leetcode20220603/</div>
+      <div>leetcode 263 268</div>
+      <div>https://movisli.github.io/2022/06/05/leetcode20220605/</div>
     </div>
     <div class="license-meta">
       
@@ -382,7 +382,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>June 4, 2022</div>
+          <div>June 5, 2022</div>
         </div>
       
       
@@ -412,18 +412,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/05/leetcode20220605/" title="leetcode 263 268">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">leetcode 263 268</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/02/%E5%86%8D%E6%AC%A1%E5%AD%A6%E4%B9%A0python/" title="再次学习python">
-                        <span class="hidden-mobile">再次学习python</span>
+                      <a href="/2022/06/04/leetcode20220603/" title="leetcode 258">
+                        <span class="hidden-mobile">leetcode 258</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>leetcode 263 268</title>
+    <link href="/2022/06/05/leetcode20220605/"/>
+    <url>/2022/06/05/leetcode20220605/</url>
+    
+    <content type="html"><![CDATA[<h1 id="丑数">263. 丑数</h1><p>根据丑数的定义，1是第一个丑数，而且质因数只有2、3、5，就有如下代码。优化的地方就是除2可以用位运算。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isUgly</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">0</span>:            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>        <span class="hljs-keyword">while</span> n%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>:            n &gt;&gt;= <span class="hljs-number">1</span>        <span class="hljs-keyword">while</span> n%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>:            n /= <span class="hljs-number">3</span>        <span class="hljs-keyword">while</span> n%<span class="hljs-number">5</span> == <span class="hljs-number">0</span>:            n /= <span class="hljs-number">5</span>        <span class="hljs-keyword">return</span> n == <span class="hljs-number">1</span></code></pre></div><h1 id="丢失的数字">268. 丢失的数字</h1><p>读题可以知道要找的那个数是在<code>[0, len(nums)]</code>里的，所以可以用<code>range</code>生成器生成一个未丢失的数组来遍历查找是否在<code>nums</code>里面确定那个丢失的数。然后发现很慢，很容易可以想到用<code>set</code>替代查找范围<code>list</code>会快一点。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">missingNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:        nums_set = <span class="hljs-built_in">set</span>(nums)        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)+<span class="hljs-number">1</span>):            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> nums_set:                <span class="hljs-keyword">return</span> i</code></pre></div><p>当然像这种对应关系很容易想到<code>enumerate</code>这个<code>python</code>内置的函数，也就是用排序的方法解决。值得注意的就是，如果恰好是<code>n</code>是丢失的数字，需要最后返回一下<code>n</code>。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">missingNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:        nums.sort()        <span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(nums):            <span class="hljs-keyword">if</span> i != v:                <span class="hljs-keyword">return</span> i        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(nums)</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>hash</tag>
+      
+      <tag>math</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>leetcode 258</title>
     <link href="/2022/06/04/leetcode20220603/"/>
     <url>/2022/06/04/leetcode20220603/</url>
