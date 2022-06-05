@@ -825,21 +825,21 @@ i.iconfont {
   --color-mode: "light";
   --body-bg-color: #eee;
   --board-bg-color: #fff;
-  --text-color: #3c4858;
-  --sec-text-color: #718096;
-  --post-text-color: #2c3e50;
-  --post-heading-color: #1a202c;
+  --text-color: #494a4b;
+  --sec-text-color: #828385;
+  --post-text-color: #3d3e3f;
+  --post-heading-color: #232323;
   --post-link-color: #0366d6;
   --link-hover-color: #30a9de;
   --link-hover-bg-color: #f8f9fa;
-  --line-color: #eaecef;
-  --navbar-bg-color: #2f4154;
+  --line-color: #ececed;
+  --navbar-bg-color: #414142;
   --navbar-text-color: #fff;
   --subtitle-color: #fff;
-  --scrollbar-color: #c4c6c9;
+  --scrollbar-color: #c6c6c7;
   --scrollbar-hover-color: #a6a6a6;
   --button-bg-color: transparent;
-  --button-hover-bg-color: #f2f3f5;
+  --button-hover-bg-color: #f3f3f4;
   --highlight-bg-color: #f6f8fa;
   --inlinecode-bg-color: rgba(175,184,193,0.2);
 }
@@ -848,23 +848,23 @@ i.iconfont {
     --color-mode: "dark";
   }
   :root:not([data-user-color-scheme]) {
-    --body-bg-color: #181c27;
-    --board-bg-color: #252d38;
-    --text-color: #c4c6c9;
-    --sec-text-color: #a7a9ad;
-    --post-text-color: #c4c6c9;
-    --post-heading-color: #c4c6c9;
+    --body-bg-color: #1f1f20;
+    --board-bg-color: #2e2e2f;
+    --text-color: #c6c6c7;
+    --sec-text-color: #a9aaab;
+    --post-text-color: #c6c6c7;
+    --post-heading-color: #c6c6c7;
     --post-link-color: #1589e9;
     --link-hover-color: #30a9de;
-    --link-hover-bg-color: #364151;
-    --line-color: #435266;
-    --navbar-bg-color: #1f3144;
+    --link-hover-bg-color: #434344;
+    --line-color: #545455;
+    --navbar-bg-color: #313132;
     --navbar-text-color: #d0d0d0;
     --subtitle-color: #d0d0d0;
-    --scrollbar-color: #687582;
-    --scrollbar-hover-color: #9da8b3;
+    --scrollbar-color: #747576;
+    --scrollbar-hover-color: #a7a8a9;
     --button-bg-color: transparent;
-    --button-hover-bg-color: #46647e;
+    --button-hover-bg-color: #616263;
     --highlight-bg-color: #2d333b;
     --inlinecode-bg-color: rgba(99,110,123,0.4);
   }
@@ -883,23 +883,23 @@ i.iconfont {
   }
 }
 [data-user-color-scheme="dark"] {
-  --body-bg-color: #181c27;
-  --board-bg-color: #252d38;
-  --text-color: #c4c6c9;
-  --sec-text-color: #a7a9ad;
-  --post-text-color: #c4c6c9;
-  --post-heading-color: #c4c6c9;
+  --body-bg-color: #1f1f20;
+  --board-bg-color: #2e2e2f;
+  --text-color: #c6c6c7;
+  --sec-text-color: #a9aaab;
+  --post-text-color: #c6c6c7;
+  --post-heading-color: #c6c6c7;
   --post-link-color: #1589e9;
   --link-hover-color: #30a9de;
-  --link-hover-bg-color: #364151;
-  --line-color: #435266;
-  --navbar-bg-color: #1f3144;
+  --link-hover-bg-color: #434344;
+  --line-color: #545455;
+  --navbar-bg-color: #313132;
   --navbar-text-color: #d0d0d0;
   --subtitle-color: #d0d0d0;
-  --scrollbar-color: #687582;
-  --scrollbar-hover-color: #9da8b3;
+  --scrollbar-color: #747576;
+  --scrollbar-hover-color: #a7a8a9;
   --button-bg-color: transparent;
-  --button-hover-bg-color: #46647e;
+  --button-hover-bg-color: #616263;
   --highlight-bg-color: #2d333b;
   --inlinecode-bg-color: rgba(99,110,123,0.4);
 }
