@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>leetcode 278</title>
+    <link href="/2022/06/06/leetcode20220606/"/>
+    <url>/2022/06/06/leetcode20220606/</url>
+    
+    <content type="html"><![CDATA[<h1 id="第一个错误的版本">278. 第一个错误的版本</h1><p>二分查找可以解决，左指针<code>left</code>记录当前正确的版本，右指针<code>right</code>记录当前错误的版本，所以当<code>right-left=1</code>时，<code>right</code>所指的就是第一个错误的版本，也就是结果。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">firstBadVersion</span>(<span class="hljs-params">self, n</span>):        left = <span class="hljs-number">0</span>        right = n        mid = (<span class="hljs-number">1</span>+n)//<span class="hljs-number">2</span>        <span class="hljs-keyword">while</span> right-left&gt;<span class="hljs-number">1</span>:            <span class="hljs-keyword">if</span> isBadVersion(mid):                right = mid            <span class="hljs-keyword">else</span>:                left = mid            mid = (left+right)//<span class="hljs-number">2</span>        <span class="hljs-keyword">return</span> right</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>point</tag>
+      
+      <tag>binary search</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>leetcode 263 268</title>
     <link href="/2022/06/05/leetcode20220605/"/>
     <url>/2022/06/05/leetcode20220605/</url>
