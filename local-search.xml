@@ -4,6 +4,41 @@
   
   
   <entry>
+    <title>leetcode 283 290 292</title>
+    <link href="/2022/06/07/leetcode20220607/"/>
+    <url>/2022/06/07/leetcode20220607/</url>
+    
+    <content type="html"><![CDATA[<h1 id="移动零">283. 移动零</h1><p>第一种就是想办法绕过测试。其实还是复制数组而非原地算法。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">moveZeroes</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-literal">None</span>:        array = []        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums:            <span class="hljs-keyword">if</span> i != <span class="hljs-number">0</span>:                array.append(i)        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(array)):            nums[i] = array[i]        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(array),<span class="hljs-built_in">len</span>(nums)):            nums[i] = <span class="hljs-number">0</span></code></pre></div><p>第二种，快慢双指针。用快指针遍历整个数组，慢指针记录不为0的元素并更改数组中此位置的值。最后在快指针遍历完后，慢指针到数组末端都是0，再填充。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">moveZeroes</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-literal">None</span>:        slow = <span class="hljs-number">0</span>        fast = <span class="hljs-number">0</span>        length = <span class="hljs-built_in">len</span>(nums)        <span class="hljs-keyword">while</span> fast&lt;length:            <span class="hljs-keyword">if</span> nums[fast] != <span class="hljs-number">0</span>:                nums[slow] = nums[fast]                fast += <span class="hljs-number">1</span>                slow += <span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                fast += <span class="hljs-number">1</span>        <span class="hljs-keyword">while</span> slow&lt;length:            nums[slow] = <span class="hljs-number">0</span>            slow += <span class="hljs-number">1</span></code></pre></div><h1 id="单词规律">290. 单词规律</h1><p>双哈希表，分为正向哈希记录<code>(pattern, string)</code>与逆向哈希记录<code>(string, pattern)</code>。值得注意的点有两个：一是正向哈希记录第一次看到的键值对，逆向哈希记录最后一次看到的键值对；二是正向哈希与逆向哈希的键值对数量应该是一样的。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">wordPattern</span>(<span class="hljs-params">self, pattern: <span class="hljs-built_in">str</span>, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        dict_pos = &#123;&#125;        dict_nag = &#123;&#125;        lst_ptn = <span class="hljs-built_in">list</span>(pattern)        lst_s = s.split()        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(lst_ptn) != <span class="hljs-built_in">len</span>(lst_s):            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>        <span class="hljs-keyword">for</span> k,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(lst_ptn, lst_s):            <span class="hljs-keyword">if</span> k <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> dict_pos:                dict_pos[k] = v            dict_nag[v] = k        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(dict_pos) != <span class="hljs-built_in">len</span>(dict_nag):            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>        <span class="hljs-keyword">for</span> k,v <span class="hljs-keyword">in</span> dict_pos.items():            <span class="hljs-keyword">if</span> k != dict_nag[v]:                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div><h1 id="nim-游戏">292. Nim 游戏</h1><p>这是一个简单的博弈，在此模拟下博弈的过程。</p><div class="code-wrapper"><pre><code class="hljs text">1：自己拿走1块，赢。2：自己拿走2块，赢。3：自己拿走3块，赢。4：无论自己拿走多少块，都会输。因为无论自己拿多少块，对于对方来说，都是1、2、3中的一种。5：自己拿走1块，赢。构建对方4的局面，因为4时拿无论怎么都会输所以只要构造出来就赢。6：自己拿走2块，赢。构建对方4的局面，因为4时拿无论怎么都会输所以只要构造出来就赢。7：自己拿走3块，赢。构建对方4的局面，因为4时拿无论怎么都会输所以只要构造出来就赢。8：无论自己拿走多少块，都会输。因为无论自己拿多少块，对于对方来说，都是5、6、7中的一种。9：自己拿走1块，赢。构建对方8的局面，因为8时拿无论怎么都会输所以只要构造出来就赢。</code></pre></div><p>所以可以发现，当桌上还剩4的倍数的石头数目时，拿的那一方一定会输。所以一开始的时候，我先手的话只要桌上石头是4的倍数就一定会输。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">canWinNim</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        <span class="hljs-keyword">return</span> n%<span class="hljs-number">4</span> != <span class="hljs-number">0</span></code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>hash</tag>
+      
+      <tag>point</tag>
+      
+      <tag>math</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>leetcode 278</title>
     <link href="/2022/06/06/leetcode20220606/"/>
     <url>/2022/06/06/leetcode20220606/</url>
