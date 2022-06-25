@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>LeetCode 326 344 349</title>
+    <link href="/2022/06/25/leetcode20220625/"/>
+    <url>/2022/06/25/leetcode20220625/</url>
+    
+    <content type="html"><![CDATA[<h1 id="的幂">326. 3 的幂</h1><p>还是经典的是否是最大值的约数。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfThree</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        <span class="hljs-keyword">return</span> (<span class="hljs-number">3</span>**<span class="hljs-number">20</span>)%n == <span class="hljs-number">0</span> <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-literal">False</span></code></pre></div><h1 id="的幂-1">342. 4 的幂</h1><p>这题不同于 2 和 3 的幂，因为 4 = 2$$2，所以如果按 2 的幂和 3的幂的解法会识别不了是 2 的幂但是不是 4的幂的数这种情况，不过可以转换为求解 2 的幂，如果一个数是 4的幂，那它的算术平方根肯定是 2 的幂就可解得正确答案。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPowerOfFour</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        <span class="hljs-keyword">return</span> (<span class="hljs-number">2</span>**<span class="hljs-number">30</span>)%(n**<span class="hljs-number">0.5</span>) == <span class="hljs-number">0</span> <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-literal">False</span></code></pre></div><h1 id="两个数组的交集">349. 两个数组的交集</h1><p>其实就是两个 <code>list</code> 转 <code>set</code> 后求交集再返回<code>list</code> 。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">intersection</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:        <span class="hljs-keyword">return</span> <span class="hljs-built_in">list</span>(<span class="hljs-built_in">set</span>(nums1)&amp;<span class="hljs-built_in">set</span>(nums2))</code></pre></div><h1 id="两个数组的交集-ii">350. 两个数组的交集 II</h1><p>比上个题要难一点，需要对字符出现次数进行一个统计，所以用了<code>dict</code> 而不是 <code>set</code>，在往结果列表里添加值时取最小的次数就可以。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">intersect</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:        dict1 = &#123;&#125;        dict2 = &#123;&#125;        res = []        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums1:            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> dict1:                dict1[i] = <span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                dict1[i] += <span class="hljs-number">1</span>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums2:            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> dict2:                dict2[i] = <span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                dict2[i] += <span class="hljs-number">1</span>        <span class="hljs-keyword">for</span> key,value <span class="hljs-keyword">in</span> dict1.items():            <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> dict2:                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">min</span>(value,dict2[key])):                    res.append(key)        <span class="hljs-keyword">return</span> res</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>hash</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>SSH Tunnel 实现 BI 工具连接数据库</title>
     <link href="/2022/06/19/ssh%E9%9A%A7%E9%81%93%E5%AE%9E%E7%8E%B0bi%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     <url>/2022/06/19/ssh%E9%9A%A7%E9%81%93%E5%AE%9E%E7%8E%B0bi%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
@@ -602,9 +633,9 @@
       
       <tag>hash</tag>
       
-      <tag>string</tag>
-      
       <tag>dp</tag>
+      
+      <tag>string</tag>
       
     </tags>
     
