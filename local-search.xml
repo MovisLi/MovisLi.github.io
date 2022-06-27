@@ -5,6 +5,37 @@
   
   <entry>
     <title>LeetCode 326 344 349</title>
+    <link href="/2022/06/27/leetcode20220627/"/>
+    <url>/2022/06/27/leetcode20220627/</url>
+    
+    <content type="html"><![CDATA[<h1 id="有效的完全平方数">367. 有效的完全平方数</h1><blockquote><p><ahref="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0">完全平方数- 百度百科</a></p></blockquote><p>这道题不禁让我想到了之前求算术平方根的题，看起来好像要更简单一点，那么直接用二分搜索。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPerfectSquare</span>(<span class="hljs-params">self, num: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        left = <span class="hljs-number">1</span>        right = num        <span class="hljs-keyword">while</span> left&lt;=right:            mid = (left+right)//<span class="hljs-number">2</span>            <span class="hljs-keyword">if</span> mid*mid == num:                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>            <span class="hljs-keyword">elif</span> mid*mid &lt; num:                left = mid+<span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                right = mid-<span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div><h1 id="猜数字大小">374. 猜数字大小</h1><p>这道题和上道题几乎完全一样的思路，不同之处在于这道题更直白地说明了二分法的可行性。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">guessNumber</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:        left = <span class="hljs-number">1</span>        right = n        <span class="hljs-keyword">while</span> left&lt;=right:            mid = (left+right)//<span class="hljs-number">2</span>            res = guess(mid)            <span class="hljs-keyword">if</span> res == <span class="hljs-number">0</span>:                <span class="hljs-keyword">return</span> mid            <span class="hljs-keyword">elif</span> res == -<span class="hljs-number">1</span>:                right = mid-<span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                left = mid+<span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>binary search</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>LeetCode 326 344 349</title>
     <link href="/2022/06/25/leetcode20220625/"/>
     <url>/2022/06/25/leetcode20220625/</url>
     
@@ -291,31 +322,6 @@
       <tag>recursion</tag>
       
       <tag>math</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>再次学习python</title>
-    <link href="/2022/06/02/%E5%86%8D%E6%AC%A1%E5%AD%A6%E4%B9%A0python/"/>
-    <url>/2022/06/02/%E5%86%8D%E6%AC%A1%E5%AD%A6%E4%B9%A0python/</url>
-    
-    <content type="html"><![CDATA[<blockquote><p>以下内容全部基于<ahref="https://www.liaoxuefeng.com/wiki/1016959663602400">Python教程 -廖雪峰的官方网站</a>。</p></blockquote>]]></content>
-    
-    
-    <categories>
-      
-      <category>python</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>python</tag>
       
     </tags>
     
@@ -633,9 +639,9 @@
       
       <tag>hash</tag>
       
-      <tag>dp</tag>
-      
       <tag>string</tag>
+      
+      <tag>dp</tag>
       
     </tags>
     

@@ -24,7 +24,7 @@
 <meta property="og:description" content="2018年，在一门叫做《数字图像处理》的选修课上第一次真正在用 python ，当时 matlab 也是工具之一，所以并没有把 python 作为唯一主力语言。之后2019年，做项目需要，粗略地学习了一下基本语法。但仔细回想过去，还没有系统地学习 python 语言，所以就有了这一篇博客。这篇博客基于廖雪峰老师的教程，系统地学习一下 python 编程，仅记录个人觉得还未通透的知识点。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-06-01T16:11:57.000Z">
-<meta property="article:modified_time" content="2022-06-02T11:05:28.029Z">
+<meta property="article:modified_time" content="2022-06-27T04:42:32.989Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          26 words
+          1.9k words
         
       </span>
     
@@ -281,6 +281,86 @@
 target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400">Python教程 -
 廖雪峰的官方网站</a>。</p>
 </blockquote>
+<h1 id="python基础">Python基础</h1>
+<h2 id="数据类型和变量">数据类型和变量</h2>
+<ul>
+<li>Python还允许用<code>r''</code>表示<code>''</code>内部的字符串默认不转义</li>
+<li>对于常量<code>PI</code>，Python根本没有任何机制保证<code>PI</code>不会被改变（不像
+C 有
+<code>const</code>），所以，用全部大写的变量名表示常量只是一个习惯上的用法，如果你一定要改变变量<code>PI</code>的值，也没人能拦住你。</li>
+</ul>
+<h2 id="字符串和编码">字符串和编码</h2>
+<ul>
+<li><p><code>ord()</code>把字符串转换为 Unicode(ASCII)
+编码，<code>chr()</code>把 Unicode(ASCII) 编码转换为字符串。</p></li>
+<li><p>可以用<code>'\uxxxx'</code>这样的方式写<code>str</code>，但是<code>xxxx</code>是16进制数而不是10进制。</p></li>
+<li><p>Python对<code>bytes</code>类型的数据用带<code>b</code>前缀的单引号或双引号表示，不过<code>b'wo'</code>和<code>'wo'</code>内容显示一样，但<code>bytes</code>的每个字符都只占用一个字节。</p></li>
+<li><p>以Unicode表示的<code>str</code>通过<code>encode()</code>方法可以编码为指定的<code>bytes</code>，同样通过<code>decode()</code>也可以解码。</p>
+<div class="code-wrapper"><pre><code class="hljs pgsql">&gt;&gt;&gt; <span class="hljs-string">&#x27;中文&#x27;</span>.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)
+b<span class="hljs-string">&#x27;\xe4\xb8\xad\xe6\x96\x87&#x27;</span></code></pre></div></li>
+<li><p>由于Python源代码也是一个文本文件，所以，当你的源代码中包含中文的时候，在保存源代码时，就需要务必指定保存为
+UTF-8 编码。当Python解释器读取源代码时，为了让它按 UTF-8
+编码读取，我们通常在文件开头写上这两行：</p>
+<div class="code-wrapper"><pre><code class="hljs d"><span class="hljs-meta">#!/usr/bin/env python3</span>
+# -*- coding: utf-<span class="hljs-number">8</span> -*-</code></pre></div></li>
+<li><p>在Python中，采用的格式化方式和C语言是一致的，用<code>%</code>实现，举例如下：</p>
+<div class="code-wrapper"><pre><code class="hljs gcode">&gt;&gt;&gt; <span class="hljs-string">&#x27;Hello, %s&#x27;</span> <span class="hljs-meta">%</span> <span class="hljs-string">&#x27;world&#x27;</span>
+<span class="hljs-string">&#x27;Hello, world&#x27;</span>
+&gt;&gt;&gt; <span class="hljs-string">&#x27;Hi, %s, you have $%d.&#x27;</span> <span class="hljs-meta">%</span> <span class="hljs-comment">(&#x27;Michael&#x27;, 1000000)</span>
+<span class="hljs-string">&#x27;Hi, Michael, you have $1000000.&#x27;</span></code></pre></div>
+<p>你可能猜到了，<code>%</code>运算符就是用来格式化字符串的。在字符串内部，<code>%s</code>表示用字符串替换，<code>%d</code>表示用整数替换，有几个<code>%?</code>占位符，后面就跟几个变量或者值，顺序要对应好。如果只有一个<code>%?</code>，括号可以省略。</p>
+<p>常见的占位符有：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">占位符</th>
+<th style="text-align: left;">替换内容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">%d</td>
+<td style="text-align: left;">整数</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">%f</td>
+<td style="text-align: left;">浮点数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">%s</td>
+<td style="text-align: left;">字符串</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">%x</td>
+<td style="text-align: left;">十六进制整数</td>
+</tr>
+</tbody>
+</table>
+<p>有些时候，字符串里面的<code>%</code>是一个普通字符怎么办？这个时候就需要转义，用<code>%%</code>来表示一个<code>%</code></p></li>
+<li><p>另一种格式化字符串的方法是使用字符串的<code>format()</code>方法，它会用传入的参数依次替换字符串内的占位符<code>&#123;0&#125;</code>、<code>&#123;1&#125;</code>……，不过这种方式写起来比%要麻烦得多：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&#x27;Hello, &#123;0&#125;, 成绩提升了 &#123;1:.1f&#125;%&#x27;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-string">&#x27;小明&#x27;</span>, <span class="hljs-number">17.125</span>)
+<span class="hljs-string">&#x27;Hello, 小明, 成绩提升了 17.1%&#x27;</span></code></pre></div></li>
+<li><p>最后一种格式化字符串的方法是使用以<code>f</code>开头的字符串，称之为<code>f-string</code>，它和普通字符串不同之处在于，字符串如果包含<code>&#123;xxx&#125;</code>，就会以对应的变量替换：</p>
+<div class="code-wrapper"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">r = <span class="hljs-number">2.5</span></span>
+<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">s = <span class="hljs-number">3.14</span> * r ** <span class="hljs-number">2</span></span>
+<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python"><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;The area of a circle with radius <span class="hljs-subst">&#123;r&#125;</span> is <span class="hljs-subst">&#123;s:<span class="hljs-number">.2</span>f&#125;</span>&#x27;</span>)</span>
+The area of a circle with radius 2.5 is 19.62</code></pre></div></li>
+</ul>
+<h2 id="使用-list-和-tuple">使用 list 和 tuple</h2>
+<ul>
+<li><p>不可变的tuple有什么意义？因为tuple不可变，所以代码更安全。如果可能，能用tuple代替list就尽量用tuple。</p></li>
+<li><p>但是，</p>
+<div class="code-wrapper"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">t = (<span class="hljs-number">1</span>)</span>
+<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">t</span>
+1</code></pre></div>
+<p>定义的不是tuple，是<code>1</code>这个数！这是因为括号<code>()</code>既可以表示tuple，又可以表示数学公式中的小括号，这就产生了歧义，因此，Python规定，这种情况下，按小括号进行计算，计算结果自然是<code>1</code>。</p>
+<p>但是 tuple 定义有 list 或者 dictionary 的话也是可以改 list 或
+dictionary 的值的。</p></li>
+</ul>
+<h2 id="循环">循环</h2>
+<ul>
+<li><em>要特别注意</em>，不要滥用<code>break</code>和<code>continue</code>语句。<code>break</code>和<code>continue</code>会造成代码执行逻辑分叉过多，容易出错。大多数循环并不需要用到<code>break</code>和<code>continue</code>语句。</li>
+</ul>
 
               
             </div>
@@ -294,16 +374,6 @@ target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663
 
 <span class="category-chains">
   
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/python/" class="category-chain-item">python</a>
-  
-  
-
-      </span>
-    
   
 </span>
 
@@ -363,29 +433,6 @@ target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/06/04/leetcode20220603/" title="LeetCode 258">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LeetCode 258</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/06/01/leetcode20220601/" title="LeetCode 242">
-                        <span class="hidden-mobile">LeetCode 242</span>
-                        <span class="visible-mobile">Next</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 

@@ -16,23 +16,23 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 class Solution:     def isAnagram(self, s: str, t: str) -&gt; bool:         import operator         return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行计">
+    <meta name="description" content="367. 有效的完全平方数  完全平方数 - 百度百科  这道题不禁让我想到了之前求算术平方根的题，看起来好像要更简单一点，那么直接用二分搜索。 class Solution:     def isPerfectSquare(self, num: int) -&gt; bool:         left &#x3D; 1         right &#x3D; num         while le">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 242">
-<meta property="og:url" content="https://movisli.github.io/2022/06/01/leetcode20220601/index.html">
+<meta property="og:title" content="LeetCode 326 344 349">
+<meta property="og:url" content="https://movisli.github.io/2022/06/27/leetcode20220627/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 class Solution:     def isAnagram(self, s: str, t: str) -&gt; bool:         import operator         return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行计">
+<meta property="og:description" content="367. 有效的完全平方数  完全平方数 - 百度百科  这道题不禁让我想到了之前求算术平方根的题，看起来好像要更简单一点，那么直接用二分搜索。 class Solution:     def isPerfectSquare(self, num: int) -&gt; bool:         left &#x3D; 1         right &#x3D; num         while le">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-01T14:41:34.000Z">
-<meta property="article:modified_time" content="2022-06-01T15:12:49.206Z">
+<meta property="article:published_time" content="2022-06-27T04:43:19.000Z">
+<meta property="article:modified_time" content="2022-06-27T05:03:36.096Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="hash">
+<meta property="article:tag" content="binary search">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LeetCode 242 - movis</title>
+  <title>LeetCode 326 344 349 - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LeetCode 242"></span>
+            <span id="subtitle" data-typed-text="LeetCode 326 344 349"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-01 22:41" pubdate>
-          June 1, 2022 pm
+        <time datetime="2022-06-27 12:43" pubdate>
+          June 27, 2022 pm
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          399 words
+          487 words
         
       </span>
     
@@ -273,34 +273,46 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LeetCode 242</h1>
+            <h1 style="display: none">LeetCode 326 344 349</h1>
             
             <div class="markdown-body">
               
-              <h1 id="有效的字母异位词">242. 有效的字母异位词</h1>
-<p>排序，比较两个字符串排序后是否相同。</p>
+              <h1 id="有效的完全平方数">367. 有效的完全平方数</h1>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0">完全平方数
+- 百度百科</a></p>
+</blockquote>
+<p>这道题不禁让我想到了之前求算术平方根的题，看起来好像要更简单一点，那么直接用二分搜索。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
-        <span class="hljs-keyword">import</span> operator
-        <span class="hljs-keyword">return</span> operator.eq(<span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(s)), <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">list</span>(t)))</code></pre></div>
-<p>哈希，用<code>dict</code>进行计数。比上一种快。</p>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isPerfectSquare</span>(<span class="hljs-params">self, num: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        left = <span class="hljs-number">1</span>
+        right = num
+        <span class="hljs-keyword">while</span> left&lt;=right:
+            mid = (left+right)//<span class="hljs-number">2</span>
+            <span class="hljs-keyword">if</span> mid*mid == num:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+            <span class="hljs-keyword">elif</span> mid*mid &lt; num:
+                left = mid+<span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right = mid-<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h1 id="猜数字大小">374. 猜数字大小</h1>
+<p>这道题和上道题几乎完全一样的思路，不同之处在于这道题更直白地说明了二分法的可行性。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
-        hashmap = &#123;&#125;
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:
-            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
-                hashmap[i] = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">guessNumber</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        left = <span class="hljs-number">1</span>
+        right = n
+        <span class="hljs-keyword">while</span> left&lt;=right:
+            mid = (left+right)//<span class="hljs-number">2</span>
+            res = guess(mid)
+            <span class="hljs-keyword">if</span> res == <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">return</span> mid
+            <span class="hljs-keyword">elif</span> res == -<span class="hljs-number">1</span>:
+                right = mid-<span class="hljs-number">1</span>
             <span class="hljs-keyword">else</span>:
-                hashmap[i] += <span class="hljs-number">1</span>
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t:
-            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
-                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
-            <span class="hljs-keyword">else</span>:
-                hashmap[i] -= <span class="hljs-number">1</span>
-        <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> hashmap.values():
-            <span class="hljs-keyword">if</span> v != <span class="hljs-number">0</span>:
-                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
+                left = mid+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div>
 
               
             </div>
@@ -349,7 +361,7 @@
       
         <a href="/tags/python/">#python</a>
       
-        <a href="/tags/hash/">#hash</a>
+        <a href="/tags/binary-search/">#binary search</a>
       
     </div>
   
@@ -361,8 +373,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LeetCode 242</div>
-      <div>https://movisli.github.io/2022/06/01/leetcode20220601/</div>
+      <div>LeetCode 326 344 349</div>
+      <div>https://movisli.github.io/2022/06/27/leetcode20220627/</div>
     </div>
     <div class="license-meta">
       
@@ -374,7 +386,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>June 1, 2022</div>
+          <div>June 27, 2022</div>
         </div>
       
       
@@ -404,18 +416,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/04/leetcode20220603/" title="LeetCode 258">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LeetCode 258</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/29/leetcode20220529/" title="LeetCode 228 231">
-                        <span class="hidden-mobile">LeetCode 228 231</span>
+                      <a href="/2022/06/25/leetcode20220625/" title="LeetCode 326 344 349">
+                        <span class="hidden-mobile">LeetCode 326 344 349</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
