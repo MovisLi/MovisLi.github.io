@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>LeetCode 387</title>
+    <link href="/2022/06/29/leetcode20220629/"/>
+    <url>/2022/06/29/leetcode20220629/</url>
+    
+    <content type="html"><![CDATA[<h1 id="字符串中的第一个唯一字符">387. 字符串中的第一个唯一字符</h1><p>先想到的一种思路就是用双<code>set</code>，一个<code>set</code>用来存储字符串每个字符，作用时校验是否重复，另一个<code>set</code>用来存储重复的字符。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">firstUniqChar</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:        hashset1 = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)        hashset2 = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)        <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> s:            <span class="hljs-keyword">if</span> value <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashset1:                hashset1.add(value)            <span class="hljs-keyword">else</span>:                hashset2.add(value)        <span class="hljs-keyword">for</span> index,value <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(s):            <span class="hljs-keyword">if</span> value <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashset2:                <span class="hljs-keyword">return</span> index        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span></code></pre></div><p>当然用字典也可以。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">firstUniqChar</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:        hashmap = &#123;&#125;        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:                hashmap[i] = <span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                hashmap[i] += <span class="hljs-number">1</span>        <span class="hljs-keyword">for</span> index,key_char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(s):            <span class="hljs-keyword">if</span> hashmap[key_char] == <span class="hljs-number">1</span>:                <span class="hljs-keyword">return</span> index        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span></code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>hash</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 383</title>
     <link href="/2022/06/28/leetcode20220628/"/>
     <url>/2022/06/28/leetcode20220628/</url>
@@ -509,9 +540,9 @@
       
       <tag>python</tag>
       
-      <tag>hash</tag>
-      
       <tag>linked list</tag>
+      
+      <tag>hash</tag>
       
     </tags>
     
