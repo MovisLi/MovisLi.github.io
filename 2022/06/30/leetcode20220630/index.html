@@ -16,23 +16,24 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="387. 字符串中的第一个唯一字符 先想到的一种思路就是用双set，一个set用来存储字符串每个字符，作用时校验是否重复，另一个set用来存储重复的字符。 class Solution:     def firstUniqChar(self, s: str) -&gt; int:         hashset1 &#x3D; set(&amp;#x27;&amp;#x27;)         hashset2 &#x3D; s">
+    <meta name="description" content="389. 找不同 用 dict 对字符串 s 进行计数，然后遍历 t 用 dict 进行检索。 class Solution:     def findTheDifference(self, s: str, t: str) -&gt; str:         hashmap &#x3D; &amp;#123;&amp;#125;         for i in s:             if i not in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 387">
-<meta property="og:url" content="https://movisli.github.io/2022/06/29/leetcode20220629/index.html">
+<meta property="og:title" content="LeetCode 389">
+<meta property="og:url" content="https://movisli.github.io/2022/06/30/leetcode20220630/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="387. 字符串中的第一个唯一字符 先想到的一种思路就是用双set，一个set用来存储字符串每个字符，作用时校验是否重复，另一个set用来存储重复的字符。 class Solution:     def firstUniqChar(self, s: str) -&gt; int:         hashset1 &#x3D; set(&amp;#x27;&amp;#x27;)         hashset2 &#x3D; s">
+<meta property="og:description" content="389. 找不同 用 dict 对字符串 s 进行计数，然后遍历 t 用 dict 进行检索。 class Solution:     def findTheDifference(self, s: str, t: str) -&gt; str:         hashmap &#x3D; &amp;#123;&amp;#125;         for i in s:             if i not in">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-29T03:35:51.000Z">
-<meta property="article:modified_time" content="2022-06-29T03:56:38.096Z">
+<meta property="article:published_time" content="2022-06-30T04:44:16.000Z">
+<meta property="article:modified_time" content="2022-06-30T05:54:01.695Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="hash">
+<meta property="article:tag" content="ascii">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LeetCode 387 - movis</title>
+  <title>LeetCode 389 - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LeetCode 387"></span>
+            <span id="subtitle" data-typed-text="LeetCode 389"></span>
           
         </div>
 
@@ -211,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-29 11:35" pubdate>
-          June 29, 2022 am
+        <time datetime="2022-06-30 12:44" pubdate>
+          June 30, 2022 pm
         </time>
       </span>
     
@@ -223,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          531 words
+          779 words
         
       </span>
     
@@ -273,38 +274,57 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LeetCode 387</h1>
+            <h1 style="display: none">LeetCode 389</h1>
             
             <div class="markdown-body">
               
-              <h1 id="字符串中的第一个唯一字符">387. 字符串中的第一个唯一字符</h1>
-<p>先想到的一种思路就是用双<code>set</code>，一个<code>set</code>用来存储字符串每个字符，作用时校验是否重复，另一个<code>set</code>用来存储重复的字符。</p>
+              <h1 id="找不同">389. 找不同</h1>
+<p>用 <code>dict</code> 对字符串 <code>s</code> 进行计数，然后遍历
+<code>t</code> 用 <code>dict</code> 进行检索。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">firstUniqChar</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:
-        hashset1 = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)
-        hashset2 = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)
-        <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> s:
-            <span class="hljs-keyword">if</span> value <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashset1:
-                hashset1.add(value)
-            <span class="hljs-keyword">else</span>:
-                hashset2.add(value)
-        <span class="hljs-keyword">for</span> index,value <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(s):
-            <span class="hljs-keyword">if</span> value <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashset2:
-                <span class="hljs-keyword">return</span> index
-        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span></code></pre></div>
-<p>当然用字典也可以。</p>
-<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">firstUniqChar</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findTheDifference</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
         hashmap = &#123;&#125;
         <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:
             <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
                 hashmap[i] = <span class="hljs-number">1</span>
             <span class="hljs-keyword">else</span>:
                 hashmap[i] += <span class="hljs-number">1</span>
-        <span class="hljs-keyword">for</span> index,key_char <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(s):
-            <span class="hljs-keyword">if</span> hashmap[key_char] == <span class="hljs-number">1</span>:
-                <span class="hljs-keyword">return</span> index
-        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span></code></pre></div>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t:
+            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                <span class="hljs-keyword">return</span> i
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">if</span> hashmap[i] == <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">return</span> i
+                <span class="hljs-keyword">else</span>:
+                    hashmap[i] -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div>
+<p>当然 <code>t</code> 只是在 <code>s</code>
+打乱顺序的基础上随机添加了一个字母，所以那个随机添加的字母的 ascii
+码其实就是两个字符串 ascii 码和的差值。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findTheDifference</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        ascii_s = <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">ord</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s])
+        ascii_t = <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">ord</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t])
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">chr</span>(ascii_t-ascii_s)</code></pre></div>
+<h1 id="判断子序列">392. 判断子序列</h1>
+<blockquote>
+<p>字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。</p>
+</blockquote>
+<p>这个题目不仅要保证 <code>s</code> 的字符在 <code>t</code>
+中有，还要有序。在遍历两个字符串的过程中，指针移动速度不一定一样，所以很容易想到了双指针。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isSubsequence</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        left = <span class="hljs-number">0</span>
+        right = <span class="hljs-number">0</span>
+        len_s = <span class="hljs-built_in">len</span>(s)
+        len_t = <span class="hljs-built_in">len</span>(t)
+        <span class="hljs-keyword">while</span> left&lt;len_s <span class="hljs-keyword">and</span> right&lt;len_t:
+            <span class="hljs-keyword">if</span> s[left] == t[right]:
+                left += <span class="hljs-number">1</span>
+                right += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> left == len_s</code></pre></div>
 
               
             </div>
@@ -355,6 +375,8 @@
       
         <a href="/tags/hash/">#hash</a>
       
+        <a href="/tags/ascii/">#ascii</a>
+      
     </div>
   
 </div>
@@ -365,8 +387,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LeetCode 387</div>
-      <div>https://movisli.github.io/2022/06/29/leetcode20220629/</div>
+      <div>LeetCode 389</div>
+      <div>https://movisli.github.io/2022/06/30/leetcode20220630/</div>
     </div>
     <div class="license-meta">
       
@@ -378,7 +400,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>June 29, 2022</div>
+          <div>June 30, 2022</div>
         </div>
       
       
@@ -408,18 +430,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/30/leetcode20220630/" title="LeetCode 389">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LeetCode 389</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/28/leetcode20220628/" title="LeetCode 383">
-                        <span class="hidden-mobile">LeetCode 383</span>
+                      <a href="/2022/06/29/leetcode20220629/" title="LeetCode 387">
+                        <span class="hidden-mobile">LeetCode 387</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>LeetCode 389</title>
+    <link href="/2022/06/30/leetcode20220630/"/>
+    <url>/2022/06/30/leetcode20220630/</url>
+    
+    <content type="html"><![CDATA[<h1 id="找不同">389. 找不同</h1><p>用 <code>dict</code> 对字符串 <code>s</code> 进行计数，然后遍历<code>t</code> 用 <code>dict</code> 进行检索。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findTheDifference</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:        hashmap = &#123;&#125;        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:                hashmap[i] = <span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                hashmap[i] += <span class="hljs-number">1</span>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t:            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:                <span class="hljs-keyword">return</span> i            <span class="hljs-keyword">else</span>:                <span class="hljs-keyword">if</span> hashmap[i] == <span class="hljs-number">0</span>:                    <span class="hljs-keyword">return</span> i                <span class="hljs-keyword">else</span>:                    hashmap[i] -= <span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div><p>当然 <code>t</code> 只是在 <code>s</code>打乱顺序的基础上随机添加了一个字母，所以那个随机添加的字母的 ascii码其实就是两个字符串 ascii 码和的差值。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findTheDifference</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:        ascii_s = <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">ord</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s])        ascii_t = <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">ord</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t])        <span class="hljs-keyword">return</span> <span class="hljs-built_in">chr</span>(ascii_t-ascii_s)</code></pre></div><h1 id="判断子序列">392. 判断子序列</h1><blockquote><p>字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。</p></blockquote><p>这个题目不仅要保证 <code>s</code> 的字符在 <code>t</code>中有，还要有序。在遍历两个字符串的过程中，指针移动速度不一定一样，所以很容易想到了双指针。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isSubsequence</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        left = <span class="hljs-number">0</span>        right = <span class="hljs-number">0</span>        len_s = <span class="hljs-built_in">len</span>(s)        len_t = <span class="hljs-built_in">len</span>(t)        <span class="hljs-keyword">while</span> left&lt;len_s <span class="hljs-keyword">and</span> right&lt;len_t:            <span class="hljs-keyword">if</span> s[left] == t[right]:                left += <span class="hljs-number">1</span>                right += <span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                right += <span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> left == len_s</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>hash</tag>
+      
+      <tag>ascii</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 387</title>
     <link href="/2022/06/29/leetcode20220629/"/>
     <url>/2022/06/29/leetcode20220629/</url>
