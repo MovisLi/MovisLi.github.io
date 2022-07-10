@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>LeetCode 401</title>
+    <link href="/2022/07/10/leetcode20220710/"/>
+    <url>/2022/07/10/leetcode20220710/</url>
+    
+    <content type="html"><![CDATA[<h1 id="二进制手表">401. 二进制手表</h1><p>枚举法，枚举时和分，如果满足就添加进列表。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">readBinaryWatch</span>(<span class="hljs-params">self, turnedOn: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:        res = []        <span class="hljs-keyword">for</span> h <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">12</span>):            <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">60</span>):               <span class="hljs-keyword">if</span> <span class="hljs-built_in">bin</span>(h).count(<span class="hljs-string">&#x27;1&#x27;</span>)+<span class="hljs-built_in">bin</span>(m).count(<span class="hljs-string">&#x27;1&#x27;</span>) == turnedOn:                   res.append(<span class="hljs-string">&#x27;%d:%.2d&#x27;</span> % (h,m))        <span class="hljs-keyword">return</span> res</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>enumerate</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 389</title>
     <link href="/2022/06/30/leetcode20220630/"/>
     <url>/2022/06/30/leetcode20220630/</url>
