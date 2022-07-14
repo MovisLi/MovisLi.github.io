@@ -224,6 +224,83 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/05/24/leetcode20220524/" target="_self">
+          LeetCode 202
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/05/24/leetcode20220524/" target="_self">
+        <div>
+          
+          202. 快乐数 首先简单找了下10以内的，满足快乐数定义的只有1和7。然后直接采取暴力解法，循环查找，如果当某次结果跳到10以内却不等于1或7时，就是False，否则就是True。 class Solution:     def isHappy(self, n: int) -&gt; bool:         if n &#x3D;&#x3D; 1 or n &#x3D;&#x3D; 7:             return
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-24 12:00" pubdate>
+              2022-05-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/algorithm/" class="category-chain-item">algorithm</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/algorithm/leetcode-answer/" class="category-chain-item">leetcode answer</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/algorithm/leetcode-answer/easy/" class="category-chain-item">easy</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">#python</a>
+            
+              <a href="/tags/hash/">#hash</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/05/19/leetcode20220519/" target="_self">
           LeetCode 191
         </a>
@@ -706,7 +783,7 @@
       <a class="index-excerpt" href="/2022/05/10/leetcode20220510/" target="_self">
         <div>
           
-          66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 class Solution:     def plusOne(self, digits: List[int]) -&gt; List[int]:         carry
+          66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。但是实际上因为return的位置可以放得巧妙点，所以可以省略flag。 class Solution:     def plusOne(self, digits: List[in
         </div>
       </a>
 
@@ -924,83 +1001,6 @@
               <a href="/tags/binary-search/">#binary search</a>
             
               <a href="/tags/dp/">#dp</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/05/06/leetcode20220506/" target="_self">
-          LeetCode 26
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2022/05/06/leetcode20220506/" target="_self">
-        <div>
-          
-          26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 class Solution:     def removeDuplicates(self, nums: List[int]) -&gt; int:         hashse
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-05-06 12:00" pubdate>
-              2022-05-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/algorithm/" class="category-chain-item">algorithm</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/algorithm/leetcode-answer/" class="category-chain-item">leetcode answer</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/algorithm/leetcode-answer/easy/" class="category-chain-item">easy</a>
-  
-  
-
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">#python</a>
-            
-              <a href="/tags/point/">#point</a>
             
           </div>
         

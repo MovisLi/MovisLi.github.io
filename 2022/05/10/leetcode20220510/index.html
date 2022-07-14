@@ -16,15 +16,15 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python">
   
-    <meta name="description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 class Solution:     def plusOne(self, digits: List[int]) -&gt; List[int]:         carry">
+    <meta name="description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。但是实际上因为return的位置可以放得巧妙点，所以可以省略flag。 class Solution:     def plusOne(self, digits: List[in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 66 67 69">
 <meta property="og:url" content="https://movisli.github.io/2022/05/10/leetcode20220510/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。 class Solution:     def plusOne(self, digits: List[int]) -&gt; List[int]:         carry">
+<meta property="og:description" content="66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。但是实际上因为return的位置可以放得巧妙点，所以可以省略flag。 class Solution:     def plusOne(self, digits: List[in">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-10T04:00:00.000Z">
-<meta property="article:modified_time" content="2022-06-01T08:11:08.507Z">
+<meta property="article:modified_time" content="2022-07-13T16:35:27.502Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="binary search">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k words
+          1k words
         
       </span>
     
@@ -280,22 +280,16 @@
             <div class="markdown-body">
               
               <h1 id="加一">66. 加一</h1>
-<p>从后往前加就行了，需要用一个<code>carry flag</code>控制是否进位，加一对末位来说就是进位的，所以当<code>carry flag</code>变为<code>False</code>时，跳出循环。如果循环走完还需进位，则需要在<code>list</code>第0个位置增添个元素1。</p>
+<p>从后往前加就行了，需要用一个<code>carry flag</code>控制是否进位，加一对末位来说就是进位的，所以当<code>carry flag</code>变为<code>False</code>时，跳出循环。如果循环走完还需进位，则需要在<code>list</code>第0个位置增添个元素1。但是实际上因为<code>return</code>的位置可以放得巧妙点，所以可以省略<code>flag</code>。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
     <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
-        carry = <span class="hljs-literal">True</span>
         <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(digits)-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
-            <span class="hljs-keyword">if</span> carry:
-                digits[i] += <span class="hljs-number">1</span>
-                <span class="hljs-keyword">if</span> digits[i] &gt;= <span class="hljs-number">10</span>:
-                    digits[i] %= <span class="hljs-number">10</span>
-                <span class="hljs-keyword">else</span>:
-                    carry = <span class="hljs-literal">False</span>
+            digits[i] += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> digits[i] &gt;= <span class="hljs-number">10</span>:
+                digits[i] -= <span class="hljs-number">10</span>
             <span class="hljs-keyword">else</span>:
-                <span class="hljs-keyword">break</span>
-        <span class="hljs-keyword">if</span> carry:
-            digits.insert(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
-        <span class="hljs-keyword">return</span> digits</code></pre></div>
+                <span class="hljs-keyword">return</span> digits
+        <span class="hljs-keyword">return</span> [<span class="hljs-number">1</span>] + digits</code></pre></div>
 <h1 id="二进制求和">67.二进制求和</h1>
 <p>直接用内置函数就行了。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
