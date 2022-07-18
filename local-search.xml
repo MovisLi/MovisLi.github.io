@@ -4,6 +4,41 @@
   
   
   <entry>
+    <title>LeetCode 441 448 453</title>
+    <link href="/2022/07/19/leetcode20220719/"/>
+    <url>/2022/07/19/leetcode20220719/</url>
+    
+    <content type="html"><![CDATA[<h1 id="排列硬币">441. 排列硬币</h1><p>首先是基本的累加。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">arrangeCoins</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:        x = <span class="hljs-number">0</span>        total = <span class="hljs-number">0</span>        <span class="hljs-keyword">while</span> total&lt;n:            x+=<span class="hljs-number">1</span>            total +=x           <span class="hljs-keyword">return</span> x-<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> total!=n <span class="hljs-keyword">else</span> x</code></pre></div><p>然后其实可以看出这道题是一道求解不等式的问题，问题为： <spanclass="math display">\[\frac{x(x-1)}{2}\le n\lt\frac{x(x+1)}{2}\]</span> 当 <code>n</code> 确定时，求解 <code>x</code>的值。而且是顺序的，所以很自然想到了二分法。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">arrangeCoins</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:        l = <span class="hljs-number">0</span>        r = n        <span class="hljs-keyword">while</span> l&lt;=r:            mid = (l+r)//<span class="hljs-number">2</span>            s = mid*(mid-<span class="hljs-number">1</span>)//<span class="hljs-number">2</span>            b = mid*(mid+<span class="hljs-number">1</span>)//<span class="hljs-number">2</span>            <span class="hljs-keyword">if</span> s&lt;=n&lt;b:                <span class="hljs-keyword">return</span> mid-<span class="hljs-number">1</span>            <span class="hljs-keyword">elif</span> n&gt;=b:                l=mid+<span class="hljs-number">1</span>            <span class="hljs-keyword">else</span>:                r=mid-<span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> l-<span class="hljs-number">1</span></code></pre></div><h1 id="找到所有数组中消失的数字">448. 找到所有数组中消失的数字</h1><p>集合的差集运算。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findDisappearedNumbers</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:        set_all = <span class="hljs-built_in">set</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(nums)+<span class="hljs-number">1</span>))        set_nums = <span class="hljs-built_in">set</span>(nums)        <span class="hljs-keyword">return</span> <span class="hljs-built_in">list</span>(set_all-set_nums)</code></pre></div><h1 id="最小操作次数使数组元素相等">453. 最小操作次数使数组元素相等</h1><p>说句实话感觉这题应该不算简单题。</p><p>这题最核心的是 <code>n-1</code> 个数都加一等价于<code>1</code>个数减1。所以最后结果应该是 <span class="math display">\[result=\sum^{len(nums)-1}_{i=0}(nums[i]-min(nums))\]</span> 把<code>min(nums)</code>提出来就是 <spanclass="math display">\[result = \sum nums-n\times min(nums)\]</span></p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">minMoves</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(nums)-<span class="hljs-built_in">len</span>(nums)*<span class="hljs-built_in">min</span>(nums)</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>hash</tag>
+      
+      <tag>enumerate</tag>
+      
+      <tag>greedy</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 409 412 414 415 434</title>
     <link href="/2022/07/15/leetcode20220715/"/>
     <url>/2022/07/15/leetcode20220715/</url>
