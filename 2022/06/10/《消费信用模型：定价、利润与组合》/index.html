@@ -24,7 +24,7 @@
 <meta property="og:description" content="前言 本书集合了当前信用研究和应用面临的主要问题，从三大挑战——定价（ pricing ）、利润（ profit ）与组合（ portfolio ）出发，进行了详细的探讨和论述。 这些贷款机构在零售贷款中遇到的新问题三个主要的变化趋势是：  贷款机构如何根据违约风险差异化定价。 贷款机构如何把违约评分变成利润评分。 如何不仅对单个贷款风险进行评估，还对贷款组合的风险进行评估。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-06-10T13:35:12.000Z">
-<meta property="article:modified_time" content="2022-06-21T11:43:22.148Z">
+<meta property="article:modified_time" content="2022-07-20T17:37:45.563Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="credit">
 <meta property="article:tag" content="decision">
@@ -407,7 +407,7 @@ class="math inline">\(odds=\frac{P(good)}{P(bad)}\)</span> 。</li>
 <p><strong>这里很重要地提到了分离了总体比率和信息比率的概念，当总体样本好坏比发生变化时，信息比率不变，总体比率会变。</strong>我的理解是提到了信息比率可以用来带来排序，而并不会受行情影响。对于贷款来讲，行情变坏时，仅能保持排序不变。</p>
 <p><strong>证据权重 WOE （ weights of evidence）的公式为：</strong>
 <span class="math display">\[
-WOE=ln(odds)=ln(\frac{P(good)}{P(bad)})
+WOE=ln(odds)=ln(\frac{P(bad)}{P(good)})
 \]</span> 相较于原始总体比率，证据权重是具有信息 x 或分数 s
 的人群的好人比率的对数。WOE
 为正表明这个组的好人概率比全部总体要好；若为负，则表明这组比总体要差一些。</p>
