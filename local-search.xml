@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>LeetCode 455 459</title>
+    <link href="/2022/07/25/leetcode20220725/"/>
+    <url>/2022/07/25/leetcode20220725/</url>
+    
+    <content type="html"><![CDATA[<h1 id="分发饼干">455. 分发饼干</h1><p>首先可以排序之后贪心算法解决。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findContentChildren</span>(<span class="hljs-params">self, g: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], s: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:        g.sort()        s.sort()        left = <span class="hljs-number">0</span>        right = <span class="hljs-number">0</span>        res = <span class="hljs-number">0</span>        len_g = <span class="hljs-built_in">len</span>(g)        len_s = <span class="hljs-built_in">len</span>(s)        <span class="hljs-keyword">while</span> left&lt;len_g <span class="hljs-keyword">and</span> right&lt;len_s:            <span class="hljs-keyword">if</span> g[left] &lt;= s[right]:                left += <span class="hljs-number">1</span>                res += <span class="hljs-number">1</span>            right += <span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> res</code></pre></div><h1 id="重复的子字符串">459. 重复的子字符串</h1><p>双指针。思路是如果字符串有子字符串长度为m 重复 n 次构成，那么它前 m个字符与后 m 个字符是一样的，并且 m 重复 n 次与它本身也是一样的。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">repeatedSubstringPattern</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        length = <span class="hljs-built_in">len</span>(s)        <span class="hljs-keyword">if</span> length == <span class="hljs-number">1</span>:            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>        left = <span class="hljs-number">1</span>        right = length-<span class="hljs-number">1</span>        <span class="hljs-keyword">while</span> left&lt;=right:            <span class="hljs-keyword">if</span> length%left == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> s[:left] == s[right:]:                <span class="hljs-keyword">if</span> s[:left]*(length//left) == s:                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>            left += <span class="hljs-number">1</span>            right -= <span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>point</tag>
+      
+      <tag>greedy</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 441 448 453</title>
     <link href="/2022/07/19/leetcode20220719/"/>
     <url>/2022/07/19/leetcode20220719/</url>
@@ -28,9 +61,9 @@
       
       <tag>hash</tag>
       
-      <tag>greedy</tag>
-      
       <tag>enumerate</tag>
+      
+      <tag>greedy</tag>
       
     </tags>
     
@@ -63,9 +96,9 @@
       
       <tag>hash</tag>
       
-      <tag>greedy</tag>
-      
       <tag>enumerate</tag>
+      
+      <tag>greedy</tag>
       
     </tags>
     
