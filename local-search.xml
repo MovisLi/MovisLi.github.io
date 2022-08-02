@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>LeetCode 492 495</title>
+    <link href="/2022/08/02/leetcode20220802-2/"/>
+    <url>/2022/08/02/leetcode20220802-2/</url>
+    
+    <content type="html"><![CDATA[<h1 id="构造矩形">492. 构造矩形</h1><p>先获取面积的算术平方根的整数部分 <code>square_root</code> ，宽一定在[1, square_root]里，所以开始递减找长就行了，当面积能够整除宽的时候，就找到了长，直接返回。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">constructRectangle</span>(<span class="hljs-params">self, area: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:        s_root = <span class="hljs-built_in">round</span>(area**<span class="hljs-number">0.5</span>)        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_root, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>):            <span class="hljs-keyword">if</span> area%i == <span class="hljs-number">0</span>:                <span class="hljs-keyword">return</span> (area//i, i)        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div><h1 id="提莫攻击">495. 提莫攻击</h1><p>前探指针，遍历整个数组，做一下条件判断。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findPoisonedDuration</span>(<span class="hljs-params">self, timeSeries: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], duration: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:        length = <span class="hljs-built_in">len</span>(timeSeries)        res = <span class="hljs-number">0</span>        cur = <span class="hljs-number">0</span>        <span class="hljs-keyword">while</span> cur&lt;length:            pre = cur+<span class="hljs-number">1</span>            <span class="hljs-keyword">if</span> pre&lt;length:                temp = timeSeries[cur]+duration-timeSeries[pre]                <span class="hljs-keyword">if</span> temp &lt;= <span class="hljs-number">0</span>:                    res += duration                <span class="hljs-keyword">else</span>:                    res += duration-temp            <span class="hljs-keyword">else</span>:                res += duration            cur = pre        <span class="hljs-keyword">return</span> res</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+      <category>leetcode answer</category>
+      
+      <category>easy</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>point</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 461 463 476 482 485</title>
     <link href="/2022/08/02/leetcode20220802/"/>
     <url>/2022/08/02/leetcode20220802/</url>
@@ -775,9 +806,9 @@
       
       <tag>python</tag>
       
-      <tag>hash</tag>
-      
       <tag>linked list</tag>
+      
+      <tag>hash</tag>
       
     </tags>
     
@@ -936,9 +967,9 @@
       
       <tag>hash</tag>
       
-      <tag>string</tag>
-      
       <tag>dp</tag>
+      
+      <tag>string</tag>
       
     </tags>
     

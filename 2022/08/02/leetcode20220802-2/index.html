@@ -16,26 +16,23 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="risk control, data analysis, machine learning, algorithm, python, develop">
   
-    <meta name="description" content="461. 汉明距离 那这道题，很明显需要一个异或 ^ 的运算，那异或完了之后所有二进制不同的位会变成 1， 之前的题里学到了 n&amp;(n-1) 可以消除最后一个 1， 那么我们做一个循环消除的操作，直到这个异或结果为 0 就可以，用一个计数器来统计循环的次数。 class Solution:     def hammingDistance(self, x: int, y: int">
+    <meta name="description" content="492. 构造矩形 先获取面积的算术平方根的整数部分 square_root ，宽一定在 [1, square_root] 里，所以开始递减找长就行了，当面积能够整除宽的时候，就找到了长，直接返回。 class Solution:     def constructRectangle(self, area: int) -&gt; List[int]:         s_root &#x3D; ro">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 461 463 476 482 485">
-<meta property="og:url" content="https://movisli.github.io/2022/08/02/leetcode20220802/index.html">
+<meta property="og:title" content="LeetCode 492 495">
+<meta property="og:url" content="https://movisli.github.io/2022/08/02/leetcode20220802-2/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="461. 汉明距离 那这道题，很明显需要一个异或 ^ 的运算，那异或完了之后所有二进制不同的位会变成 1， 之前的题里学到了 n&amp;(n-1) 可以消除最后一个 1， 那么我们做一个循环消除的操作，直到这个异或结果为 0 就可以，用一个计数器来统计循环的次数。 class Solution:     def hammingDistance(self, x: int, y: int">
+<meta property="og:description" content="492. 构造矩形 先获取面积的算术平方根的整数部分 square_root ，宽一定在 [1, square_root] 里，所以开始递减找长就行了，当面积能够整除宽的时候，就找到了长，直接返回。 class Solution:     def constructRectangle(self, area: int) -&gt; List[int]:         s_root &#x3D; ro">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-08-01T16:11:22.000Z">
-<meta property="article:modified_time" content="2022-08-01T18:03:44.243Z">
+<meta property="article:published_time" content="2022-08-02T04:08:28.000Z">
+<meta property="article:modified_time" content="2022-08-02T05:04:41.946Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="hash">
 <meta property="article:tag" content="point">
-<meta property="article:tag" content="string">
-<meta property="article:tag" content="bit">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LeetCode 461 463 476 482 485 - movis</title>
+  <title>LeetCode 492 495 - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LeetCode 461 463 476 482 485"></span>
+            <span id="subtitle" data-typed-text="LeetCode 492 495"></span>
           
         </div>
 
@@ -214,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-02 00:11" pubdate>
-          August 2, 2022 am
+        <time datetime="2022-08-02 12:08" pubdate>
+          August 2, 2022 pm
         </time>
       </span>
     
@@ -226,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k words
+          562 words
         
       </span>
     
@@ -276,122 +273,39 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LeetCode 461 463 476 482 485</h1>
+            <h1 style="display: none">LeetCode 492 495</h1>
             
             <div class="markdown-body">
               
-              <h1 id="汉明距离">461. 汉明距离</h1>
-<p>那这道题，很明显需要一个异或 <code>^</code>
-的运算，那异或完了之后所有二进制不同的位会变成 1， 之前的题里学到了
-<code>n&amp;(n-1)</code> 可以消除最后一个 1，
-那么我们做一个循环消除的操作，直到这个异或结果为 0
-就可以，用一个计数器来统计循环的次数。</p>
+              <h1 id="构造矩形">492. 构造矩形</h1>
+<p>先获取面积的算术平方根的整数部分 <code>square_root</code> ，宽一定在
+[1, square_root]
+里，所以开始递减找长就行了，当面积能够整除宽的时候，就找到了长，直接返回。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hammingDistance</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span>, y: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
-        res = x^y
-        count = <span class="hljs-number">0</span>
-        <span class="hljs-keyword">while</span> res:
-            res &amp;= res-<span class="hljs-number">1</span>
-            count += <span class="hljs-number">1</span>
-        <span class="hljs-keyword">return</span> count</code></pre></div>
-<h1 id="岛屿的周长">463. 岛屿的周长</h1>
-<p>把格子的点看作一个坐标，那么我们从左上建立坐标系。用一个元组
-<code>(x1, y1, x2, y2)</code> 来表示一条边。用一个 <code>set</code>
-来记录存放的边。然后遍历整个数组，当一个新的 <code>1</code>
-被找到时，看一下它四条边是否在 <code>set</code>
-里，在就删除，不在就添加。最后集合的长度就是周长。</p>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">constructRectangle</span>(<span class="hljs-params">self, area: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        s_root = <span class="hljs-built_in">round</span>(area**<span class="hljs-number">0.5</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_root, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> area%i == <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">return</span> (area//i, i)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div>
+<h1 id="提莫攻击">495. 提莫攻击</h1>
+<p>前探指针，遍历整个数组，做一下条件判断。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">islandPerimeter</span>(<span class="hljs-params">self, grid: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:
-        hashset = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(grid)):
-            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(grid[i])):
-                <span class="hljs-keyword">if</span> grid[i][j] == <span class="hljs-number">1</span>:
-                    <span class="hljs-keyword">if</span> (i, j, i+<span class="hljs-number">1</span>, j) <span class="hljs-keyword">in</span> hashset:
-                        hashset.remove((i, j, i+<span class="hljs-number">1</span>, j))
-                    <span class="hljs-keyword">else</span>:
-                        hashset.add((i, j, i+<span class="hljs-number">1</span>, j))
-                    <span class="hljs-keyword">if</span> (i, j, i, j+<span class="hljs-number">1</span>) <span class="hljs-keyword">in</span> hashset:
-                        hashset.remove((i, j, i, j+<span class="hljs-number">1</span>))
-                    <span class="hljs-keyword">else</span>:
-                        hashset.add((i, j, i, j+<span class="hljs-number">1</span>))
-                    <span class="hljs-keyword">if</span> (i, j+<span class="hljs-number">1</span>, i+<span class="hljs-number">1</span>, j+<span class="hljs-number">1</span>) <span class="hljs-keyword">in</span> hashset:
-                        hashset.remove((i, j+<span class="hljs-number">1</span>, i+<span class="hljs-number">1</span>, j+<span class="hljs-number">1</span>))
-                    <span class="hljs-keyword">else</span>:
-                        hashset.add((i, j+<span class="hljs-number">1</span>, i+<span class="hljs-number">1</span>, j+<span class="hljs-number">1</span>))
-                    <span class="hljs-keyword">if</span> (i+<span class="hljs-number">1</span>, j, i+<span class="hljs-number">1</span>, j+<span class="hljs-number">1</span>) <span class="hljs-keyword">in</span> hashset:
-                        hashset.remove((i+<span class="hljs-number">1</span>, j, i+<span class="hljs-number">1</span>, j+<span class="hljs-number">1</span>))
-                    <span class="hljs-keyword">else</span>:
-                        hashset.add((i+<span class="hljs-number">1</span>, j, i+<span class="hljs-number">1</span>, j+<span class="hljs-number">1</span>))
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(hashset)</code></pre></div>
-<h1 id="数字的补数">476. 数字的补数</h1>
-<p>转成字符串取反了之后再转回来。</p>
-<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findComplement</span>(<span class="hljs-params">self, num: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
-        str_num = <span class="hljs-built_in">str</span>(<span class="hljs-built_in">bin</span>(num)).replace(<span class="hljs-string">&#x27;0b&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
-        res = <span class="hljs-string">&#x27;&#x27;</span>
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> str_num:
-            <span class="hljs-keyword">if</span> i==<span class="hljs-string">&#x27;1&#x27;</span>:
-                res+=<span class="hljs-string">&#x27;0&#x27;</span>
-            <span class="hljs-keyword">else</span>:
-                res+=<span class="hljs-string">&#x27;1&#x27;</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(res,<span class="hljs-number">2</span>)</code></pre></div>
-<h1 id="密钥格式化">482. 密钥格式化</h1>
-<p>从后往前添加格式化结果，注意异常情况的处理就行。</p>
-<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">licenseKeyFormatting</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">str</span>:
-        s = s.replace(<span class="hljs-string">&#x27;-&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>).upper()
-        count = <span class="hljs-built_in">len</span>(s)//k
-        other = <span class="hljs-built_in">len</span>(s)%k
-        res = <span class="hljs-string">&#x27;&#x27;</span>
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, -count*k, -k):
-            <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>:
-                res = s[i-k:]
-            <span class="hljs-keyword">else</span>:
-                res = s[i-k:i]+<span class="hljs-string">&#x27;-&#x27;</span>+res
-        <span class="hljs-keyword">if</span> other == <span class="hljs-number">0</span>:
-            <span class="hljs-keyword">return</span> res
-        <span class="hljs-keyword">else</span>:
-            <span class="hljs-keyword">if</span> count != <span class="hljs-number">0</span>:
-                <span class="hljs-keyword">return</span> s[:other]+<span class="hljs-string">&#x27;-&#x27;</span>+res
-            <span class="hljs-keyword">else</span>:
-                <span class="hljs-keyword">return</span> s[:other]</code></pre></div>
-<h1 id="最大连续-1-的个数">485. 最大连续 1 的个数</h1>
-<p>前探指针探寻 <code>1</code> 的位置，计数器计数。</p>
-<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findMaxConsecutiveOnes</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
-        count = <span class="hljs-number">0</span>
-        cur = <span class="hljs-number">0</span>
-        length = <span class="hljs-built_in">len</span>(nums)
-        <span class="hljs-keyword">while</span> cur&lt;length:
-            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> nums[cur]:
-                cur += <span class="hljs-number">1</span>
-            <span class="hljs-keyword">else</span>:
-                pre = cur+<span class="hljs-number">1</span>
-                <span class="hljs-keyword">while</span> pre&lt;length <span class="hljs-keyword">and</span> nums[pre]:
-                    pre += <span class="hljs-number">1</span>
-                count = <span class="hljs-built_in">max</span>(count, pre-cur)
-                cur = pre+<span class="hljs-number">1</span>
-        <span class="hljs-keyword">return</span> count</code></pre></div>
-<p>或者设置一个 <code>flag</code>
-来判断是否开始计数了，并用一个结果计数器和中间计数器控制整个遍历：</p>
-<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findMaxConsecutiveOnes</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
-        flag = <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findPoisonedDuration</span>(<span class="hljs-params">self, timeSeries: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], duration: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        length = <span class="hljs-built_in">len</span>(timeSeries)
         res = <span class="hljs-number">0</span>
-        count = <span class="hljs-number">0</span>
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums:
-            <span class="hljs-keyword">if</span> i==<span class="hljs-number">1</span>:
-                <span class="hljs-keyword">if</span> flag:
-                    count+=<span class="hljs-number">1</span>
+        cur = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> cur&lt;length:
+            pre = cur+<span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> pre&lt;length:
+                temp = timeSeries[cur]+duration-timeSeries[pre]
+                <span class="hljs-keyword">if</span> temp &lt;= <span class="hljs-number">0</span>:
+                    res += duration
                 <span class="hljs-keyword">else</span>:
-                    flag = <span class="hljs-literal">True</span>
-                    count += <span class="hljs-number">1</span>
+                    res += duration-temp
             <span class="hljs-keyword">else</span>:
-                <span class="hljs-keyword">if</span> flag:
-                    flag = <span class="hljs-literal">False</span>
-                    res = <span class="hljs-built_in">max</span>(res, count)
-                    count = <span class="hljs-number">0</span>
-        res = <span class="hljs-built_in">max</span>(res, count)
+                res += duration
+            cur = pre
         <span class="hljs-keyword">return</span> res</code></pre></div>
 
               
@@ -441,13 +355,7 @@
       
         <a href="/tags/python/">#python</a>
       
-        <a href="/tags/hash/">#hash</a>
-      
         <a href="/tags/point/">#point</a>
-      
-        <a href="/tags/string/">#string</a>
-      
-        <a href="/tags/bit/">#bit</a>
       
     </div>
   
@@ -459,8 +367,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LeetCode 461 463 476 482 485</div>
-      <div>https://movisli.github.io/2022/08/02/leetcode20220802/</div>
+      <div>LeetCode 492 495</div>
+      <div>https://movisli.github.io/2022/08/02/leetcode20220802-2/</div>
     </div>
     <div class="license-meta">
       
@@ -502,18 +410,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/02/leetcode20220802-2/" title="LeetCode 492 495">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LeetCode 492 495</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/25/%E3%80%8A%E6%95%8F%E6%8D%B7%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E3%80%8B/" title="《敏捷实战指南》 - 读书笔记">
-                        <span class="hidden-mobile">《敏捷实战指南》 - 读书笔记</span>
+                      <a href="/2022/08/02/leetcode20220802/" title="LeetCode 461 463 476 482 485">
+                        <span class="hidden-mobile">LeetCode 461 463 476 482 485</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
