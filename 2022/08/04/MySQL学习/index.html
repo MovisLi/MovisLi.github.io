@@ -16,15 +16,15 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
   
-    <meta name="description" content="基础概念 数据库介绍 数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。 数据库由存储相关信息的表组成。 表以行和列的格式存储并展示信息，就像 Excel 表格一样。 数据库通常包含多个表，每个表都因特定的目的而设计。 表可拥有任意数量的行，但只能拥有一定数量的列。  MySQL Server 最多只允许 4096 个字段 InnoDB 最多只能有 1017 个字段">
+    <meta name="description" content="参考资料： Learn SQL | Sololearn 《SQL 必知必会》（第 5 版）  基础概念 数据库介绍 数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。 数据库由存储相关信息的表组成。 表以行和列的格式存储并展示信息，就像 Excel 表格一样。 数据库通常包含多个表，每个表都因特定的目的而设计。 表可拥有任意数量的行，但只能拥有一定数量的列。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL">
 <meta property="og:url" content="https://movisli.github.io/2022/08/04/MySQL%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="基础概念 数据库介绍 数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。 数据库由存储相关信息的表组成。 表以行和列的格式存储并展示信息，就像 Excel 表格一样。 数据库通常包含多个表，每个表都因特定的目的而设计。 表可拥有任意数量的行，但只能拥有一定数量的列。  MySQL Server 最多只允许 4096 个字段 InnoDB 最多只能有 1017 个字段">
+<meta property="og:description" content="参考资料： Learn SQL | Sololearn 《SQL 必知必会》（第 5 版）  基础概念 数据库介绍 数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。 数据库由存储相关信息的表组成。 表以行和列的格式存储并展示信息，就像 Excel 表格一样。 数据库通常包含多个表，每个表都因特定的目的而设计。 表可拥有任意数量的行，但只能拥有一定数量的列。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-08-04T15:34:22.000Z">
-<meta property="article:modified_time" content="2022-08-04T15:41:54.892Z">
+<meta property="article:modified_time" content="2022-08-04T17:01:36.370Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="mysql">
 <meta property="article:tag" content="sololearn">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k words
+          2.3k words
         
       </span>
     
@@ -277,7 +277,13 @@
             
             <div class="markdown-body">
               
-              <h1 id="基础概念">基础概念</h1>
+              <blockquote>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.sololearn.com/learning/1060">Learn SQL |
+Sololearn</a></p>
+<p>《SQL 必知必会》（第 5 版）</p>
+</blockquote>
+<h1 id="基础概念">基础概念</h1>
 <h2 id="数据库介绍">数据库介绍</h2>
 <p>数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。</p>
 <p>数据库由存储相关信息的表组成。</p>
@@ -361,11 +367,11 @@ Language</h2>
 </ul>
 <h1 id="查询">查询</h1>
 <h3 id="select">SELECT</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 列名 FROM 表名</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 列名 FROM 表名;</code></pre></div>
 <p>从一个表中查询指定的列。</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 列名1, 列名2 FROM 表名</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 列名1, 列名2 FROM 表名;</code></pre></div>
 <p>从一个表里查询多列的数据，列名之间用 <code>,</code> 分隔。</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT * FROM 表名</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT * FROM 表名;</code></pre></div>
 <p>如果要查询所有列的数据，可以用 <code>*</code> 。</p>
 <ul>
 <li>对于多条 SQL ，每条后需要添加 <code>;</code> 。</li>
@@ -376,28 +382,28 @@ Language</h2>
 语句更易于阅读和维护。</li>
 </ul></li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 表名.列名 FROM 表名</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 表名.列名 FROM 表名;</code></pre></div>
 <p>同样也可以指定查询某张表的某一列，在表名和列名之间加上 <code>.</code>
 ，当处理可能共享相同列名的多个表时，这种书写形式特别有用。</p>
 <h3 id="distinct">DISTINCT</h3>
 <div class="code-wrapper"><pre><code class="hljs mysql">SELECT DISTINCT
 	列名
 FROM
-	表名</code></pre></div>
+	表名;</code></pre></div>
 <p>DISTINCT 关键字可以达到去重的效果。</p>
 <h3 id="limit">LIMIT</h3>
 <div class="code-wrapper"><pre><code class="hljs mysql">SELECT
 	列名
 FROM
 	表名
-LIMIT 数量</code></pre></div>
+LIMIT 数量;</code></pre></div>
 <p>LIMIT 关键字可以指定返回结果的数量。</p>
 <div class="code-wrapper"><pre><code class="hljs mysql">SELECT
 	列名
 FROM
 	表名
 OFFSET 数量
-LIMIT 数量</code></pre></div>
+LIMIT 数量;</code></pre></div>
 <p>可以使用 OFFSET 关键字对所取结果中作筛选偏移，可以理解为 OFFSET
 几条就是前几条不要。</p>
 <h3 id="order-by">ORDER BY</h3>
@@ -406,7 +412,7 @@ LIMIT 数量</code></pre></div>
 FROM
 	表名
 ORDER BY
-	列名</code></pre></div>
+	列名;</code></pre></div>
 <p>ORDER BY 关键字可以将结果排序后再返回。</p>
 <p>如果是数值型列，默认返回从小到大；如果是字符型列，默认返回字母顺序升序。</p>
 <div class="code-wrapper"><pre><code class="hljs mysql">SELECT
@@ -414,11 +420,153 @@ ORDER BY
 FROM
 	表名
 ORDER BY
-	列名1, 列名2</code></pre></div>
+	列名1, 列名2;</code></pre></div>
 <p>ORDER BY 后可以跟两列，像这句一样。这样首先满足 <code>列名1</code>
 的顺序，再满足 <code>列名2</code> 的顺序。</p>
 <h1 id="筛选">筛选</h1>
+<h3 id="where">WHERE</h3>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	表名
+FROM
+	列名
+WHERE
+	条件;</code></pre></div>
+<p>WHERE 语句可用于按条件筛选返回结果。</p>
+<p>使用文本列时，用单引号 <code>'</code>
+将语句中出现的任何文本括起来。</p>
+<p>并且如果字符串内部有单引号，可以使用单引号来转义。例如：</p>
+<p>我有一个查询条件 <code>值 = I'm</code> ，写成：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">WHERE
+	列名 = &#x27;I&#x27;&#x27;m&#x27;</code></pre></div>
+<p>使用比较运算符和逻辑运算符来过滤要选择的数据。</p>
+<table>
+<thead>
+<tr class="header">
+<th>比较运算符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>=</td>
+<td>等于</td>
+</tr>
+<tr class="even">
+<td>!=</td>
+<td>不等于</td>
+</tr>
+<tr class="odd">
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr class="even">
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr class="odd">
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr class="even">
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr class="odd">
+<td>BETWEEN</td>
+<td>和 AND 一起筛选一个范围</td>
+</tr>
+</tbody>
+</table>
+<h3 id="between">BETWEEN</h3>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	列名
+FROM
+	表名
+WHERE
+	列名 BETWEEN 值1 AND 值2;</code></pre></div>
+<p>BETWEEN
+运算符选择范围内的值。第一个值必须是下限，第二个值必须是上限。<strong>这两个值都会被包括进去。</strong></p>
+<h3 id="逻辑运算符">逻辑运算符</h3>
+<table>
+<thead>
+<tr class="header">
+<th>逻辑运算符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AND</td>
+<td>返回左右两个条件的交集</td>
+</tr>
+<tr class="even">
+<td>OR</td>
+<td>返回左右两个条件的并集</td>
+</tr>
+<tr class="odd">
+<td>IN</td>
+<td>返回值在后面跟的括号里的结果</td>
+</tr>
+<tr class="even">
+<td>NOT</td>
+<td>对条件取反</td>
+</tr>
+</tbody>
+</table>
+<p>在上述逻辑运算符中，<code>AND</code> 优先级是要比 <code>OR</code>
+高的。</p>
+<p>所以 如果要同时用 <code>AND</code> 和 <code>OR</code> ，最好用括号
+<code>()</code> 把 <code>OR</code> 的括起来以免出错。</p>
+<h3 id="in">IN</h3>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	列名
+FROM
+	表名
+WHERE
+	列名 IN (值1， 值2);</code></pre></div>
+<p>比较一个列与多个值时，使用 IN 运算符。其效果等同于：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	列名
+FROM
+	表名
+WHERE
+	列名=值1 OR 列名=值2;</code></pre></div>
+<h3 id="as">AS</h3>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	列名 AS 新列名
+FROM
+	表名;</code></pre></div>
+<p>用 AS 关键字能够将列名的结果以新列名的标题返回。</p>
+<h3 id="算术运算符">算术运算符</h3>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	列名+值 AS 列名
+FROM
+	表名;</code></pre></div>
+<p>可以使用算术运算符将每列的值都做运算。</p>
+<p>包括四则运算 <code>+-*/</code>
+和括号，括号可用于强制操作优先于任何其他运算符，还用于提高代码的可读性。</p>
 <h1 id="函数">函数</h1>
+<h3 id="concat">CONCAT</h3>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	CONCAT(列名1, &#x27;,&#x27;, 列名2)
+FROM
+	表名;</code></pre></div>
+<p>CONCAT 函数用于连接两个或多个文本值并返回连接的字符串。</p>
+<h3 id="upper"><strong>UPPER</strong></h3>
+<p>UPPER 函数将指定字符串中的所有字母转换为大写。</p>
+<h3 id="lower">LOWER</h3>
+<p>LOWER 函数将字符串转换为小写。</p>
+<blockquote>
+<p>如果字符串中有不是字母的字符，这个函数对它们不起作用。</p>
+</blockquote>
+<h3 id="sqrt">SQRT</h3>
+<p>SQRT 函数返回该列中给定值的平方根。</p>
+<h3 id="avg">AVG</h3>
+<p>AVG 函数返回该列的平均值。</p>
+<p><strong>值得注意的是，这个函数只会返回一个值。</strong></p>
+<h3 id="sum">SUM</h3>
+<p>SUM 函数返回该列的和。</p>
+<p><strong>值得注意的是，这个函数只会返回一个值。</strong></p>
 <h1 id="子查询">子查询</h1>
 <h1 id="连接">连接</h1>
 <h1 id="表操作">表操作</h1>
