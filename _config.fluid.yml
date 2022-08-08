@@ -1,0 +1,161 @@
+# 用于浏览器标签的图标
+# Icon for browser tab
+favicon: /img/logo.jpg
+
+# 用于苹果设备的图标
+# Icon for Apple touch
+apple_touch_icon: /img/logo.jpg
+
+code:
+  copy_btn: false
+  highlight:
+    line_number: false
+    highlightjs:
+      # 在链接中挑选 style 填入
+      # Select a style in the link
+      # See: https://highlightjs.org/static/demo/
+      style: "atom one light"
+      style_dark: "atom one dark"
+
+index:
+  slogan:
+    text:
+
+dark_mode:
+  default: dark
+
+navbar:
+  blog_title: "Movis"
+
+  menu:
+    - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
+    - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill" }
+    - {
+        key: "category",
+        link: "/categories/",
+        icon: "iconfont icon-category-fill",
+      }
+    - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
+    - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
+    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+
+post:
+  banner_img: /img/default.png
+  default_index_img:
+  meta:
+    author:
+      enable: true
+
+    min2read:
+      enable: false
+  toc:
+    placement: left
+    collapseDepth: 0
+  math:
+    enable: true
+    engine: mathjax
+  mermaid:
+    enable: false
+    specific: true
+
+about:
+  banner_img: /img/default.png
+  avatar: /img/logo.jpg
+  name: "Movis"
+  intro: "ABOUT ME"
+  icons:
+
+links:
+  enable: false
+
+static_prefix:
+  mathjax: https://unpkg.com/mathjax@3.2.0/
+
+# 主题颜色配置，其他不生效的地方请使用自定义 css 解决，配色可以在下方链接中获得启发
+# Theme color, please use custom CSS to solve other colors, color schema can be inspired by the links below
+# See: https://www.webdesignrankings.com/resources/lolcolors/
+color:
+  # body 背景色
+  # Color of body background
+  body_bg_color: "#eee"
+  # 暗色模式下的 body 背景色，下同
+  # Color in dark mode, the same below
+  body_bg_color_dark: "#1f1f20"
+
+  # 顶部菜单背景色
+  # Color of navigation bar background
+  navbar_bg_color: "#414142"
+  navbar_bg_color_dark: "#313132"
+
+  # 顶部菜单字体色
+  # Color of navigation bar text
+  navbar_text_color: "#fff"
+  navbar_text_color_dark: "#d0d0d0"
+
+  # 副标题字体色
+  # Color of navigation bar text
+  subtitle_color: "#fff"
+  subtitle_color_dark: "#d0d0d0"
+
+  # 全局字体色
+  # Color of global text
+  text_color: "#494a4b"
+  text_color_dark: "#c6c6c7"
+
+  # 全局次级字体色（摘要、简介等位置）
+  # Color of global secondary text (excerpt, introduction, etc.)
+  sec_text_color: "#828385"
+  sec_text_color_dark: "#a9aaab"
+
+  # 主面板背景色
+  # Color of main board
+  board_color: "#fff"
+  board_color_dark: "#2e2e2f"
+
+  # 文章正文字体色
+  # Color of post text
+  post_text_color: "#3d3e3f"
+  post_text_color_dark: "#c6c6c7"
+
+  # 文章正文字体色（h1 h2 h3...）
+  # Color of Article heading (h1 h2 h3...)
+  post_heading_color: "#232323"
+  post_heading_color_dark: "#c6c6c7"
+
+  # 文章超链接字体色
+  # Color of post link
+  post_link_color: "#0366d6"
+  post_link_color_dark: "#1589e9"
+
+  # 超链接悬浮时字体色
+  # Color of link when hovering
+  link_hover_color: "#30a9de"
+  link_hover_color_dark: "#30a9de"
+
+  # 超链接悬浮背景色
+  # Color of link background when hovering
+  link_hover_bg_color: "#f8f9fa"
+  link_hover_bg_color_dark: "#434344"
+
+  # 分隔线和表格边线的颜色
+  # Color of horizontal rule and table border
+  line_color: "#ececed"
+  line_color_dark: "#545455"
+
+  # 滚动条颜色
+  # Color of scrollbar
+  scrollbar_color: "#c6c6c7"
+  scrollbar_color_dark: "#747576"
+  # 滚动条悬浮颜色
+  # Color of scrollbar when hovering
+  scrollbar_hover_color: "#a6a6a6"
+  scrollbar_hover_color_dark: "#a7a8a9"
+
+  # 按钮背景色
+  # Color of button
+  button_bg_color: "transparent"
+  button_bg_color_dark: "transparent"
+  # 按钮悬浮背景色
+  # Color of button when hovering
+  button_hover_bg_color: "#f3f3f4"
+  button_hover_bg_color_dark: "#616263"
