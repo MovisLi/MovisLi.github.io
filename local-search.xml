@@ -117,11 +117,11 @@
       
       <tag>python</tag>
       
+      <tag>hash</tag>
+      
       <tag>point</tag>
       
       <tag>string</tag>
-      
-      <tag>hash</tag>
       
       <tag>bit</tag>
       
@@ -218,9 +218,9 @@
       
       <tag>hash</tag>
       
-      <tag>enumerate</tag>
-      
       <tag>greedy</tag>
+      
+      <tag>enumerate</tag>
       
     </tags>
     
@@ -253,9 +253,9 @@
       
       <tag>hash</tag>
       
-      <tag>enumerate</tag>
-      
       <tag>greedy</tag>
+      
+      <tag>enumerate</tag>
       
     </tags>
     
@@ -538,9 +538,9 @@
       
       <tag>python</tag>
       
-      <tag>point</tag>
-      
       <tag>hash</tag>
+      
+      <tag>point</tag>
       
       <tag>bubble</tag>
       
@@ -604,9 +604,9 @@
       
       <tag>python</tag>
       
-      <tag>point</tag>
-      
       <tag>hash</tag>
+      
+      <tag>point</tag>
       
       <tag>math</tag>
       
@@ -1025,9 +1025,9 @@
       
       <tag>python</tag>
       
-      <tag>string</tag>
-      
       <tag>hash</tag>
+      
+      <tag>string</tag>
       
       <tag>dp</tag>
       
@@ -1326,9 +1326,9 @@
       
       <tag>python</tag>
       
-      <tag>point</tag>
-      
       <tag>hash</tag>
+      
+      <tag>point</tag>
       
     </tags>
     
