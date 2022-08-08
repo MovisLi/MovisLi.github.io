@@ -16,23 +16,23 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
   
-    <meta name="description" content="参考资料： Learn SQL | Sololearn 《SQL 必知必会》（第 5 版）  基础概念 数据库介绍 数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。 数据库由存储相关信息的表组成。 表以行和列的格式存储并展示信息，就像 Excel 表格一样。 数据库通常包含多个表，每个表都因特定的目的而设计。 表可拥有任意数量的行，但只能拥有一定数量的列。">
+    <meta name="description" content="496. 下一个更大元素 I 首先很容易想到暴力法： class Solution:     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:         res &#x3D; []         nums2_len &#x3D; len(nums2)         for i in nums">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL">
-<meta property="og:url" content="https://movisli.github.io/2022/08/04/MySQL%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="LeetCode 496">
+<meta property="og:url" content="https://movisli.github.io/2022/08/09/leetcode20220809/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="参考资料： Learn SQL | Sololearn 《SQL 必知必会》（第 5 版）  基础概念 数据库介绍 数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。 数据库由存储相关信息的表组成。 表以行和列的格式存储并展示信息，就像 Excel 表格一样。 数据库通常包含多个表，每个表都因特定的目的而设计。 表可拥有任意数量的行，但只能拥有一定数量的列。">
+<meta property="og:description" content="496. 下一个更大元素 I 首先很容易想到暴力法： class Solution:     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:         res &#x3D; []         nums2_len &#x3D; len(nums2)         for i in nums">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-08-04T15:34:22.000Z">
-<meta property="article:modified_time" content="2022-08-04T17:01:36.370Z">
+<meta property="article:published_time" content="2022-08-08T17:20:13.000Z">
+<meta property="article:modified_time" content="2022-08-08T17:44:53.613Z">
 <meta property="article:author" content="MovisLi">
-<meta property="article:tag" content="mysql">
-<meta property="article:tag" content="sololearn">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="hash">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>MySQL - movis</title>
+  <title>LeetCode 496 - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MySQL"></span>
+            <span id="subtitle" data-typed-text="LeetCode 496"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-04 23:34" pubdate>
-          August 4, 2022 pm
+        <time datetime="2022-08-09 01:20" pubdate>
+          August 9, 2022 am
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k words
+          722 words
         
       </span>
     
@@ -273,303 +273,50 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">MySQL</h1>
+            <h1 style="display: none">LeetCode 496</h1>
             
             <div class="markdown-body">
               
-              <blockquote>
-<p>参考资料：</p>
-<p><a target="_blank" rel="noopener" href="https://www.sololearn.com/learning/1060">Learn SQL |
-Sololearn</a></p>
-<p>《SQL 必知必会》（第 5 版）</p>
-</blockquote>
-<h1 id="基础概念">基础概念</h1>
-<h2 id="数据库介绍">数据库介绍</h2>
-<p>数据库是一个以便于访问、高效管理与更新的方式组织起来的数据集合。</p>
-<p>数据库由存储相关信息的表组成。</p>
-<p>表以行和列的格式存储并展示信息，就像 Excel 表格一样。</p>
-<p>数据库通常包含多个表，每个表都因特定的目的而设计。</p>
-<p><strong>表可拥有任意数量的行，但只能拥有一定数量的列。</strong></p>
-<blockquote>
-<p>MySQL Server 最多只允许 4096 个字段</p>
-<p>InnoDB 最多只能有 1017 个字段</p>
-<p><a
-target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/column-count-limit.html">MySQL
-:: MySQL 8.0 Reference Manual :: 8.4.7 Limits on Table Column Count and
-Row Size</a></p>
-</blockquote>
-<h2 id="主键---primary-keys">主键 - Primary Keys</h2>
-<p>主键是表中唯一标识表记录的字段。它关键的两个特点：</p>
-<ul>
-<li>每行值唯一。</li>
-<li>非空。</li>
-</ul>
-<p>每张表最多只能有一个主键（也可以没有）。</p>
-<h2 id="sql---structured-query-language">SQL - Structured Query
-Language</h2>
-<p>SQL 中文叫结构化查询语言。</p>
-<p>它用于访问和操作数据库。</p>
-<blockquote>
-<p>SQL 是 ANSI（美国国家标准协会）标准，但 SQL 语言有不同的版本。</p>
-<p>除了 SQL 标准之外，大多数 SQL
-数据库程序都有自己的专有扩展，但它们都支持主要命令。</p>
-<p>MySQL 是其中的一种。</p>
-</blockquote>
-<p>最主要的 4 大功能：<strong>增删查改</strong>。</p>
-<h2 id="基础-sql-命令">基础 SQL 命令</h2>
-<h3 id="show-databases">SHOW DATABASES</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SHOW DATABASES</code></pre></div>
-<p>列出了服务器管理的数据库。</p>
-<h3 id="show-tables">SHOW TABLES</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SHOW TABLES</code></pre></div>
-<p>列出当前数据库里所有表。</p>
-<h3 id="show-columns-from">SHOW COLUMNS FROM</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SHOW COLUMNS FROM 表名</code></pre></div>
-<p>列出表里的所有字段的详细信息。</p>
-<p>如结果可能是</p>
-<table>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Type</th>
-<th>Null</th>
-<th>Key</th>
-<th>Default</th>
-<th>Extra</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>id</td>
-<td>int(11)</td>
-<td>NO</td>
-<td>PRI</td>
-<td>NULL</td>
-<td>auto_increment</td>
-</tr>
-<tr class="even">
-<td>name</td>
-<td>varchar(30)</td>
-<td>YES</td>
-<td></td>
-<td>NULL</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Field - 列名，字段名。</li>
-<li>Type - 列数据类型。</li>
-<li>Null - 字段可否是空值。</li>
-<li>Key - 指示列是否被索引。</li>
-<li>Default - 分配给该列的默认值。</li>
-<li>Extra - 可能包含有关给定列的任何其他可用信息。</li>
-</ul>
-<h1 id="查询">查询</h1>
-<h3 id="select">SELECT</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 列名 FROM 表名;</code></pre></div>
-<p>从一个表中查询指定的列。</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 列名1, 列名2 FROM 表名;</code></pre></div>
-<p>从一个表里查询多列的数据，列名之间用 <code>,</code> 分隔。</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT * FROM 表名;</code></pre></div>
-<p>如果要查询所有列的数据，可以用 <code>*</code> 。</p>
-<ul>
-<li>对于多条 SQL ，每条后需要添加 <code>;</code> 。</li>
-<li>SQL 语言不区分大小写。</li>
-<li>SQL 中忽略空格和多行。
-<ul>
-<li>结合适当的间距和缩进，将命令分成逻辑行将使 SQL
-语句更易于阅读和维护。</li>
-</ul></li>
-</ul>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT 表名.列名 FROM 表名;</code></pre></div>
-<p>同样也可以指定查询某张表的某一列，在表名和列名之间加上 <code>.</code>
-，当处理可能共享相同列名的多个表时，这种书写形式特别有用。</p>
-<h3 id="distinct">DISTINCT</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT DISTINCT
-	列名
-FROM
-	表名;</code></pre></div>
-<p>DISTINCT 关键字可以达到去重的效果。</p>
-<h3 id="limit">LIMIT</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名
-FROM
-	表名
-LIMIT 数量;</code></pre></div>
-<p>LIMIT 关键字可以指定返回结果的数量。</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名
-FROM
-	表名
-OFFSET 数量
-LIMIT 数量;</code></pre></div>
-<p>可以使用 OFFSET 关键字对所取结果中作筛选偏移，可以理解为 OFFSET
-几条就是前几条不要。</p>
-<h3 id="order-by">ORDER BY</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名
-FROM
-	表名
-ORDER BY
-	列名;</code></pre></div>
-<p>ORDER BY 关键字可以将结果排序后再返回。</p>
-<p>如果是数值型列，默认返回从小到大；如果是字符型列，默认返回字母顺序升序。</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	*
-FROM
-	表名
-ORDER BY
-	列名1, 列名2;</code></pre></div>
-<p>ORDER BY 后可以跟两列，像这句一样。这样首先满足 <code>列名1</code>
-的顺序，再满足 <code>列名2</code> 的顺序。</p>
-<h1 id="筛选">筛选</h1>
-<h3 id="where">WHERE</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	表名
-FROM
-	列名
-WHERE
-	条件;</code></pre></div>
-<p>WHERE 语句可用于按条件筛选返回结果。</p>
-<p>使用文本列时，用单引号 <code>'</code>
-将语句中出现的任何文本括起来。</p>
-<p>并且如果字符串内部有单引号，可以使用单引号来转义。例如：</p>
-<p>我有一个查询条件 <code>值 = I'm</code> ，写成：</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">WHERE
-	列名 = &#x27;I&#x27;&#x27;m&#x27;</code></pre></div>
-<p>使用比较运算符和逻辑运算符来过滤要选择的数据。</p>
-<table>
-<thead>
-<tr class="header">
-<th>比较运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>=</td>
-<td>等于</td>
-</tr>
-<tr class="even">
-<td>!=</td>
-<td>不等于</td>
-</tr>
-<tr class="odd">
-<td>&gt;</td>
-<td>大于</td>
-</tr>
-<tr class="even">
-<td>&lt;</td>
-<td>小于</td>
-</tr>
-<tr class="odd">
-<td>&gt;=</td>
-<td>大于等于</td>
-</tr>
-<tr class="even">
-<td>&lt;=</td>
-<td>小于等于</td>
-</tr>
-<tr class="odd">
-<td>BETWEEN</td>
-<td>和 AND 一起筛选一个范围</td>
-</tr>
-</tbody>
-</table>
-<h3 id="between">BETWEEN</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名
-FROM
-	表名
-WHERE
-	列名 BETWEEN 值1 AND 值2;</code></pre></div>
-<p>BETWEEN
-运算符选择范围内的值。第一个值必须是下限，第二个值必须是上限。<strong>这两个值都会被包括进去。</strong></p>
-<h3 id="逻辑运算符">逻辑运算符</h3>
-<table>
-<thead>
-<tr class="header">
-<th>逻辑运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>AND</td>
-<td>返回左右两个条件的交集</td>
-</tr>
-<tr class="even">
-<td>OR</td>
-<td>返回左右两个条件的并集</td>
-</tr>
-<tr class="odd">
-<td>IN</td>
-<td>返回值在后面跟的括号里的结果</td>
-</tr>
-<tr class="even">
-<td>NOT</td>
-<td>对条件取反</td>
-</tr>
-</tbody>
-</table>
-<p>在上述逻辑运算符中，<code>AND</code> 优先级是要比 <code>OR</code>
-高的。</p>
-<p>所以 如果要同时用 <code>AND</code> 和 <code>OR</code> ，最好用括号
-<code>()</code> 把 <code>OR</code> 的括起来以免出错。</p>
-<h3 id="in">IN</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名
-FROM
-	表名
-WHERE
-	列名 IN (值1， 值2);</code></pre></div>
-<p>比较一个列与多个值时，使用 IN 运算符。其效果等同于：</p>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名
-FROM
-	表名
-WHERE
-	列名=值1 OR 列名=值2;</code></pre></div>
-<h3 id="as">AS</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名 AS 新列名
-FROM
-	表名;</code></pre></div>
-<p>用 AS 关键字能够将列名的结果以新列名的标题返回。</p>
-<h3 id="算术运算符">算术运算符</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	列名+值 AS 列名
-FROM
-	表名;</code></pre></div>
-<p>可以使用算术运算符将每列的值都做运算。</p>
-<p>包括四则运算 <code>+-*/</code>
-和括号，括号可用于强制操作优先于任何其他运算符，还用于提高代码的可读性。</p>
-<h1 id="函数">函数</h1>
-<h3 id="concat">CONCAT</h3>
-<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
-	CONCAT(列名1, &#x27;,&#x27;, 列名2)
-FROM
-	表名;</code></pre></div>
-<p>CONCAT 函数用于连接两个或多个文本值并返回连接的字符串。</p>
-<h3 id="upper"><strong>UPPER</strong></h3>
-<p>UPPER 函数将指定字符串中的所有字母转换为大写。</p>
-<h3 id="lower">LOWER</h3>
-<p>LOWER 函数将字符串转换为小写。</p>
-<blockquote>
-<p>如果字符串中有不是字母的字符，这个函数对它们不起作用。</p>
-</blockquote>
-<h3 id="sqrt">SQRT</h3>
-<p>SQRT 函数返回该列中给定值的平方根。</p>
-<h3 id="avg">AVG</h3>
-<p>AVG 函数返回该列的平均值。</p>
-<p><strong>值得注意的是，这个函数只会返回一个值。</strong></p>
-<h3 id="sum">SUM</h3>
-<p>SUM 函数返回该列的和。</p>
-<p><strong>值得注意的是，这个函数只会返回一个值。</strong></p>
-<h1 id="子查询">子查询</h1>
-<h1 id="连接">连接</h1>
-<h1 id="表操作">表操作</h1>
+              <h1 id="下一个更大元素-i">496. 下一个更大元素 I</h1>
+<p>首先很容易想到暴力法：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextGreaterElement</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        res = []
+        nums2_len = <span class="hljs-built_in">len</span>(nums2)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums1:
+            j = nums2.index(i)+<span class="hljs-number">1</span>
+            flag = <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(j, nums2_len):
+                <span class="hljs-keyword">if</span> nums2[v] &gt; i:
+                    res.append(nums2[v])
+                    flag = <span class="hljs-literal">True</span>
+                    <span class="hljs-keyword">break</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> flag:
+                res.append(-<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>不过很慢。很明显，从慢的时间上来讲，肯定是算法不够好而不是没有优化。然后观察上面的算法可以发现，其实慢就慢在
+<code>j = nums2.index(i)+1</code>
+这里。每次都得重新去寻找元素的下标，这个时候就会想到空间换时间这种方法，就会想到
+<code>dict</code> ，也就是哈希：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextGreaterElement</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        res = []
+        hashmap = &#123;&#125;
+        nums2_len = <span class="hljs-built_in">len</span>(nums2)
+        <span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(nums2):
+            hashmap[v] = i
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums1:
+            j = hashmap[i]+<span class="hljs-number">1</span>
+            flag = <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">while</span> j&lt;nums2_len:
+                <span class="hljs-keyword">if</span> nums2[j] &gt; i:
+                    res.append(nums2[j])
+                    flag = <span class="hljs-literal">True</span>
+                    <span class="hljs-keyword">break</span>
+                j += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> flag:
+                res.append(-<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
 
               
             </div>
@@ -587,13 +334,20 @@ FROM
     
       <span class="category-chain">
         
-  <a href="/categories/DataScience/" class="category-chain-item">DataScience</a>
+  <a href="/categories/ComputerScience/" class="category-chain-item">ComputerScience</a>
   
   
     <span>></span>
     
-  <a href="/categories/DataScience/Database/" class="category-chain-item">Database</a>
+  <a href="/categories/ComputerScience/Algorithm/" class="category-chain-item">Algorithm</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/ComputerScience/Algorithm/LeetCode/" class="category-chain-item">LeetCode</a>
+  
+  
+
   
 
   
@@ -609,9 +363,9 @@ FROM
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/mysql/">#mysql</a>
+        <a href="/tags/python/">#python</a>
       
-        <a href="/tags/sololearn/">#sololearn</a>
+        <a href="/tags/hash/">#hash</a>
       
     </div>
   
@@ -623,8 +377,8 @@ FROM
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MySQL</div>
-      <div>https://movisli.github.io/2022/08/04/MySQL学习/</div>
+      <div>LeetCode 496</div>
+      <div>https://movisli.github.io/2022/08/09/leetcode20220809/</div>
     </div>
     <div class="license-meta">
       
@@ -636,7 +390,7 @@ FROM
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>August 4, 2022</div>
+          <div>August 9, 2022</div>
         </div>
       
       
@@ -670,8 +424,8 @@ FROM
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/02/leetcode20220802-2/" title="LeetCode 492 495">
-                        <span class="hidden-mobile">LeetCode 492 495</span>
+                      <a href="/2022/08/04/MySQL%E5%9F%BA%E7%A1%80/" title="MySQL 基础">
+                        <span class="hidden-mobile">MySQL 基础</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
