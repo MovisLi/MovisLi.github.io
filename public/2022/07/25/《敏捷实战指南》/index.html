@@ -1,0 +1,1318 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.jpg">
+  <link rel="icon" href="/img/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414142">
+  <meta name="author" content="MovisLi">
+  <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
+  
+    <meta name="description" content="1. 引论 这里用了一个叫做预测法的东西作为对比。作者提到，本书适用于：  对于预测法与敏捷方法难以取舍的项目团队。 试图解决快速创新和复杂性问题的项目团队。 致力于团队改进的项目团队。  本书的目的是：  帮助项目取得成功。 帮助项目团队顺利交付商业价值。 满足客户的期望和需求。  看第一章所述内容似乎是解决新技术应用到现有的项目上，但寻求不降低项目开发效率的项目管理思">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《敏捷实战指南》 - 读书笔记">
+<meta property="og:url" content="https://movisli.github.io/2022/07/25/%E3%80%8A%E6%95%8F%E6%8D%B7%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E3%80%8B/index.html">
+<meta property="og:site_name" content="movis">
+<meta property="og:description" content="1. 引论 这里用了一个叫做预测法的东西作为对比。作者提到，本书适用于：  对于预测法与敏捷方法难以取舍的项目团队。 试图解决快速创新和复杂性问题的项目团队。 致力于团队改进的项目团队。  本书的目的是：  帮助项目取得成功。 帮助项目团队顺利交付商业价值。 满足客户的期望和需求。  看第一章所述内容似乎是解决新技术应用到现有的项目上，但寻求不降低项目开发效率的项目管理思">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-25T15:00:34.000Z">
+<meta property="article:modified_time" content="2022-08-11T13:38:24.675Z">
+<meta property="article:author" content="MovisLi">
+<meta property="article:tag" content="management">
+<meta property="article:tag" content="develop">
+<meta property="article:tag" content="scrum">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>《敏捷实战指南》 - 读书笔记 - movis</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Movis</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="《敏捷实战指南》 - 读书笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        MovisLi
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-25 23:00" pubdate>
+          July 25, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.8k words
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《敏捷实战指南》 - 读书笔记</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="引论">1. 引论</h1>
+<p>这里用了一个叫做预测法的东西作为对比。作者提到，本书适用于：</p>
+<ul>
+<li>对于预测法与敏捷方法难以取舍的项目团队。</li>
+<li>试图解决快速创新和复杂性问题的项目团队。</li>
+<li>致力于团队改进的项目团队。</li>
+</ul>
+<p>本书的目的是：</p>
+<ul>
+<li>帮助项目取得成功。</li>
+<li>帮助项目团队顺利交付商业价值。</li>
+<li>满足客户的期望和需求。</li>
+</ul>
+<p>看第一章所述内容似乎是解决新技术应用到现有的项目上，但寻求不降低项目开发效率的项目管理思路，称之为敏捷思维模式。</p>
+<h1 id="敏捷概述">2. 敏捷概述</h1>
+<h2 id="可确定的工作与高度不确定的工作">2.1
+可确定的工作与高度不确定的工作</h2>
+<p>项目工作包括两种不同类型：</p>
+<ul>
+<li>可确定的工作 - 执行的不确定性和风险通常较低，归宿是自动化。</li>
+<li>高度不确定的工作 - 探索性工作，项目变化速度快，复杂性和风险高。</li>
+</ul>
+<p>这里提到了<strong>预测法</strong>，其实就是传统开发过程，大概类似可行性分析、需求分析、总体设计、详细设计、编码、测试、部署上线的软件开发流程。这种流程应对变更的能力稍微有点弱（其实就是每一个阶段的质量都必须充分的保证，给人犯错的空间比较小），所以这个时候需要一种在短时间内探讨可行性，根据评估和反馈快速调整的开发过程（给试错的空间，这里跟高度不确定性相呼应），也就是敏捷方法。</p>
+<h2 id="敏捷宣言及思维模式">2.2 《敏捷宣言》及思维模式</h2>
+<ul>
+<li>四大价值观
+<ul>
+<li><p>重视个体以及互动而不是过程和工具。</p>
+<blockquote>
+<p>这个应该是为了发掘更多可改善的地方。</p>
+</blockquote></li>
+<li><p>可用的软件而不是完整的文档。</p>
+<blockquote>
+<p>这个大概是讲软件比较完善的时候再沉淀一下弄文档？不然对项目专家的依赖度也太高了。</p>
+</blockquote></li>
+<li><p>客户合作而不是合同谈判。</p>
+<blockquote>
+<p>这个应该是针对深入业务这一点所说的吧。但是感觉这两个并没有对立关系。</p>
+</blockquote></li>
+<li><p>应对变更而不是遵循计划。</p>
+<blockquote>
+<p>个人觉得这点恐怕对团队的能力要求有点高。</p>
+</blockquote></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>上面所说的是敏捷开发的一个价值观，总体来讲我觉得对整个团队里每个人能力的要求都要比传统的高一点，这个不太好做其实。</p>
+</blockquote>
+<ul>
+<li>十二大原则
+<ul>
+<li><p>最高目标，通过尽早持续交付有价值的软件来满足客户的需求。</p>
+<blockquote>
+<p>比起传统方法多了个快。</p>
+</blockquote></li>
+<li><p>欢迎对需求提出变更，善于利用变更，以帮助客户获得竞争优势。</p>
+<blockquote>
+<p>其实需求变更这个东西怎么说呢，软件开发者不太想要。至少能不停变更需求的软件与定好需求的软件不是一个价格，基于需求要变更这个前提，敏捷开发会比传统方法舒服。</p>
+</blockquote></li>
+<li><p>要经常交付可用的软件。</p>
+<blockquote>
+<p>这里应该是指局部交付，以避免所有东西都做出来结果发现不尽人意这种情况，通过这种方式尽快找出错误。</p>
+</blockquote></li>
+<li><p>项目实施过程中，业务人员与开发人员必须始终通力合作。</p>
+<blockquote>
+<p>这一点我个人是非常赞同的。很多时候，开发人员从技术上提升的代价比更深入理解业务大很多。</p>
+</blockquote></li>
+<li><p>善于激励项目人员，给予他们所需的环境和支持，并相信他们能够完成任务。</p>
+<blockquote>
+<p>我觉得看人。</p>
+</blockquote></li>
+<li><p>无论是对开发团队还是团队内部，信息传达最有效的方法都是面对面交谈。</p>
+<blockquote>
+<p>确实。</p>
+</blockquote></li>
+<li><p>可用的软件是衡量进度的首要衡量标准。</p>
+<blockquote>
+<p>类似于 Talk is cheap, show me your code.</p>
+</blockquote></li>
+<li><p>敏捷过程提倡可持续的开发。项目发起人、开发人员和用户应该都能够始终保证持续步调稳定性。</p>
+<blockquote>
+<p>对开发人员的状态是个考验。</p>
+</blockquote></li>
+<li><p>对技术的精益求精以及对设计的不断完善将提高敏捷性。</p>
+<blockquote>
+<p>其实这点是不是敏捷开发都一样的。</p>
+</blockquote></li>
+<li><p>简洁，即尽最大可能减少不必要的工作。</p>
+<blockquote>
+<p>这点对管理者是个考验。</p>
+</blockquote></li>
+<li><p>最佳的架构、需求和设计将出自组织团队。</p>
+<blockquote>
+<p>对组织团队有点依赖，不过要敏捷的话确实只有这样。</p>
+</blockquote></li>
+<li><p>团队定期反省怎样做才能更有效，并相应地调整团队地行为。</p>
+<blockquote>
+<p>这点讲究开发过程的变化。</p>
+</blockquote></li>
+</ul></li>
+</ul>
+<h2 id="精益与看板方法">2.3 精益与看板方法</h2>
+<p>重点在于：</p>
+<ul>
+<li><p>交付价值</p>
+<blockquote>
+<p>我觉得是指客户满意度这方面来讲。</p>
+</blockquote></li>
+<li><p>尊重人</p>
+<blockquote>
+<p>对客户来讲确实尊重，对开发者来讲其实有点压榨的意思，当然也可以说是信任开发者，这个恐怕得看人。</p>
+</blockquote></li>
+<li><p>减少浪费</p>
+<blockquote>
+<p>这点对项目经理（专家）要求会高一点。</p>
+</blockquote></li>
+<li><p>透明化</p>
+<blockquote>
+<p>这个确实是优点，可以看到每个人在干嘛。</p>
+</blockquote></li>
+<li><p>适应变更</p>
+<blockquote>
+<p>这个有点像是附加价值。</p>
+</blockquote></li>
+<li><p>持续改善</p>
+<blockquote>
+<p>比起改善更强调持续。这种对项目发起人的要求会高一点，可能会出现一种情况，就是项目发起人指负责规划并不参与做项目，由开发技术员做，感觉提供价值方面不太好说。</p>
+</blockquote></li>
+</ul>
+<h2 id="不确定性风险和生命周期选择">2.4
+不确定性、风险和生命周期选择</h2>
+<p>这里不确定性指需求的不确定性与技术的不确定性两方面，风险指返工的风险。</p>
+<p>这里提倡用较小的工作增量验证自身的工作，相当于是每做一个模块的东西，就去汇报验证看是否满足需求，即使返工也只是很小的返工这种方式。</p>
+<ul>
+<li>非常短的反馈循环。</li>
+<li>频繁调整过程。</li>
+<li>重新进行优先级排序。</li>
+<li>定期更新计划。</li>
+<li>频繁交付。</li>
+</ul>
+<p>但是这里也明确说了并不是什么都适合敏捷开发，如果一项任务没有中间成果，或者没有原型的时候，比较适合主用预测法去开发，用敏捷方法去管理新的迭代需求和增量交付成果。</p>
+<p>当技术和需求的不确定性都很高的时候，为了使项目可靠，需要先遏制其中一个不确定性的变量。</p>
+<blockquote>
+<p>从这一节开始，我觉得他讲得有点道理。</p>
+</blockquote>
+<h1 id="生命周期选择">3. 生命周期选择</h1>
+<p>这里详细说明了 4 种生命周期的定义：</p>
+<ul>
+<li>预测型生命周期 -
+提前进行大量的计划工作，然后一次性执行；执行时一个连续的过程。</li>
+<li>迭代型生命周期 -
+这种方法允许对未完成的工作进行反馈，从而改进和修改该工作。</li>
+<li>增量型生命周期 -
+这种方法向客户提供各个已完成的，可能立即使用的可交付成果。</li>
+<li>敏捷型生命周期 -
+这种方法既有迭代，也有增量，便于完善工作，频繁交付。</li>
+</ul>
+<h2 id="项目生命周期的特征">3.1 项目生命周期的特征</h2>
+<table>
+
+<thead>
+<tr class="header">
+<th>方法</th>
+<th>需求</th>
+<th>活动</th>
+<th>交付</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>预测型</td>
+<td>固定</td>
+<td>整个项目仅执行一次</td>
+<td>一次交付</td>
+<td>管理成本</td>
+</tr>
+<tr class="even">
+<td>迭代型</td>
+<td>动态</td>
+<td>反复执行直至修正</td>
+<td>一次交付</td>
+<td>解决方案的正确性</td>
+</tr>
+<tr class="odd">
+<td>增量型</td>
+<td>动态</td>
+<td>对给定增量执行一次</td>
+<td>频繁更小规模交付</td>
+<td>速度</td>
+</tr>
+<tr class="even">
+<td>敏捷型</td>
+<td>动态</td>
+<td>反复执行直至修正</td>
+<td>频繁小规模交付</td>
+<td>通过频繁小规模交付和反馈实现的客户价值</td>
+</tr>
+</tbody>
+</table>
+<p>选择哪一个生命周期取决于需求的变更程度与交付频率。</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>需求变更低</th>
+<th>需求变更高</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>交付频率高</strong></td>
+<td>增量型</td>
+<td>敏捷型</td>
+</tr>
+<tr class="even">
+<td><strong>交付频率低</strong></td>
+<td>预测型</td>
+<td>迭代型</td>
+</tr>
+</tbody>
+</table>
+<h3 id="预测型生命周期的特征">3.1.1 预测型生命周期的特征</h3>
+<pre><code class=" mermaid">graph LR
+demand(需求)--&gt;analysis
+analysis(分析)--&gt;design
+design(设计)--&gt;code
+code(构建)--&gt;test
+test(测试)--&gt;deploy(交付)</code></pre>
+<p>强调部门划分、有效、顺序的工作。有点谋定而后动的意思，好处自然就是计划非常清晰明了，文档也易构建。坏处就是可能在开发之前就得确定好明确的需求，除此之外还需要对技术有充分的了解，应对需求不确定性和技术不确定性的能力太弱。</p>
+<h3 id="迭代型生命周期的特征">3.1.2 迭代型生命周期的特征</h3>
+<pre><code class=" mermaid">graph LR
+analysis(需求)--&gt;phase2(分析与设计)
+phase2--&gt;|概念验证| phase2
+phase2--&gt;phase3(构建与测试)
+phase3--&gt;|改善| phase3
+phase3--&gt;deploy(交付)</code></pre>
+<p>有点类似与一个学习的开发过程。通过连续的原型或概念验证来改进产品或成果。在同一个时间盒内可能涉及到长达数周时间的迭代。生命周期可能会很长，因为它是为了学习而优化，而不是为交付速度而优化。</p>
+<h3 id="增量型生命周期的特征">3.1.3 增量型生命周期的特征</h3>
+<pre><code class=" mermaid">graph LR
+demand(需求) --&gt; phase1
+phase1(分析-设计-构建-测试-交付) --&gt; phase2(分析-设计-构建-测试-交付)
+phase2 --&gt; phase3(分析-设计-构建-测试-交付)</code></pre>
+<p>一点一点的交付，突出交付速度快，减少潜在返工。</p>
+<h3 id="敏捷生命周期的特征">3.1.4 敏捷生命周期的特征</h3>
+<pre><code class=" mermaid">graph LR
+phase1(需求-分析-设计-构建-测试) --&gt; phase2(需求-分析-设计-构建-测试)
+phase2 --&gt; deploy1(交付)
+deploy1(交付) --&gt; phase3(需求-分析-设计-构建-测试)
+phase3 --&gt; phase4(需求-分析-设计-构建-测试)
+phase4 --&gt; phase5(需求-分析-设计-构建-测试)
+phase5 --&gt; deploy2(交付)</code></pre>
+<p>类似增量型和迭代型的结合体。</p>
+<h3 id="敏捷适用性筛选器">3.1.5 敏捷适用性筛选器</h3>
+<h3 id="混合生命周期的特征">3.1.6 混合生命周期的特征</h3>
+<p>依据不同的目标在项目不同的模块选择不同的开发方法。</p>
+<h3 id="结合了敏捷和预测的方法">3.1.7 结合了敏捷和预测的方法</h3>
+<h3 id="以预测法为主敏捷方法为辅的方法">3.1.8
+以预测法为主、敏捷方法为辅的方法</h3>
+<h3 id="以敏捷方法为主预测法为辅的方法">3.1.9
+以敏捷方法为主、预测法为辅的方法</h3>
+<h3 id="符合目的的混合生命周期">3.1.10 符合目的的混合生命周期</h3>
+<p>要根据目的去选择开发方法。</p>
+<h3 id="混合型生命周期作为过渡策略">3.1.11
+混合型生命周期作为过渡策略</h3>
+<p>在预测法的项目上去使用敏捷方法作为过渡而不是一开始就在大项目上使用敏捷方法。</p>
+<h2 id="混合敏捷方法">3.2 混合敏捷方法</h2>
+<p>敏捷方法有很多，根据需要进行组合。</p>
+<h2 id="影响裁剪的项目因素">3.3 影响裁剪的项目因素</h2>
+<table>
+
+<thead>
+<tr class="header">
+<th>项目因素</th>
+<th>裁剪方案</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>对不稳定需求的适应</td>
+<td>使用节奏（定期时间盒）帮助团队进行演示、回顾与理解新任务。</td>
+</tr>
+<tr class="even">
+<td>改进速度不够快</td>
+<td>更频繁地回归并选择改进措施。</td>
+</tr>
+<tr class="odd">
+<td>工作流容易被打断</td>
+<td>利用看板让工作可见，分配任务优先级。</td>
+</tr>
+<tr class="even">
+<td>产品增量质量不佳</td>
+<td>以测试为重点。</td>
+</tr>
+<tr class="odd">
+<td>多团队协同</td>
+<td>精心制定一种符合项目背景的方法。</td>
+</tr>
+<tr class="even">
+<td>团队成员缺乏敏捷经验</td>
+<td>培养敏捷思维模式和敏捷原则的基本原理。使用特定敏捷方法前开研讨会。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="实施敏捷创建敏捷环境">4. 实施敏捷：创建敏捷环境</h1>
+<h2 id="从敏捷思维模式开始">4.1 从敏捷思维模式开始</h2>
+<p>从几个问题开始：</p>
+<ul>
+<li>项目团队如何以敏捷方式行动？</li>
+<li>为了使下一交付周期受益，团队需要快速交付哪些成果并获得早期反馈？</li>
+<li>团队如何以一种透明的方式行动？</li>
+<li>为了专注于高优先级的目标，可以避免哪些工作？</li>
+<li>仆人式领导对团队达成目标有何益处？</li>
+</ul>
+<h2 id="仆人式领导为团队赋权">4.2 仆人式领导为团队赋权</h2>
+<p>仆人式领导使通过对团队服务来领导团队的实践，它注重理解和关注团队成员的需要和发展，旨在使团队尽可能达到最高成绩。</p>
+<h3 id="仆人式领导的职责">4.2.1 仆人式领导的职责</h3>
+<ul>
+<li>促进合作。</li>
+<li>审视阻碍敏捷的过程，努力使其合理化。</li>
+<li>鼓励团队成员，让人尽其才。</li>
+<li>培养团队发展。</li>
+</ul>
+<h3 id="项目经理在敏捷环境中的角色">4.2.2
+项目经理在敏捷环境中的角色</h3>
+<p>项目经理作为技术人员的服务者而不是管理者。</p>
+<h3 id="项目经理应用仆人式领导">4.2.3 项目经理应用仆人式领导</h3>
+<p>要把责任分配给有能力的人。</p>
+<h2 id="团队构成">4.3 团队构成</h2>
+<h3 id="敏捷团队">4.3.1 敏捷团队</h3>
+<table>
+
+<thead>
+<tr class="header">
+<th>属性</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>专门人团</td>
+<td>专心，提高工作效率；少于十人的小型团队。</td>
+</tr>
+<tr class="even">
+<td>跨职能团队成员</td>
+<td>频繁开发交付；作为独立团队交付；整合工作；向团队内部外部提供反馈。</td>
+</tr>
+<tr class="odd">
+<td>集中办公或有能力应对办公地点不同</td>
+<td>改善沟通；挺高团队动力；知识共享；降低学习成本；合作。</td>
+</tr>
+<tr class="even">
+<td>通才和专家组成的混合团队</td>
+<td>专家提供专门技能，通才提供从事不同工作的灵活性；团队具有专业能力，体现在都称为通才型专家。</td>
+</tr>
+<tr class="odd">
+<td>稳定的工作环境</td>
+<td>彼此依赖；对工作方法相互认同；简化团队成本；知识资本的保证和发展。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>这，感觉对技术人员的要求也太高了。感觉不太可行。</p>
+</blockquote>
+<h3 id="敏捷的角色">4.3.2 敏捷的角色</h3>
+<ul>
+<li><p>跨职能团队成员</p></li>
+<li><p>产品负责人</p>
+<blockquote>
+<p>我感觉这个才是真正的大佬。</p>
+</blockquote></li>
+<li><p>团队促进者</p>
+<blockquote>
+<p>听起来有点玄乎。Scrum Master 居然是这个，我说实话不能接受。</p>
+</blockquote></li>
+</ul>
+<h3 id="通才型专家">4.3.3 通才型专家</h3>
+<p>知识广度够，也有专攻的 T 字型人才。</p>
+<h3 id="团队结构">4.3.4 团队结构</h3>
+<p>以产品为主，将人员组织到跨职能的团队中。</p>
+<blockquote>
+<p>做东西来讲这点挺好，问题就是这个知识和技术积累有点困难。</p>
+</blockquote>
+<h3 id="专职小组成员">4.3.5 专职小组成员</h3>
+<p>这里阐述在这个团队里专职工作的小组成员比较重要。分散尽力去做多个项目会造成切换时的效率浪费。</p>
+<h3 id="团队工作场所">4.3.6 团队工作场所</h3>
+<p>独立的私人办公区域与定期开会合作交流。</p>
+<h3 id="克服组织孤岛">4.3.7 克服组织孤岛</h3>
+<p>平等的话语权，意见都能被听到并得到考虑。</p>
+<blockquote>
+<p>前提是有话语权的人有足够水平的见解和技术吧。</p>
+</blockquote>
+<h1 id="实施敏捷在敏捷环境中交付">5. 实施敏捷：在敏捷环境中交付</h1>
+<h2 id="项目章程和团队章程">5.1 项目章程和团队章程</h2>
+<p>章程：</p>
+<ul>
+<li>项目重要的原因</li>
+<li>团队前景方向</li>
+<li>项目目标</li>
+</ul>
+<p>敏捷项目章程：</p>
+<ul>
+<li>项目愿景 - 我们为什么要做这个项目？</li>
+<li>项目远景或项目目标的一部分 - 谁会从中受益？如何受益？</li>
+<li>项目的发布标准 - 达到哪些条件才意味着项目完成？</li>
+<li>预期的工作流 - 我们将怎样合作？</li>
+</ul>
+<p>团队章程：</p>
+<ul>
+<li>团队价值观。</li>
+<li>工作协议，“就绪”如何定义，这是团队可以接受工作的前提；“完成”如何定义，达成一致；考虑时间盒，使用工作过程限制。</li>
+<li>基本规则，有关一个人在会议发言上的规定。</li>
+<li>团队规范，团队如何对待会议时间。</li>
+</ul>
+<h2 id="常见敏捷实践">5.2 常见敏捷实践</h2>
+<h3 id="回顾">5.2.1 回顾</h3>
+<p>团队定期反省如何能够做到更加有效，并相应地调整团队的行为。</p>
+<h3 id="待办事项列表编制">5.2.2 待办事项列表编制</h3>
+<p>所有工作的有序列表，故事。</p>
+<h3 id="待办事项列表的细化">5.2.3 待办事项列表的细化</h3>
+<p>任务，可能是即时制定的，也可能是迭代会上制定的，也可以是多次会议讨论（比较陌生的项目）。</p>
+<h3 id="每日站会">5.2.4 每日站会</h3>
+<p>过一下看板和任务盒。回答以下问题：</p>
+<ul>
+<li><p>基于迭代的敏捷</p>
+<ul>
+<li><p>上次站会以来我都完成了什么？</p></li>
+<li><p>从现在到下一次站会，我计划完成什么？</p></li>
+<li><p>我的障碍是什么？</p></li>
+</ul></li>
+<li><p>基于流程的敏捷</p>
+<ul>
+<li>我们还需要做些什么来推进这一工作？</li>
+<li>有人在做看板上没有的事情吗？</li>
+<li>作为一个团队，我们需要完成什么？</li>
+<li>工作流程是否存在瓶颈或障碍？</li>
+</ul></li>
+</ul>
+<h3 id="展示评审">5.2.5 展示/评审</h3>
+<p>故事完成后，展示时，产品负责人接受或拒绝故事。</p>
+<h3 id="规划基于迭代的敏捷">5.2.6 规划基于迭代的敏捷</h3>
+<p>反复计划与学习。</p>
+<blockquote>
+<p>这块我感觉是为了敏捷而敏捷。</p>
+</blockquote>
+<h3 id="帮助团队交付价值的执行实践">5.2.7
+帮助团队交付价值的执行实践</h3>
+<ul>
+<li>持续集成</li>
+<li>在不同层面测试</li>
+<li>验收测试驱动开发</li>
+<li>测试驱动开发</li>
+<li>刺探（时间盒研究或实验）</li>
+</ul>
+<h3 id="迭代和增量如何帮助交付工作产品">5.2.8
+迭代和增量如何帮助交付工作产品</h3>
+<p>迭代帮助团队为交付和多种反馈创建一个节奏。</p>
+<p>增量帮助团队频繁交付。</p>
+<h2 id="解决敏捷项目的挑战">5.3 解决敏捷项目的挑战</h2>
+<table>
+
+<thead>
+<tr class="header">
+<th>痛点</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>目标或任务不明确</td>
+<td>愿景、使命。</td>
+</tr>
+<tr class="even">
+<td>工作协议不明确</td>
+<td>价值观、原则和工作协议。</td>
+</tr>
+<tr class="odd">
+<td>团队环境不明确</td>
+<td>边界、承诺资产和前瞻性分析。</td>
+</tr>
+<tr class="even">
+<td>需求不明确</td>
+<td>帮助发起人和相关方制定产品愿景。</td>
+</tr>
+<tr class="odd">
+<td>用户体验不佳</td>
+<td>设计实践早期让用户参与。</td>
+</tr>
+<tr class="even">
+<td>估算不准确</td>
+<td>分解故事。进一步细估。</td>
+</tr>
+<tr class="odd">
+<td>工作分配或进展不明确</td>
+<td>自我管理工作。看板，每日站会。</td>
+</tr>
+<tr class="even">
+<td>团队面临障碍</td>
+<td>仆人式领导消除，消除不了就上报。</td>
+</tr>
+<tr class="odd">
+<td>产品待办事项不完善导致工作延误、超时</td>
+<td>产品负责人和团队一起研讨故事。“就绪”的定义。</td>
+</tr>
+<tr class="even">
+<td>缺陷</td>
+<td>完成工作的定义。</td>
+</tr>
+<tr class="odd">
+<td>工作未完成</td>
+<td>为完成工作定义。</td>
+</tr>
+<tr class="even">
+<td>技术债务</td>
+<td>重构，测试。</td>
+</tr>
+<tr class="odd">
+<td>产品复杂性过高</td>
+<td>提倡简单，思考简单。</td>
+</tr>
+<tr class="even">
+<td>合作进展缓慢</td>
+<td>仆人式领导负责协调。</td>
+</tr>
+<tr class="odd">
+<td>前期工作过多导致返工</td>
+<td>不要做过多的工作，通过刺探来学习。</td>
+</tr>
+<tr class="even">
+<td>错误的开始</td>
+<td>产品负责人的重要性。</td>
+</tr>
+<tr class="odd">
+<td>待办事项无序</td>
+<td>创建不同优先级。</td>
+</tr>
+<tr class="even">
+<td>不均匀的工作流程</td>
+<td>计划对应团队的能力。</td>
+</tr>
+<tr class="odd">
+<td>相关方要求无法满足</td>
+<td>仆人式领导与产品负责人一起工作。</td>
+</tr>
+<tr class="even">
+<td>意想不到或不可预见的延误</td>
+<td>团队更频繁地检查工作流。</td>
+</tr>
+<tr class="odd">
+<td>孤立的团队，而不是跨职能团队</td>
+<td>讲明是以产品为主的团队而不是以职能。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="敏捷项目的衡量指标">5.4 敏捷项目的衡量指标</h2>
+<p>定义完成和拒绝。</p>
+<h3 id="敏捷团队的衡量结果">5.4.1 敏捷团队的衡量结果</h3>
+<p>倾向使用基于经验和价值的衡量指标，而不是预测型衡量指标。</p>
+<h1 id="关于项目敏捷性的组织考虑因素">6.
+关于项目敏捷性的组织考虑因素</h1>
+<h2 id="组织变革管理">6.1 组织变革管理</h2>
+<h3 id="变革管理驱动因素">6.1.1 变革管理驱动因素</h3>
+<ul>
+<li>与加速交付相关的变革。</li>
+<li>与敏捷方法相关的变革。</li>
+</ul>
+<h3 id="变革就绪情况">6.1.2 变革就绪情况</h3>
+<p>变革友好型特征：</p>
+<ul>
+<li>管理层的变革意愿。</li>
+<li>组织在员工认知、审核和评估方式上做出改变的意愿。</li>
+<li>集中或分散项目、项目于集和项目组合管理职能。</li>
+<li>专注于短期预算和指标而不是长期目标。</li>
+<li>人才管理成熟度和能力。</li>
+</ul>
+<h2 id="组织文化">6.2 组织文化</h2>
+<h3 id="创建安全环境">6.2.1 创建安全环境</h3>
+<p>安全、诚实、透明。</p>
+<h3 id="评估文化">6.2.2 评估文化</h3>
+<ul>
+<li>探索 or 执行</li>
+<li>速度 or 稳定性</li>
+<li>数量 or 质量</li>
+<li>灵活性 or 可预测性</li>
+</ul>
+<h2 id="采购和合同">6.3 采购和合同</h2>
+<ul>
+<li>多层结构。</li>
+<li>强调价值交付。</li>
+<li>总价增量。</li>
+<li>固定时间和材料。</li>
+<li>累进的时间和材料。</li>
+<li>提前取消方案。</li>
+<li>动态范围方案。</li>
+<li>团队扩充。</li>
+<li>支持全方位供应商。</li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Management/" class="category-chain-item">Management</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/management/">#management</a>
+      
+        <a href="/tags/develop/">#develop</a>
+      
+        <a href="/tags/scrum/">#scrum</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>《敏捷实战指南》 - 读书笔记</div>
+      <div>https://movisli.github.io/2022/07/25/《敏捷实战指南》/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>MovisLi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 25, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/02/leetcode20220802/" title="LeetCode 461 463 476 482 485">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LeetCode 461 463 476 482 485</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/25/leetcode20220725/" title="LeetCode 455 459">
+                        <span class="hidden-mobile">LeetCode 455 459</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
