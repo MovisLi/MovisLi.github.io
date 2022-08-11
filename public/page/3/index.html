@@ -232,7 +232,7 @@
       <a class="index-excerpt" href="/2022/06/07/leetcode20220607/" target="_self">
         <div>
           
-          283. 移动零 第一种就是想办法绕过测试。其实还是复制数组而非原地算法。 class Solution:     def moveZeroes(self, nums: List[int]) -&gt; None:         array &#x3D; []         for i in nums:             if i !&#x3D; 0:                 array.app
+          283. 移动零 第一种就是想办法绕过测试。其实还是复制数组而非原地算法。 class Solution:     def moveZeroes(self, nums: List[int]) -&gt; None:         array &#x3D; []         for i in nums:             if i !&#x3D; 0:                 array.appen
         </div>
       </a>
 
@@ -313,7 +313,7 @@
       <a class="index-excerpt" href="/2022/06/06/leetcode20220606/" target="_self">
         <div>
           
-          278. 第一个错误的版本 二分查找可以解决，左指针left记录当前正确的版本，右指针right记录当前错误的版本，所以当right-left&#x3D;1时，right所指的就是第一个错误的版本，也就是结果。 class Solution:     def firstBadVersion(self, n):         left &#x3D; 0         right &#x3D; n         mid
+          278. 第一个错误的版本 二分查找可以解决，左指针left记录当前正确的版本，右指针right记录当前错误的版本，所以当right-left&#x3D;1时，right所指的就是第一个错误的版本，也就是结果。 class Solution:     def firstBadVersion(self, n):         left &#x3D; 0         right &#x3D; n         mid &#x3D;
         </div>
       </a>
 
@@ -392,7 +392,7 @@
       <a class="index-excerpt" href="/2022/06/05/leetcode20220605/" target="_self">
         <div>
           
-          263. 丑数 根据丑数的定义，1是第一个丑数，而且质因数只有2、3、5，就有如下代码。优化的地方就是除2可以用位运算。 class Solution:     def isUgly(self, n: int) -&gt; bool:         if n &lt;&#x3D; 0:             return False         while n%2 &#x3D;&#x3D; 0:
+          263. 丑数 根据丑数的定义，1是第一个丑数，而且质因数只有2、3、5，就有如下代码。优化的地方就是除2可以用位运算。 class Solution:     def isUgly(self, n: int) -&gt; bool:         if n &lt;&#x3D; 0:             return False         while n%2 &#x3D;&#x3D; 0:
         </div>
       </a>
 
@@ -473,7 +473,7 @@
       <a class="index-excerpt" href="/2022/06/04/leetcode20220603/" target="_self">
         <div>
           
-          258. 各位相加 简单循环，模拟题目中描述的过程逐位相加直到num小于10。 class Solution:     def addDigits(self, num: int) -&gt; int:         while num &gt;&#x3D; 10:             num_str &#x3D; str(num)             num &#x3D; sum([int(i) for i in
+          258. 各位相加 简单循环，模拟题目中描述的过程逐位相加直到num小于10。 class Solution:     def addDigits(self, num: int) -&gt; int:         while num &gt;&#x3D; 10:             num_str &#x3D; str(num)             num &#x3D; sum([int(i) for i in n
         </div>
       </a>
 
@@ -552,7 +552,7 @@
       <a class="index-excerpt" href="/2022/06/01/leetcode20220601/" target="_self">
         <div>
           
-          242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 class Solution:     def isAnagram(self, s: str, t: str) -&gt; bool:         import operator         return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行计
+          242. 有效的字母异位词 排序，比较两个字符串排序后是否相同。 class Solution:     def isAnagram(self, s: str, t: str) -&gt; bool:         import operator         return operator.eq(sorted(list(s)), sorted(list(t))) 哈希，用dict进行计数。比
         </div>
       </a>
 
@@ -629,7 +629,7 @@
       <a class="index-excerpt" href="/2022/05/29/leetcode20220529/" target="_self">
         <div>
           
-          228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 class Solution:     def summaryRanges(self, nums: List[int]) -&gt; List[str]:         res &#x3D; []         start &#x3D; 0         length &#x3D; len(n
+          228. 汇总区间 双指针 start 和 end ，开始遍历数组，每次循环找到一组可以被添加的值，注意下里循环条件就好。 class Solution:     def summaryRanges(self, nums: List[int]) -&gt; List[str]:         res &#x3D; []         start &#x3D; 0         length &#x3D; len(nums
         </div>
       </a>
 
@@ -708,7 +708,7 @@
       <a class="index-excerpt" href="/2022/05/27/leetcode20220527/" target="_self">
         <div>
           
-          217. 存在重复元素 简单hash，建立一个set，遍历数组，如果元素不在里面就添加，如果在里面就返回True。 class Solution:     def containsDuplicate(self, nums: List[int]) -&gt; bool:         hashset &#x3D; set(&amp;#x27;&amp;#x27;)         for i in nums:
+          217. 存在重复元素 简单hash，建立一个set，遍历数组，如果元素不在里面就添加，如果在里面就返回True。 class Solution:     def containsDuplicate(self, nums: List[int]) -&gt; bool:         hashset &#x3D; set(&amp;#x27;&amp;#x27;)         for i in nums:
         </div>
       </a>
 
@@ -785,7 +785,7 @@
       <a class="index-excerpt" href="/2022/05/26/leetcode20220526/" target="_self">
         <div>
           
-          206. 反转链表 常见的用栈反转。 # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, next&#x3D;None): #         self.val &#x3D; val #         self.next &#x3D; next class Solution:     def reve
+          206. 反转链表 常见的用栈反转。 # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, next&#x3D;None): #         self.val &#x3D; val #         self.next &#x3D; next class Solution:     def revers
         </div>
       </a>
 
@@ -862,7 +862,7 @@
       <a class="index-excerpt" href="/2022/05/25/leetcode20220525/" target="_self">
         <div>
           
-          203. 移除链表元素 一道基础删链表节点的问题，需要注意的是头节点如果不做特殊处理就得在前面再加个新的头节点，方便头节点重复时删除。 # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, next&#x3D;None): #         self.val &#x3D; val #
+          203. 移除链表元素 一道基础删链表节点的问题，需要注意的是头节点如果不做特殊处理就得在前面再加个新的头节点，方便头节点重复时删除。 # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, next&#x3D;None): #         self.val &#x3D; val #
         </div>
       </a>
 
@@ -941,7 +941,7 @@
       <a class="index-excerpt" href="/2022/05/24/leetcode20220524/" target="_self">
         <div>
           
-          202. 快乐数 首先简单找了下10以内的，满足快乐数定义的只有1和7。然后直接采取暴力解法，循环查找，如果当某次结果跳到10以内却不等于1或7时，就是False，否则就是True。 class Solution:     def isHappy(self, n: int) -&gt; bool:         if n &#x3D;&#x3D; 1 or n &#x3D;&#x3D; 7:             return
+          202. 快乐数 首先简单找了下10以内的，满足快乐数定义的只有1和7。然后直接采取暴力解法，循环查找，如果当某次结果跳到10以内却不等于1或7时，就是False，否则就是True。 class Solution:     def isHappy(self, n: int) -&gt; bool:         if n &#x3D;&#x3D; 1 or n &#x3D;&#x3D; 7:             return Tr
         </div>
       </a>
 

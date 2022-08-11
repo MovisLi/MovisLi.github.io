@@ -232,7 +232,7 @@
       <a class="index-excerpt" href="/2022/05/19/leetcode20220519/" target="_self">
         <div>
           
-          191. 位1的个数 首先来个循环检查每一位是否为1。 class Solution:     def hammingWeight(self, n: int) -&gt; int:         bin_str &#x3D; bin(n)[2:]         res &#x3D; 0         for i in bin_str:             if i &#x3D;&#x3D; &amp;#x27;1&amp;#x27;:
+          191. 位1的个数 首先来个循环检查每一位是否为1。 class Solution:     def hammingWeight(self, n: int) -&gt; int:         bin_str &#x3D; bin(n)[2:]         res &#x3D; 0         for i in bin_str:             if i &#x3D;&#x3D; &amp;#x27;1&amp;#x27;:
         </div>
       </a>
 
@@ -309,7 +309,7 @@
       <a class="index-excerpt" href="/2022/05/18/leetcode20220518/" target="_self">
         <div>
           
-          190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： class Solution:     def reverseBits(self, n: int) -&gt; int:         return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)
+          190. 颠倒二进制位 注意下题目中的32位无符号整数。暴力解： class Solution:     def reverseBits(self, n: int) -&gt; int:         return int(str(&amp;#x27;0&amp;#x27;*(32-len(str(bin(n))[2:]))+str(bin(n))[2:])[::-1], 2)
         </div>
       </a>
 
@@ -386,7 +386,7 @@
       <a class="index-excerpt" href="/2022/05/16/leetcode20220516/" target="_self">
         <div>
           
-          168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 class Solution:     def convertToTitle(self, columnNumber: int) -&amp;g
+          168. Excel表列名称 此题有点类似进制转换，从A到Z有26个字母也就是26进制，需要注意的是，A对应1而不是0，Z对应26而不是25，所以在做进制转换的时候，要先减1再取余再加1。即下面temp &#x3D; (columnNumber-1)%26+1这行代码。 class Solution:     def convertToTitle(self, columnNumber: int) -&gt;
         </div>
       </a>
 
@@ -465,7 +465,7 @@
       <a class="index-excerpt" href="/2022/05/15/leetcode20220515/" target="_self">
         <div>
           
-          121. 买卖股票的最佳时机 遍历一次数组，更新数组的最小值min_pcp与当前值与数组最小值差的最大值max_pft。遍历完成后，当前值与数组最小值差的最大值就是交易的最大利润。 class Solution:   def maxProfit(self, prices: List[int]) -&gt; int:     max_pft &#x3D; 0     min_pcp &#x3D; prices[0]
+          121. 买卖股票的最佳时机 遍历一次数组，更新数组的最小值min_pcp与当前值与数组最小值差的最大值max_pft。遍历完成后，当前值与数组最小值差的最大值就是交易的最大利润。 class Solution:   def maxProfit(self, prices: List[int]) -&gt; int:     max_pft &#x3D; 0     min_pcp &#x3D; prices[0]
         </div>
       </a>
 
@@ -546,7 +546,7 @@
       <a class="index-excerpt" href="/2022/05/13/leetcode20220513/" target="_self">
         <div>
           
-          83. 删除排序链表中的重复元素 基本链表操作。 class Solution:     def deleteDuplicates(self, head: ListNode) -&gt; ListNode:         if not head:             return head         node &#x3D; head         while node.next:
+          83. 删除排序链表中的重复元素 基本链表操作。 class Solution:     def deleteDuplicates(self, head: ListNode) -&gt; ListNode:         if not head:             return head         node &#x3D; head         while node.next:
         </div>
       </a>
 
@@ -627,7 +627,7 @@
       <a class="index-excerpt" href="/2022/05/11/leetcode20220511/" target="_self">
         <div>
           
-          70. 爬楼梯 斐波那契数列，一个数等于他上一个数和上上的数的和。分为递归解和非递归解，如果有空间限制可以把列表看作一个栈。 class Solution:     def climbStairs(self, n: int) -&gt; int:         lst &#x3D; [1, 1]         for i in range(0, n-1):             lst.appen
+          70. 爬楼梯 斐波那契数列，一个数等于他上一个数和上上的数的和。分为递归解和非递归解，如果有空间限制可以把列表看作一个栈。 class Solution:     def climbStairs(self, n: int) -&gt; int:         lst &#x3D; [1, 1]         for i in range(0, n-1):             lst.append(
         </div>
       </a>
 
@@ -706,7 +706,7 @@
       <a class="index-excerpt" href="/2022/05/10/leetcode20220510/" target="_self">
         <div>
           
-          66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。但是实际上因为return的位置可以放得巧妙点，所以可以省略flag。 class Solution:     def plusOne(self, digits: List[in
+          66. 加一 从后往前加就行了，需要用一个carry flag控制是否进位，加一对末位来说就是进位的，所以当carry flag变为False时，跳出循环。如果循环走完还需进位，则需要在list第0个位置增添个元素1。但是实际上因为return的位置可以放得巧妙点，所以可以省略flag。 class Solution:     def plusOne(self, digits: List[int]
         </div>
       </a>
 
@@ -787,7 +787,7 @@
       <a class="index-excerpt" href="/2022/05/09/leetcode20220509/" target="_self">
         <div>
           
-          58. 最后一个单词的长度 反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 class Solution:     def lengthOfLastWord(self, s: str) -&gt; int:         res &#x3D; 0         start &#x3D; False         for i in range(len(s)-1, -1, -1):
+          58. 最后一个单词的长度 反向遍历，用一个flag稍微控制下流程就行了，注意几个if的顺序。 class Solution:     def lengthOfLastWord(self, s: str) -&gt; int:         res &#x3D; 0         start &#x3D; False         for i in range(len(s)-1, -1, -1):
         </div>
       </a>
 
@@ -864,7 +864,7 @@
       <a class="index-excerpt" href="/2022/05/07/leetcode20220507/" target="_self">
         <div>
           
-          27. 移除元素 双指针，一个指针index控制循环遍历，另一个指针k控制将正确的数填到正确的位置。 class Solution:     def removeElement(self, nums: List[int], val: int) -&gt; int:         index &#x3D; 0         k &#x3D; 0         length &#x3D; len(nums)
+          27. 移除元素 双指针，一个指针index控制循环遍历，另一个指针k控制将正确的数填到正确的位置。 class Solution:     def removeElement(self, nums: List[int], val: int) -&gt; int:         index &#x3D; 0         k &#x3D; 0         length &#x3D; len(nums)
         </div>
       </a>
 
@@ -945,7 +945,7 @@
       <a class="index-excerpt" href="/2022/05/06/leetcode20220506/" target="_self">
         <div>
           
-          26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 class Solution:     def removeDuplicates(self, nums: List[int]) -&gt; int:         hashse
+          26. 删除有序数组中的重复项 暴力解法，创建set用于记录出现过的唯一元素，创建drop_lst用于记录要删的位置，删元素的时候注意下python的del会更改后续元素的下标，所以建立一个k辅助找到真正的下标再删。 class Solution:     def removeDuplicates(self, nums: List[int]) -&gt; int:         hashset
         </div>
       </a>
 
