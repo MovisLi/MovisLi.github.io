@@ -16,23 +16,25 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
   
-    <meta name="description" content="496. 下一个更大元素 I 首先很容易想到暴力法： class Solution:     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:         res &#x3D; []         nums2_len &#x3D; len(nums2)         for i in nums">
+    <meta name="description" content="506. 相对名次 先按逆序排序，排序后用 dict 建立分数与名次的对应关系，最后按原分数顺序将名次返回为一个列表。 class Solution:     def findRelativeRanks(self, score: List[int]) -&gt; List[str]:         rank_lst &#x3D; sorted(score, reverse&#x3D;True)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 496 500">
-<meta property="og:url" content="https://movisli.github.io/2022/08/09/leetcode20220809/index.html">
+<meta property="og:title" content="LeetCode 506 509 520">
+<meta property="og:url" content="https://movisli.github.io/2022/08/12/leetcode20220812/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="496. 下一个更大元素 I 首先很容易想到暴力法： class Solution:     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:         res &#x3D; []         nums2_len &#x3D; len(nums2)         for i in nums">
+<meta property="og:description" content="506. 相对名次 先按逆序排序，排序后用 dict 建立分数与名次的对应关系，最后按原分数顺序将名次返回为一个列表。 class Solution:     def findRelativeRanks(self, score: List[int]) -&gt; List[str]:         rank_lst &#x3D; sorted(score, reverse&#x3D;True)">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-08-08T17:20:13.000Z">
-<meta property="article:modified_time" content="2022-08-11T13:38:24.675Z">
+<meta property="article:published_time" content="2022-08-12T13:39:52.000Z">
+<meta property="article:modified_time" content="2022-08-12T15:55:48.123Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="hash">
+<meta property="article:tag" content="dp">
+<meta property="article:tag" content="recursion">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LeetCode 496 500 - movis</title>
+  <title>LeetCode 506 509 520 - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +197,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LeetCode 496 500"></span>
+            <span id="subtitle" data-typed-text="LeetCode 506 509 520"></span>
           
         </div>
 
@@ -211,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-09 01:20" pubdate>
-          August 9, 2022 am
+        <time datetime="2022-08-12 21:39" pubdate>
+          August 12, 2022 pm
         </time>
       </span>
     
@@ -223,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k words
+          1.1k words
         
       </span>
     
@@ -273,71 +275,74 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LeetCode 496 500</h1>
+            <h1 style="display: none">LeetCode 506 509 520</h1>
             
             <div class="markdown-body">
               
-              <h1 id="下一个更大元素-i">496. 下一个更大元素 I</h1>
-<p>首先很容易想到暴力法：</p>
+              <h1 id="相对名次">506. 相对名次</h1>
+<p>先按逆序排序，排序后用 <code>dict</code>
+建立分数与名次的对应关系，最后按原分数顺序将名次返回为一个列表。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextGreaterElement</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
-        res = []
-        nums2_len = <span class="hljs-built_in">len</span>(nums2)
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums1:
-            j = nums2.index(i)+<span class="hljs-number">1</span>
-            flag = <span class="hljs-literal">False</span>
-            <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(j, nums2_len):
-                <span class="hljs-keyword">if</span> nums2[v] &gt; i:
-                    res.append(nums2[v])
-                    flag = <span class="hljs-literal">True</span>
-                    <span class="hljs-keyword">break</span>
-            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> flag:
-                res.append(-<span class="hljs-number">1</span>)
-        <span class="hljs-keyword">return</span> res</code></pre></div>
-<p>不过很慢。很明显，从慢的时间上来讲，肯定是算法不够好而不是没有优化。然后观察上面的算法可以发现，其实慢就慢在
-<code>j = nums2.index(i)+1</code>
-这里。每次都得重新去寻找元素的下标，这个时候就会想到空间换时间这种方法，就会想到
-<code>dict</code> ，也就是哈希：</p>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findRelativeRanks</span>(<span class="hljs-params">self, score: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:
+        rank_lst = <span class="hljs-built_in">sorted</span>(score, reverse=<span class="hljs-literal">True</span>)
+        rank_dict = &#123;&#125;
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(rank_lst)):
+            <span class="hljs-keyword">if</span> i==<span class="hljs-number">0</span>:
+                rank_dict[rank_lst[i]] = <span class="hljs-string">&#x27;Gold Medal&#x27;</span>
+            <span class="hljs-keyword">elif</span> i == <span class="hljs-number">1</span>:
+                rank_dict[rank_lst[i]] = <span class="hljs-string">&#x27;Silver Medal&#x27;</span>
+            <span class="hljs-keyword">elif</span> i == <span class="hljs-number">2</span>:
+                rank_dict[rank_lst[i]] = <span class="hljs-string">&#x27;Bronze Medal&#x27;</span>
+            <span class="hljs-keyword">else</span>:
+                rank_dict[rank_lst[i]] = <span class="hljs-built_in">str</span>(i+<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> [rank_dict[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> score]</code></pre></div>
+<h1 id="斐波那契数">509. 斐波那契数</h1>
+<p>先来个经典的递归算法。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextGreaterElement</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
-        res = []
-        hashmap = &#123;&#125;
-        nums2_len = <span class="hljs-built_in">len</span>(nums2)
-        <span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(nums2):
-            hashmap[v] = i
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums1:
-            j = hashmap[i]+<span class="hljs-number">1</span>
-            flag = <span class="hljs-literal">False</span>
-            <span class="hljs-keyword">while</span> j&lt;nums2_len:
-                <span class="hljs-keyword">if</span> nums2[j] &gt; i:
-                    res.append(nums2[j])
-                    flag = <span class="hljs-literal">True</span>
-                    <span class="hljs-keyword">break</span>
-                j += <span class="hljs-number">1</span>
-            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> flag:
-                res.append(-<span class="hljs-number">1</span>)
-        <span class="hljs-keyword">return</span> res</code></pre></div>
-<h1 id="键盘行">500. 键盘行</h1>
-<p>用 <code>dict</code> 记录字母所在行，然后暴力解法。</p>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fib</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">fibonacci</span>(<span class="hljs-params">n</span>):
+            <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+            <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+            <span class="hljs-keyword">return</span> fibonacci(n-<span class="hljs-number">1</span>)+fibonacci(n-<span class="hljs-number">2</span>)
+        <span class="hljs-keyword">return</span> fibonacci(n)</code></pre></div>
+<p>有点慢。因此我们把中间的值放进一个 <code>list</code>
+，以空间换时间。</p>
 <div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findWords</span>(<span class="hljs-params">self, words: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:
-        res = []
-        hashmap = &#123;
-            <span class="hljs-string">&#x27;q&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;w&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;e&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;r&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;t&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;y&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;u&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;i&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;o&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;p&#x27;</span>:<span class="hljs-number">1</span>,
-            <span class="hljs-string">&#x27;a&#x27;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;s&#x27;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;d&#x27;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;f&#x27;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&quot;g&quot;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;h&#x27;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;j&#x27;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;k&#x27;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;l&#x27;</span>:<span class="hljs-number">2</span>,
-            <span class="hljs-string">&#x27;z&#x27;</span>:<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;x&#x27;</span>:<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;c&#x27;</span>:<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;v&#x27;</span>:<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;b&#x27;</span>:<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;n&#x27;</span>:<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;m&#x27;</span>:<span class="hljs-number">3</span>
-        &#125;
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(words)):
-            flag = <span class="hljs-number">0</span>
-            <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> words[i].lower():
-                <span class="hljs-keyword">if</span> flag == <span class="hljs-number">0</span>:
-                    flag = hashmap[v]
-                <span class="hljs-keyword">elif</span> flag != hashmap[v]:
-                    flag = -<span class="hljs-number">1</span>
-                    <span class="hljs-keyword">break</span>
-            <span class="hljs-keyword">if</span> flag != -<span class="hljs-number">1</span>:
-                res.append(words[i])
-        <span class="hljs-keyword">return</span> res</code></pre></div>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fib</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        lst = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]
+        i = <span class="hljs-number">2</span>
+        <span class="hljs-keyword">while</span> i&lt;=n:
+            lst.append(lst[i-<span class="hljs-number">1</span>]+lst[i-<span class="hljs-number">2</span>])
+            i += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> lst[n]</code></pre></div>
+<h1 id="检测大写字母">520. 检测大写字母</h1>
+<p>把这个问题转换为一个状态转换问题，如果当前状态不能兼容上个状态，直接报错。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">detectCapitalUse</span>(<span class="hljs-params">self, word: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        mode = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> word:
+            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">if</span> <span class="hljs-number">97</span>&lt;=<span class="hljs-built_in">ord</span>(i)&lt;=<span class="hljs-number">122</span>:
+                    mode = <span class="hljs-number">2</span>
+                <span class="hljs-keyword">else</span>:
+                    mode = <span class="hljs-number">4</span>
+            <span class="hljs-keyword">elif</span> mode == <span class="hljs-number">4</span>:
+                <span class="hljs-keyword">if</span> <span class="hljs-number">97</span>&lt;=<span class="hljs-built_in">ord</span>(i)&lt;=<span class="hljs-number">122</span>:
+                    mode = <span class="hljs-number">3</span>
+                <span class="hljs-keyword">else</span>:
+                    mode = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">1</span>:
+                <span class="hljs-keyword">if</span> <span class="hljs-built_in">ord</span>(i) &gt; <span class="hljs-number">90</span>:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">2</span>:
+                <span class="hljs-keyword">if</span> <span class="hljs-built_in">ord</span>(i) &lt; <span class="hljs-number">97</span>:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">3</span>:
+                <span class="hljs-keyword">if</span> <span class="hljs-built_in">ord</span>(i) &lt; <span class="hljs-number">97</span>:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
 
               
             </div>
@@ -388,6 +393,10 @@
       
         <a href="/tags/hash/">#hash</a>
       
+        <a href="/tags/dp/">#dp</a>
+      
+        <a href="/tags/recursion/">#recursion</a>
+      
     </div>
   
 </div>
@@ -398,8 +407,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LeetCode 496 500</div>
-      <div>https://movisli.github.io/2022/08/09/leetcode20220809/</div>
+      <div>LeetCode 506 509 520</div>
+      <div>https://movisli.github.io/2022/08/12/leetcode20220812/</div>
     </div>
     <div class="license-meta">
       
@@ -411,7 +420,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>August 9, 2022</div>
+          <div>August 12, 2022</div>
         </div>
       
       
@@ -441,18 +450,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/11/leetcode20220811/" title="LeetCode 504">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LeetCode 504</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/04/MySQL%E5%9F%BA%E7%A1%80/" title="MySQL 基础">
-                        <span class="hidden-mobile">MySQL 基础</span>
+                      <a href="/2022/08/11/leetcode20220811/" title="LeetCode 504">
+                        <span class="hidden-mobile">LeetCode 504</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

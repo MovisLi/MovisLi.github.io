@@ -4,7 +4,42 @@
   
   
   <entry>
-    <title>LeetCode</title>
+    <title>LeetCode 506 509 520</title>
+    <link href="/2022/08/12/leetcode20220812/"/>
+    <url>/2022/08/12/leetcode20220812/</url>
+    
+    <content type="html"><![CDATA[<h1 id="相对名次">506. 相对名次</h1><p>先按逆序排序，排序后用 <code>dict</code>建立分数与名次的对应关系，最后按原分数顺序将名次返回为一个列表。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findRelativeRanks</span>(<span class="hljs-params">self, score: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:        rank_lst = <span class="hljs-built_in">sorted</span>(score, reverse=<span class="hljs-literal">True</span>)        rank_dict = &#123;&#125;        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(rank_lst)):            <span class="hljs-keyword">if</span> i==<span class="hljs-number">0</span>:                rank_dict[rank_lst[i]] = <span class="hljs-string">&#x27;Gold Medal&#x27;</span>            <span class="hljs-keyword">elif</span> i == <span class="hljs-number">1</span>:                rank_dict[rank_lst[i]] = <span class="hljs-string">&#x27;Silver Medal&#x27;</span>            <span class="hljs-keyword">elif</span> i == <span class="hljs-number">2</span>:                rank_dict[rank_lst[i]] = <span class="hljs-string">&#x27;Bronze Medal&#x27;</span>            <span class="hljs-keyword">else</span>:                rank_dict[rank_lst[i]] = <span class="hljs-built_in">str</span>(i+<span class="hljs-number">1</span>)        <span class="hljs-keyword">return</span> [rank_dict[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> score]</code></pre></div><h1 id="斐波那契数">509. 斐波那契数</h1><p>先来个经典的递归算法。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fib</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:        <span class="hljs-keyword">def</span> <span class="hljs-title function_">fibonacci</span>(<span class="hljs-params">n</span>):            <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span>:                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>            <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:                <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>            <span class="hljs-keyword">return</span> fibonacci(n-<span class="hljs-number">1</span>)+fibonacci(n-<span class="hljs-number">2</span>)        <span class="hljs-keyword">return</span> fibonacci(n)</code></pre></div><p>有点慢。因此我们把中间的值放进一个 <code>list</code>，以空间换时间。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fib</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:        lst = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]        i = <span class="hljs-number">2</span>        <span class="hljs-keyword">while</span> i&lt;=n:            lst.append(lst[i-<span class="hljs-number">1</span>]+lst[i-<span class="hljs-number">2</span>])            i += <span class="hljs-number">1</span>        <span class="hljs-keyword">return</span> lst[n]</code></pre></div><h1 id="检测大写字母">520. 检测大写字母</h1><p>把这个问题转换为一个状态转换问题，如果当前状态不能兼容上个状态，直接报错。</p><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:    <span class="hljs-keyword">def</span> <span class="hljs-title function_">detectCapitalUse</span>(<span class="hljs-params">self, word: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:        mode = <span class="hljs-number">0</span>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> word:            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">0</span>:                <span class="hljs-keyword">if</span> <span class="hljs-number">97</span>&lt;=<span class="hljs-built_in">ord</span>(i)&lt;=<span class="hljs-number">122</span>:                    mode = <span class="hljs-number">2</span>                <span class="hljs-keyword">else</span>:                    mode = <span class="hljs-number">4</span>            <span class="hljs-keyword">elif</span> mode == <span class="hljs-number">4</span>:                <span class="hljs-keyword">if</span> <span class="hljs-number">97</span>&lt;=<span class="hljs-built_in">ord</span>(i)&lt;=<span class="hljs-number">122</span>:                    mode = <span class="hljs-number">3</span>                <span class="hljs-keyword">else</span>:                    mode = <span class="hljs-number">1</span>            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">1</span>:                <span class="hljs-keyword">if</span> <span class="hljs-built_in">ord</span>(i) &gt; <span class="hljs-number">90</span>:                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">2</span>:                <span class="hljs-keyword">if</span> <span class="hljs-built_in">ord</span>(i) &lt; <span class="hljs-number">97</span>:                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>            <span class="hljs-keyword">if</span> mode == <span class="hljs-number">3</span>:                <span class="hljs-keyword">if</span> <span class="hljs-built_in">ord</span>(i) &lt; <span class="hljs-number">97</span>:                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>ComputerScience</category>
+      
+      <category>Algorithm</category>
+      
+      <category>LeetCode</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>hash</tag>
+      
+      <tag>dp</tag>
+      
+      <tag>recursion</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>LeetCode 504</title>
     <link href="/2022/08/11/leetcode20220811/"/>
     <url>/2022/08/11/leetcode20220811/</url>
     
@@ -146,11 +181,11 @@
       
       <tag>python</tag>
       
+      <tag>hash</tag>
+      
       <tag>point</tag>
       
       <tag>string</tag>
-      
-      <tag>hash</tag>
       
       <tag>bit</tag>
       
@@ -247,9 +282,9 @@
       
       <tag>hash</tag>
       
-      <tag>greedy</tag>
-      
       <tag>enumerate</tag>
+      
+      <tag>greedy</tag>
       
     </tags>
     
@@ -282,9 +317,9 @@
       
       <tag>hash</tag>
       
-      <tag>greedy</tag>
-      
       <tag>enumerate</tag>
+      
+      <tag>greedy</tag>
       
     </tags>
     
@@ -567,9 +602,9 @@
       
       <tag>python</tag>
       
-      <tag>point</tag>
-      
       <tag>hash</tag>
+      
+      <tag>point</tag>
       
       <tag>bubble</tag>
       
@@ -633,9 +668,9 @@
       
       <tag>python</tag>
       
-      <tag>point</tag>
-      
       <tag>hash</tag>
+      
+      <tag>point</tag>
       
       <tag>math</tag>
       
@@ -895,9 +930,9 @@
       
       <tag>python</tag>
       
-      <tag>hash</tag>
-      
       <tag>linked list</tag>
+      
+      <tag>hash</tag>
       
     </tags>
     
@@ -1054,9 +1089,9 @@
       
       <tag>python</tag>
       
-      <tag>string</tag>
-      
       <tag>hash</tag>
+      
+      <tag>string</tag>
       
       <tag>dp</tag>
       
@@ -1355,9 +1390,9 @@
       
       <tag>python</tag>
       
-      <tag>point</tag>
-      
       <tag>hash</tag>
+      
+      <tag>point</tag>
       
     </tags>
     
