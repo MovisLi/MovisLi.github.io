@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>《Excel+Python：飞速搞定数据分析与处理》 - 读书笔记</title>
+    <link href="/2022/08/16/%E3%80%8AExcel+Python%EF%BC%9A%E9%A3%9E%E9%80%9F%E6%90%9E%E5%AE%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%84%E7%90%86%E3%80%8B/"/>
+    <url>/2022/08/16/%E3%80%8AExcel+Python%EF%BC%9A%E9%A3%9E%E9%80%9F%E6%90%9E%E5%AE%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%84%E7%90%86%E3%80%8B/</url>
+    
+    <content type="html"><![CDATA[<h1 id="python-入门">Python 入门</h1><p>作者浅讲了一下 Python 在数据分析方面与 Excel 交汇的历史。</p><p>提到了应该坚守的原则：</p><ul><li><strong>模块化</strong> - 一个应用程序通常被分为 3 层。<ul><li>数据层（ data layer ） - 也叫输入层，取数。</li><li>业务层（ business layer ） -也叫计算层，数据的处理与转换、分析。</li><li>表示层（ presentation layer ） -也叫输出层，数据分析结果的呈现。</li></ul></li><li><strong>DRY 原则</strong> - Don't repeat yourself，不要写重复的代码，就是函数式编程。</li><li><strong>测试</strong><ul><li>作者提供了一篇他的文章 <ahref="https://www.xlwings.org/blog/unittests-for-microsoft-excel">UnitTests for Microsoft Excel</a> 供参考。</li></ul></li><li><strong>版本控制</strong><ul><li>第一个选项，使用 xltrail ，这是个基于 Git 对 Excel友好的版本控制系统，但是我选择用第二个选项。</li><li>第二个选项，把业务逻辑迁移到 Python 中，然后用 Git 。</li></ul></li></ul><p>在面向对象概念中，</p><ul><li>variables 被称为 attribute 。</li><li>function 被称为 method 。</li></ul><p>Excel 单元格保存数值型数字时永远是浮点数。</p><p>在 Python 中，每个对象都可以被视作 True 或 False 。大部分对象会被视作True ，但 None 、 False 、 0或空数据类型（比如空字符串、空列表等）会被视作 False 。</p><p>Python 中切片的语法：</p><div class="code-wrapper"><pre><code class="hljs python">sequence[start:stop:step]</code></pre></div><p>切片允许越界，这个太好用了。</p><p>作者提倡用 <a href="https://peps.python.org/pep-0008/">PEP 8 – StyleGuide for Python Code | peps.python.org</a> 规范代码，当然这个应该是写Python 人的共识。</p><h1 id="pandas-入门">pandas 入门</h1><p>NumPy 中的矩阵乘法：</p><ul><li>矩阵的点乘用 <code>*</code> ，必须是大小一样的矩阵， NumPy中也支持不一样的相乘，不过结果会将矩阵1 <code>[M1, N1]</code> 与矩阵2<code>[M2, N2]</code> 扩大为 <code>[max(M1,M2), max(N1,N2)]</code>，这在 NumPy 中叫<strong>广播（ broadcasting ）</strong>。</li><li>矩阵的叉乘用 <code>@</code> ，需要矩阵1 <code>[M1, N1]</code>与矩阵2 <code>[M2, N2]</code> 满足 <code>N1=M2</code> 的条件。</li></ul><h1 id="在-excel-之外读写-excel-文件">在 Excel 之外读写 Excel 文件</h1><h1 id="使用-xlwings-对-excel-应用程序进行编程">使用 xlwings 对 Excel应用程序进行编程</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>DataScience</category>
+      
+      <category>Excel</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>excel</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 521 541</title>
     <link href="/2022/08/14/leetcode20220814/"/>
     <url>/2022/08/14/leetcode20220814/</url>
