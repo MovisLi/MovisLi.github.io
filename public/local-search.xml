@@ -190,6 +190,33 @@
   
   
   <entry>
+    <title>Python Core</title>
+    <link href="/2022/08/04/python-core/"/>
+    <url>/2022/08/04/python-core/</url>
+    
+    <content type="html"><![CDATA[<h1 id="模块">模块</h1><h2 id="模块编写规范">模块编写规范</h2><div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python # 通常只在 unix 环境有效，作用是指定解释器路径，然后可以直接使用脚本名来执行，不需要在前面调用解释器</span><span class="hljs-comment"># coding: utf-8</span><span class="hljs-string">&quot;&quot;&quot;</span><span class="hljs-string">模块文档描述</span><span class="hljs-string">&quot;&quot;&quot;</span><span class="hljs-keyword">import</span> module <span class="hljs-comment"># 导入模块</span>global_var = <span class="hljs-built_in">object</span>() <span class="hljs-comment"># 定义全局变量；如果不是必须，最好使用局部变量，这样可以提高代码的维护性，同时节省内存提高性能</span><span class="hljs-keyword">class</span> <span class="hljs-title class_">Name</span>: <span class="hljs-comment"># 定义类</span>    <span class="hljs-string">&quot;&quot;&quot;</span><span class="hljs-string">    类的注释</span><span class="hljs-string">    &quot;&quot;&quot;</span>    <span class="hljs-keyword">pass</span><span class="hljs-keyword">def</span> <span class="hljs-title function_">func</span>(): <span class="hljs-comment"># 定义函数</span>    <span class="hljs-string">&quot;&quot;&quot;</span><span class="hljs-string">    函数注释</span><span class="hljs-string">    &quot;&quot;&quot;</span>    <span class="hljs-keyword">pass</span><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>: <span class="hljs-comment"># 主程序，在被当作脚本执行时，执行下面的代码</span>    func()</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>ComputerScience</category>
+      
+      <category>Python</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LeetCode 492 495</title>
     <link href="/2022/08/02/leetcode20220802-2/"/>
     <url>/2022/08/02/leetcode20220802-2/</url>
