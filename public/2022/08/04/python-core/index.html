@@ -24,7 +24,7 @@
 <meta property="og:description" content="模块 模块编写规范 #!&#x2F;usr&#x2F;bin&#x2F;python # 通常只在 unix 环境有效，作用是指定解释器路径，然后可以直接使用脚本名来执行，不需要在前面调用解释器 # coding: utf-8  &quot;&quot;&quot; 模块文档描述 &quot;&quot;&quot;  import module # 导入模块  global_var &#x3D; object() # 定义全局变量">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-08-04T15:34:22.000Z">
-<meta property="article:modified_time" content="2022-08-30T20:08:11.553Z">
+<meta property="article:modified_time" content="2022-08-31T13:29:02.377Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          392 words
+          719 words
         
       </span>
     
@@ -305,6 +305,42 @@ global_var = <span class="hljs-built_in">object</span>() <span class="hljs-comme
 
 <span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>: <span class="hljs-comment"># 主程序，在被当作脚本执行时，执行下面的代码</span>
     func()</code></pre></div>
+<h2 id="软件目录规范">软件目录规范</h2>
+<div class="code-wrapper"><pre><code class="hljs stylus">│  README<span class="hljs-selector-class">.md</span>
+│  requirements<span class="hljs-selector-class">.txt</span>
+│
+├─api
+├─bin
+│      run<span class="hljs-selector-class">.py</span>
+│      setup<span class="hljs-selector-class">.py</span>
+│
+├─conf
+│      settings<span class="hljs-selector-class">.py</span>
+│
+├─core
+├─db
+│      db_handle<span class="hljs-selector-class">.py</span>
+│
+├─lib
+└─log</code></pre></div>
+<ul>
+<li>bin - 放程序可执行文件夹，也可把执行文件放根目录下。
+<ul>
+<li>run.py - 启动文件。</li>
+<li>setup.py - 安装、部署、打包的脚本。</li>
+</ul></li>
+<li>conf - 放用户自定义配置的文件夹。
+<ul>
+<li>settings.py - 用户自定义配置。</li>
+</ul></li>
+<li>lib - 程序常用的模块集合文件夹，包括模块、包。</li>
+<li>core - 核心代码逻辑文件夹。</li>
+<li>log - 存放项目日志。</li>
+<li>db - 数据库相关文件夹。</li>
+<li>api - 用户接口文件夹。</li>
+<li>requirement.txt - 第三方模块依赖文件。</li>
+<li>README.md - 项目简介。</li>
+</ul>
 
               
             </div>

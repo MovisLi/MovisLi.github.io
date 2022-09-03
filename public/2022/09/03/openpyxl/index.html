@@ -16,25 +16,23 @@
   <meta name="author" content="MovisLi">
   <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
   
-    <meta name="description" content="344. 反转字符串 简单交换。 class Solution:     def reverseString(self, s: List[str]) -&gt; None:         length &#x3D; len(s)         for i in range(int(length&#x2F;2)):             temp &#x3D; s[i]             s[i] &#x3D; s[len">
+    <meta name="description" content="打开保存 保存 比如保存一个叫 test.xlsx 的文件在根目录。 import openpyxl  # 实例工作簿对象 wb &#x3D; openpyxl.Workbook()  # 返回激活的工作表 ws &#x3D; wb.active  # 保存 wb.save(&amp;#x27;test.xlsx&amp;#x27;) 打开 比如打开刚刚保存的 test.xlsx 文件。 import openpyxl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 344 345">
-<meta property="og:url" content="https://movisli.github.io/2022/06/17/leetcode20220617/index.html">
+<meta property="og:title" content="openpyxl 包的学习">
+<meta property="og:url" content="https://movisli.github.io/2022/09/03/openpyxl/index.html">
 <meta property="og:site_name" content="movis">
-<meta property="og:description" content="344. 反转字符串 简单交换。 class Solution:     def reverseString(self, s: List[str]) -&gt; None:         length &#x3D; len(s)         for i in range(int(length&#x2F;2)):             temp &#x3D; s[i]             s[i] &#x3D; s[len">
+<meta property="og:description" content="打开保存 保存 比如保存一个叫 test.xlsx 的文件在根目录。 import openpyxl  # 实例工作簿对象 wb &#x3D; openpyxl.Workbook()  # 返回激活的工作表 ws &#x3D; wb.active  # 保存 wb.save(&amp;#x27;test.xlsx&amp;#x27;) 打开 比如打开刚刚保存的 test.xlsx 文件。 import openpyxl">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-17T14:13:57.000Z">
-<meta property="article:modified_time" content="2022-08-21T18:57:36.646Z">
+<meta property="article:published_time" content="2022-09-03T09:47:23.000Z">
+<meta property="article:modified_time" content="2022-09-03T18:01:40.204Z">
 <meta property="article:author" content="MovisLi">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="point">
-<meta property="article:tag" content="hash">
-<meta property="article:tag" content="bubble">
+<meta property="article:tag" content="excel">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LeetCode 344 345 - movis</title>
+  <title>openpyxl 包的学习 - movis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LeetCode 344 345"></span>
+            <span id="subtitle" data-typed-text="openpyxl 包的学习"></span>
           
         </div>
 
@@ -213,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-17 22:13" pubdate>
-          June 17, 2022 pm
+        <time datetime="2022-09-03 17:47" pubdate>
+          September 3, 2022 pm
         </time>
       </span>
     
@@ -225,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          789 words
+          663 words
         
       </span>
     
@@ -275,42 +273,64 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LeetCode 344 345</h1>
+            <h1 style="display: none">openpyxl 包的学习</h1>
             
             <div class="markdown-body">
               
-              <h1 id="反转字符串">344. 反转字符串</h1>
-<p>简单交换。</p>
-<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reverseString</span>(<span class="hljs-params">self, s: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-literal">None</span>:
-        length = <span class="hljs-built_in">len</span>(s)
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">int</span>(length/<span class="hljs-number">2</span>)):
-            temp = s[i]
-            s[i] = s[length-i-<span class="hljs-number">1</span>]
-            s[length-i-<span class="hljs-number">1</span>] = temp</code></pre></div>
-<h1 id="反转字符串中的元音字母">345. 反转字符串中的元音字母</h1>
-<p>首先我们需要用<code>set</code>存储元音字母表（这里有个坑就是大写小写都要写进去），然后通过双指针，首尾指针一起往中间遍历。如果同时遇到或者同时没有遇到元音就交换并且都移动，否则只移动没有遇到元音的指针。</p>
-<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reverseVowels</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
-        vovel = &#123;<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;e&#x27;</span>,<span class="hljs-string">&#x27;i&#x27;</span>,<span class="hljs-string">&#x27;o&#x27;</span>,<span class="hljs-string">&#x27;u&#x27;</span>,<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-string">&#x27;E&#x27;</span>,<span class="hljs-string">&#x27;I&#x27;</span>,<span class="hljs-string">&#x27;O&#x27;</span>,<span class="hljs-string">&#x27;U&#x27;</span>&#125;
-        res = <span class="hljs-built_in">list</span>(s)
-        left = <span class="hljs-number">0</span>
-        right = <span class="hljs-built_in">len</span>(res) - <span class="hljs-number">1</span>
-        <span class="hljs-keyword">while</span> left &lt;= right:
-            <span class="hljs-keyword">if</span> res[left] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vovel <span class="hljs-keyword">and</span> res[right] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vovel:
-                left += <span class="hljs-number">1</span>
-                right -= <span class="hljs-number">1</span>
-            <span class="hljs-keyword">elif</span> res[left] <span class="hljs-keyword">in</span> vovel <span class="hljs-keyword">and</span> res[right] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vovel:
-                right -= <span class="hljs-number">1</span>
-            <span class="hljs-keyword">elif</span> res[left] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vovel <span class="hljs-keyword">and</span> res[right] <span class="hljs-keyword">in</span> vovel:
-                left += <span class="hljs-number">1</span>
-            <span class="hljs-keyword">else</span>:
-                temp = res[left]
-                res[left] = res[right]
-                res[right] = temp
-                left += <span class="hljs-number">1</span>
-                right -= <span class="hljs-number">1</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join(res)</code></pre></div>
+              <h1 id="打开保存">打开保存</h1>
+<h2 id="保存">保存</h2>
+<p>比如保存一个叫 <code>test.xlsx</code> 的文件在根目录。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> openpyxl
+
+<span class="hljs-comment"># 实例工作簿对象</span>
+wb = openpyxl.Workbook()
+
+<span class="hljs-comment"># 返回激活的工作表</span>
+ws = wb.active
+
+<span class="hljs-comment"># 保存</span>
+wb.save(<span class="hljs-string">&#x27;test.xlsx&#x27;</span>)</code></pre></div>
+<h2 id="打开">打开</h2>
+<p>比如打开刚刚保存的 <code>test.xlsx</code> 文件。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> openpyxl
+
+<span class="hljs-comment"># 加载工作簿对象</span>
+wb = openpyxl.load_workbook(<span class="hljs-string">r&#x27;test.xlsx&#x27;</span>)
+
+<span class="hljs-comment"># 返回激活的工作表</span>
+ws = wb.active</code></pre></div>
+<p><strong>这里要注意的是要加载的工作簿文件必须是没有用 Excel
+打开的否则会报错。</strong></p>
+<h1 id="操作工作表">操作工作表</h1>
+<h2 id="查看工作表名">查看工作表名</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> openpyxl
+
+wb = openpyxl.Workbook()
+ws1 = wb.active
+
+<span class="hljs-comment"># 查看工作表名</span>
+<span class="hljs-built_in">print</span>(ws1.title)
+
+<span class="hljs-comment"># 查看工作簿所有工作表名</span>
+<span class="hljs-built_in">print</span>(wb.sheetnames)</code></pre></div>
+<h2 id="创建工作表">创建工作表</h2>
+<p>位置传参，第一个参数为工作表名，第二个参数为存放的 index 。</p>
+<div class="code-wrapper"><pre><code class="hljs python">wb.create_sheet(<span class="hljs-string">&#x27;Sheet2&#x27;</span>, <span class="hljs-number">1</span>)
+wb.create_sheet(<span class="hljs-string">&#x27;Sheet3&#x27;</span>, <span class="hljs-number">2</span>)</code></pre></div>
+<h2 id="取工作表">取工作表</h2>
+<div class="code-wrapper"><pre><code class="hljs python">ws2 = wb[<span class="hljs-string">&#x27;Sheet2&#x27;</span>]</code></pre></div>
+<h2 id="移动工作表">移动工作表</h2>
+<p>位置传参，第一个参数为工作表对象，第二个参数为移动的位数（正数向后移动，负数向前移动）</p>
+<div class="code-wrapper"><pre><code class="hljs python">wb.move_sheet(ws2, -<span class="hljs-number">2</span>)</code></pre></div>
+<h2 id="删除工作表">删除工作表</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">del</span> wb[<span class="hljs-string">&#x27;Sheet&#x27;</span>]</code></pre></div>
+<h1 id="访问单元格">访问单元格</h1>
+<h1 id="操作单元格">操作单元格</h1>
+<h1 id="使用公式">使用公式</h1>
+<h1 id="设置样式">设置样式</h1>
+<h1 id="过滤和排序">过滤和排序</h1>
+<h1 id="插入图表">插入图表</h1>
+<h1 id="只读只写">只读只写</h1>
 
               
             </div>
@@ -328,20 +348,13 @@
     
       <span class="category-chain">
         
-  <a href="/categories/ComputerScience/" class="category-chain-item">ComputerScience</a>
+  <a href="/categories/DataScience/" class="category-chain-item">DataScience</a>
   
   
     <span>></span>
     
-  <a href="/categories/ComputerScience/Algorithm/" class="category-chain-item">Algorithm</a>
+  <a href="/categories/DataScience/Excel/" class="category-chain-item">Excel</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/ComputerScience/Algorithm/LeetCode/" class="category-chain-item">LeetCode</a>
-  
-  
-
   
 
   
@@ -359,11 +372,7 @@
       
         <a href="/tags/python/">#python</a>
       
-        <a href="/tags/point/">#point</a>
-      
-        <a href="/tags/hash/">#hash</a>
-      
-        <a href="/tags/bubble/">#bubble</a>
+        <a href="/tags/excel/">#excel</a>
       
     </div>
   
@@ -375,8 +384,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LeetCode 344 345</div>
-      <div>https://movisli.github.io/2022/06/17/leetcode20220617/</div>
+      <div>openpyxl 包的学习</div>
+      <div>https://movisli.github.io/2022/09/03/openpyxl/</div>
     </div>
     <div class="license-meta">
       
@@ -388,7 +397,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>June 17, 2022</div>
+          <div>September 3, 2022</div>
         </div>
       
       
@@ -418,18 +427,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/19/%E3%80%8A%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E5%B7%A5%E5%85%B7%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%A1%E7%94%A8%E7%AE%A1%E7%90%86%E7%9A%84%E7%90%86%E8%AE%BA%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B/" title="《信用评分工具：自动化信用管理的理论与实践》 - 读书笔记">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">《信用评分工具：自动化信用管理的理论与实践》 - 读书笔记</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/10/%E3%80%8A%E6%B6%88%E8%B4%B9%E4%BF%A1%E7%94%A8%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%AE%9A%E4%BB%B7%E3%80%81%E5%88%A9%E6%B6%A6%E4%B8%8E%E7%BB%84%E5%90%88%E3%80%8B/" title="《消费信用模型：定价、利润与组合》 - 读书笔记">
-                        <span class="hidden-mobile">《消费信用模型：定价、利润与组合》 - 读书笔记</span>
+                      <a href="/2022/08/16/%E3%80%8AExcel+Python%EF%BC%9A%E9%A3%9E%E9%80%9F%E6%90%9E%E5%AE%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%84%E7%90%86%E3%80%8B/" title="《Excel+Python：飞速搞定数据分析与处理》 - 读书笔记">
+                        <span class="hidden-mobile">《Excel+Python：飞速搞定数据分析与处理》 - 读书笔记</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
