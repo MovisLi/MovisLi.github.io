@@ -645,15 +645,268 @@ wb.save('charts.xlsx')
 
 ### 柱形图与条形图 - Bar and Column Charts
 
+#### 二维柱状图、二维条形图与堆积图
 
+```python
+from openpyxl import Workbook
+
+from openpyxl.chart import (
+    BarChart,
+    Reference,
+    Series,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    ['Number', '分支1', '分支2'],
+    [2, 40, 30],
+    [3, 40, 25],
+    [4, 50, 30],
+    [5, 30, 10],
+    [6, 25, 5],
+    [7, 50, 10],
+]
+
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart1 = BarChart()
+# 图表标题
+chart1.title = '柱状图'
+# 图表风格
+chart1.style = 10
+# X 轴标题
+chart1.x_axis.title = '数据'
+# Y 轴标题
+chart1.y_axis.title = '占比'
+# 选择柱状图的类型
+chart1.type = 'col'
+
+# 选择标签数据
+cats = Reference(ws, min_col=1, min_row=1, max_row=7)
+# 选择数据
+data = Reference(ws, min_col=2, min_row=1, max_col=3, max_row=7)
+# 将数据与图表关联
+chart1.add_data(data, titles_from_data=True)
+# 将 X 轴与标签关联
+chart1.set_categories(cats)
+
+# 将图表添加进工作表
+ws.add_chart(chart1, 'A10')
+
+from copy import deepcopy
+
+chart2 = deepcopy(chart1)
+chart2.type = 'bar'
+chart2.title = '条形图'
+
+ws.add_chart(chart2, 'J10')
+
+chart3 = deepcopy(chart1)
+chart3.grouping = 'stacked'
+chart3.overlap = 100
+chart3.title = '柱状堆积图'
+
+ws.add_chart(chart3, 'A27')
+
+chart4 = deepcopy(chart2)
+chart4.grouping = 'percentStacked'
+chart4.overlap = 100
+chart4.title = '百分比堆积图'
+
+ws.add_chart(chart4, 'J27')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209072331682.png)
+
+#### 三维柱状图
+
+```python
+from openpyxl import Workbook
+
+from openpyxl.chart import (
+    BarChart3D,
+    Reference,
+    Series,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    ['Number', '分支1', '分支2'],
+    [2, 40, 30],
+    [3, 40, 25],
+    [4, 50, 30],
+    [5, 30, 10],
+    [6, 25, 5],
+    [7, 50, 10],
+]
+
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart1 = BarChart3D()
+# 图表标题
+chart1.title = '三维柱状图'
+# 图表风格
+chart1.style = 10
+# X 轴标题
+chart1.x_axis.title = '数据'
+# Y 轴标题
+chart1.y_axis.title = '占比'
+# 选择柱状图的类型
+chart1.type = 'col'
+
+# 选择标签数据
+cats = Reference(ws, min_col=1, min_row=1, max_row=7)
+# 选择数据
+data = Reference(ws, min_col=2, min_row=1, max_col=3, max_row=7)
+# 将数据与图表关联
+chart1.add_data(data, titles_from_data=True)
+# 将 X 轴与标签关联
+chart1.set_categories(cats)
+
+# 将图表添加进工作表
+ws.add_chart(chart1, 'A10')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209072339092.png)
 
 ### 气泡图 - Bubble Charts
 
+> 气泡图类似于散点图，但使用另一维数据来确定气泡的大小。图表可以包括多个系列。
 
+```python
+from openpyxl import Workbook
+
+from openpyxl.chart import (
+    BubbleChart,
+    Reference,
+    Series,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    ['Number', '分支1', '分支2'],
+    [2, 40, 30],
+    [3, 40, 25],
+    [4, 50, 30],
+    [5, 30, 10],
+    [6, 25, 5],
+    [7, 50, 10],
+]
+
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart = BubbleChart()
+chart.style = 10
+chart.title = '气泡图'
+
+# 定义数据的坐标
+xvalues = Reference(ws, min_col=2, min_row=2, max_row=7)
+yvalues = Reference(ws, min_col=3, min_row=2, max_row=7)
+# 定义泡泡大小
+size = Reference(ws, min_col=1, min_row=2, max_row=7)
+# 关联图表与数据
+series = Series(values=yvalues, xvalues=xvalues, zvalues=size, title='Number')
+chart.series.append(series)
+
+# 将图表添加进工作表
+ws.add_chart(chart, 'A10')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209080031958.png)
 
 ### 折线图 - Line Charts
 
+```python
+from openpyxl import Workbook
 
+from openpyxl.chart import (
+    LineChart,
+    Reference,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    ['Number', '分支1', '分支2'],
+    [2, 40, 30],
+    [3, 40, 25],
+    [4, 50, 30],
+    [5, 30, 10],
+    [6, 25, 5],
+    [7, 50, 10],
+]
+
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart = LineChart()
+chart.title = '折线图'
+chart.style = 10
+# X 轴标题
+chart.x_axis.title = '数据'
+# Y 轴标题
+chart.y_axis.title = '占比'
+
+# 选择标签数据
+cats = Reference(ws, min_col=2, min_row=1, max_row=7)
+# 选择数据
+data = Reference(ws, min_col=2, min_row=1, max_col=3, max_row=7)
+# 将数据与图表关联
+chart.add_data(data, titles_from_data=True)
+# 将 X 轴与标签关联
+chart.set_categories(cats)
+
+# 将图表添加进工作表
+ws.add_chart(chart, 'A10')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209080056319.png)
 
 ### 散点图 - Scatter Charts
 
