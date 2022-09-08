@@ -643,7 +643,7 @@ wb.save('charts.xlsx')
 
 ![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070223200.png)
 
-### 柱形图与条形图 - Bar and Column Charts
+### 柱状图与条形图 - Bar and Column Charts
 
 #### 二维柱状图、二维条形图与堆积图
 
@@ -910,27 +910,371 @@ wb.save('charts.xlsx')
 
 ### 散点图 - Scatter Charts
 
+```python
+from openpyxl import Workbook
 
+from openpyxl.chart import (
+    ScatterChart,
+    Reference,
+    Series,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
 
-### 饼图 - Pie Charts
+rows = [
+    ['Number', '分支1', '分支2'],
+    [2, 40, 30],
+    [3, 40, 25],
+    [4, 50, 30],
+    [5, 30, 10],
+    [6, 25, 5],
+    [7, 50, 10],
+]
 
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart = ScatterChart()
+chart.title = '散点图'
+chart.style = 10
+# X 轴标题
+chart.x_axis.title = '数据'
+# Y 轴标题
+chart.y_axis.title = '占比'
 
+# 选择标签数据
+cats = Reference(ws, min_col=1, min_row=2, max_row=7)
+# 依次添加数据
+for i in range(2, 4):
+    data = Reference(ws, min_col=i, min_row=1, max_row=7)
+    series = Series(data, cats, title_from_data=True)
+    chart.series.append(series)
+
+# 将图表添加进工作表
+ws.add_chart(chart, 'A10')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090118802.png)
+
+### 饼状图 - Pie Charts
+
+```python
+from openpyxl import Workbook
+
+from openpyxl.chart import (
+    PieChart,
+    Reference,
+    Series,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    ['Category', 'Percentage'],
+    [1, 20],
+    [2, 30],
+    [3, 50]
+]
+
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart = PieChart()
+chart.title = '饼状图'
+chart.style = 10
+
+# 选择标签数据
+cats = Reference(ws, min_col=1, min_row=2, max_row=4)
+# 选择数据
+data = Reference(ws, min_col=2, min_row=1, max_row=4)
+chart.add_data(data, titles_from_data=True)
+chart.set_categories(cats)
+
+# 将图表添加进工作表
+ws.add_chart(chart, 'A10')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090125558.png)
 
 ### 圆环图 - Doughnut Charts
 
+```python
+from openpyxl import Workbook
 
+from openpyxl.chart import (
+    DoughnutChart,
+    Reference,
+    Series,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
+
+# rows = [
+#     ['Number', '分支1', '分支2'],
+#     [2, 40, 30],
+#     [3, 40, 25],
+#     [4, 50, 30],
+#     [5, 30, 10],
+#     [6, 25, 5],
+#     [7, 50, 10],
+# ]
+
+rows = [
+    ['Category', 'Percentage'],
+    [1, 20],
+    [2, 30],
+    [3, 50]
+]
+
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart = DoughnutChart()
+chart.title = '圆环图'
+chart.style = 10
+# # X 轴标题
+# chart.x_axis.title = '数据'
+# # Y 轴标题
+# chart.y_axis.title = '占比'
+
+# 选择标签数据
+cats = Reference(ws, min_col=1, min_row=2, max_row=4)
+# 选择数据
+data = Reference(ws, min_col=2, min_row=1, max_row=4)
+chart.add_data(data, titles_from_data=True)
+chart.set_categories(cats)
+
+# 将图表添加进工作表
+ws.add_chart(chart, 'A10')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090127457.png)
 
 ### 雷达图 - Radar Charts
 
+```python
+from openpyxl import Workbook
 
+from openpyxl.chart import (
+    RadarChart,
+    Reference,
+    Series,
+)
+'''
+	数据层
+'''
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    ['Category', 'Percentage'],
+    [1, 20],
+    [2, 30],
+    [3, 50],
+    [4, 20],
+    [5, 30],
+    [6, 30]
+]
+
+for row in rows:
+    ws.append(row)
+'''
+	展示层
+'''
+# 定义图表类型
+chart = RadarChart()
+chart.title = '雷达图'
+chart.style = 10
+
+# 选择标签数据
+cats = Reference(ws, min_col=1, min_row=2, max_row=4)
+# 选择数据
+data = Reference(ws, min_col=2, min_row=1, max_row=4)
+chart.add_data(data, titles_from_data=True)
+chart.set_categories(cats)
+
+# 将图表添加进工作表
+ws.add_chart(chart, 'A10')
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090134136.png)
 
 ### 股票图 - Stock Charts
 
-
+这个暂时不用。
 
 ### 曲面图 - Surface charts
 
+```python
+from openpyxl import Workbook
+from openpyxl.chart import (
+    SurfaceChart,
+    SurfaceChart3D,
+    Reference,
+    Series,
+)
+from openpyxl.chart.axis import SeriesAxis
+"""
+    数据层
+"""
+wb = Workbook()
+ws = wb.active
 
+data = [
+    [
+        None,
+        10,
+        20,
+        30,
+        40,
+        50,
+    ],
+    [
+        0.1,
+        15,
+        65,
+        105,
+        65,
+        15,
+    ],
+    [
+        0.2,
+        35,
+        105,
+        170,
+        105,
+        35,
+    ],
+    [
+        0.3,
+        55,
+        135,
+        215,
+        135,
+        55,
+    ],
+    [
+        0.4,
+        75,
+        155,
+        240,
+        155,
+        75,
+    ],
+    [
+        0.5,
+        80,
+        190,
+        245,
+        190,
+        80,
+    ],
+    [
+        0.6,
+        75,
+        155,
+        240,
+        155,
+        75,
+    ],
+    [
+        0.7,
+        55,
+        135,
+        215,
+        135,
+        55,
+    ],
+    [
+        0.8,
+        35,
+        105,
+        170,
+        105,
+        35,
+    ],
+    [0.9, 15, 65, 105, 65, 15],
+]
+
+for row in data:
+    ws.append(row)
+
+
+"""
+    展示层
+"""
+c1 = SurfaceChart()
+ref = Reference(ws, min_col=2, max_col=6, min_row=1, max_row=10)
+labels = Reference(ws, min_col=1, min_row=2, max_row=10)
+c1.add_data(ref, titles_from_data=True)
+c1.set_categories(labels)
+c1.title = "二维曲面图"
+
+ws.add_chart(c1, "G1")
+
+from copy import deepcopy
+
+# 线框
+c2 = deepcopy(c1)
+c2.wireframe = True
+c2.title = "二维框线图"
+
+ws.add_chart(c2, "N1")
+
+# 3D 表面
+c3 = SurfaceChart3D()
+c3.add_data(ref, titles_from_data=True)
+c3.set_categories(labels)
+c3.title = "三维曲面图"
+
+ws.add_chart(c3, "G17")
+
+c4 = deepcopy(c3)
+c4.wireframe = True
+c4.title = "三维框线图"
+
+ws.add_chart(c4, "N17")
+
+wb.save('charts.xlsx')
+```
+
+效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090140116.png)
 
 ## 轴的使用
 
