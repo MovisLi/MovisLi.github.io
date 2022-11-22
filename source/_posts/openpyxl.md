@@ -1,6 +1,6 @@
 ---
 title: openpyxl 包的学习
-date: 2022-09-03 17:47:23
+date: 2022-11-21 17:47:23
 categories: [DataScience, Excel]
 tags: [python, excel]
 ---
@@ -1294,3 +1294,48 @@ wb.save('charts.xlsx')
 
 ## 图表页工作表
 
+
+
+# 评论
+
+```python
+import openpyxl
+
+wb = openpyxl.Workbook()
+ws = wb.active
+ws['A1'].comment = openpyxl.comments.Comment('text','author')
+wb.save('comment.xlsx')
+```
+
+可以看到，评论就被添加上了，不过似乎没有 `Author` 。
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202211211220411.png)
+
+然后同时也可以编辑评论框的大小。
+
+```python
+import openpyxl
+
+wb = openpyxl.Workbook()
+ws = wb.active
+
+# 以像素为单位
+ws['A1'].comment = openpyxl.comments.Comment('text','author')
+ws['A1'].comment.width = 1000
+ws['A1'].comment.height = 200
+
+# 通过其它单位转换，需要用到 utils.units
+ws['B2'].comment = openpyxl.comments.Comment('text2', 'author2')
+ws['B2'].comment.width = openpyxl.utils.units.points_to_pixels(1000)
+ws['B2'].comment.height = openpyxl.utils.units.points_to_pixels(200)
+
+wb.save('comment.xlsx')
+```
+
+A1：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202211211228749.png)
+
+B2：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202211211229164.png)
