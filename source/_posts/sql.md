@@ -2,7 +2,7 @@
 title: SQL 基础
 date: 2022-08-04 23:34:22
 categories: [DataScience, Database]
-tags: [sql]
+tags: [sql, mysql]
 ---
 
 > 参考资料：
