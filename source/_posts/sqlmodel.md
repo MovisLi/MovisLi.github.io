@@ -182,7 +182,7 @@ if __name__ == '__main__':
 
 从 `create_test_record` 这个函数我们可以看到添加数据分为 2 步，第一步是 `add` ，第二步是 `commit` ，这个有点像 `git` 。
 
-## 自增 ID、默认值与更新数据
+## 自增 ID、默认值与刷新数据
 
 在上文的代码中：
 
@@ -305,7 +305,7 @@ session.exec(select(Test)).all()
 
 我的感觉就是说如果你在使用 SQLModel 中遇到一些问题，你可以直接去看 SQLAlchemy 的文档（我没有专门学这个框架因为它的文档实在太长了），事实上我已经这么做了（比如上面对表字段的类型定义）。
 
-## 过滤数据 - WHERE
+## 过滤 - WHERE
 
 在 SQL 中，我们可以用 WHERE 来进行数据的过滤与筛选，比如：
 
@@ -346,6 +346,203 @@ def read_test_record():
 | OR         | WHERE condition1 OR condition2  | where(or_(condition1, cindition2))                           |
 
 然后作者这里提到了说 Python 解释器可能会对 `where(Test.id > 3)` 这种写法报错，因为在创建的时候用了 `Optional[int]` 这样的声明。解决方案是写成 `where(col(Test.id) > 3)` 。我没有遇到这个问题，这里就不作展示。
+
+## 索引 - INDEX
+
+索引是一种加速查询的技术，优点：
+
+- 查询快
+
+缺点：
+
+- 需要额外物理空间
+- 增删改慢
+
+在 SQL 中，如果是上面的例子，要对 `numeric_field` 创建索引：
+
+```mysql
+CREATE INDEX 
+	idx_test_numeric_field 
+ON 
+	test(numeric_field)
+```
+
+在 SQLModel 中：
+
+```python
+class Test(SQLModel, table=True):
+    id: Optional[int] = Field(BIGINT(19), primary_key=True)
+    numeric_field: Optional[int] = Field(index=True) # 只需要在这里进行小的修改
+    string_field: Optional[str] = Field(VARCHAR(256))
+```
+
+> 数据库会为主键创建一个内部索引，因此主键不需要索引。
+
+## 查询一行数据
+
+在上文查询或过滤那里我们都查询了所有数据，这里讲如果我们只需要查询一行数据时的操作和会遇到的情况。
+
+其实很简单，把 `session.exec(select(Test).where(Test.id>3))` 当作一个返回结果的话，在上文调用了 `.all()` 方法返回了一个 `list` ，如果不调用返回的是一个可迭代对象，这里我们可以调用 `.first()` 等方法来查询一行数据，比如：
+
+```python
+session.exec(select(Test).where(Test.id>3)).first()
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070504699.png)
+
+在这里也可能查询不到任何行，也就是没有满足条件的数据，比如：
+
+```python
+session.exec(select(Test).where(Test.id<0)).first()
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070505626.png)
+
+除了 `.first()` ，还有一个 `.one()` 也类似，这里列出它们的差异：
+
+| 情况       | 有多行满足条件时返回        | 只有一行满足条件时返回 | 没有满足条件的数据时返回 |
+| ---------- | --------------------------- | ---------------------- | ------------------------ |
+| `.first()` | 一个 Test 实例对象          | 一个 Test 实例对象     | None                     |
+| `.one()`   | 报错 `MultipleResultsFound` | 一个 Test 实例对象     | 报错 `NoResultFound`     |
+
+如果只用主键选择单行，由于主键是唯一的，还有个 `.get()` 方法：
+
+```python
+# get()
+session.get(Test, 3)
+# first()
+session.exec(select(Test).where(Test.id == 3)).first()
+# one()
+session.exec(select(Test).where(Test.id == 3)).one()
+```
+
+上面 3 句话结果是一样的。如果用 `.get()` 方法去查询一个不存在的主键，会返回 `None` 。
+
+## LIMIT 与 OFFSET
+
+限制查询满足某种条件的数据 3 条，在 SQL 里：
+
+```mysql
+SELECT
+	*
+FROM
+	test
+WHERE
+	numeric_field >= 3
+LIMIT
+	3
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070532914.png)
+
+在 SQLModel 里：
+
+```python
+session.exec(select(Test).where(Test.numeric_field >= 3).limit(3)).all()
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070532521.png)
+
+这个地方我个人觉得要注意的就是 `limit()` 的位置，是放在 `exec()` 里面的，也就是对 `select().where()` 返回的对象做了 `limit()` 操作。
+
+增加 `offset` 偏移量也是一样，在 SQL 里：
+
+```mysql
+SELECT
+	*
+FROM
+	test
+WHERE
+	numeric_field >= 3
+LIMIT
+	2
+OFFSET
+	2
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070534313.png)
+
+这里注意总共满足条件的数据只有 3 条，在跳过 2 条后（ `OFFSET 2` ）只剩下 1 条数据可查询，所以这里即使 `LIMIT 2` ，也只返回了一条数据。
+
+在 SQLModel 里：
+
+```python
+session.exec(select(Test).where(Test.numeric_field >= 3).offset(2).limit(2)).all()
+# 或
+session.exec(select(Test).where(Test.numeric_field >= 3).limit(2).offset(2)).all()
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070539528.png)
+
+这里 `offset()` 和 `limit()` 的顺序没关系，不影响结果。
+
+## 更新 - UPDATE
+
+在 SQL 中：
+
+```mysql
+UPDATE
+	test
+SET
+	string_field = 'SQL_UPDATE_ID_3'
+WHERE
+	id = 3
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071335853.png)
+
+在 SQLModel 中：
+
+```python
+def update_test_record():
+    with Session(engine) as session:
+        result = session.get(Test, 4)
+        result.string_field = 'SQLMODEL_UPDATE_ID_4'
+        session.add(result)
+        session.commit()
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071339300.png)
+
+可以看到， `id=4` 这条记录的字段已经更新成功。不过这种写法与其说是更新，不如说是覆盖，因为我感觉这代码几乎和 `INSERT` 操作一样。因此我做个尝试，如下：
+
+```python
+def update_test_record():
+    with Session(engine) as session:
+        result = Test(id=5, numeric_field=5, string_field='CUSTOM_ID_5')
+        result.string_field = 'SQLMODEL_UPDATE_ID_5'
+        session.add(result)
+        session.commit()
+```
+
+然而报错了，是在 `session.commit()` 时出错的，错误信息如下：
+
+```
+sqlalchemy.exc.IntegrityError: (MySQLdb.IntegrityError) (1062, "Duplicate entry '5' for key 'test.PRIMARY'")
+[SQL: INSERT INTO test (id, numeric_field, string_field) VALUES (%s, %s, %s)]
+[parameters: (5, 5, 'CUSTOM_ID_5')]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+```
+
+SQLAlchemy 与 MySQLdb 官方文档给出的解释是：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071523782.png)
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071525723.png)
+
+还是不太明白这里为啥会有问题。
+
+不过如果非要做这样的操作，可以使用 `merge()` ，这样：
+
+```python
+def custom_update():
+    with Session(engine) as session:
+        test = Test(id=5, numeric_field=5, string_field='CUSTOM_ID_5')
+        session.merge(test)
+        session.commit()
+```
+
+这样无论是更新数据还是插入数据都可以。
 
 # 高级教程
 
