@@ -544,5 +544,59 @@ def custom_update():
 
 这样无论是更新数据还是插入数据都可以。
 
-# 高级教程
+## 删除 - DELETE
+
+在 SQL 里：
+
+```mysql
+DELETE
+FROM
+	test
+WHERE
+	id = 7
+```
+
+删前：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212081124913.png)
+
+删后：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212081125097.png)
+
+在 SQLModel 里：
+
+```python
+def delete_test_record():
+    with Session(engine) as session:
+        result = session.get(Test, 6)
+        session.delete(result)
+        session.commit()
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212081129966.png)
+
+跟 `INSERT` 数据类似，这里在调用 `.delete()` 后也需要 `commit()` 。
+
+## 连接 - JOIN
+
+### 创建连接表
+
+这里主要是讲的外键。
+
+这里比如我需要建一张表叫 `test2` ，其中主键是 `id` ，还有一个字段是 `test_id` ，但这个字段与 `test` 表的字段具有外键关系。
+
+```python
+class Test2(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    test_id: int = Field(foreign_key='test.id')
+```
+
+这样就可以了。
+
+### 创建
+
+跟正常的一样。
+
+### 查询
 
