@@ -1,8 +1,8 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-12 11:34:41
+date: 2022-12-15 01:50:41
 categories: [ComputerScience, Algorithm, LeetCode]
-tags: [python, array, hash, point]
+tags: [python, array, hash, point, sliding window]
 ---
 
 # 数据结构入门
@@ -86,5 +86,51 @@ class Solution:
                 nums1[m+n-1] = nums2[n-1]
                 n -= 1
         return None
+```
+
+### 350. 两个数组的交集 II
+
+用两个 `dict` 分别计数数组中每个数出现的次数，然后遍历其中一个 `dict` ，如果数满足两个 `dict` 里 `key` 都有取 `value` 的最小值，然后将 `value` 个 `key` 加入结果。
+
+```python
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        counter1 = {}
+        counter2 = {}
+        for i in nums1:
+            if i not in counter1:
+                counter1[i] = 1
+            else:
+                counter1[i] += 1
+        for i in nums2:
+            if i not in counter2:
+                counter2[i] = 1
+            else:
+                counter2[i] += 1
+        res = []
+        for k,v in counter1.items():
+            if k in counter2:
+                t = min(v, counter2[k])
+                res += [k]*t
+        return res
+```
+
+### 121. 买卖股票的最佳时机
+
+动态规划的入门题，卖是建立在买的基础上的。在找到买入更低点时更新最大利润直到找到下个买入最低点。
+
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        if not prices:
+            return 0
+        price_min = 1e5
+        profit_max = 0
+        for i in prices:
+            if i < price_min:
+                price_min = i
+            if i-price_min > profit_max:
+                profit_max = i-price_min
+        return profit_max
 ```
 

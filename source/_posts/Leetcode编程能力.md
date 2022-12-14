@@ -68,3 +68,101 @@ class Solution:
 ```
 
 这里有个小坑，假如你的初始最大值是 `1e3` ，也就是理论上最小值，初始最小值是 `1e6` 也就是理论上的最大值，这里不能写 `if elif` ，因为对第一个值是最小值的情况会解答错误。
+
+## 运算符
+
+### 191. 位1的个数
+
+首先可以转换成字符串，然后统计字符 `'1'` 的个数。这里取 `[2:]` 主要是用 `bin()` 这个函数转换之后是 `0bxxx` 这种形式。
+
+```python
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        n_str = bin(n)[2:]
+        return n_str.count('1')
+```
+
+从位运算的角度考虑，判断奇偶可以用 `n&1==1?` 相当于看最后一位是不是 `1` ，所以可以将数字不断向右移位来判断 `1` 的个数。
+
+```python
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res = 0
+        while n:
+            res += n&1
+            n >>= 1
+        return res
+```
+
+还有个操作 `n&(n-1)` 作用是将最右端的 `1` 置 `0` ：
+
+```python
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res = 0
+        while n:
+            n &= n-1
+            res += 1
+        return res
+```
+
+### 1281. 整数的各位积和之差
+
+模拟。
+
+```python
+class Solution:
+    def subtractProductAndSum(self, n: int) -> int:
+        bit_sum = 0
+        bit_mul = 1
+        while n:
+            temp = n%10
+            n //= 10
+            bit_sum += temp
+            bit_mul *= temp
+        return bit_mul - bit_sum
+```
+
+## 条件语句
+
+### 976. 三角形的最大周长
+
+最开始想的是列出所有排列组合然后看满足条件的排列组合，找周长最大的那个，然后 `OOT` 了。
+
+后来发觉这个其实是个排序然后滑动窗口的问题，由大到小（逆序）排序后，从最左开始滑动包含 3 个数的窗口，当遇到满足条件的窗口直接返回窗口内数的和，否则返回 0 。
+
+```python
+class Solution:
+    def largestPerimeter(self, nums: List[int]) -> int:
+        nums = list(sorted(nums, reverse=True))
+        x = 0
+        y = 1
+        z = 2
+        nums_len = len(nums)
+        while z<nums_len:
+            if nums[x]+nums[y]>nums[z] and nums[y]+nums[z]>nums[x] and nums[x]+nums[z]>nums[y]:
+                return nums[x]+nums[y]+nums[z]
+            x += 1
+            y += 1
+            z += 1
+        return 0
+```
+
+### 1779. 找到最近的有相同 X 或 Y 坐标的点
+
+简单模拟，这道题的坑在于这里的下标指的是点在 `points` 中的位置而非点的 x 坐标。
+
+```python
+class Solution:
+    def nearestValidPoint(self, x: int, y: int, points: List[List[int]]) -> int:
+        m_dis_min = 10001
+        res = -1
+        for index,point in enumerate(points):
+            if point[0] == x or point[1] == y:
+                m_dis = abs(point[0]-x)+abs(point[1]-y)
+                if m_dis < m_dis_min:
+                    res = index
+                    m_dis_min = m_dis
+        return res
+```
+

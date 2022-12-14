@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-12-12 13:06:31
+date: 2022-12-15 02:20:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search]
 ---
@@ -173,6 +173,41 @@ class Solution:
         if k == 0:
             return None
         nums[:k], nums[k:] = nums[n-k:], nums[:n-k]
+        return None
+```
+
+### 283. 移动零
+
+快慢指针问题，分两步：
+
+1. 填非零值，快指针负责遍历数组找到非零值，填入慢指针指向位置，然而慢指针前进一位，否则不处理。
+2. 填零值，从慢指针开始移动到数组尾端都填 0 。
+
+```python
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        slow = 0
+        for fast, value in enumerate(nums):
+            if value:
+                nums[slow] = value
+                slow += 1
+        nums[slow::] = [0 for i in range(slow, len(nums))]
+        return None
+```
+
+### 167. 两数之和 II - 输入有序数组
+
+其实和第一题 `两数之和` 还是挺像的，依然是用 `dict` 记录是否存在满足条件的数。两个小坑，第一个 index 从 1 开始，第二个说不能使用重复的元素是指不能用同一个数而不是同一个值（如果数组里有两个一样的依然可以用）。
+
+```python
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        hashmap = {}
+        for i,v in enumerate(numbers):
+            if target-v in hashmap:
+                return [hashmap[target-v]+1, i+1]
+            else:
+                hashmap[v] = i
         return None
 ```
 
