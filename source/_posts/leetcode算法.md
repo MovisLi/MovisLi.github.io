@@ -2,7 +2,7 @@
 title: 「算法」 - 学习计划
 date: 2022-12-16 01:37:31
 categories: [ComputerScience, Algorithm, LeetCode]
-tags: [python, binary search]
+tags: [python, binary search, point]
 ---
 
 # 算法入门
