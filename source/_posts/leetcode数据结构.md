@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-15 01:50:41
+date: 2022-12-16 01:24:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, hash, point, sliding window]
 ---
@@ -132,5 +132,77 @@ class Solution:
             if i-price_min > profit_max:
                 profit_max = i-price_min
         return profit_max
+```
+
+### 566. 重塑矩阵
+
+比较直观的解法，假设有一个点 `(a,b)` 在源矩阵 `m*n` 里面，如果源矩阵用一维数组表示，那么它的位置就是 `b+a*n` ，对于一个新矩阵 `r*c` 来讲，它对应 `r` 的位置就应该是 `((b+a*n)//c, (b+a*n)%c)` 这个点：
+
+```python
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        n = len(mat[0])
+        m = len(mat)
+        if m*n != r*c:
+            return mat
+        res = [[0]*c for _ in range(r)]
+        for row in range(m):
+            for col in range(n):
+                res[(col+row*n)//c][(col+row*n)%c] = mat[row][col]
+        return res
+```
+
+这里我们用了两层循环，其实如果用一维数组做循环也可以，重点变成双方都找 `(loc//column, loc%column)` 的位置了：
+
+```python
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        n = len(mat[0])
+        m = len(mat)
+        if m*n != r*c:
+            return mat
+        res = [[0]*c for _ in range(r)]
+        for loc in range(m*n):
+                res[loc//c][loc%c] = mat[loc//n][loc%n]
+        return res
+```
+
+### 118. 杨辉三角
+
+又是一道考察多维数组的题，我们可以模拟题目描述中的动画：
+
+```python
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        res = [[1]]
+        for i in range(numRows-1):
+            temp = [1]
+            for k in range(len(res[-1])-1):
+                temp.append(res[-1][k]+res[-1][k+1])
+            temp += [1]
+            res.append(temp)
+        return res
+```
+
+然后我们也可以想象下这个假如是个二维数组坐标系：
+
+|         | **col** |      |      |      |      |
+| ------- | ------- | ---- | ---- | ---- | ---- |
+| **row** | 1       |      |      |      |      |
+|         | 1       | 1    |      |      |      |
+|         | 1       | 2    | 1    |      |      |
+|         | 1       | 3    | 3    | 1    |      |
+|         | 1       | 4    | 6    | 4    | 1    |
+
+在 `row-col` 坐标系上非行首行尾点 `(a,b)` 其实等于 `(a-1, b-1)+(a-1, b)` ：
+
+```python
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        res = [[1]*(row+1) for row in range(numRows)]
+        for row in range(2, numRows):
+            for col in range(1, row):
+                res[row][col] = res[row-1][col-1]+res[row-1][col]
+        return res
 ```
 

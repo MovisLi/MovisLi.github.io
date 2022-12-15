@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-12-15 02:20:31
+date: 2022-12-16 01:37:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search]
 ---
@@ -209,5 +209,52 @@ class Solution:
             else:
                 hashmap[v] = i
         return None
+```
+
+### 344. 反转字符串
+
+这是真的经典双指针，一个指向头一个指向尾，然后交换值再都向对方移动一位，直到相遇。
+
+```python
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        left = 0
+        right = len(s)-1
+        while left<right:
+            s[left], s[right] = s[right], s[left]
+            left += 1
+            right -= 1
+        return None
+```
+
+或者用 `for` 循环。
+
+```python
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        s_len = len(s)
+        for i in range(s_len//2):
+            s[i], s[s_len-i-1] = s[s_len-i-1], s[i]
+        return None
+```
+
+当然 Python 里面用切片是最方便的：
+
+```python
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        s[:] = s[::-1]
+        return None
+```
+
+### 557. 反转字符串中的单词 III
+
+`join()` 加列表生成式加切片。
+
+```python
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        s_lst = s.split()
+        return ' '.join([i[::-1] for i in s_lst])
 ```
 
