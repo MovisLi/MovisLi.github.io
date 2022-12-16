@@ -1,6 +1,6 @@
 ---
 title: 「SQL」 - 学习计划 
-date: 2022-12-15 02:04:58
+date: 2022-12-17 00:23:58
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [SQL]
 ---
@@ -77,7 +77,7 @@ FROM
     Customers
     LEFT JOIN Orders ON Customers.Id = Orders.CustomerId
 WHERE
-    Orders.CustomerId IS NULL
+    Orders.CustomerId IS NULL;
 ```
 
 ## 排序 & 修改
@@ -105,7 +105,7 @@ WHERE
     employee_id & 1 != 1
     OR name LIKE 'M%'
 ORDER BY
-    employee_id ASC
+    employee_id ASC;
 ```
 
  MySQL 中有个函数 LEFT 也可以：
@@ -129,7 +129,7 @@ WHERE
     employee_id & 1 != 1
     OR LEFT(name, 1) = 'M'
 ORDER BY
-    employee_id ASC
+    employee_id ASC;
 ```
 
 CASE WHEN 也可以：
@@ -141,7 +141,7 @@ SELECT
 FROM
     Employees
 ORDER BY
-    employee_id ASC
+    employee_id ASC;
 ```
 
 IF 也可以：
@@ -153,7 +153,7 @@ SELECT
 FROM
     Employees
 ORDER BY
-    employee_id ASC
+    employee_id ASC;
 ```
 
 ### 627. 变更性别
@@ -199,6 +199,8 @@ WHERE
     AND p1.email = p2.email;
 ```
 
+## 字符串处理函数/正则
+
 ### 1667. 修复表中的名字
 
 CONCAT, UPPER, LOWER, LEFT, SUBSTRING 这几个函数的用法。
@@ -210,7 +212,7 @@ SELECT
 FROM
     Users
 ORDER BY
-    user_id ASC
+    user_id ASC;
 ```
 
 ### 1484. 按日期分组销售产品
@@ -255,5 +257,195 @@ FROM
 WHERE
     conditions LIKE 'DIAB1%'
     OR conditions LIKE '% DIAB1%';
+```
+
+## 组合查询 & 指定选取
+
+### 1965. 丢失信息的雇员
+
+MySQL 居然没有 FULL OUTER JOIN ，所以我们可以使用 LEFT JOIN 加 RIGHT JOIN 这种方式实现。
+
+```mysql
+SELECT
+    t1.employee_id
+FROM
+    Employees AS t1
+    LEFT JOIN Salaries AS t2 ON t1.employee_id = t2.employee_id
+WHERE
+    t2.salary IS NULL
+UNION
+SELECT
+    t2.employee_id
+FROM
+    Employees AS t1
+    RIGHT JOIN Salaries AS t2 ON t1.employee_id = t2.employee_id
+WHERE
+    t1.name IS NULL
+ORDER BY
+    employee_id ASC;
+```
+
+可以用 GROUP BY 的方式实现，讲两张表的 `employee_id` UNION ALL（与 UNION 的区别就是不去重）起来，计数等于 1 的 `employee_id` 就是信息缺失的。
+
+```mysql
+SELECT
+    t.employee_id
+FROM
+    (
+        SELECT employee_id FROM Employees
+        UNION ALL
+        SELECT employee_id FROM Salaries
+    ) AS t
+GROUP BY
+    t.employee_id
+HAVING
+    COUNT(t.employee_id) = 1
+ORDER BY
+    t.employee_id ASC;
+```
+
+### 1795. 每个产品在不同商店的价格
+
+列转行问题，可以用 UNION ALL （这里不会重复，这里主要是比 UNION 快）。
+
+```mysql
+SELECT product_id, 'store1' AS store, store1 AS price FROM Products WHERE store1 IS NOT NULL
+UNION ALL
+SELECT product_id, 'store2' AS store, store2 AS price FROM Products WHERE store2 IS NOT NULL
+UNION ALL
+SELECT product_id, 'store3' AS store, store3 AS price FROM Products WHERE store3 IS NOT NULL;
+```
+
+### 608. 树节点
+
+感觉很多 SQL 的题考察的都是对这门语言的熟练程度而不是逻辑，比如这道题的逻辑很简单，就是：
+
+- `p_id` 为空， Root
+- `p_id` 不为空 `id` 不是别人的 `p_id` ，Leaf
+- `p_id` 不为空 `id` 是别人的 `p_id` ，Inner
+
+CASE WHEN ELSE 语句：
+
+```mysql
+SELECT
+    id,
+    CASE
+        WHEN p_id IS NULL THEN 'Root'
+        WHEN id NOT IN (SELECT p_id FROM tree WHERE p_id IS NOT NULL) THEN 'Leaf'
+        ELSE 'Inner'
+    END AS Type
+FROM
+    tree
+ORDER BY
+    id;
+```
+
+IF 语句：
+
+```mysql
+SELECT
+    id,
+    IF(p_id IS NULL, 'Root', IF(id NOT IN (SELECT p_id FROM tree WHERE p_id IS NOT NULL), 'Leaf', 'Inner')) AS Type
+FROM
+    tree
+ORDER BY
+    id;
+```
+
+### 176. 第二高的薪水
+
+除开最高薪水的最高薪水：
+
+```mysql
+SELECT
+    MAX(salary) AS SecondHighestSalary
+FROM
+    Employee
+WHERE
+    salary != (
+        SELECT MAX(salary) FROM Employee
+    );
+```
+
+从大到小排序去重后排第二的薪水：
+
+```mysql
+SELECT (
+    SELECT DISTINCT
+        salary
+    FROM
+        Employee
+    ORDER BY
+        salary DESC
+    LIMIT 1 OFFSET 1
+) AS SecondHighestSalary;
+```
+
+## 合并
+
+### 175. 组合两个表
+
+简单的连接，注意要包含 `Person` 表的信息即可。
+
+```mysql
+SELECT
+    t1.firstName,
+    t1.lastName,
+    t2.city,
+    t2.state
+FROM
+    Person AS t1
+    LEFT JOIN Address AS t2 ON t1.personId = t2.personId;
+```
+
+### 1581. 进店却未进行过交易的顾客
+
+首先查满足条件的 `customer_id` ，然后再用 GROUP BY 进行统计。以构建一张中间表的形式在 FROM 里：
+
+```mysql
+SELECT
+    customer_id,
+    COUNT(*) AS count_no_trans
+FROM
+    (
+        SELECT
+            t1.customer_id
+        FROM
+            Visits AS t1
+            LEFT JOIN Transactions AS t2 ON t1.visit_id = t2.visit_id
+        WHERE
+            t2.transaction_id IS NULL
+    ) AS t
+GROUP BY
+    customer_id;
+```
+
+放在 WHERE 里：
+
+```mysql
+SELECT
+    customer_id,
+    COUNT(*) AS count_no_trans
+FROM
+    Visits
+WHERE
+    visit_id NOT IN(SELECT DISTINCT visit_id FROM Transactions)
+GROUP BY
+    customer_id;
+```
+
+### 1148. 文章浏览 I
+
+DISTINCT 去重。
+
+```mysql
+SELECT DISTINCT
+    author_id AS id
+FROM
+    Views
+WHERE
+    author_id = viewer_id
+ORDER BY
+    id ASC;
 ```
 

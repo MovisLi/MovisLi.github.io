@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-16 01:24:41
+date: 2022-12-17 02:10:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, hash, point, sliding window]
 ---
@@ -206,3 +206,90 @@ class Solution:
         return res
 ```
 
+### 36. 有效的数独
+
+我们首先遍历一遍数独，得到一个每个数的存储信息的 `dict` ：
+
+- `dict` 的 `key` - 存放每个数，除了 `'.'` 这个代表空白的值。
+- `dict` 的 `value` - 存放一个 `list` ，这个 `list` 里存放的是 `(row_index, col_index, block_index)` 的 `tuple` 用来记录这个数的位置信息。
+
+得到信息后对字典每个 `value` 进行判断，需要当前 `list` 里的 `row_index` ， `col_index` ， `block_index` 都不相同，任意一个相同时返回错误，否则返回正确。
+
+```python
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        num_loc = {}
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != '.':
+                    if board[i][j] not in num_loc:
+                        num_loc[board[i][j]] = [(i,j,((i//3)*3+(j//3)))]
+                    else:
+                        num_loc[board[i][j]].append((i,j,((i//3)*3+(j//3))))
+        for v in num_loc.values():
+            row_set = set('')
+            col_set = set('')
+            block_set = set('')
+            for i in v:
+                if i[0] not in row_set:
+                    row_set.add(i[0])
+                else:
+                    return False
+                if i[1] not in col_set:
+                    col_set.add(i[1])
+                else:
+                    return False
+                if i[2] not in block_set:
+                    block_set.add(i[2])
+                else:
+                    return False
+        return True
+```
+
+然后就可以发现上面的逻辑可以优化，上述逻辑是先放后比，边放边比会更快。
+
+```python
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        row_record = [set('') for _ in range(9)]
+        col_record = [set('') for _ in range(9)]
+        block_record = [set('') for _ in range(9)]
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != '.':
+                    if board[i][j] in row_record[i]:
+                        return False
+                    if board[i][j] in col_record[j]:
+                        return False
+                    if board[i][j] in block_record[(i//3)*3+(j//3)]:
+                        return False
+                    row_record[i].add(board[i][j])
+                    col_record[j].add(board[i][j])
+                    block_record[(i//3)*3+(j//3)].add(board[i][j])
+        return True
+```
+
+### 73. 矩阵置零
+
+和上面这道题思路比较像，先统计一下 0 的位置信息，再修改。
+
+```python
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        row_record = set('')
+        col_record = set('')
+        m = len(matrix)
+        n = len(matrix[0])
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    row_record.add(i)
+                    col_record.add(j)
+        for i in range(m):
+            if i in row_record:
+                matrix[i][:] = [0]*n
+            else:
+                for j in col_record:
+                    matrix[i][j] = 0
+        return None
+```

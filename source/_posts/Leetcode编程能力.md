@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-15 08:51:45
+date: 2022-12-16 19:51:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python]
 ---
@@ -164,5 +164,81 @@ class Solution:
                     res = index
                     m_dis_min = m_dis
         return res
+```
+
+## 循环
+
+### 1822. 数组元素积的符号
+
+没有必要真的去乘，只需要关注数的正负性对结果的影响。循环遍历数组：
+
+- 如果是正数，乘积不变号，进入下次循环。
+- 如果是 0 ，乘积为 0 ，跳出循环。
+- 如果是负数，乘积变号，进入下次循环。
+
+```python
+class Solution:
+    def arraySign(self, nums: List[int]) -> int:
+        res = 1
+        for i in nums:
+            if i < 0:
+                res *= -1
+            elif i == 0:
+                return 0
+        return res
+```
+
+### 1502. 判断能否形成等差数列
+
+先排序，并从前两个数求得差值，在依次遍历，如果发现某连续两个数的差值不等于之前求的差值，则说明不是等差数列，否则是等差数列。
+
+```python
+class Solution:
+    def canMakeArithmeticProgression(self, arr: List[int]) -> bool:
+        arr = list(sorted(arr))
+        diff = arr[1]-arr[0]
+        for i in range(len(arr)-1):
+            if arr[i+1]-arr[i] != diff:
+                return False
+        return True
+```
+
+### 202. 快乐数
+
+这个过程让我想到《火影忍者》里的忍术伊邪那美，我们试想下如果处在一个循环的进程中，你什么时候会发现你循环了呢？那就是过去的东西再次重复的时候。所以这道题很显然就是用一个 `set` 来存储过程中出现的数，如果出现的数在 `set` 里了就说明不是快乐数，否则是快乐数。
+
+```python
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        num_set = {n}
+        while n != 1:
+            temp = 0
+            while n!=0:
+                temp += (n%10)*(n%10)
+                n //= 10
+            n = temp
+            if n in num_set:
+                return False
+            else:
+                num_set.add(n)
+        return True
+```
+
+### 1790. 仅执行一次字符串交换能否使两个字符串相等
+
+定义一个数组记录不相同的值的下标，如果两个字符串不同，当且仅当数组长度为 2 且字符串 `s1` 与 `s2` 不同的数交叉相等时，满足题意。
+
+```python
+class Solution:
+    def areAlmostEqual(self, s1: str, s2: str) -> bool:
+        if s1 == s2:
+            return True
+        counter = []
+        for i,v in enumerate(s2):
+            if v != s1[i]:
+                counter.append(i)
+        if len(counter) == 2 and s2[counter[0]] == s1[counter[1]] and s2[counter[1]] == s1[counter[0]]:
+            return True
+        return False
 ```
 
