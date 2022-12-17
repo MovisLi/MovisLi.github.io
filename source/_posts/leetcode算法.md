@@ -258,3 +258,95 @@ class Solution:
         return ' '.join([i[::-1] for i in s_lst])
 ```
 
+### 876. 链表的中间结点
+
+这道题被归到双指针题目里面，显然就是一道快慢指针的问题，逻辑很简单，快指针走两次，慢指针走一次。最后慢指针的位置就是中间结点。
+
+```python
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = head
+        fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+```
+
+### 19. 删除链表的倒数第 N 个结点
+
+第一种思路，一次扫描，之后再删。注意要删一个结点需要找到的是它的前序结点（而不是它自己）。
+
+```python
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        counter = 0
+        node = head
+        while node:
+            node = node.next
+            counter += 1
+        dummy = ListNode(0, head)
+        node = dummy
+        for i in range(counter-n):
+            node = node.next
+        node.next = node.next.next
+        return dummy.next
+```
+
+这里我感觉有个坑就是测试用例好像是异步跑的 。我曾经想过用：
+
+```python
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        counter = 0
+        node = head
+        while node:
+            node = node.next
+            counter += 1
+        node = head
+        for i in range(counter-n-1):
+            node = node.next
+        node.next = node.next.next
+        return head
+```
+
+会得到如下报错，假如你打印错误的话你会很迷，其实这是第二个测试用例的错误。
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212171014954.png)
+
+应该写成：
+
+```python
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        counter = 0
+        node = head
+        while node:
+            node = node.next
+            counter += 1
+        node = head
+        for i in range(counter-n-1):
+            node = node.next
+        if not node.next:
+            return head.next
+        node.next = node.next.next
+        return head
+```
+
+第二种是快慢指针的方式：
+
+```python
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        fast = head
+        slow = dummy
+        for i in range(n):
+            fast = fast.next
+        while fast:
+            fast = fast.next
+            slow = slow.next
+        slow.next = slow.next.next
+        return dummy.next
+```
+

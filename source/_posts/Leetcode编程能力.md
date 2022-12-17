@@ -242,3 +242,76 @@ class Solution:
         return False
 ```
 
+## 函数
+
+### 589. N 叉树的前序遍历
+
+递归，前序遍历（又称 NLR ）其实很简单，就是先遍历根节点，遍历子节点，和深度优先搜索是一样的，所以：
+
+```python
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        res = []
+        def dfs(node):
+            if not node:
+                return None
+            res.append(node.val)
+            for child in node.children:
+                dfs(child)
+        dfs(root)
+        return res
+```
+
+非递归，用栈的思想，从根节点开始，先添加节点值进结果，在反序添加孩子的值进栈，每次循环出栈一个节点并打印，再添加。这个是更直观的深度优先搜索。
+
+```python
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        if root is None:
+            return None
+        res = []
+        stack = [root]
+        while stack:
+            temp = stack.pop()
+            res.append(temp.val)
+            for child in reversed(temp.children):
+                stack.append(child)
+        return res
+```
+
+### 496. 下一个更大元素 I
+
+我们逆序遍历 `nums2` ，可以用一个 `stack` 来记录比当前所有数都大的数，如果比当前数小就出栈直到比当前数大或者非空，那么遍历到下一个更大元素实际上就是栈顶元素。
+
+```python
+class Solution:
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        hashmap = {}
+        stack = []
+        for i in reversed(nums2):
+            while stack and i>stack[-1]:
+                stack.pop()
+            hashmap[i] = stack[-1] if stack else -1
+            stack.append(i)
+        return [hashmap[i] for i in nums1]
+```
+
+### 1232. 缀点成线
+
+一条直线上的点斜率相等。
+
+```python
+class Solution:
+    def checkStraightLine(self, coordinates: List[List[int]]) -> bool:
+        dy = coordinates[1][1]-coordinates[0][1]
+        dx = coordinates[1][0]-coordinates[0][0]
+        for point in coordinates[2:]:
+            if (point[1]-coordinates[0][1])*dx != (point[0]-coordinates[0][0])*dy:
+                return False
+        return True
+```
+
+这样写是为了避免除数为 0 的情况。
+
+## 数组
+
