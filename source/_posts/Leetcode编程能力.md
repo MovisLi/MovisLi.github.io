@@ -1,8 +1,8 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-16 19:51:45
+date: 2022-12-19 01:27:45
 categories: [ComputerScience, Algorithm, LeetCode]
-tags: [python]
+tags: [python, hash, point]
 ---
 
 # 编程能力入门
@@ -314,4 +314,145 @@ class Solution:
 这样写是为了避免除数为 0 的情况。
 
 ## 数组
+
+### 1588. 所有奇数长度子数组的和
+
+很显然这必然是一道数学题。我们先用的解法，遍历数组模拟流程：
+
+```python
+class Solution:
+    def sumOddLengthSubarrays(self, arr: List[int]) -> int:
+        res = 0
+        arr_len = len(arr)
+        for i in range(arr_len):
+            temp = 1
+            while i+temp <= arr_len:
+                for v in arr[i:i+temp]:
+                    res += v
+                temp += 2
+        return res
+```
+
+之后我们想一种数学关系，先列出一个矩阵：
+
+| 长度 | 数组                        | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    |
+| ---- | --------------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | [1]                         | 1    |      |      |      |      |      |      |      |      |
+| 2    | [1, 2]                      | 1    | 1    |      |      |      |      |      |      |      |
+| 3    | [1, 2, 3]                   | 2    | 2    | 2    |      |      |      |      |      |      |
+| 4    | [1, 2, 3, 4]                | 2    | 3    | 3    | 2    |      |      |      |      |      |
+| 5    | [1, 2, 3, 4, 5]             | 3    | 4    | 5    | 4    | 3    |      |      |      |      |
+| 6    | [1, 2, 3, 4, 5, 6]          | 3    | 5    | 6    | 6    | 5    | 3    |      |      |      |
+| 7    | [1, 2, 3, 4, 5, 6, 7]       | 4    | 6    | 8    | 8    | 8    | 6    | 4    |      |      |
+| 8    | [1, 2, 3, 4, 5, 6, 7, 8]    | 4    | 6    | 8    | 9    | 9    | 8    | 6    | 4    |      |
+| 9    | [1, 2, 3, 4, 5, 6, 7, 8, 9] | 5    | 8    | 11   | 12   | 13   | 12   | 11   | 8    | 5    |
+
+可以发现多项式的系数呈现对称关系。
+
+以 5 为例，呈现这样的分布经过了 1, 3, 5 这 3 个奇数向量的相加，其中：
+
+- 1 - 1, 1, 1, 1, 1
+- 3 - 1, 2, 3, 2, 1
+- 5 - 1, 1, 1, 1, 1
+
+以 7 为例，呈现这样的分布经过了 1, 3, 5, 7 这 4 个奇数向量的相加，其中：
+
+- 1 - 1, 1, 1, 1, 1, 1, 1
+- 3 - 1, 2, 3, 3, 3, 2, 1
+- 5 - 1, 2, 3, 3, 3, 2, 1
+- 7 - 1, 1, 1, 1, 1, 1, 1
+
+再以 9 为例，呈现这样的分布经过了 1, 3, 5, 7, 9 这 5 个奇数向量的相加，其中：
+
+- 1 - 1, 1, 1, 1, 1, 1, 1, 1, 1
+- 3 - 1, 2, 3, 3, 3, 3, 3, 2, 1
+- 5 - 1, 2, 3, 4, 5, 4, 3, 2, 1
+- 7 - 1, 2, 3, 3, 3, 3, 3, 2, 1
+- 9 - 1, 1, 1, 1, 1, 1, 1, 1, 1
+
+那可以看到 5 和 9 还算是相同的规律，7 好像有所不同和 3 有点像，那么我们去寻找 7 哪里不同，结合上文的对称关系，我们首先找每个数组的中间的数有什么不同：
+
+- 3 的中间数 2 - 左右各有 1 个数，此系数为 2 = 1\*1 + 1\*1。左右各有 1 个奇数， 0 个偶数。
+
+- 5 的中间数 3 - 左右各有 2 个数，此系数为 5 = 1\*1 + 2\*2。左右各有 1 个奇数， 1 个偶数。
+- 7 的中间数 4 - 左右各有 3 个数，此系数为 8 = 2\*2 + 2\*2。左右各有 2 个奇数， 1 个偶数。
+- 9 的中间数 5 - 左右各有 4 个数，此系数为 13 = 2\*2 + 3\*3。左右各有 2 个奇数， 2 个偶数。
+
+可以看到其实每个中间数的系数其实=左右奇数数量的平方+左右偶数数量加 1 的平方。
+
+然后再观察 9 的其他项发现这个公式容易推广成每个数的系数 = 左边奇数个数\*右边奇数个数 + (左边偶数个数+1)\*(右边偶数个数+1)。
+
+```python
+class Solution:
+    def sumOddLengthSubarrays(self, arr: List[int]) -> int:
+        res = 0
+        arr_len = len(arr)
+        for i in range(arr_len):
+            left_count, right_count = i, arr_len-i-1
+            left_odds = (left_count+1)//2
+            right_odds = (right_count+1)//2
+            left_evens = left_count//2 + 1
+            right_evens = right_count//2 + 1
+            res += arr[i]*(left_odds*right_odds+left_evens*right_evens)
+        return res
+```
+
+### 283. 移动零
+
+这道快慢指针问题在算法专题里刷过，其核心就是慢指针记录，快指针遍历。
+
+```python
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        slow = 0
+        for fast, value in enumerate(nums):
+            if value:
+                nums[slow] = value
+                slow += 1
+        nums[slow::] = [0 for i in range(slow, len(nums))]
+        return None
+```
+
+### 1672. 最富有客户的资产总量
+
+这道题就是遍历每位客户，直接求每位客户资产和求最大值就行了。
+
+```python
+class Solution:
+    def maximumWealth(self, accounts: List[List[int]]) -> int:
+        return max(map(sum, accounts))
+```
+
+### 1572. 矩阵对角线元素的和
+
+这道题注意一下矩阵行列数为奇数和偶数时的不同情况就行了。
+
+```python
+class Solution:
+    def diagonalSum(self, mat: List[List[int]]) -> int:
+        n = len(mat)
+        res = 0
+        if n&1:
+            res = -mat[n//2][n//2]
+        for i in range(n):
+            res += mat[i][i]+mat[i][-i-1]
+        return res
+```
+
+### 566. 重塑矩阵
+
+在数据结构的专项计划里做过。
+
+```python
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        n = len(mat[0])
+        m = len(mat)
+        if m*n != r*c:
+            return mat
+        res = [[0]*c for _ in range(r)]
+        for loc in range(m*n):
+                res[loc//c][loc%c] = mat[loc//n][loc%n]
+        return res
+```
 

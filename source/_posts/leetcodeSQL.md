@@ -1,6 +1,6 @@
 ---
 title: 「SQL」 - 学习计划 
-date: 2022-12-17 00:23:58
+date: 2022-12-19 01:13:58
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [SQL]
 ---
@@ -447,5 +447,120 @@ WHERE
     author_id = viewer_id
 ORDER BY
     id ASC;
+```
+
+### 197. 上升的温度
+
+`ADDDATE` 函数的使用。
+
+```mysql
+SELECT
+    today.id
+FROM
+    Weather AS yesterday,
+    Weather AS today
+WHERE
+    today.recordDate = ADDDATE(yesterday.recordDate, INTERVAL 1 DAY)
+    AND today.temperature > yesterday.temperature;
+```
+
+或者用 `DATE_ADD` 函数。
+
+```mysql
+SELECT
+    today.id
+FROM
+    Weather AS yesterday,
+    Weather AS today
+WHERE
+    today.recordDate = DATE_ADD(yesterday.recordDate, INTERVAL 1 DAY)
+    AND today.temperature > yesterday.temperature;
+```
+
+### 607. 销售员
+
+子查询。
+
+```mysql
+SELECT
+    name
+FROM
+    SalesPerson
+WHERE
+    sales_id NOT IN (
+        SELECT
+            o.sales_id
+        FROM
+            Orders AS o
+            INNER JOIN Company AS c ON o.com_id = c.com_id
+        WHERE
+            c.name = 'RED'
+    )
+```
+
+## 计算函数
+
+### 1141. 查询近30天活跃用户数
+
+这道题考察分组查询统计，首先 COUNT 里是可以用 `DISTINCT user_id` 来去重的，然后可以用 `DATE_SUB` 函数。
+
+```mysql
+SELECT
+    activity_date AS day,
+    COUNT(DISTINCT user_id) AS active_users
+FROM
+    Activity
+WHERE
+    activity_date > DATE_SUB("2019-07-27", INTERVAL 30 DAY)
+    AND activity_date <= "2019-07-27"
+GROUP BY
+    activity_date;
+```
+
+当然也可以用 `DATE_ADD` 函数。
+
+```mysql
+SELECT
+    activity_date AS day,
+    COUNT(DISTINCT user_id) AS active_users
+FROM
+    Activity
+WHERE
+    activity_date > DATE_ADD("2019-07-27", INTERVAL -30 DAY)
+    AND activity_date <= "2019-07-27"
+GROUP BY
+    activity_date;
+```
+
+### 1693. 每天的领导和合伙人
+
+这道题应该是考察 GOURP BY 可以按多列分组。
+
+```mysql
+SELECT
+    date_id,
+    make_name,
+    COUNT(DISTINCT lead_id) AS unique_leads,
+    COUNT(DISTINCT partner_id) AS unique_partners
+FROM
+    DailySales
+GROUP BY
+    date_id, make_name;
+```
+
+### 1729. 求关注者的数量
+
+其实就是对 `user_id` 进行 GROUP BY：
+
+```mysql
+SELECT
+    user_id,
+    COUNT(*) AS followers_count
+FROM
+    Followers
+GROUP BY
+    user_id
+ORDER BY
+    user_id ASC;
 ```
 

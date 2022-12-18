@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-17 02:10:41
+date: 2022-12-19 02:55:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, hash, point, sliding window]
 ---
@@ -293,3 +293,200 @@ class Solution:
                     matrix[i][j] = 0
         return None
 ```
+
+## 字符串
+
+### 387. 字符串中的第一个唯一字符
+
+`dict` 存储频次。
+
+```python
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        hashmap = {}
+        for i in s:
+            if i not in hashmap:
+                hashmap[i] = 1
+            else:
+                hashmap[i] += 1
+        for i,v in enumerate(s):
+            if hashmap[v] == 1:
+                return i
+        return -1
+```
+
+`dict` 存储唯一元素的下标，否则存储 -1。
+
+```python
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        hashmap = {}
+        for i,v in enumerate(s):
+            if v not in hashmap:
+                hashmap[v] = i
+            else:
+                hashmap[v] = -1
+        res = len(s)
+        for i in hashmap.values():
+            if i != -1 and i < res:
+                res = i
+        if res == len(s):
+            return -1
+        return res
+```
+
+### 383. 赎金信
+
+用 `dict` 做一个简单的计数，再判断。
+
+```python
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        magazine_dict = {}
+        ransomNote_dict = {}
+        for i in magazine:
+            if i not in magazine_dict:
+                magazine_dict[i] = 1
+            else:
+                magazine_dict[i] += 1
+        for i in ransomNote:
+            if i not in ransomNote_dict:
+                ransomNote_dict[i] = 1
+            else:
+                ransomNote_dict[i] += 1
+        for k,v in ransomNote_dict.items():
+            if k not in magazine_dict:
+                return False
+            else:
+                if v > magazine_dict[k]:
+                    return False
+        return True
+```
+
+### 242. 有效的字母异位词
+
+用 `dict` 做一个简单的计数统计，再判断。
+
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        hashmap = {}
+        for i in s:
+            if i not in hashmap:
+                hashmap[i] = 1
+            else:
+                hashmap[i] += 1
+        for i in t:
+            if i not in hashmap:
+                return False
+            else:
+                hashmap[i] -= 1
+        for v in hashmap.values():
+            if v != 0:
+                return False
+        return True
+```
+
+## 链表
+
+### 141. 环形链表
+
+快慢双指针能否相遇的问题，如果相遇了就是有环，没有相遇就是没有环。
+
+```python
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        fast = slow = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if fast == slow:
+                return True
+        return False
+```
+
+### 21. 合并两个有序链表
+
+迭代，链表的修改需要找到待插入节点的上一个节点，因此，我们需要定义一个 `pre` 节点方便修改，同时为了方便返回结果，我们还需要一个 `dummy` 节点用于记录一开始的位置。
+
+```python
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        pre = dummy
+        while list1 and list2:
+            if list1.val <= list2.val:
+                pre.next = list1
+                list1 = list1.next
+            else:
+                pre.next = list2
+                list2 = list2.next
+            pre = pre.next
+        pre.next = list2 if list1 is None else list1
+        return dummy.next
+```
+
+递归。
+
+```python
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if list1 is None:
+            return list2
+        elif list2 is None:
+            return list1
+        elif list1.val <= list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1,list2.next)
+            return list2
+```
+
+### 203. 移除链表元素
+
+迭代，同样一个 `pre` 节点方便删元素，一个 `dummy` 节点方便返回头指针。
+
+```python
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        dummy = ListNode()
+        pre = dummy
+        while head:
+            while head and head.val == val:
+                head = head.next
+            if head:
+                pre.next = head
+                head = head.next
+            else:
+                pre.next = None
+            pre = pre.next
+        return dummy.next
+```
+
+虽然过了，但是我仔细一看上面的代码其实逻辑有问题，最外层的 `while head` 根本不应该写成循环，因为推动循环变化的是 `pre` 这个点，优化一下：
+
+```python
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        pre = dummy
+        while pre.next:
+            if pre.next.val != val:
+                pre = pre.next
+            else:
+                pre.next = pre.next.next
+        return dummy.next
+```
+
+递归。这里也注意递归条件。
+
+```python
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        if head is None:
+            return head
+        head.next = self.removeElements(head.next, val)
+        return head if head.val != val else head.next
+```
+

@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-12-16 01:37:31
+date: 2022-12-19 00:37:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -350,3 +350,121 @@ class Solution:
         return dummy.next
 ```
 
+## 滑动窗口
+
+### 3. 无重复字符的最长子串
+
+我们采用队列来实现滑动窗口，遍历字符串，当队里没有当前字符时，当前字符入队；当队里有当前字符时，先统计队列长度进而看情况更新最大子字符串，出队直到队里没有当前字符，再添加当前字符到队尾。考虑到字符串字符都不一样的情况，也就是没有更新最大子字符串长度，遍历完之后还应该更新一次。
+
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        queue = []
+        res = 0
+        for i in s:
+            if i in queue:
+                res = max(res, len(queue))
+                while queue[0] != i:
+                    del queue[0]
+                del queue[0]
+            queue.append(i)
+        return max(res, len(queue))
+```
+
+### 567. 字符串的排列
+
+`s1` 排列之一是 `s2` 的字串，这句话的意思就是 `s1` 的 `dict` 计数结果和 `s2` 的某字串 `dict` 计数结果是一样的，那么显然 `s2` 这个字串长度和 `s1` 也就一样了。所以我们可以模拟这个计数过程。
+
+```python
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        s1_dict = {}
+        for i in s1:
+            if i not in s1_dict:
+                s1_dict[i] = 1
+            else:
+                s1_dict[i] += 1
+        s1_len = len(s1)
+        for i in range(len(s2)-s1_len+1):
+            subs = s2[i:i+s1_len]
+            subs_dict = {}
+            for v in subs:
+                if v not in subs_dict:
+                    subs_dict[v] = 1
+                else:
+                    subs_dict[v] += 1
+            flag = True
+            for k,v in subs_dict.items():
+                if k not in s1_dict or v != s1_dict[k]:
+                    flag = False
+                    break
+            if flag:
+                return True
+        return False
+```
+
+那么上面的代码是很慢的，我们可以发现根本没有必要每次创建 `dict` ，维护一个 `dict` 就行了。
+
+```python
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        s1_len = len(s1)
+        s2_len = len(s2)
+        if s1_len > s2_len:
+            return False
+        s1_dict = {}
+        for i in s1:
+            if i not in s1_dict:
+                s1_dict[i] = 1
+            else:
+                s1_dict[i] += 1
+        s2_dict = {}
+        for i in range(s1_len):
+            if s2[i] not in s2_dict:
+                s2_dict[s2[i]] = 1
+            else:
+                s2_dict[s2[i]] += 1
+        flag = True
+        for k,v in s1_dict.items():
+            if k not in s2_dict or v != s2_dict[k]:
+                flag = False
+                break
+        if flag:
+            return True
+        for i in range(s1_len, s2_len):
+            s2_dict[s2[i-s1_len]] -= 1
+            if s2[i] not in s2_dict:
+                s2_dict[s2[i]] = 1
+            else:
+                s2_dict[s2[i]] += 1
+            flag = True
+            for k,v in s1_dict.items():
+                if k not in s2_dict or v != s2_dict[k]:
+                    flag = False
+                    break
+            if flag:
+                return True
+        return False
+```
+
+如果用 collections 的 Counter 看起来就很简洁，但是似乎变慢了：
+
+```python
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        s1_len = len(s1)
+        s1_dict = collections.Counter(s1)
+        s2_dict = collections.Counter(s2[:s1_len])
+        if s1_dict == s2_dict:
+            return True
+        for i in range(s1_len, len(s2)):
+            s2_dict[s2[i-s1_len]] -= 1
+            s2_dict.update({s2[i]:1})
+            if s1_dict == s2_dict:
+                return True
+        return False
+```
+
+## 广度优先搜索 / 深度优先搜索
+
+### 733. 图像渲染
