@@ -103,5 +103,5 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/MovisLi/MovisLi.github.io.git
+  repo: git@github.com:MovisLi/MovisLi.github.io.git
   branch: main

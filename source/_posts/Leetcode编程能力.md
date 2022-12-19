@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-19 01:27:45
+date: 2022-12-20 02:44:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -454,5 +454,61 @@ class Solution:
         for loc in range(m*n):
                 res[loc//c][loc%c] = mat[loc//n][loc%n]
         return res
+```
+
+## 字符串
+
+### 1768. 交替合并字符串
+
+简单模拟。
+
+```python
+class Solution:
+    def mergeAlternately(self, word1: str, word2: str) -> str:
+        word1_len = len(word1)
+        word2_len = len(word2)
+        min_len = min(word1_len, word2_len)
+        res = []
+        for i in range(min_len):
+            res.append(word1[i])
+            res.append(word2[i])
+        if min_len == word1_len:
+            res.append(word2[min_len:word2_len])
+        else:
+            res.append(word1[min_len:word1_len])
+        return ''.join(res)
+```
+
+### 1678. 设计 Goal 解析器
+
+简单替换。
+
+```python
+class Solution:
+    def interpret(self, command: str) -> str:
+        command = command.replace('G','G')
+        command = command.replace('()','o')
+        command = command.replace('(al)','al')
+        return command
+```
+
+### 389. 找不同
+
+对两个字符串计数找不同。
+
+```python
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        s_dict = collections.Counter(s)
+        t_dict = collections.Counter(t)
+        return list(t_dict-s_dict)[0]
+```
+
+巧用 ASCII 码。
+
+```python
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        return chr(sum(ord(_) for _ in t)-sum(ord(_) for _ in s))
 ```
 

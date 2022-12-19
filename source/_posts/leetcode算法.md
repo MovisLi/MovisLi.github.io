@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-12-19 00:37:31
+date: 2022-12-20 02:26:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -468,3 +468,218 @@ class Solution:
 ## 广度优先搜索 / 深度优先搜索
 
 ### 733. 图像渲染
+
+深度优先搜索的递归解法。为了防止无限循环，我们需要一个 `record` 数组来记录已经遍历过的点。
+
+```python
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        m = len(image)
+        n = len(image[0])
+        record = [[1]*n for _ in range(m)]
+        def _floodFill(image, sr, sc):
+            if record[sr][sc]:
+                temp, image[sr][sc], record[sr][sc] = image[sr][sc], color, 0
+            else:
+                return image
+            if sr>=1 and image[sr-1][sc]==temp:
+                image = _floodFill(image, sr-1, sc)
+            if sr+1<m and image[sr+1][sc]==temp:
+                image = _floodFill(image, sr+1, sc)
+            if sc>=1 and image[sr][sc-1]==temp:
+                image = _floodFill(image, sr, sc-1)
+            if sc+1<n and image[sr][sc+1]==temp:
+                image = _floodFill(image, sr, sc+1)
+            return image
+        image = _floodFill(image, sr, sc)
+        return image
+```
+
+当然我们也可以用栈来实现非递归算法。
+
+```python
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        m = len(image)
+        n = len(image[0])
+        record = [[1]*n for _ in range(m)]
+        stack = [(sr,sc)]
+        while stack:
+            i,j = stack.pop()
+            if record[i][j]:
+                temp, image[i][j], record[i][j] = image[i][j], color, 0
+                if j+1<n and image[i][j+1] == temp:
+                    stack.append((i, j+1))
+                if j>=1 and image[i][j-1] == temp:
+                    stack.append((i, j-1))
+                if i+1<m and image[i+1][j] == temp:
+                    stack.append((i+1, j))
+                if i>=1 and image[i-1][j] == temp:
+                    stack.append((i-1, j))
+        return image
+```
+
+### 695. 岛屿的最大面积
+
+与上题相似，我们需要一个 `record` 来记录某个点是否被算过。
+
+```python
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        record = [[1]*n for _ in range(m)]
+        max_count = 0
+
+        def dfs(i, j):
+            stack = [(i, j)]
+            res = 0
+            while stack:
+                i,j = stack.pop()
+                if record[i][j]:
+                    record[i][j] = 0
+                    res += 1
+                    if j+1<n and grid[i][j+1] == 1:
+                        stack.append((i, j+1))
+                    if j>=1 and grid[i][j-1] == 1:
+                        stack.append((i, j-1))
+                    if i+1<m and grid[i+1][j] == 1:
+                        stack.append((i+1, j))
+                    if i>=1 and grid[i-1][j] == 1:
+                        stack.append((i-1, j))
+            return res
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    max_count = max(max_count, dfs(i, j))
+
+        return max_count
+```
+
+### 617. 合并二叉树
+
+深度优先搜索，递归。
+
+```python
+class Solution:
+    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root1 and root2:
+            root1.val += root2.val
+            root1.left = self.mergeTrees(root1.left, root2.left)
+            root1.right = self.mergeTrees(root1.right, root2.right)
+            return root1
+        return root1 or root2
+```
+
+也可以不用递归，这时我们需要栈。假设我们的目的是把 `root2` 合并到 `root1` 里，我们会有如下情况：
+
+- 首先我们需要出栈拿到 `root1` , `root2` 的节点。
+- 将 `root1` 和 `root2` 的值相加，这里我们需要保证除非根节点是空的，否则不会遇到 `root1` 或 `root2` 为空的情况。
+- 如果 `root1` 和 `root2` 都有右子树或都有左子树，则我们按顺序进行压栈。
+- 如果 `root1` 没有右子树或者没有左子树而 `root2` 有，只需要把 `root2` 的接过来，不需要进栈操作。
+- 剩余情况我们都不用做处理。
+
+```python
+class Solution:
+    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root1 is None or root2 is None:
+            return root1 or root2
+        stack = [(root1, root2)]
+        while stack:
+            t1, t2 = stack.pop()
+            if t1 and t2:
+                t1.val += t2.val
+            if t1.right and t2.right:
+                stack.append((t1.right, t2.right))
+            elif t1.right is None:
+                t1.right = t2.right
+            if t1.left and t2.left:
+                stack.append((t1.left, t2.left))
+            elif t1.left is None:
+                t1.left = t2.left
+        return root1
+```
+
+广度优先搜索。其实改动非常小，因为这道题本身就跟顺序没什么关系。把上面代码的 `pop()` （出栈）换成 `pop(0)`（出队）就行了。
+
+```python
+class Solution:
+    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root1 is None or root2 is None:
+            return root1 or root2
+        queue = [(root1, root2)]
+        while queue:
+            t1, t2 = queue.pop(0)
+            if t1 and t2:
+                t1.val += t2.val
+            if t1.right and t2.right:
+                queue.append((t1.right, t2.right))
+            elif t1.right is None:
+                t1.right = t2.right
+            if t1.left and t2.left:
+                queue.append((t1.left, t2.left))
+            elif t1.left is None:
+                t1.left = t2.left
+        return root1
+```
+
+### 116. 填充每个节点的下一个右侧节点指针
+
+这个填充其实是父节点在填充子节点的指针。分为左右子节点两种情况：
+
+- 左子节点，`next` 指针指向位置其实就是右子节点的位置。
+- 右子节点，`next` 指针指向位置是此节点 `next` 指针指向节点的左子节点。
+
+想明白这个，用递归实现就很简单了：
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if root and root.left and root.right:
+            root.left.next = root.right
+            if root.next:
+                root.right.next = root.next.left
+            root.left = self.connect(root.left)
+            root.right = self.connect(root.right)
+        return root
+```
+
+对于非递归来讲，采用广度优先搜索。
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if root is None:
+            return root
+        queue = [root]
+        while queue:
+            t = queue.pop(0)
+            if t.left and t.right:
+                t.left.next = t.right
+                if t.next:
+                    t.right.next = t.next.left
+                queue.append(t.left)
+                queue.append(t.right)
+        return root
+```
+
+也可以一直找最左节点与 `next` 指针：
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if root is None:
+            return root
+        leftmost = root
+        while leftmost.left:
+            node = leftmost
+            while node:
+                node.left.next = node.right
+                if node.next:
+                    node.right.next = node.next.left
+                node = node.next
+            leftmost = leftmost.left
+        return root
+```
+
