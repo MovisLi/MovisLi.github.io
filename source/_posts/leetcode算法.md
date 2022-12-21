@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-12-20 02:26:31
+date: 2022-12-22 03:38:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -681,5 +681,302 @@ class Solution:
                 node = node.next
             leftmost = leftmost.left
         return root
+```
+
+### 542. 01 矩阵
+
+这道题第一眼应该是一道广度优先搜索的题目，然而居然超时了。
+
+然后又想到一招，先记录 0 的位置，之后直接遍历距离 0 的最小值，毕竟这个距离可以用 `abs(x1-x0)+abs(y1-y0)` 得到，比上一个好像快了一点，但是依然超时。
+
+然后可以转换一下，从找每个点到 0 的距离变成 0 到每个点的距离，也就是所谓的多源广度优先搜索，把 0 看作一个整体，首先找距它们 0 个位置的点（自身），再找距它们 1 个位置的点，以此类推直到找到所有点。然后我成功 AC 了一次。
+
+```python
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m = len(mat)
+        n = len(mat[0])
+        res = [[-1]*n for _ in range(m)]
+        queue = []
+        for r in range(m):
+            for c in range(n):
+                if not mat[r][c]:
+                    queue.append((r, c, 0))
+        while queue:
+            i, j, count = queue.pop(0)
+            if res[i][j] == -1:
+                res[i][j] = count
+                for ni, nj in ((i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+                    if 0<=ni<m and 0<=nj<n and res[ni][nj] == -1:
+                        queue.append((ni, nj, count+1))
+        return res
+```
+
+这个通过时间显然是哪里有问题。然后打印了一下循环的信息，我发现这里有个问题，我用 `res` 去分辨哪些点的值被搜索过，而 `res` 是在出队的时候更改搜索信息的，因此，同一层（离多个 0 同一距离）的点可能会被重复添加，也就是说除了 `res` 之外，我们最好再来一个记录值是否被搜索过的，比如 `set` ？
+
+```python
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m = len(mat)
+        n = len(mat[0])
+        res = [[0]*n for _ in range(m)]
+        queue = []
+        searched = set('')
+        for r in range(m):
+            for c in range(n):
+                if not mat[r][c]:
+                    queue.append((r, c, 0))
+                    searched.add((r,c))
+        while queue:
+            i, j, count = queue.pop(0)
+            for ni, nj in ((i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+                if 0<=ni<m and 0<=nj<n and (ni, nj) not in searched:
+                    res[ni][nj] = count+1
+                    queue.append((ni, nj, count+1))
+                    searched.add((ni, nj))
+        return res
+```
+
+优化一下代码：
+
+```python
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m = len(mat)
+        n = len(mat[0])
+        res = [[0]*n for _ in range(m)]
+        queue = [(r,c) for r in range(m) for c in range(n) if mat[r][c]==0]
+        searched = set(queue)
+        while queue:
+            i, j = queue.pop(0)
+            for ni, nj in ((i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+                if 0<=ni<m and 0<=nj<n and (ni, nj) not in searched:
+                    res[ni][nj] = res[i][j]+1
+                    queue.append((ni, nj))
+                    searched.add((ni, nj))
+        return res
+```
+
+仍然很慢，难道是 `list` 的问题？数据量大之后 `list` 不够高效？把 `list` 换成 `collections.deque()` 双端队列。
+
+```python
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m, n = len(mat), len(mat[0])
+        queue = collections.deque()
+        searched = [[0]*n for _ in range(m)]
+        res = [[0]*n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if mat[i][j] == 0:
+                    queue.append((i, j))
+                    searched[i][j] = 1
+        while queue:
+            i, j = queue.popleft()
+            for ni, nj in ((i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+                if 0<=ni<m and 0<=nj<n and not searched[ni][nj]:
+                    res[ni][nj] = res[i][j]+1
+                    queue.append((ni, nj))
+                    searched[ni][nj] = 1
+        return res
+```
+
+还真是，应该是 `list.pop(0)` 这个方法的事件复杂度是 `O(n)` 。
+
+看了一下官解里提的动态规划方法，原理。
+
+状态转移方程：
+$$
+f(i,j)=\begin{cases}
+1+min(f(i-1,j), f(i+1,j), f(i,j-1),f(i,j+1))\ \ \ \ if\ (i,j)=1
+\\0\ \ \ \ if\ (i,j)=0
+\end{cases}
+$$
+这个是很好理解的，毕竟一个点可以由他上下左右四个点离 0 最近的位置决定。
+
+但是 `for i in range(m) for j in range(n)` 这个循环相当于是从左上开始往右下遍历，也就是说这次遍历只会包含 `f(i-1,j), f(i,j-1)` 两个点的真实值，所以还需要一次从右下角开始的遍历，稍有不同的是右下角遍历的时候还可以同时处理下左上角遍历时的结果。
+
+```python
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m, n = len(mat), len(mat[0])
+        res = [[2e4]*n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if mat[i][j] == 0:
+                    res[i][j] = 0
+                else:
+                    top, left = 1e4, 1e4
+                    if i>0: top = res[i-1][j]
+                    if j>0: left = res[i][j-1]
+                    res[i][j] = min(top+1, left+1)
+        for i in range(m-1, -1, -1):
+            for j in range(n-1, -1, -1):
+                if mat[i][j] == 0:
+                    res[i][j] = 0
+                else:
+                    bottom, right = 1e4, 1e4
+                    if i<m-1: bottom = res[i+1][j]
+                    if j<n-1: right = res[i][j+1]
+                    res[i][j] = min(res[i][j], bottom+1, right+1)
+        return res
+```
+
+### 994. 腐烂的橘子
+
+方法一，模拟橘子腐烂的过程，每分钟遍历一次，这里要注意在这分钟腐烂的橘子这分钟不会影响到其他橘子。
+
+```python
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        fresh = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    fresh += 1
+        minute = 0
+        while fresh != 0:
+            minute += 1
+            temp_set = set('')
+            for i in range(m):
+                for j in range(n):
+                    if grid[i][j] > 1 and (i,j) not in temp_set:
+                        for ni, nj in ((i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+                            if 0<=ni<m and 0<=nj<n and grid[ni][nj] == 1:
+                                grid[ni][nj] = 2
+                                temp_set.add((ni,nj))
+                                fresh -= 1
+            if len(temp_set)==0:
+                return -1
+        return minute
+```
+
+方法二，腐烂橘子的广度优先搜索，这里需要注意的是这分钟能感染的橘子下分钟不能再感染了（因为周围被感染过）。
+
+```python
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        fresh = 0
+        queue = collections.deque()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    fresh += 1
+                elif grid[i][j] == 2:
+                    queue.append((i,j))
+        minute = 0
+        while fresh != 0 and queue:
+            minute += 1
+            for _ in range(len(queue)):
+                i, j = queue.popleft()
+                for ni, nj in ((i-1,j), (i+1,j), (i,j-1), (i,j+1)):
+                    if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] == 1:
+                        grid[ni][nj] = 2
+                        queue.append((ni, nj))
+                        fresh -= 1
+        if fresh != 0:
+            return -1
+        return minute
+```
+
+## 递归 / 回溯
+
+### 21. 合并两个有序链表
+
+这道题用递归其实就 4 种情况：
+
+- `list1` 节点为空 - 返回 `list2`
+- `list2` 节点为空 - 返回 `list1`
+- 都非空 `list1` 节点值小于等于 `list2` - 递归，返回 `list1` 。
+- 都非空 `list2` 节点值小于 `list1` - 递归，返回 `list2` 。
+
+```python
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if list1 is None:
+            return list2
+        elif list2 is None:
+            return list1
+        elif list1.val <= list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1,list2.next)
+            return list2
+```
+
+非递归。
+
+```python
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        pre = dummy
+        while list1 and list2:
+            if list1.val <= list2.val:
+                pre.next = list1
+                list1 = list1.next
+            else:
+                pre.next = list2
+                list2 = list2.next
+            pre = pre.next
+        if not list1:
+            pre.next = list2
+        if not list2:
+            pre.next = list1
+        return dummy.next
+```
+
+### 206. 反转链表
+
+递归。
+
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None or head.next is None:
+            return head
+        cur = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return cur
+```
+
+非递归。可以用栈去遍历节点。
+
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        stack = []
+        while head:
+            temp = head.next
+            head.next = None
+            stack.append(head)
+            head = temp
+        pre = dummy
+        while stack:
+            node = stack.pop()
+            pre.next = node
+            pre = pre.next
+        return dummy.next
+```
+
+非递归，也能用三指针去遍历，因为对一个节点的 `next` 指针逆序与他前后节点和自身都有关系。
+
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        pre = None
+        dummy = None
+        while head:
+            temp = head.next
+            dummy = head
+            head.next = pre
+            head = temp
+            pre = dummy
+        return dummy
 ```
 

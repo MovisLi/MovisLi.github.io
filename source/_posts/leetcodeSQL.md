@@ -1,6 +1,6 @@
 ---
 title: 「SQL」 - 学习计划 
-date: 2022-12-19 01:13:58
+date: 2022-12-22 00:35:58
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [SQL]
 ---
@@ -562,5 +562,306 @@ GROUP BY
     user_id
 ORDER BY
     user_id ASC;
+```
+
+### 586. 订单最多的客户
+
+首先找 `customer` 与其的订单数量，然后从中可以找到最多的订单数量，最后再查谁的订单数量等于最多的订单数量。嵌套子查询。
+
+```mysql
+SELECT
+    MAX(order_count)
+FROM(
+    SELECT
+        customer_number,
+        COUNT(*) AS order_count
+    FROM
+        Orders
+    GROUP BY
+        customer_number
+) AS t
+```
+
+也可以直接用 `customer` 的订单数量从大到小排序，只输出 1 个值，只查 `customer_number` 。
+
+```mysql
+SELECT
+    customer_number
+FROM
+    Orders
+GROUP BY
+    customer_number
+ORDER BY
+    count(*) DESC
+LIMIT 1
+```
+
+### 511. 游戏玩法分析 I
+
+直接用 GROUP BY 加 MIN 就行了。
+
+```mysql
+SELECT
+    player_id,
+    MIN(event_date) AS first_login
+FROM
+    Activity
+GROUP BY
+    player_id;
+```
+
+### 1890. 2020年最后一次登录
+
+这道题是 GROUP BY 加 MAX，比上道题多了个 WHERE 筛选年份。
+
+```mysql
+SELECT
+    user_id,
+    MAX(time_stamp) AS last_stamp
+FROM
+    Logins
+WHERE
+    time_stamp >= DATE('2020-01-01')
+    AND time_stamp < DATE('2021-01-01')
+GROUP BY
+    user_id;
+```
+
+也可以这样
+
+```mysql
+SELECT
+    user_id,
+    MAX(time_stamp) AS last_stamp
+FROM
+    Logins
+WHERE
+    YEAR(time_stamp) = 2020
+GROUP BY
+    user_id;
+```
+
+### 1741. 查找每个员工花费的总时间
+
+GROUP BY + SUM 函数，GROUP BY 是可以分组 2 列的。
+
+```mysql
+SELECT
+    event_day AS day,
+    emp_id,
+    SUM(out_time-in_time) AS total_time
+FROM
+    Employees
+GROUP BY
+    event_day, emp_id
+```
+
+## 控制流
+
+### 1393. 股票的资本损益
+
+收益等于每笔卖出减去买入的和，也就等于总卖出减去总买入，所以可以用 SUM 和 IF 。
+
+```mysql
+SELECT
+    stock_name,
+    SUM(IF(operation='Sell', price, 0))-SUM(IF(operation='Buy', price, 0)) AS capital_gain_loss
+FROM
+    Stocks
+GROUP BY
+    stock_name;
+```
+
+当然可以把买入看作支出，卖出看作收入，那么两个 SUM IF 可以合并成一个。
+
+```mysql
+SELECT
+    stock_name,
+    SUM(IF(operation='Sell', price, -price))AS capital_gain_loss
+FROM
+    Stocks
+GROUP BY
+    stock_name;
+```
+
+### 1407. 排名靠前的旅行者
+
+IFNULL 函数的使用，ORDER BY 的多列操作。
+
+```mysql
+SELECT
+    t1.name,
+    IFNULL(SUM(t2.distance), 0) AS travelled_distance
+FROM
+    Users AS t1
+    LEFT JOIN Rides AS t2 ON t1.id = t2.user_id
+GROUP BY
+    t1.id
+ORDER BY
+    travelled_distance DESC, t1.name ASC;
+```
+
+### 1158. 市场分析 I
+
+SUM IF YEAR 三个函数的使用，这题跟 Item 这张表没啥关系。
+
+```mysql
+SELECT
+    t1.user_id AS buyer_id,
+    t1.join_date,
+    SUM(IF(YEAR(t2.order_date) = 2019, 1, 0)) AS orders_in_2019
+FROM
+    Users AS t1
+    LEFT JOIN Orders AS t2 ON t1.user_id = t2.buyer_id
+GROUP BY
+    t1.user_id;
+```
+
+还有种，`JOIN table ON condition` 后面居然可以用 AND 再加条件，是我没想到的。
+
+```mysql
+SELECT
+    t1.user_id AS buyer_id,
+    t1.join_date,
+    COUNT(t2.buyer_id) AS orders_in_2019
+FROM
+    Users AS t1
+    LEFT JOIN Orders AS t2 ON t1.user_id = t2.buyer_id AND YEAR(t2.order_date) = 2019
+GROUP BY
+    t1.user_id;
+```
+
+而且在 ON 这里加跟在 WHERE 这里加不一样，如下图：
+
+ON 添加条件限定 2019 年：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212211008315.png)
+
+WHERE 添加条件限定 2019 年：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212211008555.png)
+
+### 182. 查找重复的电子邮箱
+
+GROUP BY + COUNT + HAVING 。
+
+```mysql
+SELECT
+    Email
+FROM
+    Person
+GROUP BY
+    Email
+HAVING
+    COUNT(*) > 1;
+```
+
+### 1050. 合作过至少三次的演员和导演
+
+依然是 GROUP BY + COUNT + HAVING 。
+
+```mysql
+SELECT
+    actor_id,
+    director_id
+FROM
+    ActorDirector
+GROUP BY
+    actor_id, director_id
+HAVING
+    COUNT(*)>=3;
+```
+
+### 1587. 银行账户概要 II
+
+子查询 + GROUP BY + IFNULL + SUM 。
+
+```mysql
+SELECT
+    name,
+    balance
+FROM(
+    SELECT
+        t1.name,
+        IFNULL(SUM(t2.amount), 0) AS balance
+    FROM
+        Users AS t1
+        LEFT JOIN Transactions AS t2 ON t1.account = t2.account
+    GROUP BY
+        t1.account
+) AS t
+WHERE
+    balance > 10000;
+```
+
+当然直接用 GROUP BY + IFNULL + HAVING 也可以，因为 HAVING 针对的就是 GROUP BY 之后的结果。
+
+```mysql
+SELECT
+    t1.name,
+    IFNULL(SUM(t2.amount), 0) AS balance
+FROM
+    Users AS t1
+    LEFT JOIN Transactions AS t2 ON t1.account = t2.account
+GROUP BY
+    t1.account
+HAVING
+    balance > 10000;
+```
+
+### 1084. 销售分析III
+
+可以用子查询 + 连接的方式，不过需要去重。
+
+```mysql
+SELECT DISTINCT
+    t1.product_id,
+    t1.product_name
+FROM
+    Product AS t1
+    INNER JOIN Sales AS t2 ON t1.product_id = t2.product_id
+WHERE
+    t1.product_id NOT IN (
+        SELECT product_id
+        FROM Sales
+        WHERE YEAR(sale_date) != 2019 OR MONTH(sale_date) > 3
+    );
+```
+
+两个子查询也是可以的。
+
+```mysql
+SELECT DISTINCT
+    product_id,
+    product_name
+FROM
+    Product
+WHERE
+    product_id NOT IN (
+        SELECT product_id
+        FROM Sales
+        WHERE YEAR(sale_date) != 2019 OR MONTH(sale_date) > 3
+    )
+    AND product_id IN (
+        SELECT DISTINCT product_id
+        FROM Sales
+    );
+```
+
+当然可以在一个子查询里用 MAX + MIN 两个函数做控制。
+
+```mysql
+SELECT DISTINCT
+    product_id,
+    product_name
+FROM
+    Product
+WHERE
+    product_id IN (
+        SELECT product_id
+        FROM Sales
+        GROUP BY product_id
+        HAVING MAX(sale_date) <= '2019-03-31' AND MIN(sale_date) >= '2019-01-01'
+    );
 ```
 

@@ -1,8 +1,8 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-19 02:55:41
+date: 2022-12-22 03:06:41
 categories: [ComputerScience, Algorithm, LeetCode]
-tags: [python, array, hash, point, sliding window]
+tags: [python, array, tree, linked list, stack, queue]
 ---
 
 # 数据结构入门
@@ -488,5 +488,268 @@ class Solution:
             return head
         head.next = self.removeElements(head.next, val)
         return head if head.val != val else head.next
+```
+
+### 206. 反转链表
+
+用栈进行反转。
+
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        stack = []
+        while head:
+            stack.append(head.val)
+            head = head.next
+        dummy = ListNode()
+        node = dummy
+        while stack:
+            node.next = ListNode(stack.pop())
+            node = node.next
+        return dummy.next
+```
+
+但是这个都把值提出来了，不太正规。
+
+我们可以使用双指针迭代，一个指针在前一个指针在后，遍历链表时修改指针的方向。
+
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        pre = None
+        cur = head
+        while cur:
+            temp = cur.next
+            cur.next = pre
+            pre = cur
+            cur = temp
+        return pre
+```
+
+还可以用递归，其中递归是参考的 [206. 反转链表 - 力扣（Leetcode）](https://leetcode.cn/problems/reverse-linked-list/solutions/36710/dong-hua-yan-shi-206-fan-zhuan-lian-biao-by-user74/) 。
+
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None or head.next is None:
+            return head
+        cur = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return cur
+```
+
+### 83. 删除排序链表中的重复元素
+
+可以使用 `set` 只保留重复元素。
+
+```python
+        hashset = set('')
+        dummy = ListNode()
+        pre = dummy
+        while head:
+            if head.val not in hashset:
+                hashset.add(head.val)
+                pre.next = head
+                pre = pre.next
+            head = head.next
+        pre.next = None
+        return dummy.next
+```
+
+不过，因为这道题是已经排序的链表，也就是说重复元素都是连着出现的，所以也可以这样，根据下一个元素是否重复来决定是移动指针还是插值：
+
+```python
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None:
+            return head
+        node = head
+        while node.next:
+            if node.val == node.next.val:
+                node.next = node.next.next
+            else:
+                node = node.next
+        return head
+```
+
+## 栈 / 队列
+
+### 20. 有效的括号
+
+用栈处理，左符号进栈右符号出栈匹配，出现任何错误或者最后栈非空都是 `False` ，否则是 `True` 。
+
+```python
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        for i in s:
+            match i:
+                case '(': stack.append(i)
+                case ')': 
+                    if not stack or stack.pop() != '(':
+                        return False
+                case '{': stack.append(i)
+                case '}':
+                    if not stack or stack.pop() != '{':
+                        return False
+                case '[': stack.append(i)
+                case ']':
+                    if not stack or stack.pop() != '[':
+                        return False
+        return not stack
+```
+
+### 232. 用栈实现队列
+
+我的做法是有两个栈分别叫 `stack_in` 和 `stack_out` ，`stack_in` 负责用于转换数据的顺序（因为队列和栈顺序是反着的），`stack_out` 存着正确的出队，查看队顶，查看队空的顺序。
+
+```python
+class MyQueue:
+
+    def __init__(self):
+        self.stack_in = []
+        self.stack_out = []
+
+    def push(self, x: int) -> None:
+        while self.stack_out:
+            self.stack_in.append(self.stack_out.pop())
+        self.stack_in.append(x)
+        while self.stack_in:
+            self.stack_out.append(self.stack_in.pop())
+
+    def pop(self) -> int:
+        return self.stack_out.pop()
+
+    def peek(self) -> int:
+        return self.stack_out[-1]
+
+    def empty(self) -> bool:
+        return len(self.stack_out) == 0
+```
+
+## 树
+
+### 144. 二叉树的前序遍历
+
+二叉树的遍历顺序（前中后）指的是根节点遍历是在前中后哪个位置，比如这道题，前序，根节点在前。
+
+递归。
+
+```python
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        if not root:
+            return res
+
+        def NLR(node:Optional[TreeNode]):
+            if not node:
+                return None
+            res.append(node.val)
+            NLR(node.left)
+            NLR(node.right)
+            
+        NLR(root)
+        return res
+```
+
+非递归，类似深度优先搜索。
+
+```python
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        if not root:
+            return res
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            if node.right: stack.append(node.right)
+            if node.left: stack.append(node.left)
+        return res
+```
+
+### 94. 二叉树的中序遍历
+
+递归。
+
+```python
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        if not root:
+            return res
+
+        def LNR(node:Optional[TreeNode]):
+            if not node:
+                return None
+            LNR(node.left)
+            res.append(node.val)
+            LNR(node.right)
+        
+        LNR(root)
+        return res
+```
+
+非递归的方式，我们可以看上面递归的方法，其实在打印之前，是不对右节点进行处理的，也就是说是针对每一次循环都是先处理左节点到打印，想明白这件事，我们对栈的变化情况其实心里就有数了。
+
+值得注意的是这个中序遍历其实用的是指针去遍历，而不是用栈遍历。
+
+```python
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        if not root:
+            return res
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            res.append(root.val)
+            root = root.right
+        return res
+```
+
+### 145. 二叉树的后序遍历
+
+递归。
+
+```python
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        if not root:
+            return res
+
+        def LRN(node:Optional[TreeNode]):
+            if not node:
+                return None
+            LRN(node.left)
+            LRN(node.right)
+            res.append(node.val)
+
+        LRN(root)
+        return res
+```
+
+这个有点骚，已知前序遍历是 NLR，后续遍历是 LRN，我们可以将前序遍历魔改一下成为，NRL，再反转一下结果就变成了 LRN。
+
+```python
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        if not root:
+            return res
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            if node.left: stack.append(node.left)
+            if node.right: stack.append(node.right)
+        return res[::-1]
 ```
 

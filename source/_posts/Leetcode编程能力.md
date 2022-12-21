@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-20 02:44:45
+date: 2022-12-22 01:23:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -510,5 +510,219 @@ class Solution:
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
         return chr(sum(ord(_) for _ in t)-sum(ord(_) for _ in s))
+```
+
+### 709. 转换成小写字母
+
+Python 里面的最直接用法当然是调用 `lower()` 函数了。
+
+```python
+class Solution:
+    def toLowerCase(self, s: str) -> str:
+        return s.lower()
+```
+
+不过做题的话我觉得可以用 ASCII 码的方式，用 `list` 和 `str.join()` 来代替 `Java` 里类似 `StringBuffer, StringBuilder` 这样的东西，如下：
+
+```python
+class Solution:
+    def toLowerCase(self, s: str) -> str:
+        res = []
+        for i in s:
+            c_ascii = ord(i)
+            if 65<=c_ascii<=90:
+                res.append(chr(c_ascii+32))
+            else:
+                res.append(i)
+        return ''.join(res)
+```
+
+当然字符串相加也行：
+
+```python
+class Solution:
+    def toLowerCase(self, s: str) -> str:
+        res = ''
+        for i in s:
+            c_ascii = ord(i)
+            if 65<=c_ascii<=90:
+                res += chr(c_ascii+32)
+            else:
+                res += i
+        return res
+```
+
+### 1309. 解码字母到整数映射
+
+依然是 ASCII 码完整数字和字母的转换，需要一个前探指针探一下后两位是不是 `#` 。
+
+```python
+class Solution:
+    def freqAlphabets(self, s: str) -> str:
+        res = ''
+        s_len = len(s)
+        i = 0
+        while i<s_len:
+            if (s[i] == '1' or s[i] == '2') and i+2<s_len and s[i+2]=='#':
+                res += chr(int(s[i:i+2])+96)
+                i += 3
+            else:
+                res += chr(ord(s[i])+48)
+                i += 1
+        return res
+```
+
+### 953. 验证外星语词典
+
+模拟逻辑。
+
+```python
+class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        hashmap = {}
+        for i,v in enumerate(order):
+            hashmap[v] = i
+        for i in range(len(words)-1):
+            s1 = words[i]
+            s2 = words[i+1]
+            flag = False
+            if len(s1) > len(s2):
+                flag = True
+                min_len = len(s2)
+            else:
+                min_len = len(s1)
+            j = 0
+            while j<min_len:
+                if hashmap[s2[j]] > hashmap[s1[j]]:
+                    flag = False
+                    break
+                elif hashmap[s2[j]] < hashmap[s1[j]]:
+                    return False
+                j += 1
+            if flag:
+                return False
+        return True
+```
+
+## 链表 & 树
+
+### 1290. 二进制链表转整数
+
+最直观的用 `list` 存储链表每个节点的值，最后再调用进制转换的方法。
+
+```python
+class Solution:
+    def getDecimalValue(self, head: ListNode) -> int:
+        res = []
+        while head:
+            res.append(str(head.val))
+            head = head.next
+        return int(''.join(res), 2)
+```
+
+好像用字符串快一些。
+
+```python
+class Solution:
+    def getDecimalValue(self, head: ListNode) -> int:
+        res = []
+        while head:
+            res.append(str(head.val))
+            head = head.next
+        return int(''.join(res), 2)
+```
+
+递归。
+
+```python
+class Solution:
+    def getDecimalValue(self, head: ListNode) -> int:
+        def get_dec(node:ListNode)->tuple:
+            if not node.next:
+                return node.val, 0
+            res, count = get_dec(node.next)
+            count += 1
+            res += node.val<<count
+            return res, count
+        return get_dec(head)[0]
+```
+
+还有就是从前到后找时，每次先把前面的和乘 2，相当于一个 n 位的二进制数，最左已经乘了 n-1 次。
+
+```python
+class Solution:
+    def getDecimalValue(self, head: ListNode) -> int:
+        res = 0
+        while head:
+            res = (res<<1) + head.val
+            head = head.next
+        return res
+```
+
+### 876. 链表的中间结点
+
+在算法的学习计划里做过，就是快慢指针。
+
+```python
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = head
+        fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+```
+
+### 104. 二叉树的最大深度
+
+广度优先搜索。
+
+```python
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        queue = collections.deque()
+        queue.append(root)
+        depth = 0
+        while queue:
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            depth += 1
+        return depth
+```
+
+深度优先搜索，递归。
+
+```python
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if root:
+            return max(self.maxDepth(root.left), self.maxDepth(root.right))+1
+        else:
+            return 0
+```
+
+### 404. 左叶子之和
+
+广度优先搜索加一个标志位。
+
+```python
+class Solution:
+    def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        queue = collections.deque()
+        queue.append((root, 0))
+        res = 0
+        while queue:
+            node, is_left = queue.popleft()
+            if node.left: queue.append((node.left, 1))
+            if node.right: queue.append((node.right, 0))
+            if not node.left and not node.right and is_left: res += node.val
+        return res
 ```
 
