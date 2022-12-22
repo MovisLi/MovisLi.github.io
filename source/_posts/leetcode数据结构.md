@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-22 03:06:41
+date: 2022-12-23 02:45:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -751,5 +751,109 @@ class Solution:
             if node.left: stack.append(node.left)
             if node.right: stack.append(node.right)
         return res[::-1]
+```
+
+### 102. 二叉树的层序遍历
+
+经典广度优先搜索。
+
+```python
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        queue = collections.deque()
+        res = []
+        queue.append(root)
+        while queue:
+            temp = []
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                temp.append(node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            res.append(temp)
+        return res
+```
+
+### 104. 二叉树的最大深度
+
+昨天刚在编程能力学习计划里做了。递归。
+
+```python
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if root:
+            return max(self.maxDepth(root.left), self.maxDepth(root.right))+1
+        else:
+            return 0
+```
+
+广度优先搜索。
+
+```python
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        res = 0
+        queue = collections.deque()
+        queue.append(root)
+        while queue:
+            res += 1
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+        return res
+```
+
+### 101. 对称二叉树
+
+我们可以用二叉树层次遍历的思想进行广度优先搜索。每一层都必须是对称的否则直接不是对称二叉树。同时为了处理空节点的情况，即使空节点也要添加值 `None` 。
+
+```python
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        queue = collections.deque()
+        queue.append(root)
+        while queue:
+            temp = []
+            for i in range(len(queue)):
+                node = queue.popleft()
+                if node.left:
+                    temp.append(node.left.val)
+                    queue.append(node.left)
+                else:
+                    temp.append(None)
+                if node.right:
+                    temp.append(node.right.val)
+                    queue.append(node.right)
+                else:
+                    temp.append(None)
+            if temp != temp[::-1]:
+                return False
+        return True
+```
+
+递归，这里主要考虑终止递归的条件：
+
+- 左节点和右节点都为空 - 对称，返回 `True` 。
+- 左右节点空了一个 - 非对称，返回 `False` 。
+- 左右节点都非空但值不相等 - 非对称，返回 `False` 。
+- 左右节点都非空且值相等 - 需要递归比较（左节点的左子节点，右节点的右子节点）和（左节点的右子节点，右节点的左子节点）。
+
+```python
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        def DFS(left, right):
+            if not (left or right):
+                return True
+            if not (left and right):
+                return False
+            if left.val != right.val:
+                return False
+            return DFS(left.left, right.right) and DFS(left.right, right.left)
+        return DFS(root.left, root.right)
 ```
 

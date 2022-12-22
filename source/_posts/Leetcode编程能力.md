@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-22 01:23:45
+date: 2022-12-23 01:45:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -724,5 +724,105 @@ class Solution:
             if node.right: queue.append((node.right, 0))
             if not node.left and not node.right and is_left: res += node.val
         return res
+```
+
+## 容器 & 库
+
+### 1356. 根据数字二进制下 1 的数目排序
+
+我们需要一个 `dict` ，以 1 的数量为 `key` ，`value` 则是一个 `list` 用来记录同 1 的数量的数字。
+
+首先我们遍历数组可以将这个 `dict` 填充好数据。
+
+然后对 `dict` 的 `value` 里每个 `list` 排序，处理相同 1 数量的顺序。
+
+然后根据 `dict` 的 `key` 的顺序将 `list` 放入结果中。
+
+```python
+class Solution:
+    def sortByBits(self, arr: List[int]) -> List[int]:
+        def one_count(num: int)->int:
+            res = 0
+            while num:
+                res += 1
+                num &= num-1
+            return res
+        
+        hashmap = {}
+        for i in arr:
+            count = one_count(i)
+            if count not in hashmap:
+                hashmap[count] = [i]
+            else:
+                hashmap[count].append(i)
+        for k in hashmap.keys():
+            unsort_value = hashmap[k]
+            hashmap[k] = list(sorted(unsort_value))
+        res = []
+        for i in sorted(hashmap, key=lambda x:x):
+            res += hashmap[i]
+        return res
+```
+
+也可以调用 Python 的 `sorted` 函数修改排序规则。
+
+```python
+class Solution:
+    def sortByBits(self, arr: List[int]) -> List[int]:     
+        return sorted(arr, key=lambda x: (bin(x).count('1'), x))
+```
+
+### 232. 用栈实现队列
+
+在数据结构学习计划里做过了，这里不再赘述。
+
+```python
+class MyQueue:
+
+    def __init__(self):
+        self.stack_in = []
+        self.stack_out = []
+
+    def push(self, x: int) -> None:
+        while self.stack_out:
+            self.stack_in.append(self.stack_out.pop())
+        self.stack_in.append(x)
+        while self.stack_in:
+            self.stack_out.append(self.stack_in.pop())
+
+    def pop(self) -> int:
+        return self.stack_out.pop()
+
+    def peek(self) -> int:
+        return self.stack_out[-1]
+
+    def empty(self) -> bool:
+        return len(self.stack_out) == 0
+```
+
+### 242. 有效的字母异位词
+
+也在数据结构学习计划里做过，这里展示一下用 `collections.Counter` 的方法，这种计数的问题其实都可以用这个方式，效果挺好。
+
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return collections.Counter(s)==collections.Counter(t)
+```
+
+### 217. 存在重复元素
+
+这个也在数据结构学习计划里做过，考察是否知道 `set` 这个概念。
+
+```py
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        hashset = set('')
+        for i in nums:
+            if i not in hashset:
+                hashset.add(i)
+            else:
+                return True
+        return False
 ```
 
