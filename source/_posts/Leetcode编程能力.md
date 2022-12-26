@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-23 01:45:45
+date: 2022-12-26 21:20:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -824,5 +824,281 @@ class Solution:
             else:
                 return True
         return False
+```
+
+## 类 & 对象
+
+### 1603. 设计停车系统
+
+这个应该是考察面向对象的简单设计。
+
+```python
+class ParkingSystem:
+
+    def __init__(self, big: int, medium: int, small: int):
+        self.big = big
+        self.medium = medium
+        self.small = small
+
+    def addCar(self, carType: int) -> bool:
+        match carType:
+            case 1:
+                if self.big>0:
+                    self.big -= 1
+                    return True
+                else:
+                    return False
+            case 2:
+                if self.medium>0:
+                    self.medium -= 1
+                    return True
+                else:
+                    return False
+            case 3:
+                if self.small>0:
+                    self.small -= 1
+                    return True
+                else:
+                    return False
+            case _:
+                return False    
+```
+
+尽量写优雅一点吧。
+
+```python
+class ParkingSystem:
+
+    def __init__(self, big: int, medium: int, small: int):
+        self.park = [big, medium, small]
+
+    def addCar(self, carType: int) -> bool:
+        if carType>len(self.park) or carType<1:
+            return False
+        if self.park[carType-1] > 0:
+            self.park[carType-1] -= 1
+            return True
+        else:
+            return False
+```
+
+### 303. 区域和检索 - 数组不可变
+
+正常来讲应该是这样的。
+
+```python
+class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.nums = nums
+
+    def sumRange(self, left: int, right: int) -> int:
+        return sum(self.nums[left:right+1])
+```
+
+但是很慢，为什么呢？作为一个类来讲，查询的次数是很多的。如果每次查询都得重新累加，就会非常慢。
+
+```python
+class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.nums = [0]
+
+        for i in nums:
+            self.nums.append(self.nums[-1]+i)
+
+    def sumRange(self, left: int, right: int) -> int:
+        return self.nums[right+1] - self.nums[left]
+```
+
+这里体现出了前缀和的思想，在初始化遍历的时候就把前缀和写好，查询会非常快。
+
+# 编程能力基础
+
+### 896. 单调数列
+
+我们用 `flag` 来记录数列的单调性，但未知晓数列的单调性时不将它初始化，知晓之后再初始化。
+
+```python
+class Solution:
+    def isMonotonic(self, nums: List[int]) -> bool:
+        flag = 0
+        for i in range(len(nums)-1):
+            if flag:
+                if flag == 1 and nums[i]>nums[i+1]:
+                    return False
+                elif flag == -1 and nums[i]<nums[i+1]:
+                    return False
+            else:
+                if nums[i]>nums[i+1]:
+                    flag = -1
+                elif nums[i]<nums[i+1]:
+                    flag = 1
+        return True
+```
+
+### 28. 找出字符串中第一个匹配项的下标
+
+切片去匹配。
+
+```python
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        m = len(haystack)
+        n = len(needle)
+        for i in range(m-n+1):
+            if haystack[i:i+n] == needle:
+                return i
+        return -1
+```
+
+或者用双指针去比较。
+
+```python
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        m = len(haystack)
+        n = len(needle)
+        for i in range(m-n+1):
+            t = 0
+            flag = False
+            if haystack[i] == needle[t]:
+                flag = True
+                k = i
+                while t<n:
+                    if haystack[k] != needle[t]:
+                        flag = False
+                    t += 1
+                    k += 1
+            if flag:
+                return i
+        return -1
+```
+
+### 110. 平衡二叉树
+
+第一种是自顶向下判断是否左右子树平衡，相当于我们从根节点开始，先查找左右子数的最大高度，差值 <= 1 则说明根节点是平衡的，再去找左子节点是否平衡，右子节点是否平衡，依次遍历完。
+
+```python
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        def get_height(node):
+            if not node:
+                return 0
+            left = get_height(node.left)
+            right = get_height(node.right)
+            return 1+max(left, right)
+
+        if not root:
+            return True
+        left = get_height(root.left)
+        right = get_height(root.right)
+        if abs(left-right) > 1:
+            return False
+        return self.isBalanced(root.left) and self.isBalanced(root.right)
+```
+
+当然自顶向下的遍历会有很多重复的计算，实际上在求最大高度的时候可以携带一个信息，来表明是否是 AVL 树，比如如果已经不是 AVL 树就直接返回 -1 ，而不再返回当前节点的最大高度。这就叫自底向上的遍历。
+
+```python
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        def get_height(node):
+            if not node:
+                return 0
+            left = get_height(node.left)
+            if left == -1:
+                return -1
+            right = get_height(node.right)
+            if right == -1 or abs(left-right)>1:
+                return -1
+            return 1+max(left, right)
+
+        if not root:
+            return True
+        return get_height(root)>=0
+```
+
+### 459. 重复的子字符串
+
+遍历扫描字符串，实际上只需要扫描一半即可，因为如果扫描一半还没有发现有重复的子字符串其实就没有了。
+
+如果左 `i` 个字符与右 `i` 个字符相等，并且字符串等于左 `i` 个字符的重复时，说明可以通过重复子字符串构成。
+
+```python
+class Solution:
+    def repeatedSubstringPattern(self, s: str) -> bool:
+        s_len = len(s)
+        for i in range(s_len//2):
+            if s_len%(i+1) == 0 and s[:i+1] == s[s_len-i-1:] and s[:i+1]*(s_len//(i+1)) == s:
+                return True
+        return False
+```
+
+如果字符串能有重复子字符串构成，比如像 `ababab` 这种，移除左边的 `a` 和右边的 `b` 其实也还有构成的元素 `ab` 。将字符串乘 2 ，即 `abababababab` 移除左边的 `a` 和右边的 `b` ，可以发现 `ababab` 仍然在 `bababababa` 里面。
+
+```python
+class Solution:
+    def repeatedSubstringPattern(self, s: str) -> bool:
+        return s in (s+s)[1:2*len(s)-1]
+```
+
+### 150. 逆波兰表达式求值
+
+后缀表达式求值，我记得是当时学数据结构时栈的测试题，当时涉及中缀表达式转后缀再求值，除了数字栈还需要有符号栈，这里一个数字栈就够了。
+
+```python
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        num_stack = []
+        res = 0
+        for t in tokens:
+            match t:
+                case '+':
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(b+a)
+                case '-':
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(b-a)
+                case '*':
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(b*a)
+                case '/':
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(int(b/a))
+                case _:
+                    num_stack.append(int(t))
+        return num_stack.pop()
+```
+
+### 66. 加一
+
+可以考虑先求加一再生成结果数组。
+
+```python
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        res = 0
+        for i in digits:
+            res = res*10+i
+        return [int(i) for i in str(res+1)]
+```
+
+但是其实在加的过程中就可以得到答案，那就是 digits 不进位的时候。
+
+```python
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        for i in range(len(digits)-1, -1, -1):
+            digits[i] += 1
+            if digits[i] >= 10:
+                digits[i] -= 10
+            else:
+                return digits
+        return [1] + digits
 ```
 

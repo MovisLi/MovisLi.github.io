@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-23 02:45:41
+date: 2022-12-26 23:34:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -855,5 +855,454 @@ class Solution:
                 return False
             return DFS(left.left, right.right) and DFS(left.right, right.left)
         return DFS(root.left, root.right)
+```
+
+### 226. 翻转二叉树
+
+递归翻转。
+
+```python
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+        return root
+```
+
+层次反转，广度优先搜索的思想：
+
+```python
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        queue = collections.deque()
+        queue.append(root)
+        while queue:
+            node = queue.popleft()
+            node.left, node.right = node.right, node.left
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        return root
+```
+
+深度优先搜索的思想：
+
+```python
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            node.left, node.right = node.right, node.left
+            if node.left: stack.append(node.left)
+            if node.right: stack.append(node.right)
+        return root
+```
+
+### 112. 路径总和
+
+深度优先搜索，非递归方法。实质上就是每次往栈里填节点的时候填上当前路径的和，当节点为叶子节点的时候可以看一下路径和是否等于目标值。
+
+```python
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        stack = [(root, root.val)]
+        while stack:
+            node, temp = stack.pop()
+            if node.right: stack.append((node.right, temp+node.right.val))
+            if node.left: stack.append((node.left, temp+node.left.val))
+            if not node.left and not node.right and temp == targetSum:
+                return True
+        return False
+```
+
+广度优先搜索也能解决。
+
+```python
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        queue = collections.deque()
+        queue.append((root, root.val))
+        while queue:
+            node, temp = queue.popleft()
+            if node.right: queue.append((node.right, temp+node.right.val))
+            if node.left: queue.append((node.left, temp+node.left.val))
+            if not node.left and not node.right and temp == targetSum:
+                return True
+        return False
+```
+
+递归，递归似乎比上面两种快很多。
+
+```python
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        if root.left and root.right:
+            return self.hasPathSum(root.left, targetSum-root.val) or self.hasPathSum(root.right, targetSum-root.val)
+        if root.left:
+            return self.hasPathSum(root.left, targetSum-root.val)
+        if root.right:
+            return self.hasPathSum(root.right, targetSum-root.val)
+        return root.val == targetSum
+```
+
+### 700. 二叉搜索树中的搜索
+
+二叉搜索树的重要特征就是左子树的所有值 <= 根节点的值 <= 右子树的所有值，因此我们可以通过值的比较快速定位到目标值的节点。
+
+递归。
+
+```python
+class Solution:
+    def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if root.val == val:
+            return root
+        if root.val < val and root.right:
+            return self.searchBST(root.right, val)
+        if root.val > val and root.left:
+            return self.searchBST(root.left, val)
+        return None
+```
+
+非递归。
+
+```python
+class Solution:
+    def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        while root:
+            if root.val == val:
+                return root
+            elif root.val < val:
+                root = root.right
+            elif root.val > val:
+                root = root.left
+        return None
+```
+
+### 701. 二叉搜索树中的插入操作
+
+在不考虑树的深度的情况下插入新节点到二叉搜索树中还是非常容易的，与上题相似。
+
+递归。
+
+```python
+class Solution:
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if not root:
+            return TreeNode(val)
+        if root.val > val:
+            if root.left:
+                root.left = self.insertIntoBST(root.left, val)
+            else:
+                root.left = TreeNode(val)
+        if root.val < val:
+            if root.right:
+                root.right = self.insertIntoBST(root.right, val)
+            else:
+                root.right = TreeNode(val)
+        return root
+```
+
+非递归，在循环里插入：
+
+```python
+class Solution:
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if not root:
+            return TreeNode(val)
+        dummy = root
+        while True:
+            if root.val > val:
+                if root.left:
+                    root = root.left
+                else:
+                    root.left = TreeNode(val)
+                    break
+            elif root.val < val:
+                if root.right:
+                    root = root.right
+                else:
+                    root.right = TreeNode(val)
+                    break
+        return dummy
+```
+
+非递归，在循环外插入：
+
+```python
+class Solution:
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if not root:
+            return TreeNode(val)
+        dummy = root
+        while True:
+            if root.val > val and root.left:
+                root = root.left
+            elif root.val < val and root.right:
+                root = root.right
+            else:
+                break
+        if root.val > val:
+            root.left = TreeNode(val)
+        else:
+            root.right = TreeNode(val)
+        return dummy
+```
+
+### 98. 验证二叉搜索树
+
+自定义一个递归方法去设置上下限。
+
+```python
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def DST(root, min_val, max_val):
+            if root.left and root.right:
+                if min_val < root.left.val < root.val < root.right.val < max_val:
+                    return DST(root.left, min_val, root.val) and DST(root.right, root.val, max_val)
+                else:
+                    return False
+            if root.left:
+                if min_val < root.left.val < root.val < max_val:
+                    return DST(root.left, min_val, root.val)
+                else:
+                    return False
+            if root.right:
+                if min_val < root.val < root.right.val < max_val:
+                    return DST(root.right, root.val, max_val)
+                else:
+                    return False
+            return True
+        return DST(root, -1<<32, 1<<32)
+```
+
+也可以中序遍历完了再做比较。
+
+```python
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        res = []
+        def LNR(node):
+            if not node:
+                return None
+            LNR(node.left)
+            res.append(node.val)
+            LNR(node.right)
+        LNR(root)
+        for i in range(len(res)-1):
+            if res[i] >= res[i+1]:
+                return False
+        return True
+```
+
+对于中序遍历来讲，可以边遍历边比较会更快。
+
+```python
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        pre = float('-inf')
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if root.val <= pre:
+                return False
+            pre = root.val
+            root = root.right
+        return True
+```
+
+### 653. 两数之和 IV - 输入二叉搜索树
+
+我们可以用 hash 加遍历树的方式来寻找有无两数之和。非递归。
+
+```python
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        hashset = set('')
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            if node.val in hashset:
+                return True
+            hashset.add(k-node.val)
+            if node.left: stack.append(node.left)
+            if node.right: stack.append(node.right)
+        return False
+```
+
+递归。
+
+```python
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        hashset = set('')
+        def DFS(node):
+            if not node:
+                return False
+            if node.val in hashset:
+                return True
+            hashset.add(k-node.val)
+            return DFS(node.left) or DFS(node.right) 
+        return DFS(root)
+```
+
+### 235. 二叉搜索树的最近公共祖先
+
+上道题感觉其实与二叉搜索树没什么关系，这道是真有。
+
+我们先不管这个二叉搜索树的性质，使用树的层次遍历并开一个祖先列表，将一个节点所有祖先都放入列表中，直到找到 `p` ， `q` 两个节点然后再从后往前去比较两个祖先列表。
+
+```python
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        queue = collections.deque()
+        queue.append((root,[root]))
+        p_ancestors = None
+        q_ancestors = None
+        while queue:
+            node, ancestors = queue.pop()
+            if node == p:
+                p_ancestors = ancestors
+            if node == q:
+                q_ancestors = ancestors
+            if p_ancestors and q_ancestors:
+                break
+            if node.left: queue.append((node.left, ancestors+[node.left]))
+            if node.right: queue.append((node.right, ancestors+[node.right]))
+        for p_ancestor in reversed(p_ancestors):
+            for q_ancestor in reversed(q_ancestors):
+                if p_ancestor == q_ancestor:
+                    return p_ancestor
+        return None
+```
+
+这个效率确实低了很多。
+
+我们可以利用二叉搜索树的性质，如果两个节点的值都比某个节点值大，这两个节点都应该在这个节点右边。如果两个节点值都比某个节点值小，这两个节点都应该在某个节点左边。否则这个节点就是两个节点的最近公共祖先。
+
+```python
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+        if p.val > root.val and q.val > root.val:
+            return self.lowestCommonAncestor(root.right, p, q)
+        return root
+```
+
+# 数据结构基础
+
+## 数组
+
+### 136. 只出现一次的数字
+
+异或运算的性质。
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        return reduce(lambda x,y:x^y, nums)
+```
+
+### 169. 多数元素
+
+对元素计数，找出大于 `len(nums)//2` 的元素。
+
+```python
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums_len_half = len(nums)//2
+        counter = collections.Counter(nums)
+        for k in counter:
+            if counter[k] > nums_len_half:
+                return k
+        return None
+```
+
+### 15. 三数之和
+
+强行三数之和转两数之和（ hash ）+ 去重。
+
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        def twoSum(nums, target, begin_index):
+            hashset = set('')
+            res = []
+            for i in range(begin_index, len(nums)):
+                temp = target-nums[i]
+                if temp in hashset:
+                    res.append([nums[i],temp])
+                else:
+                    hashset.add(nums[i])
+            return res
+        
+        res = []
+        zero = False
+        for i,v in enumerate(nums):
+            two = twoSum(nums, -v, i+1)
+            if len(two) != 0:
+                for j in two:
+                    if v==0 and j[0]==0 and j[1]==0:
+                        zero = True
+                        continue
+                    flag = True
+                    for r in res:
+                        if v in r and j[0] in r and j[1] in r:
+                            flag = False
+                    if flag:
+                        res.append([v]+j)
+        if zero:
+            res.append([0, 0, 0])
+        return res
+```
+
+太慢了，我甚至怀疑不是 Python 都过不了测试用例：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212260937219.png)
+
+双指针法，见注释。
+
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums = sorted(nums)	# 靠排序达到去重效果
+        nums_len = len(nums)
+        res = []
+        if nums_len < 3 or nums[0]>0 or nums[-1]<0:
+            return res
+        for i in range(nums_len-2):	# 寻找元素 a
+            if nums[i]>0:	# 剪枝
+                break
+            if i>0 and nums[i] == nums[i-1]:	# 对元素 a 去重
+                continue
+            left = i+1			# 寻找元素 b
+            right = nums_len-1	# 寻找元素 c
+            while left<right:
+                temp_sum = nums[i]+nums[left]+nums[right]	# 这里和下面的 if-elif-else 语句都在寻找三数之和为 0
+                if temp_sum > 0:
+                    right -= 1
+                elif temp_sum < 0:
+                    left += 1
+                else:
+                    res.append([nums[i], nums[left], nums[right]])
+                    while left<right and nums[left] == nums[left+1]: left += 1		# 对元素 b 去重
+                    while left<right and nums[right] == nums[right-1]: right -= 1	# 对元素 c 去重
+                    left += 1
+                    right -= 1
+        return res
 ```
 

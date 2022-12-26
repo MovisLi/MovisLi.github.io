@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-12-22 03:38:31
+date: 2022-12-26 16:02:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -635,7 +635,7 @@ class Solution:
 
 ```python
 class Solution:
-    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+    def connect(self, root: Optional[Node]) -> Optional[Node]:
         if root and root.left and root.right:
             root.left.next = root.right
             if root.next:
@@ -649,7 +649,7 @@ class Solution:
 
 ```python
 class Solution:
-    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+    def connect(self, root: Optional[Node]) -> Optional[Node]:
         if root is None:
             return root
         queue = [root]
@@ -668,7 +668,7 @@ class Solution:
 
 ```python
 class Solution:
-    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+    def connect(self, root: Optional[Node]) -> Optional[Node]:
         if root is None:
             return root
         leftmost = root
@@ -978,5 +978,319 @@ class Solution:
             head = temp
             pre = dummy
         return dummy
+```
+
+### 77. 组合
+
+Python 里的 `itertools.combinations()` 函数。
+
+```python
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        return list(itertools.combinations(range(1,n+1), k))
+```
+
+从 [代码随想录 - 回溯算法](https://programmercarl.com/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html) 前辈这里学习的回溯算法。
+
+相当于把从 n 个数里找满足条件的 k 个数分解成 `for` 循环（横向遍历 n ）与递归（纵向遍历 `k` ）这样的结构。
+
+```python
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+        path = []
+
+        def combinations(n, k, i):
+            if len(path) == k:
+                res.append(path[:])
+                return None
+            for j in range(i, n+1):
+                path.append(j)
+                combinations(n, k, j+1)
+                path.pop()
+
+        combinations(n, k, 1)
+        return res
+```
+
+上面的代码并不快，这就引申出了剪枝这个概念。
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212230903768.png)
+
+有的步骤是多余的，在于取完 x 个数之后，剩下数量必须大于等于 k-x 个，否则没有意义。
+
+这个 x 就是 path 的元素个数。
+
+```python
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+        path = []
+
+        def combinations(n, k, i):
+            if len(path) == k:
+                res.append(path[:])
+                return None
+            for j in range(i, n-(k-len(path))+2):
+                path.append(j)
+                combinations(n, k, j+1)
+                path.pop()
+
+        combinations(n, k, 1)
+        return res
+```
+
+其实这个这个递归函数不需要传 n，k，我们稍微简化一下：
+
+```python
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+        path = []
+
+        def combinations(i):
+            if len(path) == k:
+                res.append(path[:])
+                return None
+            for j in range(i, n-(k-len(path))+2):
+                path.append(j)
+                combinations(j+1)
+                path.pop()
+
+        combinations(1)
+        return res
+```
+
+### 46. 全排列
+
+Python 里的 `itertools.permutations()` 函数。
+
+```python
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        return list(itertools.permutations(nums, len(nums)))
+```
+
+这道题的树图我们可以画出：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212230951840.png)
+
+我们可以用一个 `used` 数组来记录哪些元素被使用过，但其实，使用过的元素已经在 `path` 里了，因此也不需要记录。
+
+```python
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        path = []
+
+        def permutations():
+            if len(path) == len(nums):
+                res.append(path[:])
+                return None
+            for i in nums:
+                if i not in path:
+                    path.append(i)
+                    permutations()
+                    path.pop()
+        
+        permutations()
+        return res
+```
+
+### 784. 字母大小写全排列
+
+这道题其实是求 0（设为小写），1（设为大写）可重复取数共取 k（ k 为字符串种字母的数量）个数的全排列。
+
+我们可以按照上面的老套路，不过既然可以重复取数就没有限制条件了。
+
+```python
+class Solution:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        s_lst = list(s)
+        letter_index = []
+        for i,v in enumerate(s_lst):
+            if not v.isdigit():
+                letter_index.append(i)
+        res = []
+        path = []
+        def permutation():
+            if len(path) == len(letter_index):
+                res.append(path[:])
+                return None
+            for i in (0, 1):
+                path.append(i)
+                permutation()
+                path.pop()
+        permutation()
+        for i in range(len(res)):
+            for j in zip(res[i], letter_index):
+                if j[0]:
+                    s_lst[j[1]] = s_lst[j[1]].upper()
+                else:
+                    s_lst[j[1]] = s_lst[j[1]].lower()
+            res[i] = ''.join(s_lst)
+        return res
+```
+
+Python 的一行代码。
+
+```python
+class Solution:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        return list(map(''.join, itertools.product(*map(lambda x:(x.lower(), x.upper()) if x.isalpha() else x, s))))
+```
+
+## 动态规划
+
+### 70. 爬楼梯
+
+状态转移方程：
+$$
+dp[i]=\begin{cases}dp[i-1]+dp[i-2]\ \ \ \ if\ i>2\\i\ \ \ \ if\ i=1\ or i=2\end{cases}
+$$
+
+```python
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        dp = [1,2]
+        for i in range(2,n):
+            dp.append(dp[i-1]+dp[i-2])
+        return dp[-1]
+```
+
+### 198. 打家劫舍
+
+状态转移方程：
+$$
+dp[i]=\begin{cases}max(dp[i-2]+nums[i], dp[i-1])\ \ \ \ if\ i>2
+\\max(nums[i], nums[i-1])\ \ \ \ if\ i=2
+\\nums[i]\ \ \ \ if\ i=1\end{cases}
+$$
+
+```python
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+        if n == 2:
+            return max(nums[0], nums[1])
+        dp = [nums[0], max(nums[0], nums[1])]
+        for i in range(2, n):
+            dp.append(max(dp[i-2]+nums[i], dp[i-1]))
+        return dp[-1]
+```
+
+### 120. 三角形最小路径和
+
+状态转移方程
+$$
+\begin{cases}
+min(dp[i-1][j-1],dp[i-1][j])+triangle[i][j]\ \ \ \ if\ i>=1\ and\ i>j>=1\\
+dp[i-1][j]+triangle[i][j]\ \ \ \ if\ i>=1\ and\ j=0\\
+dp[i-1][j-1]+triangle[i][j]\ \ \ \ if\ i>=1\ and\ i=j\\
+triangle[i][j]\ \ \ \ if\ i=0
+\end{cases}
+$$
+
+```python
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        n = len(triangle)
+        if n == 1:
+            return triangle[0][0]
+        dp = [[triangle[0][0]]]
+        for i in range(1,n):
+            temp = []
+            for j in range(i+1):
+                if j==0:
+                    temp.append(dp[i-1][j]+triangle[i][j])
+                elif j==i:
+                    temp.append(dp[i-1][j-1]+triangle[i][j])
+                else:
+                    temp.append(min(dp[i-1][j], dp[i-1][j-1])+triangle[i][j])
+            dp.append(temp)
+        return min(dp[-1])
+```
+
+## 位运算
+
+### 231. 2 的幂
+
+2 的幂首先是大于 0 的，其次在二进制表示中只有 1 个 1 ，所以我们可以用 `n&(n-1)` 把最后一个 1 消去看是否结果为 0 。
+
+```python
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        return n > 0 and n&(n-1) == 0
+```
+
+另外 $2^{31}$ 去取余任何 2 的幂结果应该都为 0 ，所以也可以利用这个性质。
+
+```python
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        return (2<<31)%n == 0 if n > 0 else False
+```
+
+### 191. 位1的个数
+
+跟上题一样，用 `n&(n-1)` 的方式统计计数。
+
+```python
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res = 0
+        while n:
+            n &= n-1
+            res += 1
+        return res
+```
+
+### 190. 颠倒二进制位
+
+使用字符串去操作。
+
+```python
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        return (int(bin(n)[:1:-1].ljust(32, '0'), 2))
+```
+
+逐位颠倒累加。原理有点类似与比如一个字符串 `1234` ，要转成 10 进制数，如果要从前往后遍历的话，每一步都是 `res = res*10 + string[i]` ，相当于经历 0+1， 10+2， 120+3， 1230+4 这个过程。这里可以累加 32 次。
+
+```python
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        res = 0
+        for _ in range(32):
+            res = (res<<1)|(n&1)
+            n >>= 1
+        return res
+```
+
+### 136. 只出现一次的数字
+
+这道题主要是位运算 异或 这个操作的理解，将所有元素做异或运算，出现两次的元素异或结果为 0 ，最后得到的就是只出现一次的数字。
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        res = 0
+        for i in nums:
+            res = res^i
+        return res
+```
+
+或者用 `reduce` 函数。
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        return reduce(lambda x,y:x^y, nums)
 ```
 
