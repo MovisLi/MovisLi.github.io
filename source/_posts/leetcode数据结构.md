@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-26 23:34:41
+date: 2022-12-30 05:13:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -1303,6 +1303,301 @@ class Solution:
                     while left<right and nums[right] == nums[right-1]: right -= 1	# 对元素 c 去重
                     left += 1
                     right -= 1
+        return res
+```
+
+### 75. 颜色分类
+
+这道题是一道盲点问题，其实不需要排序，只需要统计，统计完之后根据统计结果直接替换就行了。
+
+```python
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        counter = collections.Counter(nums)
+        index = 0
+        for i in (0, 1, 2):
+            for _ in range(counter[i]):
+                nums[index] = i
+                index += 1
+```
+
+### 56. 合并区间
+
+暴力法，用一个 `record` 数组记录有数的位置，这种思路的问题在于要处理 `[1,1], [2,2]` 与 `[1,2], [2,2]` 的区别，因为在 `record` 数组上的记录都是 `record[1]=1, record[2]=1` 。这里采取的方式是将 `record` 数组扩大两倍，这样 `[1,1], [2,2]` 就表现为 `record[2]=1, record[4]=1` ，而 `[1,2], [2,2]` 则表现为 `record[2]=1, record[3]=1, record[4]=1` ，得以区分。
+
+```python
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        res = []
+        record = [0] * 20002
+        for i in intervals:
+            for j in range(i[0]*2, i[1]*2+1):
+                record[j] = 1
+        i = 0
+        while i<=20001:
+            if record[i] == 0:
+                i += 1
+            else:
+                pre = i+1
+                while pre<=20001 and record[pre]:
+                    pre += 1
+                res.append([i//2, pre//2])
+                i = pre
+        return res
+```
+
+贪心。首先需要将 `intervals` 数组按 `i[0]` 排序，排序之后进行遍历，这时会有两种情况：
+
+- 当前遍历的 `t[0]` 大于结果数组 `res` 最后一个 `i[1]` 的值，代表从现在开始就不连续了，直接将 `t` 加入结果数组。
+- 当前遍历的 `t[0]` 小于等于结果数组 `res` 最后一个 `i[1]` 的值，也就是连续，这时候应该对 `res[-1]` 和 `t` 取并集，不过由于已经排了序，所以其实就是 `res[-1][1]` 右边边界取 `t[1]` 和 `res[-1][1]` 的更大值。
+
+```python
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        arr_sort = sorted(intervals, key=lambda x: x[0])
+        res = [arr_sort[0]]
+        for t in arr_sort:
+            if t[0]>res[-1][1]:
+                res.append(t)
+            else:
+                res[-1][1] = max(res[-1][1], t[1])
+        return res
+```
+
+### 706. 设计哈希映射
+
+调用 `dict` 。
+
+```python
+class MyHashMap:
+
+    def __init__(self):
+        self.hashmap = {}
+
+    def put(self, key: int, value: int) -> None:
+        self.hashmap[key] = value
+
+    def get(self, key: int) -> int:
+        if key not in self.hashmap:
+            return -1
+        else:
+            return self.hashmap[key]
+
+    def remove(self, key: int) -> None:
+        if key in self.hashmap:
+            del self.hashmap[key]
+```
+
+### 119. 杨辉三角 II
+
+与构建杨辉三角很类似，直接沿用构建杨辉三角的思路，取结果数组里最后一行的数组就行了。
+
+```python
+class Solution:
+    def getRow(self, rowIndex: int) -> List[int]:
+        if rowIndex == 0:
+            return [1]
+        res = [[1]*(row+1) for row in range(rowIndex+1)]
+        for row in range(2, rowIndex+1):
+            for col in range(1, row):
+                res[row][col] = res[row-1][col-1]+res[row-1][col]
+        return res[-1]
+```
+
+### 48. 旋转图像
+
+先沿右对角线做一次轴对称，再沿中线做一次轴对称。
+
+```python
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        n = len(matrix)
+        for c in range(1, n):
+            for r in range(0, c):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+        for r in range(n):
+            matrix[r][:] = matrix[r][::-1]
+```
+
+### 59. 螺旋矩阵 II
+
+模拟过程：
+
+```python
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        res = [[1]*n for _ in range(n)]
+        direction = ('t', 'r', 'b', 'l')
+        direct = ['r']*(n-1) + ['b']*(n-1) + ['l']*(n-1)
+        index = 0
+        while n>1:
+            for _ in range(2):
+                direct += direction[index]*(n-2)
+                index = (index+1)%4
+            n -= 1
+        count = 2
+        r = 0
+        c = 0
+        for d in direct:
+            match d:
+                case 'r':
+                    c += 1
+                case 'b':
+                    r += 1
+                case 'l':
+                    c -= 1
+                case 't':
+                    r -= 1
+            res[r][c] = count
+            count += 1
+        return res
+```
+
+### 240. 搜索二维矩阵 II
+
+直接使用暴力法：
+
+```python
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == target:
+                    return True
+        return False
+```
+
+？？？打败了 90 % 的人？
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212291126962.png)
+
+说实话我肯定不能接受。这题肯定跟二分有关系的。
+
+对每一行都使用二分查找搜索。
+
+```python
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+        for i in range(m):
+            l, r = 0, n-1
+            while l<=r:
+                mid = (l+r) // 2
+                if matrix[i][mid] == target:
+                    return True
+                elif matrix[i][mid] < target:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+        return False
+```
+
+从右上角或者左下角开始搜，思路差不多。以右上角开始为例，可以发现向左值都在减小，向下值都在增加，所以可以利用这个性质搜。
+
+```python
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+        i = 0
+        j = n-1
+        while i<m and j>=0:
+            if matrix[i][j] == target:
+                return True
+            elif matrix[i][j] > target:
+                j -= 1
+            else:
+                i += 1
+        return False
+```
+
+### 435. 无重叠区间
+
+先排序之后用贪心的思想过滤每个区间。
+
+```python
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals = sorted(intervals, key=lambda x:x[0])
+        bound = -1e5
+        res = 0
+        for t in intervals:
+            if t[0] < bound:
+                res += 1
+                bound = min(bound, t[1])
+            else:
+                bound = t[1]
+        return res
+```
+
+### 334. 递增的三元子序列
+
+首先使用暴力，不幸地超出时间限制了。一看 `nums.length` 哦 5e5 啊，O(n3) 那肯定 OOT 了。
+
+ok，试了一些基础方法，比如转 `hashmap` 存下标这样的方式还是没能解这个题。但是能感觉到这个题解的代码是一个动态的过程，但又列不出状态转移方程，那肯定就是贪心了。定义 `min_1` 记录最小值，定义 `min_2` 记录第二小值，那么当一个数比目前的第二小值大时显然就得到了解。
+
+```python
+class Solution:
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        min_1 = float('inf')
+        min_2 = float('inf')
+        for i in nums:
+            if i <= min_1:
+                min_1 = i
+            elif i<= min_2:
+                min_2 = i
+            else:
+                return True
+        return False
+```
+
+### 238. 除自身以外数组的乘积
+
+前缀和问题，分别正序和逆序遍历数组找出当前元素之前的积得到 `pre` 与 `suf` 数组，将 `suf` 反序（因为是逆序遍历的），然后对于结果来说就是当前位置的前缀积与后缀积相乘。
+
+```python
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        pre = []
+        suf = []
+        temp = 1
+        for i in nums:
+            pre.append(temp)
+            temp *= i
+        temp = 1
+        for i in nums[::-1]:
+            suf.append(temp)
+            temp *= i
+        suf[:] = suf[::-1]
+        res = []
+        for i in range(len(nums)):
+            res.append(pre[i]*suf[i])
+        return res
+```
+
+### 560. 和为 K 的子数组
+
+前缀和 + hashmap 。
+
+```python
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        pre_sum = [0]
+        for i in nums:
+            pre_sum.append(pre_sum[-1]+i)
+        hashmap = {0:1}
+        res = 0
+        for i in range(len(nums)):
+            temp = pre_sum[i+1]-k
+            if temp in hashmap:
+                res += hashmap[temp]
+            if pre_sum[i+1] not in hashmap:
+                hashmap[pre_sum[i+1]] = 1
+            else:
+                hashmap[pre_sum[i+1]] += 1
         return res
 ```
 
