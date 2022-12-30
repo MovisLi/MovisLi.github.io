@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-26 21:20:45
+date: 2022-12-31 03:54:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -1100,5 +1100,291 @@ class Solution:
             else:
                 return digits
         return [1] + digits
+```
+
+### 1367. 二叉树中的链表
+
+遍历树的时候存储下每个节点的路径，如果一个节点路径后 `n` 位与长度为 `n` 的链表相同，那么就满足题意，否则遍历完树之后就不存在。
+
+```python
+class Solution:
+    def isSubPath(self, head: Optional[ListNode], root: Optional[TreeNode]) -> bool:
+        stack = []
+        stack.append((root, [root.val]))
+        linked_lst = []
+        linked_len = 0
+        while head:
+            linked_lst.append(head.val)
+            linked_len += 1
+            head = head.next
+        while stack:
+            node, path = stack.pop()
+            if path[-linked_len:] == linked_lst:
+                return True
+            if node.left: stack.append((node.left, path+[node.left.val]))
+            if node.right: stack.append((node.right, path+[node.right.val]))
+        return False
+```
+
+### 43. 字符串相乘
+
+如果转成整数形式的话：
+
+```python
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        return str(int(num1)*int(num2))
+```
+
+或者模拟多位数乘法运算。
+
+```python
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        res = 0
+        flag1 = 1
+        for i in num1[::-1]:
+            adv = 0
+            temp = 0
+            flag2 = 1
+            i = ord(i)-48
+            for j in num2[::-1]:
+                j = ord(j)-48
+                mul = (i*j+adv)
+                adv = mul//10
+                temp += (mul%10)*flag2
+                flag2 *= 10
+            res += (temp+adv*flag2) * flag1
+            flag1 *= 10
+        return str(res)
+```
+
+### 67. 二进制求和
+
+转成数求和。
+
+```python
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        return bin(int(a,2)+int(b,2))[2:]
+```
+
+模拟。
+
+```python
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        carry = False
+        res = ''
+        len_a = len(a)
+        len_b = len(b)
+        for i in range(-1, -max(len_a,len_b)-1, -1):
+            if i<-len_a:
+                temp = int(b[i])
+            elif i<-len_b:
+                temp = int(a[i])
+            else:
+                temp = int(a[i])+int(b[i])
+            if carry:
+                temp += 1
+            if temp >= 2:
+                carry = True
+                temp -= 2
+            else:
+                carry = False
+            res = str(temp) + res
+        if carry:
+            res = '1' + res
+        return res
+```
+
+### 989. 数组形式的整数加法
+
+这道题考察的是对各种情况的处理，算是一道简单的模拟。
+
+```python
+class Solution:
+    def addToArrayForm(self, num: List[int], k: int) -> List[int]:
+        carry = 0
+        for i in range(len(num)-1, -1, -1):
+            num[i] += (k%10)+carry
+            if num[i] >= 10:
+                num[i] -= 10
+                carry = 1
+            else:
+                carry = 0
+            k //= 10
+        k += carry
+        res = []
+        while k:
+            res.append(k%10)
+            k //= 10
+        return res[::-1]+num
+```
+
+### 739. 每日温度
+
+首先上暴力，但是超时了。然后我想可能是个前缀和的问题（准确地说应该叫后缀差），然而依然没有头绪，因此从 [代码随想录](https://programmercarl.com/0739.%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6.html) 前辈这里学习了一下这种应该用地数据结构叫单调栈。简单来说就是我们需要维护一个单调递增栈（或者叫最小栈，从栈头到栈尾单调递增），这个栈其实记的是下标，每次遍历到一个元素有三种情况，对应操作如下：
+
+- 如果遍历到的元素小于栈顶元素 - 当前元素入栈。
+- 如果遍历到的元素等于栈顶元素 - 当前元素入栈。
+- 如果遍历到的元素大于栈顶元素 
+  - 这种情况下如果当前元素入栈会破坏栈的单调性。
+  - 首先我们需要将比当前元素小的元素都出栈，在出栈时就可以说明当前元素是出栈那个元素的下一个更大值，因此可以对结果数组赋值。
+  - 当前元素进栈。
+
+```python
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        temperatures_len = len(temperatures)
+        stack = [0]
+        res = [0] * temperatures_len
+        for i in range(1, temperatures_len):
+            if temperatures[i] <= temperatures[stack[-1]]:
+                stack.append(i)
+            else:
+                while len(stack)!=0 and temperatures[i]>temperatures[stack[-1]]:
+                    res[stack[-1]] = i - stack[-1]
+                    stack.pop()
+                stack.append(i)
+        return res
+```
+
+### 58. 最后一个单词的长度
+
+简单的模拟计数。
+
+```python
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        count_start = False
+        res = 0
+        for i in s[::-1]:
+            if i != ' ':
+                count_start = True
+                res += 1
+            elif count_start:
+                break
+        return res
+```
+
+### 48. 旋转图像
+
+两次轴对称。
+
+```python
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        n = len(matrix)
+        for c in range(1, n):
+            for r in range(0, c):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+        for r in range(n):
+            matrix[r][:] = matrix[r][::-1]
+```
+
+### 1886. 判断矩阵经轮转后是否一致
+
+应该算是上道题的进阶版吧。判断矩阵本身和旋转 3 次有没有和目标矩阵一样就行了。
+
+```python
+class Solution:
+    def findRotation(self, mat: List[List[int]], target: List[List[int]]) -> bool:
+        def rotate(matrix):
+            n = len(matrix)
+            for c in range(1, n):
+                for r in range(0, c):
+                    matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+            for r in range(n):
+                matrix[r][:] = matrix[r][::-1]
+            return matrix
+        if mat == target:
+            return True
+        for _ in range(3):
+            mat = rotate(mat)
+            if mat == target:
+                return True
+        return False
+```
+
+### 54. 螺旋矩阵
+
+这是一道模拟题，考察对边界的控制。
+
+```python
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        m, n = len(matrix), len(matrix[0])
+        printed = [[0]*n for _ in range(m)]
+        r,c = 0, 0
+        res = []
+        direction = 'r'
+        while True:
+            res.append(matrix[r][c])
+            printed[r][c] = 1
+            match direction:
+                case 'r':
+                    if c+1<n and not printed[r][c+1]:
+                        c += 1
+                    elif r+1<m and not printed[r+1][c]:
+                        direction = 'b'
+                        r += 1
+                    else:
+                        break
+                case 'b':
+                    if r+1<m and not printed[r+1][c]:
+                        r += 1
+                    elif c>0 and not printed[r][c-1]:
+                        direction = 'l'
+                        c -= 1
+                    else:
+                        break
+                case 'l':
+                    if c>0 and not printed[r][c-1]:
+                        c -= 1
+                    elif r>0 and not printed[r-1][c]:
+                        direction = 't'
+                        r -= 1
+                    else:
+                        break
+                case 't':
+                    if r>0 and not printed[r-1][c]:
+                        r -= 1
+                    elif c+1<n and not printed[r][c+1]:
+                        direction = 'r'
+                        c += 1
+                    else:
+                        break
+        return res
+```
+
+### 973. 最接近原点的 K 个点
+
+用 `dict` 来统计某距离所有的点，然后最 `dict` 进行排序，从前往后往结果里更新点，最终当更新到 k 个点时返回答案。
+
+```python
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        hashmap = {}
+        res = []
+        for i in points:
+            distance = i[0]*i[0]+i[1]*i[1]
+            if distance not in hashmap:
+                hashmap[distance] = [[i[0], i[1]]]
+            else:
+                hashmap[distance] += [[i[0], i[1]]]
+        sorted_dis = sorted(hashmap)
+        for i in sorted_dis:
+            if len(res) < k:
+                res += hashmap[i]
+        return res
+```
+
+不过既然都用自带的排序了也可以直接根据距离排序后取前 k 个点。
+
+```python
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        return sorted(points, key=lambda x:x[0]*x[0]+x[1]*x[1])[:k]
 ```
 
