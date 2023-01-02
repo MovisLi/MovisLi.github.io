@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2022-12-30 05:13:41
+date: 2023-01-02 23:56:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -1599,5 +1599,168 @@ class Solution:
             else:
                 hashmap[pre_sum[i+1]] += 1
         return res
+```
+
+## 字符串
+
+### 415. 字符串相加
+
+模拟。
+
+```python
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        res = ""
+        i, j, carry = len(num1) - 1, len(num2) - 1, 0
+        while i >= 0 or j >= 0:
+            n1 = int(num1[i]) if i >= 0 else 0
+            n2 = int(num2[j]) if j >= 0 else 0
+            temp = n1 + n2 + carry
+            carry = temp // 10
+            res = str(temp % 10) + res
+            i, j = i - 1, j - 1
+        return "1" + res if carry else res
+```
+
+### 409. 最长回文串
+
+用 `dict` 去统计每个字符出现的次数，如果是偶数可以直接用 `n` 个字符构成回文串，如果是奇数则可以用 `n-1` 个字符来构成，不过这时要标记遇到了奇数，之后如果标记位为真说明遇到了奇数，结果就会加 1 。
+
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        res = 0
+        hashmap = {}
+        flag = False
+        for i in s:
+            if i not in hashmap:
+                hashmap[i] = 1
+            else:
+                hashmap[i] += 1
+        for value in hashmap.values():
+            if value&1:
+                res += value - 1
+                flag = True
+            else:
+                res += value
+        return res+1 if flag else res
+```
+
+### 290. 单词规律
+
+用 `dict` 去计数匹配。
+
+```python
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        dict_pos = {}
+        dict_nag = {}
+        lst_ptn = list(pattern)
+        lst_s = s.split()
+        if len(lst_ptn) != len(lst_s):
+            return False
+        for k,v in zip(lst_ptn, lst_s):
+            if k not in dict_pos:
+                dict_pos[k] = v
+            dict_nag[v] = k
+        if len(dict_pos) != len(dict_nag):
+            return False
+        for k,v in dict_pos.items():
+            if k != dict_nag[v]:
+                return False
+        return True
+```
+
+### 763. 划分字母区间
+
+用 `dict` 去记录每个字母首次出现尾次出现的索引，然后根据首次出现的索引排序，遍历排序后的索引，并记录首次索引和尾次索引。会遇到 3 种情况：
+
+- 遍历的首次索引大于当前记录的尾次出现索引 - 将当前结果添加，更新当前记录的首次索引和尾次索引。
+- 遍历的尾次索引大于当前记录的尾次索引 - 更新当前记录的尾次索引。
+- 遍历的首尾区间被当前记录的索引包含 - 不处理。
+
+```python
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        hashmap = {}
+        for i,v in enumerate(s):
+            if v not in hashmap:
+                hashmap[v] = (i, i)
+            else:
+                start, end = hashmap[v]
+                hashmap[v] = (start, i)
+        sorted_index = sorted(hashmap.items(), key=lambda x:x[1][0])
+        res = []
+        start = -1
+        end = -1
+        for i in sorted_index:
+            if i[1][0] > end:
+                res.append(end-start+1)
+                start = i[1][0]
+                end = i[1][1]
+            elif i[1][1] > end:
+                end = i[1][1]
+        res.append(end-start+1)
+        return res[1:]
+```
+
+### 49. 字母异位词分组
+
+这道题主要考察如何将具有相同特征（字母异位词）作为 `dict` 的 `key` ，毕竟如果只是对每个字母做计数得到的子 `dict` 是不能作为 `key` 的。因此首先我想到的是计数之后再双循环去处理，不幸地超时了。然后可以将每个单词重新排序后作为 `key` 。
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = {}
+        for i in strs:
+            temp = ''.join(sorted([_ for _ in i]))
+            if temp not in hashmap:
+                hashmap[temp] = [i]
+            else:
+                hashmap[temp] += [i]
+        return [_ for _ in hashmap.values()]
+```
+
+官解里提到的另一种方法实际也是再找寻合适的 `key` ，也是不排序直接计数的方法，我最开始也这样想但是没想到。官解这里采用长度为 26 的 `list` 来记录字母出现的次数，`ord(x)-ord('a')` 即为对应数组下标，再将 `list` 转为 `tuple` 以实现哈希。
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = {}
+        for t in strs:
+            temp = [0]*26
+            for i in t:
+                temp[ord(i)-97] += 1
+            temp = tuple(temp)
+            if temp not in hashmap:
+                hashmap[temp] = [t]
+            else:
+                hashmap[temp] += [t]
+        return [_ for _ in hashmap.values()]
+```
+
+### 43. 字符串相乘
+
+这题前几天在编程能力计划里做过，不再赘述。
+
+```python
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        res = 0
+        flag1 = 1
+        for i in num1[::-1]:
+            adv = 0
+            temp = 0
+            flag2 = 1
+            i = ord(i)-48
+            for j in num2[::-1]:
+                j = ord(j)-48
+                mul = (i*j+adv)
+                adv = mul//10
+                temp += (mul%10)*flag2
+                flag2 *= 10
+            res += (temp+adv*flag2) * flag1
+            flag1 *= 10
+        return str(res)
 ```
 
