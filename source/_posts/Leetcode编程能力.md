@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-12-31 03:54:45
+date: 2022-01-04 03:42:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -1360,7 +1360,7 @@ class Solution:
 
 ### 973. 最接近原点的 K 个点
 
-用 `dict` 来统计某距离所有的点，然后最 `dict` 进行排序，从前往后往结果里更新点，最终当更新到 k 个点时返回答案。
+用 `dict` 来统计某距离所有的点，然后对 `dict` 进行排序，从前往后往结果里更新点，最终当更新到 k 个点时返回答案。
 
 ```python
 class Solution:
@@ -1388,3 +1388,241 @@ class Solution:
         return sorted(points, key=lambda x:x[0]*x[0]+x[1]*x[1])[:k]
 ```
 
+### 1630. 等差子数组
+
+暴力，对每一组取出来依次判断，判断的方法就是找到数列第一个差值，然后依次遍历看是否都等差。
+
+```python
+class Solution:
+    def checkArithmeticSubarrays(self, nums: List[int], l: List[int], r: List[int]) -> List[bool]:
+        res = []
+        for i,j in zip(l,r):
+            temp = nums[i:j+1]
+            temp = sorted(temp)
+            diff = temp[1]-temp[0]
+            flag = True
+            for k in range(j-i):
+                if temp[k+1]-temp[k] != diff:
+                    flag = False
+                    break
+            res.append(flag)
+        return res
+```
+
+### 429. N 叉树的层序遍历
+
+经典树的广度优先搜索，跟二叉树层次遍历区别不大。
+
+```python
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        if not root:
+            return []
+        queue = collections.deque()
+        queue.append(root)
+        res = []
+        while queue:
+            temp = []
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                temp.append(node.val)
+                if node.children:
+                    for child in node.children:
+                        queue.append(child)
+            res.append(temp)
+        return res
+```
+
+### 503. 下一个更大元素 II
+
+单调栈。解决循环数组的方式可以是将数组看成 2 倍长，然后从尾端开始遍历，只要遍历完成每一个数都应该找过下一个更大元素了。我们假设理论索引是 `i` ，实际索引是 `j=i%len(nums)` 代表实际应该判断的位置，然后用一个单调递增（栈顶 < 栈底）的单调栈。单调栈的思路见 [496. 下一个更大元素 I](###496. 下一个更大元素 I) 与 [739. 每日温度](###739. 每日温度) 。
+
+```python
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        nums_len = len(nums)
+        res = [-1] * nums_len
+        stack = []
+        for i in range(2*nums_len-1, -1, -1):
+            j = i%nums_len
+            while stack and nums[j]>=stack[-1]:
+                stack.pop()
+            res[j] = stack[-1] if stack else -1
+            stack.append(nums[j])
+        return res
+```
+
+### 556. 下一个更大元素 III
+
+首先 `n` 如果小于 12 ，肯定是不存在满足题意的数的，直接返回 -1 。
+
+然后将 `n` 转换为一个 `List[str]` 的列表，从后往前遍历，如果找到了某一位比它后一位的值小，记录这个索引，退出遍历，我们设这个索引为 `flag` 。当然，也可能存在找不到索引的情况，也返回 -1 。
+
+此时下一个更大的值实际上是把 `flag` 位上的数和**在 `flag` 后面并且比他大的最小值交换**，再对 `str[flag+1:]` 从小到大排序。
+
+```python
+class Solution:
+    def nextGreaterElement(self, n: int) -> int:
+        if n < 12:
+            return -1
+        digits = [_ for _ in str(n)]
+        flag = -1
+        for i in range(len(digits)-1, 0, -1):
+            if digits[i] > digits[i-1]:
+                flag = i-1
+                break
+        if flag == -1:
+            return -1
+        temp = digits[flag:]
+        target = None
+        for i in range(1, len(temp)):
+            if temp[i] > temp[0]:
+                target = i
+        temp[0], temp[target] = temp[target], temp[0]
+        temp = temp[:1] + sorted(temp[1:])
+        res = int(''.join(digits[:flag]+temp))
+        return -1 if res>=1<<31 else res
+```
+
+### 1376. 通知所有员工所需的时间
+
+这道题算是一个加了权的 N 叉树，或者说是一个加了权的有向无环图。
+
+首先我们不考虑树的思想，直接使用暴力解法，就是对每一个人进行遍历，去推总裁找到他们所需时间。这个时间的最大值显然就是通知所有员工所需的时间。
+
+```python
+class Solution:
+    def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
+        direct_info = [_ for _ in informTime]
+        for i in range(n):
+            j = i
+            temp = informTime[j]
+            while manager[j] != -1:
+                j = manager[j]
+                temp += informTime[j]
+            direct_info[i] = temp
+        return max(direct_info)
+```
+
+这个代码是很慢的，因为会去计算很多重复的通知时间，即回溯过程中上层树结构都一样了，这就是自底向上的计算思路。当然也可以优化，因为实际上去统计的是底层员工的时间，因此我们只需要计算每个底层员工就行了。
+
+```python
+class Solution:
+    def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
+        direct_info = [_ for _ in informTime]
+        for i in range(n):
+            if informTime[i] != 0:
+                continue
+            j = i
+            temp = informTime[j]
+            while manager[j] != -1:
+                j = manager[j]
+                temp += informTime[j]
+            direct_info[i] = temp
+        return max(direct_info)
+```
+
+当然其实还能再优化，我们可以用空间换时间，开一个数组专门记录当前员工是否被搜过。
+
+```python
+class Solution:
+    def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:      
+        direct_info = [0]*n
+        def stats_time(i):
+            if manager[i] != -1 and direct_info[i] == 0:
+                direct_info[i] = informTime[manager[i]] + stats_time(manager[i])
+            return direct_info[i]
+        
+        res = 0
+        for i in range(n):
+            if informTime[i] == 0:
+               res = max(res, stats_time(i)) 
+        return res
+```
+
+为了避免重复计算，我们在这里还可以采用自顶向下的思路，就是树的搜索，搜过了就不再搜了。这里可以考虑用一个 `dict` 来辅助记录上级与下级的关系。
+
+```python
+class Solution:
+    def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
+        hashmap = {}
+        for staff, boss in enumerate(manager):
+            if boss not in hashmap:
+                hashmap[boss] = [staff]
+            else:
+                hashmap[boss] += [staff]
+        stack = [(headID, informTime[headID])]
+        max_time = 0
+        while stack:
+            p,t = stack.pop()
+            max_time = max(max_time, t)
+            if p in hashmap:
+                for staff in hashmap[p]:
+                    stack.append((staff, t+informTime[staff]))
+        return max_time
+```
+
+### 438. 找到字符串中所有字母异位词
+
+其实这道题就是哈希计数的题，首先最直接的比较计数结果是否一样。
+
+```python
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        p_count = collections.Counter(p)
+        p_len = len(p)
+        s_len = len(s)
+        res = []
+        for i in range(s_len-p_len+1):
+            if collections.Counter(s[i:i+p_len]) == p_count:
+                res.append(i)
+        return res
+```
+
+这样能过，但是很慢，这里有一个显著的问题，那就是如果 `s` 的子串和 `p` 不是字母异位词，不需要统计完这个子串，因此我们需要在这里剪枝。
+
+但是很遗憾，速度慢似乎并不是因为剪枝引起的。因为剪枝过后居然超出时间限制了，这里可以说明 `collections.Counter` 比我想象中要快很多。
+
+```python
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        p_count = dict(collections.Counter(p))
+        p_len = len(p)
+        s_len = len(s)
+        res = []
+        for i in range(s_len-p_len+1):
+            temp = deepcopy(p_count)
+            flag = True
+            for j in s[i:i+p_len]:
+                if j not in temp or temp[j] == 0:
+                    flag = False
+                    break
+                temp[j] -= 1
+            if flag:
+                res.append(i)
+        return res
+```
+
+然后我考虑了滑动窗口，也是一种优化。
+
+```python
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        p_count = collections.Counter(p)
+        s_len = len(s)
+        l, r = 0, len(p)
+        count = collections.Counter(s[:r])
+        res = []
+        while r<=s_len:
+            if count == p_count:
+                res.append(l)
+            count.subtract({s[l]:1})
+            if r<s_len:
+                count.subtract({s[r]:-1})
+            l += 1
+            r += 1
+            count = +count
+        return res
+```
+
+看起来不在 hash 上面做文章，这个效率是高不了了。

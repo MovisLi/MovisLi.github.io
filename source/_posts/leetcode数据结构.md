@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2023-01-02 23:56:41
+date: 2023-01-03 21:47:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -1764,3 +1764,97 @@ class Solution:
         return str(res)
 ```
 
+### 187. 重复的DNA序列
+
+用 2 个 `set` 来记录，一个存放已经出现过的序列，另一个用来存放结果，如果已经出现过，就添加进结果中。
+
+```python
+class Solution:
+    def findRepeatedDnaSequences(self, s: str) -> List[str]:
+        hashset = set('')
+        res = set('')
+        for i in range(len(s)):
+            temp = s[i:i+10]
+            if temp not in hashset:
+                hashset.add(temp)
+            else:
+                res.add(temp)
+        return list(res)
+```
+
+### 5. 最长回文子串
+
+暴力，过了。从长到短取序列，如果某个序列是回文串，直接返回他。
+
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        s_len = len(s)
+        c_len = s_len
+        while c_len > 0:
+            for i in range(s_len-c_len+1):
+                temp = s[i:i+c_len]
+                if temp == temp[::-1]:
+                    return temp
+            c_len -= 1
+        return None
+```
+
+中心扩散算法，对每个点开始从中心往左右两边扩散直到扩散结果不是回文串。这个算法的难点在于有两种情况，比如 `aba` 与 `abba` 这两个字符串，都从第一个 `b` 开始扩散，很难同时进行处理，所以这里需要假设两种情况扩散的结果，选取最大回文串。
+
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        def get_palindrome(s, l, r):
+            while l>=0 and r<len(s) and s[l]==s[r]:
+                l -= 1
+                r += 1
+            return l,r
+        
+        s_len = len(s)
+        left, right = 0, 0
+        for i in range(s_len):
+            l1, r1 = get_palindrome(s, i, i)
+            l2, r2 = get_palindrome(s, i, i+1)
+            if r1-l1 > right-left:
+                left, right = l1,r1
+            if r2-l2 > right-left:
+                left, right = l2,r2
+        return s[left+1:right]
+```
+
+中心扩散这个算法其实有点动态规划的思想在里面，我之前其实很少遇到二维 dp ，这里用 `dp[i][j]` 表示字符串 `s[i:j]` 是否是回文字符串，可以列出如下状态转移方程：
+$$
+dp[i][j]=\begin{cases}
+dp[i+1][j-1]\&(s[i]==s[j])\ \ \ \ if\ j>i+1\\
+s[i]==s[j]\ \ \ \ if\ j=i+1\\
+True\ \ \ \ if\ i==j
+\end{cases}
+$$
+但是得注意，这里跟暴力不太一样，是从小往大推，不是从大往小推（否则算 `dp[i][j]` 时根本不知道 `dp[i+1][j-1]` ）。
+
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        s_len = len(s)
+        dp = [[False]*s_len for _ in range(s_len)]
+        for i in range(s_len):
+            dp[i][i] = True
+        start, max_len = 0, 1
+        for c_len in range(2,s_len+1):
+            for i in range(s_len-c_len+1):
+                j = i+c_len-1
+                if s[i] != s[j]:
+                    dp[i][j] = False
+                else:
+                    if j>i+1:
+                        dp[i][j] = dp[i+1][j-1]
+                    else:
+                        dp[i][j] = True
+                if dp[i][j] and c_len>max_len:
+                    start = i
+                    max_len = c_len
+        return s[start:start+max_len]
+```
+
+但是动态规划，这里也不快。
