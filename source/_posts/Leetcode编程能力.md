@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2022-01-04 03:42:45
+date: 2023-01-07 01:31:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -1562,6 +1562,43 @@ class Solution:
         return max_time
 ```
 
+### 49. 字母异位词分组
+
+这道题之前在数据结构里计划里做过，核心在于创造一个合适的 `hashmap` 的 `key` 。
+
+第一种是数组记录（因为只有 26 个小写英文字母）转元组作为 `key` 的方式。
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = {}
+        for t in strs:
+            temp = [0]*26
+            for i in t:
+                temp[ord(i)-97] += 1
+            temp = tuple(temp)
+            if temp not in hashmap:
+                hashmap[temp] = [t]
+            else:
+                hashmap[temp] += [t]
+        return [_ for _ in hashmap.values()]
+```
+
+第二种是排序的方式。
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = {}
+        for i in strs:
+            temp = ''.join(sorted([_ for _ in i]))
+            if temp not in hashmap:
+                hashmap[temp] = [i]
+            else:
+                hashmap[temp] += [i]
+        return [_ for _ in hashmap.values()]
+```
+
 ### 438. 找到字符串中所有字母异位词
 
 其实这道题就是哈希计数的题，首先最直接的比较计数结果是否一样。
@@ -1626,3 +1663,191 @@ class Solution:
 ```
 
 看起来不在 hash 上面做文章，这个效率是高不了了。
+
+这里建议采用 [49. 字母异位词分组](###49. 字母异位词分组) 中数组记录（因为只有 26 个小写英文字母）转元组作为 `key` 的方式。
+
+```python
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        s_len = len(s)
+        l, r = 0, len(p)
+        p_count = [0]*26
+        for t in p:
+            p_count[ord(t)-97] += 1
+        count = [0]*26
+        for t in s[l:r]:
+            count[ord(t)-97] += 1
+        res = []
+        while r<s_len+1:
+            if count == p_count:
+                res.append(l)
+            if r<s_len:
+                count[ord(s[l])-97] -= 1
+                count[ord(s[r])-97] += 1
+            l += 1
+            r += 1
+        return res
+```
+
+### 713. 乘积小于 K 的子数组
+
+我觉得这个都不能算滑动窗口了，应该是一个双指针问题，右指针指向子数组的右边，并且在每一轮循环中右指针的位置是不变的。左指针指向的位置是**当前右指针下满足条件的最左位置**。最后进行一个对 `k` 值的剪枝就行了。
+
+```python
+class Solution:
+    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+        if k <= 1:
+            return 0
+        res, left, temp = 0, 0, 1
+        for right, value in enumerate(nums):
+            temp *= value
+            while temp>=k:
+                temp //= nums[left]
+                left += 1
+            res += right-left+1
+        return res
+```
+
+### 304. 二维区域和检索 - 矩阵不可变
+
+经典前缀和设计加快查询求和速度。
+
+```python
+class NumMatrix:
+
+    def __init__(self, matrix: List[List[int]]):
+        m = len(matrix)
+        n = len(matrix[0])
+        presum = [[0]*(n+1) for _ in range(m+1)]
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                presum[i][j] = matrix[i-1][j-1] + presum[i-1][j] + presum[i][j-1] - presum[i-1][j-1]
+        self.presum = presum
+
+    def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
+        return self.presum[row2+1][col2+1] + self.presum[row1][col1] - self.presum[row2+1][col1] - self.presum[row1][col2+1]
+```
+
+### 910. 最小差值 II
+
+观察一下能想到这道题就是一组数大于某个值就 `-k` ，小于某个值就 `+k` ，我最开始的猜测是平均值。发现不对，至少处理不了一个数等于平均值的情况。昨天刚看了一下概率论的几个流派，按照古典派的思想，当一个事件有两种可能性但我们并不清楚的时候，它的可能性都是一半。所以取特定的值肯定与这个思想冲突很大。因此我选择排序之后逐一判断，结果过了。
+
+```python
+class Solution:
+    def smallestRangeII(self, nums: List[int], k: int) -> int:
+        nums = sorted(nums)
+        res = nums[-1] - nums[0]
+        for i in range(1, len(nums)):
+            num_min = min(nums[0]+k, nums[i]-k)
+            num_max = max(nums[-1]-k, nums[i-1]+k)
+            res = min(num_max-num_min, res)
+        return res
+```
+
+### 143. 重排链表
+
+这道题可以用双端队列解决，先扫描链表进队，然后左出一个右出一个直至队空。
+
+```python
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        queue = collections.deque()
+        while head:
+            queue.append(head)
+            head = head.next
+        dummy = ListNode()
+        node = dummy
+        while queue:
+            if queue:
+                node.next = queue.popleft()
+                node = node.next
+            if queue:
+                node.next = queue.pop()
+                node = node.next
+        node.next = None
+        head = dummy.next
+```
+
+### 138. 复制带随机指针的链表
+
+Python 中的 `deepcopy()` 。
+
+```python
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        return deepcopy(head)
+```
+
+先遍历 `head` ，同时构建新节点，同时将节点的对应关系加入 `hashmap` 中。之后再根据 `hashmap` 添加 `random` 。
+
+```python
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        dummy = head
+        res = Node(0)
+        node = res
+        hashmap = {}
+        while dummy:
+            node.next = Node(dummy.val)
+            node = node.next
+            hashmap[dummy] = node
+            dummy = dummy.next
+        dummy = head
+        node = res.next
+        while dummy:
+            node.random = hashmap[dummy.random] if dummy.random else None
+            dummy = dummy.next
+            node = node.next
+        return res.next
+```
+
+### 2. 两数相加
+
+在数据结构里做过。
+
+```python
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        node = dummy
+        carry = 0
+        while l1 or l2:
+            temp = carry
+            if l1:
+                temp += l1.val
+                l1 = l1.next
+            if l2:
+                temp += l2.val
+                l2 = l2.next
+            carry = temp // 10
+            temp %= 10
+            node.next = ListNode(temp)
+            node = node.next
+        if carry:
+            node.next = ListNode(1)
+        return dummy.next
+```
+
+### 445. 两数相加 II
+
+可以采用的一种思路就是先对链表取数相加再构建新链表。
+
+```python
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        num1 = 0
+        while l1:
+            num1 = num1*10 + l1.val
+            l1 = l1.next
+        num2 = 0
+        while l2:
+            num2 = num2*10 + l2.val
+            l2 = l2.next
+        dummy = ListNode()
+        node = dummy
+        for i in str(num1+num2):
+            node.next = ListNode(int(i))
+            node = node.next
+        return dummy.next
+```
+

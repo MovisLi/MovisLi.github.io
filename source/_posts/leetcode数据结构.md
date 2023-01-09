@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2023-01-03 21:47:41
+date: 2023-01-10 01:08:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -1858,3 +1858,508 @@ class Solution:
 ```
 
 但是动态规划，这里也不快。
+
+## 链表
+
+### 2. 两数相加
+
+一种方式是先把 `l1` 与 `l2` 的数都取出来相加之后再根据结果生成新的链表。
+
+```python
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        num1 = 0
+        digit = 1
+        while l1:
+            num1 += l1.val*digit
+            l1 = l1.next
+            digit *= 10
+        num2 = 0
+        digit = 1
+        while l2:
+            num2 += l2.val*digit
+            l2 = l2.next
+            digit *= 10
+        res_num = num1+num2
+        dummy = ListNode()
+        temp = dummy
+        for i in str(res_num)[::-1]:
+            temp.next = ListNode(int(i))
+            temp = temp.next
+        return dummy.next
+```
+
+否则我们需要哨兵节点用于返回最终的链表，并需要前置节点用于将当前数位两数之和结果相加。
+
+```python
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        node = dummy
+        carry = 0
+        while l1 or l2:
+            temp = carry
+            if l1:
+                temp += l1.val
+                l1 = l1.next
+            if l2:
+                temp += l2.val
+                l2 = l2.next
+            if temp >= 10:
+                temp -= 10
+                carry = 1
+            else:
+                carry = 0
+            node.next = ListNode(temp)
+            node = node.next
+        if carry:
+            node.next = ListNode(1)
+        return dummy.next
+```
+
+### 142. 环形链表 II
+
+用 `set` 存储每个节点然后遍历链表，如果节点已经存在，那么这个节点就是入环第一个节点。
+
+```python
+class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        hashset = set('')
+        while head:
+            if head not in hashset:
+                hashset.add(head)
+                head = head.next
+            else:
+                return head
+        return None
+```
+
+快慢指针，快指针走的步数减去慢指针走的步数一定是环的整数倍。
+
+```python
+class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        fast, slow = head, head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if fast == slow:
+                temp = head
+                while temp != slow:
+                    temp = temp.next
+                    slow = slow.next
+                return temp
+        return None
+```
+
+### 160. 相交链表
+
+用 `set` 存储 `headA` 的每个节点，然后遍历 `headB` 看节点是否在 `set` 中。
+
+```python
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        setA = set('')
+        while headA:
+            setA.add(headA)
+            headA = headA.next
+        while headB:
+            if headB in setA:
+                return headB
+            headB = headB.next
+        return None
+```
+
+或者用两个 `set` 存储，在时间效率上有一定的优化。
+
+```python
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        setA, setB = set(''), set('')
+        while headA or headB:
+            if headA:
+                if headA in setB: return headA
+                setA.add(headA)
+                headA = headA.next
+            if headB:
+                if headB in setA: return headB
+                setB.add(headB)
+                headB = headB.next
+        return None
+```
+
+双指针，一个以 `headA+headB` 顺序遍历，一个以 `headB+headA` 顺序遍历，相遇的时候就是相交节点。
+
+```python
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        if not headA or not headB:
+            return None
+        nodeA = headA
+        nodeB = headB
+        while nodeA != nodeB:
+            nodeA = headB if not nodeA else nodeA.next
+            nodeB = headA if not nodeB else nodeB.next
+        return nodeA
+```
+
+### 82. 删除排序链表中的重复元素 II
+
+一个哨兵节点用于返回结果链表，另一个用于记录新链表节点。循环遍历 `head` ，假设 `temp` 是 `head` 节点的下个节点：
+
+- 如果 `temp` 是空节点或者 `temp.val != head.val` 则将当前 `head` 节点添加至记录。
+- 否则 `head` 移到不是重复元素的位置。
+
+```python
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        node = dummy
+        while head:
+            temp = head.next
+            if not temp or temp.val != head.val:
+                node.next = head
+                head = head.next
+                node = node.next
+            else:
+                while temp and temp.val == head.val:
+                    temp = temp.next
+                head = temp
+        node.next = head
+        return dummy.next
+```
+
+### 24. 两两交换链表中的节点
+
+模拟。
+
+```python
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+        if not head.next:
+            return head
+        dummy = ListNode()
+        node = dummy
+        while head and head.next:
+            p1 = head
+            p2 = head.next
+            p1.next, p2.next = p2.next, p1
+            node.next = p2
+            node = node.next.next
+            head = head.next
+        return dummy.next
+```
+
+### 707. 设计链表
+
+`list` 实现。
+
+```python
+class MyLinkedList:
+
+    def __init__(self):
+        self.len = 0
+        self.nums = []
+
+    def get(self, index: int) -> int:
+        if index < 0 or index >= self.len:
+            return -1
+        return self.nums[index]
+
+    def addAtHead(self, val: int) -> None:
+        self.addAtIndex(0, val)
+
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(self.len, val)
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index > self.len:
+            return None
+        index = max(index, 0)
+        self.len += 1
+        self.nums.insert(index, val)
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index < 0 or index >= self.len:
+            return None
+        self.len -= 1
+        del self.nums[index]
+```
+
+单向链表。
+
+```python
+class ListNode:
+    def __init__(self, val=0):
+        self.val = val
+        self.next = None
+
+
+class MyLinkedList:
+
+    def __init__(self):
+        self.size = 0
+        self.head = ListNode(0)
+
+    def get(self, index: int) -> int:
+        if index < 0 or index >= self.size:
+            return -1
+        node = self.head
+        for _ in range(index+1):
+            node = node.next
+        return node.val
+
+    def addAtHead(self, val: int) -> None:
+        self.addAtIndex(0, val)
+
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(self.size, val)
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index > self.size:
+            return None
+        index = max(index, 0)
+        self.size += 1
+        node = self.head
+        for _ in range(index):
+            node = node.next
+        temp = ListNode(val)
+        temp.next = node.next
+        node.next = temp
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index < 0 or index >= self.size:
+            return None
+        self.size -= 1
+        node = self.head
+        for _ in range(index):
+            node = node.next
+        node.next = node.next.next
+```
+
+### 25. K 个一组翻转链表
+
+用栈可以很轻松的解决，直接每次 `k` 个节点进栈，然后出栈生成新链表，为了防止节点不够进栈的情况，每次进栈前先记录一下节点。
+
+```python
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        res = ListNode()
+        node = res
+        stack = []
+        while True:
+            pre = head
+            for _ in range(k):
+                if not head:
+                    node.next = pre
+                    return res.next
+                stack.append(head)
+                head = head.next
+            while stack:
+                temp = stack.pop()
+                node.next = temp
+                node = node.next
+        return None
+```
+
+### 143. 重排链表
+
+在编程能力里做过。
+
+```python
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        queue = collections.deque()
+        while head:
+            queue.append(head)
+            head = head.next
+        dummy = ListNode()
+        node = dummy
+        while queue:
+            if queue:
+                node.next = queue.popleft()
+                node = node.next
+            if queue:
+                node.next = queue.pop()
+                node = node.next
+        node.next = None
+        head = dummy.next
+```
+
+### 155. 最小栈
+
+最开始读这道题没读懂，后面发现原来这个题既想记录元素入栈的顺序又想记录最小值，那么比较合理的就是采用空间换时间的方法，两个栈，一个正常存数，一个存最小值。
+
+```python
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.minstack = []
+
+    def push(self, val: int) -> None:
+        if self.minstack:
+            _min = self.minstack[-1]
+            _min = min(val, _min)
+            self.minstack.append(_min)
+            self.stack.append(val)
+        else:
+            self.minstack.append(val)
+            self.stack.append(val)
+
+    def pop(self) -> None:
+        self.stack.pop()
+        self.minstack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.minstack[-1]
+```
+
+### 1249. 移除无效的括号
+
+可以采用一个栈来记录有效的括号，遍历字符串时，如果遇到左括号，下标入栈，如果遇到右括号，那么判断是否可出栈，能出则出，不能说明这个右括号是无效的，把下标记录一下。遍历完成后，还在栈里的下标说明这些左括号找不到匹配的右括号，也记录。最后凡是记录的位置不添加到结果里。
+
+```python
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        stack = []
+        error = set('')
+        for i,v in enumerate(s):
+            if v == '(':
+                stack.append(i)
+            elif v == ')':
+                if stack:
+                    stack.pop()
+                else:
+                    error.add(i)
+        for i in stack:
+            error.add(i)
+        res = []
+        for i,v in enumerate(s):
+            if i not in error:
+                res.append(v)
+        return ''.join(res)
+```
+
+### 1823. 找出游戏的获胜者
+
+可以采用一个队列来模拟实际游戏情况。
+
+```python
+class Solution:
+    def findTheWinner(self, n: int, k: int) -> int:
+        queue = collections.deque()
+        for i in range(1, n+1):
+            queue.append(i)
+        while len(queue) != 1:
+            for i in range(k):
+                temp = queue.popleft()
+                if i!=k-1:
+                    queue.append(temp)
+        return queue.popleft()
+```
+
+但是其实我们是知道哪个位置的元素被删的，是 `start+k-1` 这个位置，所以可以直接删这个元素。
+
+```python
+class Solution:
+    def findTheWinner(self, n: int, k: int) -> int:
+        flag = [i for i in range(1, n+1)]
+        start = 0
+        count = n
+        while count != 1:
+            index = (start+k-1)%count
+            flag.pop(index)
+            start = index
+            count -= 1
+        return flag[0]
+```
+
+### 108. 将有序数组转换为二叉搜索树
+
+从数组中点开始递归构建二叉平衡树。
+
+```python
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        def insert_BST(l, r):
+            mid = (l+r) // 2
+            node = TreeNode(nums[mid])
+            if l<=mid-1:
+                node.left = insert_BST(l,mid-1)
+            if r>=mid+1:
+                node.right = insert_BST(mid+1,r)
+            return node
+        
+        return insert_BST(0, len(nums)-1)
+```
+
+### 105. 从前序与中序遍历序列构造二叉树
+
+二叉树的前序遍历是 `NLR` ，中序遍历是 `LNR` ，因此，`preorder` 的首个元素一定是 `root` 节点，然后根据 `root` 在 `inorder` 中的位置可以区分出左右子树的 `inorder` ，然后可以根据左右子树的 `inorder` 数量来找出左右子树的 `preorder` 。递归构造二叉树。
+
+```python
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder:
+            return None
+        node = TreeNode(preorder[0])
+        index_node = inorder.index(preorder[0])
+        left_num = index_node
+        node.left = self.buildTree(preorder[1:1+left_num], inorder[:index_node])
+        node.right = self.buildTree(preorder[1+left_num:], inorder[index_node+1:])
+        return node
+```
+
+我们可以使用 `dict` 对于查找根节点进行一个优化，但是就不能像上面那样传新的 `list` 了。
+
+```python
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:    
+        def _build(preorder_left, preorder_right, inorder_left, inorder_right):
+            if preorder_left > preorder_right:
+                return None
+            preorder_root = preorder_left
+            inorder_root = hashmap[preorder[preorder_root]]
+            root = TreeNode(preorder[preorder_root])
+            size_left_subtree = inorder_root - inorder_left
+            root.left = _build(preorder_left + 1, preorder_left + size_left_subtree, inorder_left, inorder_root - 1)           
+            root.right = _build(preorder_left + size_left_subtree + 1, preorder_right, inorder_root + 1, inorder_right)
+            return root
+
+        hashmap={v:i for i,v in enumerate(inorder)}
+        return _build(0, len(preorder)-1, 0, len(inorder)-1)
+```
+
+### 103. 二叉树的锯齿形层序遍历
+
+简单的层次遍历，根据不同层数添加不同遍历方向的值。
+
+```python
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        queue = [root]
+        res = []
+        count = 1
+        while queue:
+            temp = []
+            for _ in range(len(queue)):
+                node = queue.pop(0)
+                temp.append(node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            if count&1:
+                res.append(temp)
+            else:
+                res.append(temp[::-1])
+            count += 1
+        return res
+```
+
