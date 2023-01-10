@@ -2363,3 +2363,45 @@ class Solution:
         return res
 ```
 
+### 199. 二叉树的右视图
+
+依然是二叉树的层次遍历，我们在添加节点时从右往左添加并且只将第一个出队的值添加进结果中即可。
+
+```python
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        queue = [root]
+        res = []
+        while queue:
+            for i in range(len(queue)):
+                node = queue.pop(0)
+                if i == 0:
+                    res.append(node.val)
+                if node.right: queue.append(node.right)
+                if node.left: queue.append(node.left)
+        return res
+```
+
+### 113. 路径总和 II
+
+带其它信息的搜索，深度优先搜索和广度优先搜索都可以。
+
+```python
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        if not root:
+            return []
+        queue = collections.deque()
+        res = []
+        queue.append((root, [root.val], root.val))
+        while queue:
+            node, path, path_sum = queue.popleft()
+            if node.left: queue.append((node.left, path+[node.left.val], path_sum+node.left.val))
+            if node.right: queue.append((node.right, path+[node.right.val], path_sum+node.right.val))
+            if not node.left and not node.right:
+                if path_sum == targetSum:
+                    res.append(path)
+        return res
+```
