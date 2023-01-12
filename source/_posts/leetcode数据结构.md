@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2023-01-10 01:08:41
+date: 2023-01-12 21:28:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -2405,3 +2405,221 @@ class Solution:
                     res.append(path)
         return res
 ```
+
+### 450. 删除二叉搜索树中的节点
+
+在查询并删除某个节点中，可能会遇到以下几种情况。
+
+- 当前节点为空，返回空节点。
+- 当前节点值大于目标值，那么应该去左子树寻找目标节点，相当于对左子树运用同样的函数删一次，因此 `root.left = self.deleteNode(root.left, key)` 。
+- 当前节点值小于目标值，那么应该去右子树寻找目标节点。
+- 当前节点值等于目标值，也就是找到了。
+  - 如果没有左子树，那么直接用右子节点覆盖当前节点就行了。
+  - 同样如果没有右子树，那么直接用左子节点覆盖当前节点就行了。
+  - 如果都有的话，可以将左子树接到右子树的最左节点，然后用右子树覆盖当前节点。
+
+```python
+class Solution:
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        if not root:
+            return None
+        if root.val > key:
+            root.left = self.deleteNode(root.left, key)
+        elif root.val < key:
+            root.right = self.deleteNode(root.right, key)
+        else:
+            if not root.left: return root.right
+            if not root.right: return root.left
+            node = root.right
+            while node.left:
+                node = node.left
+            node.left = root.left
+            root = root.right
+        return root
+```
+
+还有一种方法，将二叉搜索树中序遍历，并且如果遇到目标值就跳过。在根据 `list` 构造二叉搜索树的方法生成新的树。
+
+```python
+class Solution:
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        nums = []
+        if not root:
+            return None
+        def LNR(node):
+            if not node: return None
+            LNR(node.left)
+            if node.val != key: nums.append(node.val)
+            LNR(node.right)
+        LNR(root)
+        nums_len = len(nums)
+        if nums_len == 0: return None
+        def insert_BST(l, r):
+            mid = (l+r)//2
+            node = TreeNode(val=nums[mid])
+            if l<=mid-1:
+                node.left = insert_BST(l, mid-1)
+            if r>=mid+1:
+                node.right = insert_BST(mid+1, r)
+            return node
+        return insert_BST(0, nums_len-1)
+```
+
+### 230. 二叉搜索树中第K小的元素
+
+暴力解法，先将二叉搜索树中序遍历，然后返回第 `K` 小的元素。递归。
+
+```python
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        nums = []
+        def LNR(node):
+            if not node: return None
+            LNR(node.left)
+            nums.append(node.val)
+            LNR(node.right)
+        LNR(root)
+        return nums[k-1]
+```
+
+非递归。
+
+```python
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        nums = []
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            nums.append(root.val)
+            root = root.right
+        return nums[k-1]
+```
+
+其实在非递归这里可以看出来，只要数组里有 `k` 个元素就行了，根本不需要遍历完。
+
+```python
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        counter = 0
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            counter += 1
+            if counter == k: return root.val
+            root = root.right
+        return None
+```
+
+### 173. 二叉搜索树迭代器
+
+在初始化 `__init__` 里把二叉搜索树的遍历结果写好，之后就很简单。
+
+```python
+class BSTIterator:
+
+    def __init__(self, root: Optional[TreeNode]):
+        nums = []
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            nums.append(root.val)
+            root = root.right
+        self.index = 0
+        self.nums = nums
+        self.len = len(nums)
+
+    def next(self) -> int:
+        res = self.nums[self.index]
+        self.index += 1
+        return res
+
+    def hasNext(self) -> bool:
+        if self.index<self.len:
+            return True
+        else:
+            return False
+```
+
+### 236. 二叉树的最近公共祖先
+
+暴力解法，搜索 `p` , `q` 。遍历找出这两个节点，并且记录路径，逆序比较后得到最近公共祖先。
+
+```python
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        queue = collections.deque()
+        queue.append((root,[root]))
+        p_ancestors = None
+        q_ancestors = None
+        while queue:
+            for _ in range(len(queue)):
+                node, ancestors = queue.pop()
+                if node == p:
+                    p_ancestors = ancestors
+                if node == q:
+                    q_ancestors = ancestors
+                if p_ancestors and q_ancestors:
+                    break
+                if node.left: queue.append((node.left, ancestors+[node.left]))
+                if node.right: queue.append((node.right, ancestors+[node.right]))
+        for p_ancestor in reversed(p_ancestors):
+            for q_ancestor in reversed(q_ancestors):
+                if p_ancestor == q_ancestor:
+                    return p_ancestor
+        return None
+```
+
+### 297. 二叉树的序列化与反序列化
+
+都可以使用二叉树的遍历去解决。
+
+```python
+class Codec:
+
+    def serialize(self, root):
+        if not root:
+            return ''
+        res = []
+        queue = collections.deque()
+        queue.append(root)
+        while queue:
+            node = queue.popleft()
+            if node:
+                res.append(str(node.val))
+                queue.append(node.left)
+                queue.append(node.right)
+            else:
+                res.append('')
+        return ','.join(res)
+
+    def deserialize(self, data):
+        if not data:
+            return None
+        data = data.split(',')
+        root = TreeNode(data[0])
+        queue = collections.deque()
+        queue.append(root)
+        i = 1
+        while queue:
+            node = queue.popleft()
+            if data[i] != '':
+                node.left = TreeNode(int(data[i]))
+                queue.append(node.left)
+            i += 1
+            if data[i] != '':
+                node.right = TreeNode(int(data[i]))
+                queue.append(node.right)
+            i += 1
+        return root
+```
+

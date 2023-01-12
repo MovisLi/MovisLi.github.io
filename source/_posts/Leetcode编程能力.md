@@ -1,6 +1,6 @@
 ---
 title: 「编程能力」 - 学习计划
-date: 2023-01-07 01:31:45
+date: 2023-01-12 23:58:45
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, hash, point]
 ---
@@ -1849,5 +1849,389 @@ class Solution:
             node.next = ListNode(int(i))
             node = node.next
         return dummy.next
+```
+
+### 61. 旋转链表
+
+用一个 `list` 记录每个节点位置，再相应操作。
+
+```python
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head:
+            return None
+        lst = []
+        while head:
+            lst.append(head)
+            head = head.next
+        k %= len(lst)
+        if k == 0:
+            return lst[0]
+        node_1 = lst[-k-1]
+        node_2 = lst[-k]
+        node_3 = lst[-1]
+        node_4 = lst[0]
+        node_1.next = None
+        node_3.next = node_4
+        return node_2
+```
+
+### 173. 二叉搜索树迭代器
+
+数据结构里做过。首先将搜索树结果中序遍历，之后再创建迭代器输出。
+
+```python
+class BSTIterator:
+
+    def __init__(self, root: Optional[TreeNode]):
+        nums = []
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            nums.append(root.val)
+            root = root.right
+        self.index = 0
+        self.nums = nums
+        self.len = len(nums)
+
+    def next(self) -> int:
+        res = self.nums[self.index]
+        self.index += 1
+        return res
+
+    def hasNext(self) -> bool:
+        if self.index<self.len:
+            return True
+        else:
+            return False
+```
+
+### 1845. 座位预约管理系统
+
+可以采用单调栈解决问题，预约的过程是出栈，解除预约是进栈。
+
+```python
+class SeatManager:
+
+    def __init__(self, n: int):
+        self.stack = [i for i in range(n, 0, -1)]
+
+    def reserve(self) -> int:
+        return self.stack.pop()
+
+    def unreserve(self, seatNumber: int) -> None:
+        temp = []
+        while self.stack and seatNumber>self.stack[-1]:
+            temp.append(self.stack.pop())
+        self.stack.append(seatNumber)
+        while temp:
+            self.stack.append(temp.pop())
+```
+
+另一个需要用到堆队列算法，可以参考 [heapq — Heap queue algorithm — Python 3.11.1 documentation](https://docs.python.org/3/library/heapq.html) 。
+
+```python
+class SeatManager:
+
+    def __init__(self, n: int):
+        self.heap = list(range(1,n+1))
+
+    def reserve(self) -> int:
+        return heappop(self.heap)
+
+    def unreserve(self, seatNumber: int) -> None:
+        heappush(self.heap, seatNumber)
+```
+
+### 860. 柠檬水找零
+
+利用 `dict` 做一个对零钱的统计模拟。
+
+```python
+class Solution:
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        hashmap = {
+            5:0,
+            10:0
+        }
+        for bill in bills:
+            match bill:
+                case 5:
+                    hashmap[5] += 1
+                case 10:
+                    hashmap[10] += 1
+                    if hashmap[5] > 0:
+                        hashmap[5] -= 1
+                    else:
+                        return False
+                case 20:
+                    if hashmap[10] > 0:
+                        hashmap[10] -= 1
+                    elif hashmap[5] > 1:
+                        hashmap[5] -= 2
+                    else:
+                        return False
+                    if hashmap[5] > 0:
+                        hashmap[5] -= 1
+                    else:
+                        return False
+        return True
+```
+
+### 155. 最小栈
+
+数据结构里做过，用两个栈解决问题，一个存顺序，一个存最小值。
+
+```python
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.minstack = []
+
+    def push(self, val: int) -> None:
+        if self.minstack:
+            _min = self.minstack[-1]
+            _min = min(val, _min)
+            self.minstack.append(_min)
+            self.stack.append(val)
+        else:
+            self.minstack.append(val)
+            self.stack.append(val)
+
+    def pop(self) -> None:
+        self.stack.pop()
+        self.minstack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.minstack[-1]
+```
+
+### 341. 扁平化嵌套列表迭代器
+
+深度优先搜索，但是重点在于我们必须在 `hasNext()` 里去维护栈，否则结果可能会有无效空值，比如 `[[]]` 这种输入。
+
+```python
+class NestedIterator:
+    def __init__(self, nestedList: [NestedInteger]):
+        self.stack = [t for t in nestedList][::-1]
+    
+    def next(self) -> int:
+        return self.stack.pop().getInteger()
+
+    
+    def hasNext(self) -> bool:
+        while self.stack:
+            node = self.stack.pop()
+            if node.isInteger():
+                self.stack.append(node)
+                return True
+            else:
+                self.stack += node.getList()[::-1]
+                return self.hasNext()
+        return False
+```
+
+### 1797. 设计一个验证系统
+
+重点在于题目中这句，过期事件**优先于**其他操作。 `dict` 哈希实现。
+
+```python
+class AuthenticationManager:
+
+    def __init__(self, timeToLive: int):
+        self.timeToLive = timeToLive
+        self.hashmap = {}
+
+    def generate(self, tokenId: str, currentTime: int) -> None:
+        self.hashmap[tokenId]=self.timeToLive+currentTime
+
+    def renew(self, tokenId: str, currentTime: int) -> None:
+        if tokenId not in self.hashmap or self.hashmap[tokenId] <= currentTime:
+            return None
+        self.hashmap[tokenId]=self.timeToLive+currentTime
+
+    def countUnexpiredTokens(self, currentTime: int) -> int:
+        res = 0
+        for k,v in self.hashmap.items():
+            if v > currentTime:
+                res += 1
+        return res
+```
+
+### 707. 设计链表
+
+数据结构里做过。
+
+```python
+class MyLinkedList:
+
+    def __init__(self):
+        self.len = 0
+        self.nums = []
+
+    def get(self, index: int) -> int:
+        if index < 0 or index >= self.len:
+            return -1
+        return self.nums[index]
+
+    def addAtHead(self, val: int) -> None:
+        self.addAtIndex(0, val)
+
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(self.len, val)
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index > self.len:
+            return None
+        index = max(index, 0)
+        self.len += 1
+        self.nums.insert(index, val)
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index < 0 or index >= self.len:
+            return None
+        self.len -= 1
+        del self.nums[index]
+```
+
+### 380. O(1) 时间插入、删除和获取随机元素
+
+用 `set` , `random` 实现插入、删除和随机获取的逻辑。
+
+```python
+class RandomizedSet:
+
+    def __init__(self):
+        self.set = set('')
+
+    def insert(self, val: int) -> bool:
+        if val not in self.set:
+            self.set.add(val)
+            return True
+        else:
+            return False
+
+    def remove(self, val: int) -> bool:
+        if val in self.set:
+            self.set.remove(val)
+            return True
+        else:
+            return False
+
+    def getRandom(self) -> int:
+        return random.choice(list(self.set))
+```
+
+### 622. 设计循环队列
+
+用 `list` 模拟队列。
+
+```python
+class MyCircularQueue:
+
+    def __init__(self, k: int):
+        self.queue = []
+        self.max_len = k
+        self.len = 0
+
+    def enQueue(self, value: int) -> bool:
+        if self.len == self.max_len:
+            return False
+        self.queue.append(value)
+        self.len += 1
+        return True
+
+    def deQueue(self) -> bool:
+        if self.len == 0:
+            return False
+        self.queue.pop(0)
+        self.len -= 1
+        return True
+
+    def Front(self) -> int:
+        if self.len == 0:
+            return -1
+        return self.queue[0]
+
+    def Rear(self) -> int:
+        if self.len == 0:
+            return -1
+        return self.queue[-1]
+
+    def isEmpty(self) -> bool:
+        return self.len == 0
+
+    def isFull(self) -> bool:
+        return self.len == self.max_len
+```
+
+使用 `deque` 双端队列。
+
+```python
+class MyCircularQueue:
+
+    def __init__(self, k: int):
+        self.queue = collections.deque()
+        self.max_len = k
+
+    def enQueue(self, value: int) -> bool:
+        if len(self.queue) == self.max_len:
+            return False
+        self.queue.append(value)
+        return True
+
+    def deQueue(self) -> bool:
+        if len(self.queue) == 0:
+            return False
+        self.queue.popleft()
+        return True
+
+    def Front(self) -> int:
+        if len(self.queue) == 0:
+            return -1
+        res = self.queue.popleft()
+        self.queue.appendleft(res)
+        return res
+
+    def Rear(self) -> int:
+        if len(self.queue) == 0:
+            return -1
+        res = self.queue.pop()
+        self.queue.append(res)
+        return res
+
+    def isEmpty(self) -> bool:
+        return len(self.queue) == 0
+
+    def isFull(self) -> bool:
+        return len(self.queue) == self.max_len
+```
+
+### 729. 我的日程安排表 I
+
+用一个 `list` 里，存储元组进行简单模拟。
+
+```python
+class MyCalendar:
+
+    def __init__(self):
+        self.calendar = []
+
+    def book(self, start: int, end: int) -> bool:
+        flag = True
+        for i in self.calendar:
+            if start < i[1] and end > i[0]:
+                flag = False
+                break
+        if flag:
+            self.calendar.append((start, end))
+        return flag
 ```
 
