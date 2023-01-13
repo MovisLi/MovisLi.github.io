@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-12-26 16:02:31
+date: 2022-01-13 23:35:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -1292,5 +1292,458 @@ class Solution:
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         return reduce(lambda x,y:x^y, nums)
+```
+
+# 算法基础
+
+## 二分查找
+
+### 34. 在排序数组中查找元素的第一个和最后一个位置
+
+用二分法模拟过程就行。
+
+```python
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        nums_len = len(nums)
+        left = 0
+        right = nums_len - 1
+        start = -1
+        end = -1
+        while left <= right:
+            mid = (left+right) // 2
+            if nums[mid] == target:
+                t_s = mid
+                t_e = mid
+                while t_s>=0 and nums[t_s] == target:
+                    t_s -= 1
+                while t_e<nums_len and nums[t_e] == target:
+                    t_e += 1
+                start = t_s + 1
+                end = t_e - 1
+                return [start, end]
+            elif nums[mid] > target:
+                right = mid - 1
+            else:
+                left = mid + 1
+        return [start, end]
+```
+
+### 33. 搜索旋转排序数组
+
+第一种解法是暴力。
+
+```python
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        res = -1
+        for i,v in enumerate(nums):
+            if v == target:
+                res = i
+                break
+        return res
+```
+
+第二种解法，先用二分法找出 `k` 值，再用二分法找出 `target` 目标值。
+
+```python
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        if len(nums) == 1:
+            return 0 if nums[0] == target else -1
+        k = 0
+        nums_len = len(nums)
+        l = 0
+        r = nums_len - 1
+        lv = nums[l]
+        rv = nums[r]
+        while r != l+1:
+            mid = (l+r) // 2
+            if nums[mid] > lv:
+                l = mid
+            elif nums[mid] < rv:
+                r = mid
+        k = r if nums[r]<nums[l] else 0
+        nums = nums[k:]+nums[:k] if k != 0 else nums
+        l = 0
+        r = nums_len - 1
+        while l<=r:
+            mid = (l+r) // 2
+            if nums[mid] == target:
+                res = mid + k if k != 0 else mid
+                if res >= nums_len:
+                    res -= nums_len
+                return res
+            elif nums[mid] > target:
+                r = mid - 1
+            else:
+                l = mid + 1
+        return -1
+```
+
+### 74. 搜索二维矩阵
+
+矩阵的二分法，重点在于建立 `row, col` 与 `index` 的对应关系。
+
+```python
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+        l = 0
+        r = m*n-1
+        while l <= r:
+            mid = (l+r) // 2
+            row = mid//n
+            col = mid%n
+            if matrix[row][col] == target:
+                return True
+            elif matrix[row][col] > target:
+                r = mid - 1
+            else:
+                l = mid + 1
+        return False
+```
+
+### 153. 寻找旋转排序数组中的最小值
+
+其实相当于 [33. 搜索旋转排序数组](###33. 搜索旋转排序数组) 的寻找 `k` 值。
+
+```python
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        k = 0
+        nums_len = len(nums)
+        l = 0
+        r = nums_len - 1
+        lv = nums[l]
+        rv = nums[r]
+        while r != l+1:
+            mid = (l+r) // 2
+            if nums[mid] > lv:
+                l = mid
+            elif nums[mid] < rv:
+                r = mid
+        k = r if nums[r]<nums[l] else 0
+        return nums[k]
+```
+
+### 162. 寻找峰值
+
+可以理解为找函数 `y=nums[x]` 的极值点。我们采用二分搜索的策略，为了避免极值点在边界，我们左右两端各添加一个 `float('-inf')` 负无穷。我们可以通过左右指针循环查找，这里的重点是控制指针的变化。
+
+- 当 `mid` 比 `mid-1` , `mid+1` 都大时，返回它（当然由于预处理，应该返回 `mid-1` ）。
+- 如果 `mid-1` , `mid` , `mid+1` 呈现单调递增趋势，说明极值点在右边。
+- 否则说明极值点在左边。
+
+```python
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        nums = [float('-inf')] + nums + [float('-inf')]
+        l, r = 0, len(nums)-1
+        while l<=r:
+            mid = (l+r) // 2
+            if nums[mid]>nums[mid-1] and nums[mid]>nums[mid+1]:
+                return mid-1
+            elif nums[mid+1]>=nums[mid]>=nums[mid-1]:
+                l = mid + 1
+            else:
+                r = mid - 1
+        return None
+```
+
+## 双指针
+
+### 82. 删除排序链表中的重复元素 II
+
+数据结构里做过。
+
+```python
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        node = dummy
+        while head:
+            temp = head.next
+            if not temp or temp.val != head.val:
+                node.next = head
+                head = head.next
+                node = node.next
+            else:
+                while temp and temp.val == head.val:
+                    temp = temp.next
+                head = temp
+        node.next = head
+        return dummy.next
+```
+
+### 15. 三数之和
+
+数据结构里做过。
+
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums = sorted(nums)
+        nums_len = len(nums)
+        res = []
+        if nums_len < 3 or nums[0]>0 or nums[-1]<0:
+            return res
+        for i in range(nums_len-2):
+            if nums[i]>0:
+                break
+            if i>0 and nums[i] == nums[i-1]:
+                continue
+            left = i+1
+            right = nums_len-1
+            while left<right:
+                temp_sum = nums[i]+nums[left]+nums[right]
+                if temp_sum > 0:
+                    right -= 1
+                elif temp_sum < 0:
+                    left += 1
+                else:
+                    res.append([nums[i], nums[left], nums[right]])
+                    while left<right and nums[left] == nums[left+1]: left += 1
+                    while left<right and nums[right] == nums[right-1]: right -= 1
+                    left += 1
+                    right -= 1
+        return res
+```
+
+### 844. 比较含退格的字符串
+
+用栈模拟整个过程，遇到 `#` 时，如果栈非空就出栈，否则不管，如果遇到其它字符则进栈。最后比较两个栈是否一致。
+
+```python
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        stack_s = []
+        for c in s:
+            if c == '#':
+                if stack_s:
+                    stack_s.pop()
+            else:
+                stack_s.append(c)
+        stack_t = []
+        for c in t:
+            if c == '#':
+                if stack_t:
+                    stack_t.pop()
+            else:
+                stack_t.append(c)
+        return stack_s == stack_t
+```
+
+### 986. 区间列表的交集
+
+用双指针分别控制当前遍历的 A、B 两个列表的区间。如果区间不相交，将靠后区间的指针移到下个区间。如果区间相交，那么相交起始位置就是更大的 `start` ，结束位置是更小的 `end` 。
+
+```python
+class Solution:
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        firstList_len = len(firstList)
+        secondList_len = len(secondList)
+        l, r = 0, 0
+        res = []
+        while l<firstList_len and r<secondList_len:
+            if firstList[l][0] > secondList[r][1]:
+                r += 1
+                continue
+            if secondList[r][0] > firstList[l][1]:
+                l += 1
+                continue
+            start = max(firstList[l][0], secondList[r][0])
+            if firstList[l][1] < secondList[r][1]:
+                end = firstList[l][1]
+                l += 1
+            else:
+                end = secondList[r][1]
+                r += 1
+            res.append([start, end])
+        return res
+```
+
+### 11. 盛最多水的容器
+
+双指针逐渐向中间移动，优先移动高度更低的指针。
+
+```python
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        height_len = len(height)
+        l, r = 0, height_len-1
+        res = 0
+        while l<r:
+            if height[l] <= height[r]:
+                res = max(res, (r-l)*height[l])
+                l += 1
+            else:
+                res = max(res, (r-l)*height[r])
+                r -= 1
+        return res
+```
+
+这道题其实有一个可以优化的地方，当移动到某个程度时就不需要移动了，因为有个理论最大值，面积等于两个线中短线的高度乘两线距离，如果当前面积比理论最大高度乘两线距离还大，就可以直接返回结果了。
+
+```python
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        height_len = len(height)
+        height_max = max(height)
+        l, r = 0, height_len-1
+        res = 0
+        while l<r:
+            if height[l] <= height[r]:
+                res = max(res, (r-l)*height[l])
+                l += 1
+            else:
+                res = max(res, (r-l)*height[r])
+                r -= 1
+            if res >= height_max*(r-l):		# 剪枝
+                break
+        return res
+```
+
+## 滑动窗口
+
+### 438. 找到字符串中所有字母异位词
+
+在编程能力里做过。
+
+```python
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        s_len = len(s)
+        l, r = 0, len(p)
+        p_count = [0]*26
+        for t in p:
+            p_count[ord(t)-97] += 1
+        count = [0]*26
+        for t in s[l:r]:
+            count[ord(t)-97] += 1
+        res = []
+        while r<s_len+1:
+            if count == p_count:
+                res.append(l)
+            if r<s_len:
+                count[ord(s[l])-97] -= 1
+                count[ord(s[r])-97] += 1
+            l += 1
+            r += 1
+        return res
+```
+
+### 713. 乘积小于 K 的子数组
+
+在编程能力里做过。
+
+```python
+class Solution:
+    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+        if k <= 1:
+            return 0
+        res, left, temp = 0, 0, 1
+        for right, value in enumerate(nums):
+            temp *= value
+            while temp>=k:
+                temp //= nums[left]
+                left += 1
+            res += right-left+1
+        return res
+```
+
+### 209. 长度最小的子数组
+
+与上题有点相似，总的来说也属于双指针问题。
+
+```python
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        nums_sum = nums[0]
+        if nums_sum >= target:
+            return 1
+        l, r = 0, 0
+        res, nums_len = float('inf'), len(nums)
+        while r<nums_len:
+            if nums_sum<target:
+                r += 1
+                if r<nums_len:
+                    nums_sum += nums[r]
+            else:
+                res = min(res, r-l+1)
+                nums_sum -= nums[l]
+                l += 1
+        return res if res != float('inf') else 0
+```
+
+或者更 Pythonic 一点。
+
+```python
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        res, left, temp_sum = float('inf'), 0, 0
+        for right, value in enumerate(nums):
+            temp_sum += value
+            while temp_sum >= target:
+                temp_sum -= nums[left]
+                res = min(res, right-left+1)
+                left += 1
+        return res if res != float('inf') else 0
+```
+
+## 广度优先搜索 / 深度优先搜索
+
+### 200. 岛屿数量
+
+这道题这个字符串是真有点坑，实际是个简单的搜索，深度优先搜索或广度优先搜索都可以。
+
+```python
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        searched = [[0]*n for _ in range(m)]
+        res = 0
+        for row in range(m):
+            for col in range(n):
+                if grid[row][col]=='1' and not searched[row][col]:
+                    res += 1
+                    stack = [(row, col)]
+                    while stack:
+                        r, c = stack.pop()
+                        searched[r][c] = 1
+                        if r>0 and grid[r-1][c]=='1' and not searched[r-1][c]: stack.append((r-1, c))
+                        if r+1<m and grid[r+1][c]=='1' and not searched[r+1][c]: stack.append((r+1, c))
+                        if c>0 and grid[r][c-1]=='1' and not searched[r][c-1]: stack.append((r, c-1))
+                        if c+1<n and grid[r][c+1]=='1' and not searched[r][c+1]: stack.append((r, c+1))
+        return res
+```
+
+### 547. 省份数量
+
+这个属于是换了一种图存储方式的搜索，本质还是深度优先搜索或广度优先搜索。
+
+```python
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n = len(isConnected)
+        searched = [0]*n
+        res = 0
+        for l in range(n):
+            if searched[l]:
+                continue
+            res += 1
+            searched[l] = 1
+            stack = [l]
+            while stack:
+                left = stack.pop()
+                for right in range(n):
+                    if isConnected[left][right] and not searched[right]:
+                        searched[right] = 1
+                        stack.append(right)
+        return res
 ```
 

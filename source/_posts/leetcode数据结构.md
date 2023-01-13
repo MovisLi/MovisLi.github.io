@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2023-01-12 21:28:41
+date: 2023-01-13 17:19:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -2621,5 +2621,59 @@ class Codec:
                 queue.append(node.right)
             i += 1
         return root
+```
+
+### 997. 找到小镇的法官
+
+用 `dict` 记录每个人的信任其人数，用 `set` 记录信任过别人的人，如果满足信任某个人人数等于 `n-1` 并且他没有信任的人，他就是法官，否则没有法官。
+
+```python
+class Solution:
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        hashmap = {i:0 for i in range(1,n+1)}
+        hashset = set('')
+        for p,t in trust:
+            hashset.add(p)
+            if t not in hashmap:
+                hashmap[t] = 1
+            else:
+                hashmap[t] += 1
+        for p,count in hashmap.items():
+            if count == n-1 and p not in hashset:
+                return p
+        return -1
+```
+
+### 1557. 可以到达所有点的最少点数目
+
+推演几次可以发现可以到达所有点的最少点其实就是不能由其它点到达的点。
+
+```python
+class Solution:
+    def findSmallestSetOfVertices(self, n: int, edges: List[List[int]]) -> List[int]:
+        hashset = {t for f,t in edges}
+        return [i for i in range(n) if i not in hashset]
+```
+
+### 841. 钥匙和房间
+
+这个和上道题不一样的是这道题的图是有可能有环的，因此直接沿用上道题的方法可能不行，可以加一个栈或队列进行图的搜索，搜索结果就是 `0` 能到达的点。
+
+```python
+class Solution:
+    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+        hashset = set('')
+        queue = collections.deque()
+        queue.append(0)
+        while queue:
+            node = queue.popleft()
+            for i in rooms[node]:
+                if i not in hashset:
+                    queue.append(i)
+                    hashset.add(i)
+        for i in range(1,len(rooms)):
+            if i not in hashset:
+                return False
+        return True
 ```
 
