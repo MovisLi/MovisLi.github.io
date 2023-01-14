@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-01-13 23:35:31
+date: 2022-01-15 03:02:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -1747,3 +1747,82 @@ class Solution:
         return res
 ```
 
+### 117. 填充每个节点的下一个右侧节点指针 II
+
+二叉树的层次遍历思想，首先想到的是用一个 `list` 来存储每一层的节点，第一个节点指向第二个节点，第二个节点指向第三个节点，依次类推，最后一个节点指向 `None` 不用管。
+
+```python
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        if root is None:
+            return root
+        queue = [root]
+        while queue:
+            temp = []
+            for _ in range(len(queue)):
+                node = queue.pop(0)
+                temp.append(node)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            for i in range(len(temp)-1):
+                temp[i].next = temp[i+1]
+        return root
+```
+
+上面是很有优化空间的，实际上在出队的时候就可以判断有没有节点的 `next` 指向出队那个节点。
+
+```python
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        if root is None:
+            return root
+        queue = [root]
+        while queue:
+            temp = None
+            for _ in range(len(queue)):
+                node = queue.pop(0)
+                if temp:
+                    temp.next = node
+                temp = node
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+        return root
+```
+
+### 572. 另一棵树的子树
+
+一棵树是另一棵树的子树，满足以下三种情况之一：
+
+- 两棵树相同。
+- 这棵树是另一棵树左子树的子树。
+- 这棵树是另一棵树右子树的子树。
+
+```python
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def isSametree(roota, rootb):
+            if roota and rootb:
+                return roota.val == rootb.val and isSametree(roota.left, rootb.left) and isSametree(roota.right, rootb.right)
+            if roota or rootb:
+                return False
+            return True
+
+        if not (root or subRoot):
+            return True
+        if not root and subRoot:
+            return False
+        return isSametree(root, subRoot) or self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+```
+
+其实这个很类似字符串匹配，因为我们显然也可以通过稍加修改的遍历去转换成一个字符串匹配的问题，这个稍加修改就是空节点的值要记为空。
+
+```python
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def serialize(root):
+            if not root:
+                return '()'
+            return f'({serialize(root.left)}{root.val}{serialize(root.right)})'
+        
+        return serialize(subRoot) in serialize(root)
+```

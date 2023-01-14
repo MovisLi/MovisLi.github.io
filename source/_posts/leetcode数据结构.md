@@ -1,6 +1,6 @@
 ---
 title: 「数据结构」 - 学习计划 
-date: 2023-01-13 17:19:41
+date: 2023-01-14 23:33:41
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, array, tree, linked list, stack, queue]
 ---
@@ -2188,6 +2188,8 @@ class Solution:
         head = dummy.next
 ```
 
+## 栈 / 队列
+
 ### 155. 最小栈
 
 最开始读这道题没读懂，后面发现原来这个题既想记录元素入栈的顺序又想记录最小值，那么比较合理的就是采用空间换时间的方法，两个栈，一个正常存数，一个存最小值。
@@ -2279,6 +2281,8 @@ class Solution:
             count -= 1
         return flag[0]
 ```
+
+## 树
 
 ### 108. 将有序数组转换为二叉搜索树
 
@@ -2623,6 +2627,8 @@ class Codec:
         return root
 ```
 
+## 图
+
 ### 997. 找到小镇的法官
 
 用 `dict` 记录每个人的信任其人数，用 `set` 记录信任过别人的人，如果满足信任某个人人数等于 `n-1` 并且他没有信任的人，他就是法官，否则没有法官。
@@ -2675,5 +2681,51 @@ class Solution:
             if i not in hashset:
                 return False
         return True
+```
+
+## 优先队列
+
+### 215. 数组中的第K个最大元素
+
+可以调用优先队列 `heapq` 这个包。
+
+```python
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        heapq.heapify(nums)
+        res = None
+        for i in range(len(nums)-k+1):
+            res = heapq.heappop(nums)
+        return res
+```
+
+当然实质上排序也是可以的。
+
+```python
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        return sorted(nums, reverse=True)[k-1]
+```
+
+我这里排序能过，应该是快排，如果我设立一个 `k` 大小的数组用来存放前 `k` 大的值，然后用二分法去添加新的比这个数组最小值更大的值的方法，过不了，应该是重构 `list` 太慢了。
+
+### 347. 前 K 个高频元素
+
+用 `dict` 进行计数（其实用 `collections.Counter` 更快），然后根据数量排序就行。
+
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.Counter(nums)
+        return sorted(counter, reverse=True, key=lambda x:counter[x])[:k]
+```
+
+或者。
+
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.Counter(nums).most_common(k)
+        return [t[0] for t in counter]
 ```
 
