@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-01-15 03:02:31
+date: 2022-01-18 01:26:31
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -1826,3 +1826,100 @@ class Solution:
         
         return serialize(subRoot) in serialize(root)
 ```
+
+### 1091. 二进制矩阵中的最短路径
+
+广度优先搜索，不过这道题让我印象更深刻的不是广搜。而是可变类型与不可变类型，这道题我建立 `visited` 时最开始用的 `[[0]*n]*n` 发现怎么也不对。因为这里内层 `n` 个列表都是同一个列表。
+
+```python
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        if grid[0][0] or grid[-1][-1]:
+            return -1
+        queue = collections.deque()
+        queue.append((0, 0, 1))
+        direction = ((-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1))
+        n = len(grid)
+        visited = [[0]*n for i in range(n)]
+        visited[0][0] = 1
+        while queue:
+            r, c, count = queue.popleft()
+            if r==n-1 and c==n-1:
+                return count
+            for dx, dy in direction:
+                x = r+dx
+                y = c+dy
+                if 0<=x<n and 0<=y<n and grid[x][y]==0 and visited[x][y]==0:
+                    queue.append((x, y, count+1))
+                    visited[x][y] = 1
+        return -1
+```
+
+### 130. 被围绕的区域
+
+从边框上的 `O` 点开始广度优先搜索， 4 个方向上下左右，能搜索到的 `O` 点记录下来，其它点改为 `X` 。
+
+```python
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        hashset = set('')
+        m, n = len(board), len(board[0])
+        direction = ((-1, 0), (1, 0), (0, -1), (0, 1))
+        border = [(i,0) for i in range(m)]+[(i,n-1) for i in range(m)]+[(0,i) for i in range(n)]+[(m-1,i) for i in range(n)]
+        for r,c in border:
+            if board[r][c] == 'O' and (r,c) not in hashset:
+                queue = collections.deque()
+                queue.append((r,c))
+                hashset.add((r,c))
+                while queue:
+                    row, col = queue.popleft()
+                    for dx, dy in direction:
+                        x = row+dx
+                        y = col+dy
+                        if -1<x<m and -1<y<n and board[x][y]=='O' and (x,y) not in hashset:
+                            queue.append((x,y))
+                            hashset.add((x,y))
+        for r in range(m):
+            for c in range(n):
+                if (r,c) not in hashset:
+                    board[r][c] = 'X'
+```
+
+### 797. 所有可能的路径
+
+广度优先搜索并记录。
+
+```python
+class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        queue = collections.deque()
+        queue.append((0, [0]))
+        n = len(graph)
+        res = []
+        while queue:
+            node, path = queue.popleft()
+            for _next in graph[node]:
+                if _next == n-1:
+                    res.append(path+[n-1])
+                else:
+                    queue.append((_next, path+[_next]))
+        return res
+```
+
+深度优先搜索。
+
+```python
+class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        n = len(graph)
+        def dfs(node):
+            if node == n-1:
+                return [[node]]
+            res = []
+            for t in graph[node]:
+                for i in dfs(t):
+                    res.append([node]+i)
+            return res
+        return dfs(0) 
+```
+
