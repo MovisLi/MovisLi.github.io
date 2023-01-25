@@ -1113,7 +1113,7 @@ class Solution:
                 letter_index.append(i)
         res = []
         path = []
-        def permutation():
+        def permutations():
             if len(path) == len(letter_index):
                 res.append(path[:])
                 return None
@@ -1923,3 +1923,181 @@ class Solution:
         return dfs(0) 
 ```
 
+## 递归 / 回溯
+
+### 78. 子集
+
+求出所有可能长度的组合，因此可以使用 `itertools.combinations` 来根据不同长度求出组合。
+
+```python
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for i in range(1, len(nums)+1):
+            temp = itertools.combinations(nums, i)
+            for t in temp:
+                res.append(list(t))
+        return res
+```
+
+回溯。
+
+```python
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+        
+        def backtracking(start, path):
+            res.append(path)
+            for i in range(start, n):
+                backtrack(i+1, path+[nums[i]])
+                
+        backtrack(0, [])
+        return res
+```
+
+### 90. 子集 II
+
+与上题不一样之处在于通过排序达到去重效果。
+
+```python
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+        nums = sorted(nums)
+
+        def backtracking(start, path):
+            res.append(path)
+            for i in range(start, n):
+                if i > start and nums[i] == nums[i-1]:
+                    continue
+                backtracking(i+1, path+[nums[i]])
+
+        backtracking(0, [])
+        return res
+```
+
+### 47. 全排列 II
+
+调用 `itertools.permutations` 函数，如果不重复就添加到结果里。
+
+```python
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        for t in itertools.permutations(nums):
+            temp = list(t)
+            if temp not in res:
+                res.append(temp)
+        return res
+```
+
+添加一个 `used` 数组记录此次递归元素是否被使用，进而保证没有重复的全排列。
+
+```python
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+        used = [0]*n
+        nums = sorted(nums)
+
+        def backtracking(used, path):
+            if len(path) == n:
+                res.append(path)
+                return None
+            for i in range(n):
+                if not used[i]:
+                    if i>0 and nums[i] == nums[i-1] and not used[i-1]:
+                        continue
+                    used[i] = 1
+                    backtracking(used, path+[nums[i]])
+                    used[i] = 0
+        
+        backtracking(used, [])
+        return res
+```
+
+### 39. 组合总和
+
+回溯的时候可以重复取数，如果当前和大于目标值就进行剪枝。
+
+```python
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        n = len(candidates)
+
+        def backtracking(start, path, temp_sum):
+            if temp_sum == target:
+                res.append(path)
+            if temp_sum > target:
+                return None
+            for i in range(start, n):
+                backtracking(i, path+[candidates[i]], temp_sum+candidates[i])
+
+        backtracking(0, [], 0)
+        return res
+```
+
+### 40. 组合总和 II
+
+与上题不一样的地方在于针对重复情况做特殊处理。
+
+```python
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        n = len(candidates)
+        candidates = sorted(candidates)
+
+        def bcaktracking(start, path, temp_sum):
+            if temp_sum == target:
+                res.append(path)
+            if temp_sum > target:
+                return None
+            for i in range(start, n):
+                if i>start and candidates[i] == candidates[i-1]:
+                    continue
+                bcaktracking(i+1, path+[candidates[i]], temp_sum+candidates[i])
+
+        bcaktracking(0, [], 0)
+        return res
+```
+
+### 17. 电话号码的字母组合
+
+回溯的实际应用。
+
+```python
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        hashmap = {
+            '2': ('a', 'b', 'c'),
+            '3': ('d', 'e', 'f'),
+            '4': ('g', 'h', 'i'),
+            '5': ('j', 'k', 'l'),
+            '6': ('m', 'n', 'o'),
+            '7': ('p', 'q', 'r', 's'),
+            '8': ('t', 'u', 'v'),
+            '9': ('w', 'x', 'y', 'z')
+        }
+        res = []
+        n = len(digits)
+        if n == 0:
+            return res
+
+        def backtracking(start, path):
+            if len(path) == n:
+                res.append(''.join(path))
+            for i in range(start, n):
+                for t in hashmap[digits[i]]:
+                    backtracking(i+1, path+[t])
+        
+        backtracking(0, [])
+        return res
+```
+
+### 22. 括号生成
