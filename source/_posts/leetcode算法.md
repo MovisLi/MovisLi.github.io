@@ -2101,3 +2101,177 @@ class Solution:
 ```
 
 ### 22. 括号生成
+
+这次递归点在于去生成左括号还是右括号，而不是一对括号。
+
+```python
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+        
+        def backtracking(l_count, r_count, path):
+            if l_count<0 or r_count<0 or r_count<l_count:
+                return None
+            if l_count == 0 and r_count == 0:
+                res.append(path)
+                return None
+            backtracking(l_count-1, r_count, path+'(')
+            backtracking(l_count, r_count-1, path+')')
+
+        backtracking(n, n, '')
+        return res
+```
+
+### 79. 单词搜索
+
+对每个点递归搜索，对特定情况进行剪枝。
+
+```python
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        if not board:
+            return False
+        m = len(board)
+        n = len(board[0])
+        word_len = len(word)
+        searched = [[0]*n for _ in range(m)]
+
+        def backtracking(r, c, loc):
+            if 0<=r<m and 0<=c<n and loc<word_len and not searched[r][c] and board[r][c]==word[loc]:
+                if loc == word_len-1:
+                    return True
+                else:
+                    loc += 1
+                    searched[r][c] = 1
+                    res = backtracking(r-1, c, loc) or backtracking(r+1, c, loc) or backtracking(r, c-1, loc) or backtracking(r, c+1, loc)
+                    searched[r][c] = 0
+                    return res
+            else:
+                return False
+
+        for r in range(m):
+            for c in range(n):
+                if backtracking(r, c, 0):
+                    return True
+        return False
+```
+
+## 动态规划
+
+### 213. 打家劫舍 II
+
+分两种情况讨论。分别是取头不取尾和取尾不取头这两种情况。
+
+```python
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums)<3:
+            return max(nums)
+        
+        def rob1(nums: List[int]) -> int:
+            n = len(nums)
+            if n == 1:
+                return nums[0]
+            if n == 2:
+                return max(nums[0], nums[1])
+            dp = [nums[0], max(nums[0], nums[1])]
+            for i in range(2, n):
+                dp.append(max(dp[i-2]+nums[i], dp[i-1]))
+            return dp[-1]
+       
+        return max(rob1(nums[0:-1]), rob1(nums[1:]))
+```
+
+### 55. 跳跃游戏
+
+动态更新当前位置能够到达的最远位置，然后移动当前位置，但是当前位置有一个条件就是要小于上一个当前位置能够到达的最远位置。
+
+```python
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+        if n == 1:
+            return True
+        max_len = nums[0]
+        i = 0
+        while i <= max_len:
+            if i+nums[i] > max_len:
+                max_len = i+nums[i]
+            if max_len >= n-1:
+                return True
+            i += 1
+        return False
+```
+
+### 45. 跳跃游戏 II
+
+将步数和覆盖范围联系起来，求相同覆盖范围覆盖当前位置的最小步数。
+
+```python
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 1:
+            return 0
+        max_len = 0
+        cur_len = 0
+        res = 0
+        for i in range(n):
+            max_len = max(max_len, i+nums[i])
+            if i == cur_len:
+                if cur_len != n-1:
+                    res += 1
+                    cur_len = max_len
+                    if cur_len >= n-1:
+                        break
+        return res
+```
+
+### 62. 不同路径
+
+最开始尝试了下深度优先搜索，超时了。
+
+很显然这道题不需要搜索，而是一道动态规划，状态转移方程如下：
+$$
+dp[i][j]=\begin{cases}dp[i-1][j]+dp[i][j-1]\ \ \ \ i>0\&j>0\\1\ \ \ \ i=0|j=0\end{cases}
+$$
+
+```python
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[1]*n] + [[0]*n for _ in range(m-1)]
+        for i in range(m): dp[i][0] = 1
+        for r in range(1, m):
+            for c in range(1, n):
+                dp[r][c] = dp[r-1][c]+dp[r][c-1]
+        return dp[-1][-1]
+```
+
+### 5. 最长回文子串
+
+数据结构里做过。
+
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        s_len = len(s)
+        dp = [[False]*s_len for _ in range(s_len)]
+        for i in range(s_len):
+            dp[i][i] = True
+        start, max_len = 0, 1
+        for c_len in range(2,s_len+1):
+            for i in range(s_len-c_len+1):
+                j = i+c_len-1
+                if s[i] != s[j]:
+                    dp[i][j] = False
+                else:
+                    if j>i+1:
+                        dp[i][j] = dp[i+1][j-1]
+                    else:
+                        dp[i][j] = True
+                if dp[i][j] and c_len>max_len:
+                    start = i
+                    max_len = c_len
+        return s[start:start+max_len]
+```
+
