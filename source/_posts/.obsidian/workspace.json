@@ -11,8 +11,12 @@
             "id": "e5d732cd9848dd1d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "《Excel+Python：飞速搞定数据分析与处理》.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "《Excel+Python：飞速搞定数据分析与处理》.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "《Excel+Python：飞速搞定数据分析与处理》.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,10 +124,13 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "《Excel+Python：飞速搞定数据分析与处理》.md"
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -130,18 +139,25 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "canvas:Create new canvas": false
     }
   },
   "active": "e5d732cd9848dd1d",
   "lastOpenFiles": [
-    "Untitled.canvas",
-    "leetcode20220628.md",
-    "leetcode算法.md"
+    "《信用评分工具：自动化信用管理的理论与实践》.md",
+    "leetcode20220503.md",
+    "《Excel+Python：飞速搞定数据分析与处理》.md",
+    "leetcode20220809.md",
+    "leetcode数据结构.md",
+    "Leetcode编程能力.md",
+    "openpyxl.md",
+    "leetcode算法.md",
+    "《敏捷实战指南》.md",
+    "leetcode20220526.md"
   ]
 }

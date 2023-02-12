@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-01-18 01:26:31
+date: 2022-02-13 00:32:12
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -2273,5 +2273,171 @@ class Solution:
                     start = i
                     max_len = c_len
         return s[start:start+max_len]
+```
+
+### 413. 等差数列划分
+
+假设一个数组为等差数列的数组，那么它的等差数列子数组的个数等于 $\sum_{1}^{nums\_len-3}$ 。对于一个不是等差数列的数组，这个数组等差数列子数组则等于其中所有最长等差数列子数组的等差数列子数组个数的和，可能有点难理解，举例，`[1,3,5,10,12,13,14]` 这个数组的等差数列子数组和是等于 `[1,3,5]` 的等差数列子数组 1 加上 `[12,13,14]` 的等差数列子数组 1 等于 2 的。
+
+```python
+class Solution:
+    def numberOfArithmeticSlices(self, nums: List[int]) -> int:
+        nums_len = len(nums)
+        if nums_len < 3:
+            return 0
+        temp = 0
+        res = 0
+        for i in range(2,nums_len):
+            if nums[i]+nums[i-2] == nums[i-1]+nums[i-1]:
+                temp += 1
+                res += temp
+            else:    
+                temp = 0
+        return res
+```
+
+### 91. 解码方法
+
+需要对 5 种情况进行处理：
+
+- 当前字符是 1 或 2 ，此时有点像是斐波那契数列。
+- 当前字符是 0 ，前面字符是 1 或 2 ，会导致前面那个字符衍生的结果被影响。
+- 当前字符是 0 ，前面字符不是 1 或 2 ，解码不了。
+- 当前字符是其他数字，如果这一位和上一位的组合起来比 26 大，那么这一位相当于是独立的，不会有衍生结果。
+- 当前字符是其他数字，并且不是上面那种情况，这一位参与斐波那契式计算并添加至结果。
+
+```python
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        s_len = len(s)
+        temp = [0, 1]
+        res = 1
+        for i in range(s_len):
+            if s[i] == '1' or s[i] == '2':
+                temp.append(temp[-1]+temp[-2])
+            elif s[i] == '0':
+                if i>0 and s[i-1] in {'1','2'}:
+                    res *= temp[-2]
+                    temp = [0, 1]
+                else:
+                    return 0
+            else:
+                if i>0 and s[i-1] == '2' and s[i] > '6':
+                    res *= temp[-1]
+                    temp = [0, 1]
+                else:
+                    res *= temp[-1]+temp[-2]
+                    temp = [0, 1]
+        if temp[-1] != 1:
+            res *= temp[-1]
+        return res
+```
+
+### 139. 单词拆分
+
+状态转移方程，dp[i] 代表字符串第 i 位及之前能够由字典的单词拼接成：
+$$
+dp[j]=\begin{cases}True\ \ \ \ if\ dp[i]\&s[i:j]\in wordDict\\False\end{cases}
+$$
+
+```python
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        s_len = len(s)
+        dp=[True]+[False]*s_len
+        for i in range(s_len):
+            for j in range(i+1, s_len+1):
+                if dp[i] and s[i:j] in wordDict:
+                    dp[j] = True
+        return dp[-1]
+```
+
+### 300. 最长递增子序列
+
+状态转移方程为，这里 dp[i] 指的是包含第 i 个元素的状态：
+$$
+dp[i]=\begin{cases}max(dp[x],x\in[0,i-1]\&nums[x]<nums[i])+1\\1\ \ \ \ if\ i=0\end{cases}
+$$
+
+```python
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        nums_len = len(nums)
+        dp = [1]*nums_len
+        for i in range(1,nums_len):
+            for j in range(i):
+                if nums[j]<nums[i]:
+                    dp[i] = max(dp[i], dp[j]+1)
+        return max(dp)
+```
+
+### 673. 最长递增子序列的个数
+
+相对于上道题，这道题多了一个计数，每次增长序列时，需要重置计数，每次遇到另一组当前最长序列时，需要累加计数。
+
+```python
+class Solution:
+    def findNumberOfLIS(self, nums: List[int]) -> int:
+        nums_len = len(nums)
+        dp = [1]*nums_len
+        count = [1]*nums_len
+        for i in range(1,nums_len):
+            for j in range(i):
+                if nums[j]<nums[i]:
+                    if dp[j]+1>dp[i]:
+                        dp[i] = dp[j]+1
+                        count[i] = count[j]
+                    elif dp[j]+1==dp[i]:
+                        count[i] += count[j]
+        max_seq = max(dp)
+        res = 0
+        for i in range(nums_len):
+            if max_seq == dp[i]:
+                res += count[i]
+        return res
+```
+
+### 1143. 最长公共子序列
+
+动态规划，二维状态转移方程：
+$$
+dp[i][j]=\begin{cases}max(dp[i][j-1],dp[i-1][j],dp[i-1][j-1]+1\ \ when\ text_i=text_j)\ \ \ \ if\ i>0\&j>0
+\\dp[i-1][j]\ or\ dp[i][j-1]\ \ \ \ if\ i=0|j=0\ \&text_i\ne text_j
+\\dp[i-1][j]+1\ or\ dp[i][j-1]+1\ \ \ \ if\ i=0|j=0\ \&text_i=text_j
+\\1 or 0\ if\ i=0\&j=0\end{cases}
+$$
+
+```python
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        len1 = len(text1)
+        len2 = len(text2)
+        dp = [[0]*(len2+1) for _ in range(len1+1)]
+        for i in range(len1):
+            for j in range(len2):
+                if text1[i] == text2[j]:
+                    dp[i+1][j+1] = dp[i][j]+1
+                else:
+                    dp[i+1][j+1] = max(dp[i+1][j], dp[i][j+1])  
+        return dp[-1][-1]
+```
+
+### 583. 两个字符串的删除操作
+
+跟上题基本一样，重点就在于找到最长公共子序列。
+
+```python
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        len1 = len(word1)
+        len2 = len(word2)
+        dp = [[0]*(len2+1) for _ in range(len1+1)]
+        for i in range(len1):
+            for j in range(len2):
+                if word1[i] == word2[j]:
+                    dp[i+1][j+1] = dp[i][j]+1
+                else:
+                    dp[i+1][j+1] = max(dp[i+1][j], dp[i][j+1])  
+        return len1+len2-2*dp[-1][-1]
 ```
 
