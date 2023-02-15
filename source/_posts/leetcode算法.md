@@ -1,6 +1,6 @@
 ---
 title: 「算法」 - 学习计划
-date: 2022-02-13 00:32:12
+date: 2022-02-16 01:48:12
 categories: [ComputerScience, Algorithm, LeetCode]
 tags: [python, binary search, point]
 ---
@@ -2439,5 +2439,190 @@ class Solution:
                 else:
                     dp[i+1][j+1] = max(dp[i+1][j], dp[i][j+1])  
         return len1+len2-2*dp[-1][-1]
+```
+
+### 72. 编辑距离
+
+状态转移方程：
+$$
+dp[i][j]=\begin{cases}dp[i-1][j-1]，此时两个字母相同所以不用操作\\min(dp[i][j-1],dp[i-1][j],dp[i-1][j-1])+1，此时两个字母不同，选择增删改里最优方式执行\end{cases}
+$$
+
+```python
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        len1 = len(word1)
+        len2 = len(word2)
+        dp = [[0]*(len2+1) for _ in range(len1+1)]
+        for i in range(len1+1): dp[i][0] = i
+        for j in range(len2+1): dp[0][j] = j
+        for i in range(len1):
+            for j in range(len2):
+                if word1[i] == word2[j]:
+                    dp[i+1][j+1] = dp[i][j]
+                else:
+                    dp[i+1][j+1] = min(dp[i][j+1], dp[i+1][j], dp[i][j])+1
+        return dp[-1][-1]
+```
+
+### 322. 零钱兑换
+
+做过。
+
+```python
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        if amount == 0:
+            return 0
+        dp = [-1]*(amount+1)
+        for i in range(1, amount+1):
+            if i in coins:
+                dp[i] = 1
+            else:
+                temp = []
+                for coin in coins:
+                    if i-coin>0 and dp[i-coin] != -1:
+                        temp.append(dp[i-coin])
+                if len(temp) != 0:
+                    dp[i] = min(temp)+1
+        return dp[-1]
+```
+
+### 343. 整数拆分
+
+我感觉这道题是在做数学题，找规律，找到 10 左右应该能发现规律。
+
+```python
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        dp=[1,2,4,6,9]
+        for i in range(n-6):
+            dp.append(3*dp[-3])
+        return dp[n-2]
+```
+
+##  位运算
+
+### 201. 数字范围按位与
+
+问题的本质在于找最长公共前缀。所以假设两个数位长度不一样显然公共前缀都为 0 。
+
+```python
+class Solution:
+    def rangeBitwiseAnd(self, left: int, right: int) -> int:
+        if len(bin(left)) != len(bin(right)):
+            return 0
+        res = left
+        for i in range(left+1, right+1):
+            res &= i
+        return res
+```
+
+正常找最长前缀当然也可以。
+
+```python
+class Solution:
+    def rangeBitwiseAnd(self, left: int, right: int) -> int:
+        shift = 0
+        while left != right:
+            left >>= 1
+            right >>= 1
+            shift += 1
+        return right<<shift
+```
+
+或者利用 Brian Kernighan 算法，一直消去 `right` 的最后一个 1 使 `right` 小于等于 `left` ，此时 `right` 就是答案。
+
+> Brian Kernighan's Algorithm
+>
+> 通过 n&(n-1) 可以使 n 最后一位上的 1 变成 0 。
+
+```python
+class Solution:
+    def rangeBitwiseAnd(self, left: int, right: int) -> int:
+        while left<right:
+            right = right&(right-1)
+        return right
+```
+
+## 其他
+
+### 384. 打乱数组
+
+`random` 类里 `sample` 和 `shuffle` 方法的使用。
+
+```python
+class Solution:
+
+    def __init__(self, nums: List[int]):
+        import random
+        self.nums = nums
+
+    def reset(self) -> List[int]:
+        return self.nums
+
+    def shuffle(self) -> List[int]:
+        return random.sample(self.nums, len(self.nums))
+```
+
+或是
+
+```python
+class Solution:
+
+    def __init__(self, nums: List[int]):
+        import random
+        self.nums = nums
+
+    def reset(self) -> List[int]:
+        return self.nums
+
+    def shuffle(self) -> List[int]:
+        res = self.nums.copy()
+        random.shuffle(res)
+        return res
+```
+
+### 202. 快乐数
+
+找规律题。
+
+```python
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        num_set = {n}
+        while n != 1:
+            temp = 0
+            while n!=0:
+                temp += (n%10)*(n%10)
+                n //= 10
+            n = temp
+            if n in num_set:
+                return False
+            else:
+                num_set.add(n)
+        return True
+```
+
+### 149. 直线上最多的点数
+
+暴力。
+
+```python
+class Solution:
+    def maxPoints(self, points: List[List[int]]) -> int:
+        points_len = len(points)
+        if points_len <= 2:
+            return points_len
+        res = 0
+        for i in range(points_len):
+            for j in range(i+1, points_len):
+                x1,y1,x2,y2 = points[i][0],points[i][1],points[j][0],points[j][1]
+                count = 2
+                for k in range(j+1, points_len):
+                    x,y = points[k][0], points[k][1]
+                    if (y-y1)*(x2-x1) == (y2-y1)*(x-x1): count+=1
+                res = max(res, count)
+        return res
 ```
 
