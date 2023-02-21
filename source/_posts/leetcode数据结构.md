@@ -2728,3 +2728,29 @@ class Solution:
         counter = collections.Counter(nums).most_common(k)
         return [t[0] for t in counter]
 ```
+
+### 451. 根据字符出现频率排序
+
+先对每个字符计数，再根据计数排序，再构建结果字符串。
+
+```python
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        hashmap = collections.Counter(s)
+        feq = sorted(hashmap, key=lambda x:hashmap[x], reverse=True)
+        res = ''
+        for t in feq:
+            res += t*hashmap[t]
+        return res
+```
+
+### 973. 最接近原点的 K 个点
+
+之前做过。
+
+```python
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        return sorted(points, key=lambda x:x[0]*x[0]+x[1]*x[1])[:k]
+```
+
