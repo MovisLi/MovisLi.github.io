@@ -619,7 +619,163 @@ async def main(request: Request):
 
 # 异常处理
 
-# 中间件技术
+FastAPI 提供了异常处理机制，是为了对异常信息的抛出和处理进行统一管理，增加代码可读性。
+
+## HTTPException
+
+使用 `raise` 关键字抛出 `HTTPException` 异常，如下：
+
+```python
+from fastapi import HTTPException
+
+@app.get('/item/{item_id}')
+async def main(item_id: int):
+    if item_id == 3:
+        raise HTTPException(status_code=404, detail='Error item_id')
+    return {'item_id': item_id}
+```
+
+当路径参数中的 `item_id` 为 3 时，客户端会收到一条如下的响应：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306120506790.png)
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306120506339.png)
+
+## 全局异常管理器
+
+用 `HTTPException` 的方式抛出异常，在大型项目中不太方便管理。为了实现逻辑处理与异常处理的分离，FastAPI 提供了一种全局异常处理器的方式。
+
+```python
+class TestException(Exception): # 定义异常类
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+
+@app.exception_handler(TestException) # 注册全局异常管理器
+async def test_exception_handler(request: Request, exc: TestException): # 定义异常处理函数
+    return JSONResponse(status_code=404, content={'detail': 'Error item_id.'})
+
+
+@app.get('/item/{item_id}')
+async def main(item_id: int):
+    if item_id == 3:
+        raise TestException(str(item_id))
+    return {'item_id': item_id}
+```
+
+通过这种写法，得到的效果和上面 `HTTPException` 的方式是一样的。但是异常处理这部分，也就是 `test_exception_handler` 这个函数已经和逻辑处理分离开，而且异常信息的格式也可以自定义，比如不用 `JSONResponse` 而改用 `PlainTextResponse` 就可以返回一段文本而不是 json 格式的数据。
+
+## RequestValidationError
+
+这里主要是 `RequestValidationError` ，与前面请求模型里的数据格式验证相对应，当数据格式验证失败时，也可以采取自定义的方式返回错误信息。上面这个例子，如果不自定义，当数据格式验证错误时：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306120555362.png)
+
+在某些时候需要自定义这个信息，比如在公司里可能需要约定正确和错误的格式，这时就可以自定义：
+
+```python
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(status_code=200, content={"error_code": "-2"})
+```
+
+这样的话当数据格式验证错误时，返回的 `Status Code` 仍然是 200，而错误信息变成了：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306120558009.png)
+
+# 中间件
+
+FastAPI 中间件实际上是服务端的一种函数，在每个请求处理之前被调用，又在每个响应返回给客户端之前被调用。（也就是函数内部不再需要自己调用）
+
+## 自定义中间件
+
+如下是一个在 `header` 里添加 `X-Process-Time` 的中间件：
+
+```python
+@app.middleware('http')
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    end_time = time.time()
+    response.headers['X-Process-Time'] = str(end_time - start_time)
+    return response
+```
+
+这样在给服务端发请求时：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306120636748.png)
+
+## CORSMiddleware
+
+针对前后端分离的软件项目开发方式，有一种称为 CORS （ Cross-Origin Resource Sharing ，跨域资源共享）的机制，用于**保护后端服务的安全**。
+
+这里所说的**域**指 HTTP 协议、主机名、端口的组合。多见于前端访问后端接口访问不通。
+
+针对这种情况，我们可以如下操作：
+
+```python
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['http://localhost:9000'], # 这里写前端访问的网址
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
+```
+
+以下是 CORSMiddleware 的配置说明：
+
+- `allow_origins` ：允许跨域请求的源域列表，使用 `['*']` 代表允许任何源。
+- `allow_origin_regex` ：使用正则表达式匹配的源允许跨域请求。
+- `allow_methods` ：允许跨域请求的 HTTP 方法列表，默认为 `['GET']` ，可以使用 `['*']` 来允许所有标准方法。
+- `allow_headers` ：允许跨域请求的 HTTP 请求头列表，默认为空，可以使用 `[*]` 来允许所有请求头。
+- `allow_credentials` ：是否支持跨域请求用 cookies，默认 `False` 不支持。如果设置为 `True` ，则 `allow_origins` 不能为 `['*']` 。
+- `expose_headers` ：指示可以被浏览器访问的响应信息头，默认为 `[]` 。
+- `max_age` ：设定浏览器缓存 CORS 响应的最长事件，单位是秒，默认值为 600 。
+
+在不配置 CORSMiddleware 时，不允许任何跨域的访问。
+
+## HTTPSRedirectMiddleware
+
+HTTPS 的全称为 Hyper Text Transfer Protocol over Secure Socket Layer，通过安全套接字层的超文本传输协议，在 HTTP 上加入了 SSL 。
+
+该中间件的作用是约束传入的请求地址必须是 HTTPS 开头，对于任何传入的以 HTTP 开头的请求地址，都将被重定向到 HTTPS 开头的地址上。
+
+代码只需要一行：
+
+```python
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+
+app.add_middleware(HTTPSRedirectMiddleware)
+```
+
+## TrustedHostMiddleware
+
+这个中间件用来设置域名访问白名单，和 `CORSMiddleware` 类似：
+
+```python
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=['baidu.com'])
+```
+
+这样设置后，只允许域名为 `baidu.com` 的主机访问，比如本地的 `127.0.0.1` 并不在白名单里，如果访问就会：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306121020121.png)
+
+## GZipMiddleware
+
+这个一个请求头有 `Accept-Encoding:GZip`  时，对响应数据进行压缩，再发送给客户端，客户端拿到响应，先解压缩的中间件，使用方法也很简单：
+
+```python
+from fastapi.middleware.gzip import GZipMiddleware
+
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+```
+
+总的来说，中间件类似于一种通信预处理小工具，可以实现一些基础功能，避免重复造轮子，让开发者更专注于业务逻辑，更多可以看 [Middleware - Starlette](https://www.starlette.io/middleware/) 。
 
 # 依赖注入
 
