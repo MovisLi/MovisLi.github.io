@@ -1,6 +1,6 @@
 ---
 title: FastAPI
-date: 2023-05-12 05:57:22
+date: 2023-06-20 05:57:22
 categories: [ComputerScience, Python, Backend]
 tags: [python, fastapi]
 ---
@@ -709,7 +709,7 @@ async def add_process_time_header(request: Request, call_next):
 
 针对前后端分离的软件项目开发方式，有一种称为 CORS （ Cross-Origin Resource Sharing ，跨域资源共享）的机制，用于**保护后端服务的安全**。
 
-这里所说的**域**指 HTTP 协议、主机名、端口的组合。多见于前端访问后端接口访问不通。
+这里所说的 **域** 指 HTTP 协议、主机名、端口的组合。多见于前端访问后端接口访问不通。
 
 针对这种情况，我们可以如下操作：
 
@@ -779,7 +779,443 @@ app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # 依赖注入
 
+依赖注入是指本来接收各种参数构造一个对象，现在只接收一个参数——已经实例化的对象，这样的话就不用关心这个对象的创建，销毁等问题。
+
+## 函数依赖注入
+
+假设有一个功能是返回参数名，这个功能很多接口都会用，那么我们就可以采用依赖注入的方式减少代码量，比如定义一个依赖函数返回参数名，然后在要用这个功能的接口里都指定依赖：
+
+```python
+from fastapi import Depends
+
+async def depend_func(name: Optional[str] = None):
+	""" 定义依赖函数 """
+    return {'name': name}
+
+
+@app.get('/items/')
+async def read_item(item: dict = Depends(depend_func)):
+    return item
+
+
+@app.get('/users/')
+async def read_user(user: dict = Depends(depend_func)):
+    return user
+
+# @app.get('/items/')
+# async def read_item(name: Optional[str]):
+#     return {'name': name}
+
+
+# @app.get('/users/')
+# async def read_user(name: Optional[str]):
+#     return {'name': name}
+```
+
+这里的这个 `depend_func` 就是依赖函数，而下面所注释的部分则是不使用依赖注入方式的接口。假设我现在一个新需求，返回 `name` 时还需要返回当前时间，对于依赖注入的方式，只需要修改依赖函数：
+
+```python
+async def depend_func(name: Optional[str] = None):
+	""" 定义依赖函数 """
+    return {'name': name, 'time':time.time()}
+```
+
+而对于不是依赖注入的方式则需要去两个接口里分别修改：
+
+```python
+# @app.get('/items/')
+# async def read_item(name: Optional[str]):
+#     return {'name': name, 'time':time.time()}
+
+
+# @app.get('/users/')
+# async def read_user(name: Optional[str]):
+#     return {'name': name, 'time':time.time()}
+```
+
+这里共享代码逻辑的好处就体现出来了。
+
+## 类依赖注入
+
+同样的方式可以将依赖函数封装成一个参数类，增加了代码的可读性。
+
+```python
+class DependClass:
+    def __init__(self, name: Optional[str] = None) -> None:
+        self.name = name
+
+
+@app.get('/items/')
+async def read_item(item: dict = Depends(DependClass)):
+    return item
+
+
+@app.get('/users/')
+async def read_user(user: dict = Depends(DependClass)):
+    return user
+```
+
+## 依赖注入的嵌套
+
+像[函数依赖注入](##函数依赖注入)说到的时间功能，可以如下写：
+
+```python
+async def depend_func2(name: Optional[str] = None):
+    return {'name': name}
+
+
+async def depend_func(name: dict = Depends(depend_func2), need_time: Optional[bool] = False):
+    if need_time:
+        return {**name, 'time': time.time()}
+    else:
+        return name
+
+
+@app.get('/items/')
+async def read_item(item: dict = Depends(depend_func)):
+    return item
+
+
+@app.get('/users/')
+async def read_user(user: dict = Depends(depend_func)):
+    return user
+```
+
+这里 `read_item` 和 `read_user` 依赖了 `depend_func` ，而 `depend_func` 又依赖了 `depend_func2` ，可以看到返回参数名的逻辑其实并不是在 `depend_func` 里完成的，而是在 `depend_func2` 里完成的。
+
+当程序用到的多个依赖项都依赖于某一个共同的子依赖项时，FastAPI 默认会在第一次执行这个子依赖项时，将其执行结果放在缓存中，以保证对路径操作函数的单次请求，无论定义了多少子依赖项，这个共同的子依赖项只会执行一次。如果不想将其结果放入缓存，可以把 `use_cache` 参数设置为 `False` 。
+
+如：
+
+```python
+@app.get('/items/')
+async def read_item(item: dict = Depends(depend_func, use_cache=False)):
+    return item
+```
+
+## 装饰器中使用依赖注入
+
+假设 `read_item` 和 `read_user` 在传入 `is_test='test'` 时都会抛出异常，而不需要 `is_test` 的返回值，那么这个依赖可以放在装饰器中，就像：
+
+```python
+async def depend_func(name: Optional[str] = None):
+    """定义依赖函数，请求参数依赖"""
+    return {'name': name}
+
+
+async def depend_func_test(is_test: str = None):
+    """定义依赖函数，装饰器中的依赖"""
+    if is_test == 'test':
+        raise HTTPException(status_code=400, detail='This is the test')
+
+
+@app.get('/items/', dependencies=[Depends(depend_func_test)])
+async def read_item(item: dict = Depends(depend_func)):
+    return item
+
+
+@app.get('/users/', dependencies=[Depends(depend_func_test)])
+async def read_user(user: dict = Depends(depend_func)):
+    return user
+```
+
+或者放到实例化 `FastAPI()` 对象中的 `dependencies` 参数中，也是一样的效果。
+
+```python
+async def depend_func_test(is_test: str = None):
+    if is_test == 'test':
+        raise HTTPException(status_code=400, detail='This is the test')
+
+
+app = FastAPI(dependencies=[Depends(depend_func_test)])
+
+
+async def depend_func(name: Optional[str] = None):
+    return {'name': name}
+
+
+@app.get('/items/')
+async def read_item(item: dict = Depends(depend_func)):
+    return item
+
+
+@app.get('/users/')
+async def read_user(user: dict = Depends(depend_func)):
+    return user
+```
+
+## 依赖项中的 yield
+
+FastAPI 支持再依赖函数中使用 yield 替代 return，这样做的目的是在**路径操作函数**执行完成后，再执行一些其他操作。比较典型的应用场景是文件的读写，数据库会话连接。在 FastAPI 官方教程中 [SQL (Relational) Databases - FastAPI](https://fastapi.tiangolo.com/tutorial/sql-databases/) 里，有这样一段代码：
+
+```python
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()	# yield 的意义
+```
+
+这里这个 `get_db` 实际上是一个依赖项，可能在路径操作函数中会依赖它。
+
+**假设我们不在路径操作函数中依赖它，而在普通函数中依赖它，那么依赖它这个普通函数必须被路径操作函数依赖。简而言之就是依赖链顶端必须是 路径操作函数（否则会报错）。**
+
+这样是可以的：
+
+```python
+def depend_func(db: Session = Depends(get_db)):
+    return db
+
+@app.get('/')
+async def read_test(db: Session = Depends(depend_func)):
+    pass
+```
+
+这样却不可以：
+
+```python
+def depend_func(db: Session = Depends(get_db)):
+    return db
+
+async def read_test(db: Session = Depends(depend_func)):
+    pass
+
+"""
+或者是
+"""
+
+async def read_test(db: Session = Depends(get_db)):
+    pass
+```
+
+因为这时 `read_test` 已经变为一个普通函数，如果想在 `read_test` 里使用 `get_db` 这个生成器，那么就要像使用生成器一样使用它：
+
+```python
+async def read_test(db: Session = next(get_db())):
+    pass
+
+"""
+或者是
+"""
+
+async def read_test():
+    for db in get_db():
+    	pass
+```
+
+## 依赖类的可调用实例
+
+依赖类本身是可调用的，但是如果想让类的实例也可调用，那么需要实现 `__call__` 这个方法：
+
+```python
+class DependClass:
+    def __init__(self, name: Optional[str] = None) -> None:
+        self.name = name
+
+    def __call__(self, q: str = "") -> bool:
+        if q:
+            return self.name in q
+        return False
+
+
+@app.get('/items/')
+async def read_item(is_dog: str = Depends(DependClass('dog')), is_cat: bool = Depends(DependClass('cat'))):
+    return {'is_dog': is_dog, 'is_cat': is_cat}
+```
+
+结果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306200447727.png)
+
 # 数据库操作
+
+## SQLAlchemy
+
+SQLAlchemy 是一个 ORM（ Object Relationship Mapping ，对象关系映射）工具，作用就是像操作对象一样（因为这样比较符合习惯）与数据库交互。在我另一篇文章 《SQLModel》 中那个框架其实就是基于 SQLAlchemy。
+
+## 连接 MySQL
+
+像 PostgreSQL，SQLite 这些关系型数据库其实和 Mysql 差不多，这里以 Mysql 举例，主要是完成以下几件事情：
+
+### 连接数据库
+
+一般放在 `database.py` 文件中，代码一般就是负责建立连接：
+
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+SQLALCHEMY_DATABASE_URL = "mysql://username:password@ipaddress:port/databse"
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+SessionLocal = sessionmaker(autocommit=False, bind=engine)
+
+Base = declarative_base()
+```
+
+1. 定义连接地址与驱动
+   - ```python
+     SQLALCHEMY_DATABASE_URL = "mysql://username:password@ipaddress:port/databse"
+     ```
+
+   - 当然其实连接 MySQL 的驱动有很多种，比如 `mysqldb` ，`pymysql` 等等。这里可以用 ```mysql+mysqldb://username:password@ipaddress:port/databse``` 这样的方式去选择。
+
+   - 另外，如果使用 SSH 的方式那么这一步可能还要复杂一点，原理就是首先要创建 SSH 连接，然后这里的 IP 与端口填写 SSH 映射的。
+
+2. 创建连接引擎
+
+   - ```python
+     engine = create_engine(SQLALCHEMY_DATABASE_URL)
+     ```
+
+   - 熟悉 pandas 的应该知道这里这个引擎就是 `pd.read_sql()` 这个方法中需要的引擎。
+
+3. 创建本地会话
+
+   - ```python
+     SessionLocal = sessionmaker(autocommit=False, bind=engine)
+     ```
+
+4. 创建数据模型基类
+
+   - ```python
+     Base = declarative_base()
+     ```
+
+一般 `database.py` 就放这些内容。
+
+### 创建 ORM 数据模型
+
+数据模型一般写在 `models.py` 文件中，每个类其实就是数据库的一张表。
+
+比如：
+
+```python
+from sqlalchemy import Column, Integer, String
+
+from .database import Base # 刚刚创建的 Base
+
+class ItemModel(Base):
+    __tablename__ = "item"
+    
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String)
+```
+
+### 创建 Pydantic 数据模型
+
+用 Pydantic 实现的数据模型主要为了实现数据的读写操作，并提供 API 接口文档，一般写在 `schemas.py` 文件中。
+
+比如：
+
+```python
+from pydantic import BaseModel
+
+class ItemSchema(BaseModel):
+    name: str
+    
+    class Config:
+        orm_mode = True
+```
+
+在内部类 `Config` 中配置 `orm_mode = True` 的作用是让 Pydantic 模型可以从 ORM 模型读取数据，如果不写的话，只能从字典读取数据。
+
+### 实现 CRUD 操作
+
+CRUD ：Create 增加，Read 查询，Update 更改，Delete 删除。也就是我们常说的增删改查。
+
+一般写在 `crud.py` 文件中。
+
+这里要遵循 SQLAlchemy 的方式去实现这几个操作，以单个 C R 为例。
+
+```python
+def create_item(db: Session, item: ItemSchema):
+    db_item = ItemModel(name=item.name)
+    
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    
+    return db_item
+
+def read_item(db: Session):
+    return db.query(ItemModel).first()
+```
+
+具体使用 CRUD 操作的逻辑不写在这里，一般写在请求函数中。具体步骤一般如下：
+
+1. 导入所需模块。
+
+2. ```python
+   Base.metadata.create_all(bind=engine)
+   ```
+
+   这段代码的作用是**生成数据库表**，这是 SQLAlchemy 提供的最简洁的方式。
+
+3. 使用依赖注入的方式将 `SessionLocal` 管理。
+
+   ```python
+   def get_db():
+       db = SessionLocal()
+       try:
+           yield db
+       finally:
+           db.close()
+   ```
+
+4. 根据业务需求定义路径操作函数。
+
+## 连接 Redis
+
+### 连接数据库
+
+类似关系型数据库，连接 Redis 同样采用依赖注入的方式：
+
+```python
+def get_rdb():
+    pool = ConnectionPool(host='127.0.0.1', port=6379)
+    rdb = Redis(connection_pool=pool)
+    try:
+        yield rdb
+    finally:
+        rdb.close()
+```
+
+### 增加数据与更改数据
+
+增加和更改数据都只需要调用 `set` 方法就行了：
+
+```python
+@app.post('/items/', response_model=Item)
+async def set_item(item: Item, rdb: Redis = Depends(get_rdb)):
+    rdb.set('test', json.dumps(item.dict()))
+    return item
+```
+
+### 查询数据
+
+查询数据需要调用 `get` 方法：
+
+```python
+@app.get('/items/', response_model=Item)
+async def get_item(rdb: Redis = Depends(get_rdb)):
+    item = rdb.get('test')
+    return json.loads(item)
+```
+
+### 删除数据
+
+删除数据需要调用 `delete` 方法：
+
+```python
+@app.delete('/items/')
+async def delete_item(rdb: Redis = Depends(get_rdb)):
+    rdb.delete('test')
+```
 
 # 安全机制
 
