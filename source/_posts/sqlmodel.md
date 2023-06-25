@@ -1,5 +1,5 @@
 ---
-title: sqlmodel 阅读笔记
+title: SQLModel
 date: 2022-12-06 16:51:53
 categories: [DataScience, Database]
 tags: [sqlmodel, fastapi, orm, sqlalchemy]
