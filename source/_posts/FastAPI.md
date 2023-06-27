@@ -1259,15 +1259,614 @@ FastAPI 基于 OpenAPI 规范构建了自动交互式文档。
 
 ## 基于 OAuth 2 的安全机制
 
-这里实现一套完整的安全验证机制
+### JWT Token & Bearer
+
+JWT（Json Web Tokens）是一种安全标准，将 JSON 对象编入一个没有空格的长字符串中。
+
+我们这里使用 `python-jose` 包实现。
+
+在没有 Token 认证时，我们用于记录一个用户可能会用到以下函数：
+
+- `get_db` - 依赖函数，用于 FastAPI 和数据库有交互时连接的建立。
+- `create_user` - 新建一个用户。
+- `get_user` - 查询一个用户。
+
+这时我们遇到一个问题，就是其实我们并不知道当前用户是谁。当我们需要提供差异化服务时，我们就做不到。因此，我们需要对每个用户进行一个身份认证。思路如下：
+
+- 创建一个工具函数用于 hash 用户的密码，也就是加盐。那么由于密码已经加盐，我们就需要再创建一个工具函数用于校验接收的密码是否与存储的 hash value 匹配。这两个函数是为了认证并返回用户，具体的功能还需要一个工具函数实现。这一步统称为密码加盐相关处理。
+- 配置 JWT 令牌签名，包括算法、令牌过期时间。创建一个工具函数用于生成 token 的编码与解码。
+- 在业务相关模块用到上面 2 个模块实现业务逻辑。
+
+#### 密码 Hash 相关
+
+密码加盐指存储密码散列形式而不是明文，这样做提高了密码的安全性。
+
+```python
+from sqlalchemy.orm import Session
+from passlib.context import CryptContext
+
+_pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
+def verify_password(plain_password: str, hashed_password: str):
+    return _pwd_context.verify(plain_password, hashed_password)
+
+
+def get_password_hash(password):
+    return _pwd_context.hash(password)
+
+def authenticate_user(db: Session, username: str, password: str):
+    user = read_user(db=db, username=username)
+    if not user:
+        return False
+    if not verify_password(password, user.hashed_password):
+        return False
+    return user
+```
+
+用 `passlib` 包可以实现密码加盐与校验密码。
+
+- `get_password_hash` - 实现了对来自用户的密码进行 hash 处理。
+- `verify_password` - 实现了验证收到的密码是否与存储的哈希值相符。
+- `authenticate_user` - 认证并返回用户，可以看到这里是根据 `username` 与 `password` 查询。
+
+#### JWT 相关
+
+```python
+from datetime import datetime, timedelta
+from jose import jwt
+
+SECRET_KEY = "b8f7673c0929ee8fa7e9974ba7fbd3e999f2a526189dab012258381c4a044dd7"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 5
+
+
+def create_token(data: dict):
+    to_encode = data.copy()
+    expries_delta = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow() + expries_delta
+    to_encode.update({'exp': expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+def extract_token(token: str):
+    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    return payload.get('username')
+```
+
+- `create_token` - 这里我们可以看到，生成令牌的逻辑其实就是 `jwt.encode` 一个函数，为了设置过期时间，这里需要将一个 `datetime` 对象（过期的时间点，这里实现方式是当前时间 `datetime` 对象加上时间偏移 `timedelta` 对象）作为 value 传入到名为 `exp` 的 key 中。然后 `jwt.encode` 会返回一个长字符串，也就是令牌。官方文档的方式是把过期时间作为函数参数传入，这样也不错。
+
+  这里需要注意的是，由于时区问题的存在，`jose` 源码里有一段：
+
+  ```python
+  for time_claim in ["exp", "iat", "nbf"]:
+      # Convert datetime to a intDate value in known time-format claims
+      if isinstance(claims.get(time_claim), datetime):
+          claims[time_claim] = timegm(claims[time_claim].utctimetuple())
+  ```
+
+  很显然这个包是把这个 `datetime` 对象当作 `utc` 时间来处理，所以我们在生成时间的时候一定要用 `datetime.utcnow()` 而不是 `datetime.now()` 。
+
+- `extract_token` - 令牌的解码很简单，直接调用即可，`jose` 源码里有一个函数叫 `_validate_exp` 是来验证令牌是否过期的，如果过期就会抛出异常，所以我们在这里不需要自己处理令牌过期问题。
+
+#### 业务逻辑相关
+
+```python
+from pydantic import BaseModel
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class UserBase(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    
+    class Config:
+        orm_mode = True
+```
+
+```python
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import JWTError
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
+@app.post('/login/', response_model=schemas.Token)
+async def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = services.authenticate_user(db, form.username, form.password)
+
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Username or password is invalid.')
+    access_token = services.create_token(data={'username': user.username})
+
+    return {'access_token': access_token, 'token_type': 'bearer'}
+
+@app.get('/user/', response_model=schemas.User)
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    invalid_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                      detail='Username or password is invalid.')
+    try:
+        username: str = services.extract_token(token)
+        if username is None:
+            raise invalid_exception
+    except JWTError:
+        raise invalid_exception
+    user = services.read_user(db, username=username)
+    if user is None:
+        raise invalid_exception
+    return user
+```
+
+这里有两个接口，`login` 和 `get_current_user` ：
+
+- `login` - 业务逻辑是，首先校验用户名和密码（登陆），校验成功后发放令牌。
+- `get_current_user` - 从令牌里拿到用户名，根据用户名去数据库查询用户相关信息。
 
 # 异步
 
-# 架构
+理解异步需要先理解几个概念：
+
+## 进程与线程
+
+- 进程 / Process - 进程是计算机**资源分配和调度**的最小单位。所以不同进程之间的数据是不共享的，需要通过网络通信比如 TCP/IP 端口通信实现资源共享。
+- 线程 / Thread - 线程是计算机**运算调度**的最小单位。所以不同线程之间的数据是有可能共享的（处在同一个进程时），此时通过共享内存可实现线程间的通信。
+
+## 阻塞与非阻塞
+
+- 阻塞 / Blocking - 阻塞是指一个线程所访问的资源被其他线程占用时，需要等待其他线程完成操作，**在等待期间该线程自身无法继续其他操作**，常见的阻塞有：网络 I/O 、磁盘 I/O 、用户输入阻塞。
+- 非阻塞 / Non-Blocking - 非阻塞是指线程在等待其他线程过程中，自身不被阻塞，**等待期间可以执行其他操作**。
+
+## 同步与异步
+
+- 同步 / Synchronous - 同步是指为了完成某个操作，多个线程必须按照特定的通信方式协调一致，**按顺序执行，前面的执行完了，后面才能执行**。
+- 异步 / Asynchronous - 异步是指为了完成某个操作，无需特定的通信方式协调也可完成任务的方式。
+
+这里提到的通信方式，通常有：
+
+- 信号量 - 用于控制并发的数量。比如某个网站一秒内只能接收本机 500 次访问，那么为了避免网站服务器压力过大，可以在客户端使用信号量做控制。
+- 锁 - 确保并发时数据安全。比如两个线程一起访问一个数，逻辑都为如果此数为奇数，则加一否则不变。当一个数原本是奇数时，两个线程同时访问（或者说一个线程访问时另外个线程正在加一，但还没加上去），最后结果是奇数，这种就是数据不安全。可以通过在线程访问时加一个锁，等访问完毕加一完毕释放此锁达保证数据安全。
+- 同步队列 - 一个自带锁的队列。
+
+## 并发与并行
+
+- 并发 / Concurrency - 看起来同时执行。
+- 并行 / Parallelism - 实际上同时执行。
+
+## GIL
+
+Python 是一种动态解释型语言。动态指代码跑到有错的地方才会停，解释指不需要编译直接运行（个人理解就是因为是解释所以才动态）。因此运行 `.py` 文件的代码需要一个 Python 解释器。
+
+GIL 全称 Global Interpreter Lock ，全局解释器锁，是一种全局互斥锁。作用是每个线程在执行的过程中都需要先获取 GIL ，保证同一时刻只有一个线程能控制 Python 解释器。好处显然是保证了数据的线程安全，坏处就是效率比较低，没有充分运用 CPU 多核的优势。
+
+但是值得注意的是，并不是有了 GIL 就没有多线程这一说了，比如网络 I/O 的典型应用爬虫一样可以多线程执行。另外，协程的出现很好的解决了性能损失的问题。
+
+## 协程 / Coroutine
+
+协程成为微线程，是一种用户态的轻量级线程，也就是操作系统是没有协程这个概念的，是用户自己在用类似多线程的方式进行任务的切换以实现并发目的。
+
+Python 中有一个库叫 `Asyncio` ，要使用这个库要理解几个概念以及用法。因为我本人主要是从事数据方面的工作，时常用到 `jupyter notebook` ，在那里面想正常使用需要：
+
+```python
+import nest_asyncio
+
+nest_asyncio.apply()
+```
+
+### 事件循环
+
+事件循环时每个异步应用的核心，用于管理异步任务和回调、执行网络 I/O 操作，以及运行子线程等等。大概类似于一个包含很多任务的循环队列。
+
+```python
+loop = asyncio.get_event_loop()
+```
+
+事件循环可以这样拿到。
+
+### 协程
+
+协程本质上是一个函数，特点是在代码块中可以将执行权交给其他协程。当调用协程函数时，不会立即执行，而是返回一个协程对象。需要将协程对象注册到事件循环当中，由事件循环负责调用。
+
+```python
+async def test():
+    print('start', time.time())
+    await asyncio.sleep(1)
+    print('end', time.time())
+
+
+async def main():
+    await test()
+    await test()
+
+
+if __name__ == '__main__':
+    asyncio.run(main())
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306261339057.png)
+
+这里可以看到实际上，这两个协程并没有并发执行。那么如果要让他们并发执行，则需要任务。
+
+### 任务
+
+在事件循环中，使用 Task 对象运行协程，Task 对象可以说是顾名思义，就是一个任务，比如刚刚那个 `test` 协程如果想并发执行，可以：
+
+```python
+async def test():
+    print('start', time.time())
+    await asyncio.sleep(1)
+    print('end', time.time())
+
+
+async def main():
+    task1 = asyncio.create_task(test())
+    task2 = asyncio.create_task(test())
+
+    await task1
+    await task2
+
+
+asyncio.run(main())
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306261340442.png)
+
+可以看到用 `asyncio.create_task()` 可以创建 Task 对象。也可以先去拿到事件循环 `event_loop` ，再用 `loop.create_task()` 创建 Task 对象。
+
+有时遇到多个任务我们可以往 `list` 里添加 `task` ，然后用 `asyncio.wait(task_list)` 。
+
+```python
+async def test():
+    print('start', time.time())
+    await asyncio.sleep(1)
+    print('end', time.time())
+
+
+async def main():
+    task_list = []
+    for _ in range(2):
+        task_list.append(asyncio.create_task(test()))
+
+    await asyncio.wait(task_list)
+
+
+asyncio.run(main())
+```
+
+### Future
+
+一个 Future 对象代表一个异步操作的最终结果，是一个比较底层的东西。
+
+关于异步这块，我个人觉得有必要直接读官方的文档：
+
+- [Coroutines and Tasks — Python 3.11.4 documentation](https://docs.python.org/3/library/asyncio-task.html)
+- [Futures — Python 3.11.4 documentation](https://docs.python.org/3/library/asyncio-future.html)
+
+# 应用管理
+
+## 配置项管理
+
+### 环境变量
+
+在 Windows 系统中设置环境变量和打印环境变量如下所示：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270435936.png)
+
+但是这样做似乎并没有保存，如果想要保存，可以从 *我的电脑 - 属性 - 高级系统设置 - 高级 - 环境变量* 这里去设置环境变量，举个例子，假设安装了 JAVA ，很有可能配置了名为 `JAVA_HOME`  的环境变量。
+
+```python
+import os
+
+@app.get('/')
+async def main():
+    return os.getenv('JAVA_HOME')
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270505462.png)
+
+有时为了安全性考虑，可能会把密钥存储在环境变量中。
+
+### 配置
+
+在 Pydantic 中，前面已经使用了 `BaseModel` 作为数据类的基类，另外还有一个 `BaseSettings` 可以用作配置。
+
+```python
+from pydantic import BaseSettings
+
+
+class Settings(BaseSettings):
+    verson: str = '0.1.0a'
+
+
+settings = Settings()
+app = FastAPI()
+
+
+@app.get('/')
+async def main():
+    return {'version': settings.verson}
+```
+
+作为一个类，每次在使用的时候需要实例化。
+
+## 应用事件处理
+
+### 程序启动事件
+
+有参装饰器 `app.on_event()` 传入参数 `startup` 即可。
+
+```python
+@app.on_event("startup")
+async def start_log():
+    print('FastAPI start'.center(60, '='))
+```
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270519403.png)
+
+### 程序停止事件
+
+```python
+@app.on_event("shutdown")
+async def end_log():
+    print('FastAPI shutdown'.center(60, '='))
+```
+
+当 FastAPI 应用程序被停止时，会执行所有停止事件。但与启动事件不同，如果停止事件执行失败，不会影响应用程序的关闭过程。所以，尽量不要在停止事件中写入耗时或者是特别重要的操作。
+
+## 应用挂载
+
+FastAPI 提供了一种方式，可以用一个主应用管理各个子应用，这个过程称为 **挂载** 。挂载可以通过 `app.mount()` 实现。
+
+```python
+app = FastAPI()
+
+test1_app = FastAPI()
+test2_app = FastAPI()
+
+app.mount('/test1', test1_app)
+app.mount('/test2', test2_app)
+
+
+@app.get('/')
+async def main():
+    return {'version': 'main app'}
+
+
+@test1_app.get('/')
+async def main():
+    return {'version': 'test1 app'}
+
+
+@test2_app.get('/')
+async def main():
+    return {'version': 'test2 app'}
+```
+
+然后这三个接口的访问方式及结果为：
+
+主接口：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270528429.png)
+
+test1 接口：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270529686.png)
+
+test2 接口：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270530840.png)
+
+当挂载对象是外部应用，比如 Flask 应用时，可以使用 `WSGIMiddleware` 中间件：
+
+```python
+from fastapi import FastAPI
+from fastapi.middleware.wsgi import WSGIMiddleware
+
+from flask import Flask
+
+app = FastAPI()
+flaskapp = Flask(__name__)
+
+app.mount('/flask', WSGIMiddleware(flaskapp))
+```
+
+## 路由管理
+
+在真实的应用程序中，会有几十个甚至上百个路由，如果都放在 `main.py` 中，那么主文件会非常复杂，可以使用 `APIRouter` 这个路由类抽离出来。
+
+```python
+from fastapi import FastAPI, APIRouter
+
+app = FastAPI()
+
+openapi = APIRouter(
+    prefix='/openapi',
+    tags=['openapi'],
+    dependencies=[],
+    responses={404: {
+        'detail': 'Not Found'
+    }},
+)
+
+
+@openapi.get('/')
+async def hello():
+    return {'hello': 'world'}
+
+
+app.include_router(openapi)
+```
+
+可以看到，这样 `/openapi/` 这个接口就被分离出来了。
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270547196.png)
+
+## 目录结构管理
+
+在实际项目中，一般由团队成员共同讨论决定目录结构，也没有说哪种方式就是最好的。
+
+这里可以参考一下 FastAPI 这个框架作者给的一个全栈项目 [Full Stack FastAPI and PostgreSQL - Base Project Generator](https://github.com/tiangolo/full-stack-fastapi-postgresql) 中后端部分的目录结构。
+
+- app
+  - `main.py` - 主文件
+  - api
+    - routers - Router 
+    - errors - Error
+    - dependencies - 依赖
+  - core
+    - setting - 综合设置
+    - database - 数据库相关设置
+    - security - 安全设置
+  - services - 业务逻辑
+  - crud - 数据库的各种操作
+  - models - 数据库模型
+  - schemas - 数据模型
+
+# 模板
+
+FastAPI 是一个服务器端框架，主要用于提供服务器端的数据接口，但在某些场景下，仍然需要使用传统的页面模板技术，提供 Web 界面（前后端不分离）。
+
+接口函数的主要作用是处理业务逻辑返回响应。在大型应用中，把业务逻辑和表现内容放在一起，会增加代码的复杂度和维护成本。使用模板后，由模板负责渲染表现内容，后端接口负责处理业务逻辑。
+
+模板仅仅是文本文件。它可以生成任何基于文本的格式（ HTML 、 XML 、 CSV 、 LaTex 等等）。 它并没有特定的扩展名， `.html` 或 `.xml` 都是可以的。
+
+这里介绍一下 Jinja2 这个模板的使用。详情可参考 [Template Designer Documentation — Jinja Documentation (3.1.x)](https://jinja.palletsprojects.com/en/3.1.x/templates/) 这份官方文档。
+
+## 注释
+
+```
+{# 注释 #}
+```
+
+## 变量
+
+```
+{{ 变量名 }}
+```
+
+最终在文件或网页中，这里可以直接得到变量值。
+
+##  转义
+
+```
+{% raw %}
+	这部分不会被转义
+{% endraw %}
+```
+
+## 循环
+
+```
+{% for item in list %}
+	{{ item }}
+{% endfor %}
+```
+
+## 条件 IF
+
+```
+{% if item is not None %}
+	{{ item }}
+{% endif %}
+```
+
+## 作用域With
+
+```
+{% with name = test %}
+	{{ name }}
+{% endwith %}
+```
+
+## FastAPI 应用 Jinja2
+
+```python
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
+app = FastAPI()
+
+templates = Jinja2Templates(directory='templates')
+
+
+@app.get('/', response_class=HTMLResponse)
+async def index(request: Request, input_str: str = 'Hello World !'):
+    return templates.TemplateResponse('index.html', {'request': request, 'input_str': input_str})
+```
+
+后端代码如上所示，不难看出，当用户请求 `index` 这个接口的时候，接口返回的数据是 `request` 和 `input_str` ，到 `index.html` 这个文件中，那么再来看下这个前端文件的具体内容：
+
+```html
+<html>
+    <head>
+        <title>{{ request }}</title>
+    </head>
+
+    <body>
+        <h1>{{ input_str }}</h1>
+    </body>
+</html>
+```
+
+这里这个 `request` 和 `input_str` 其实就是接口给的，最终效果如下：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270743752.png)
+
+我们可以用 `StaticFiles` 挂载静态资源比如 CSS 文件，例如：
+
+后端 `main.py` ：
+
+```python
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+
+app = FastAPI()
+app.mount('/static', StaticFiles(directory='static'), name='static')
+templates = Jinja2Templates(directory='templates')
+
+
+@app.get('/', response_class=HTMLResponse)
+async def index(request: Request, input_str: str = 'Hello World !'):
+    return templates.TemplateResponse('index.html', {'request': request, 'input_str': input_str})
+```
+
+HTML 文件 `templates/index.html` ：
+
+```html
+<html>
+    <head>
+        <title>{{ request }}</title>
+        <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    </head>
+
+    <body>
+        <h1>{{ input_str }}</h1>
+    </body>
+</html>
+```
+
+CSS 文件 `static/style.css` ：
+
+```css
+h1 {
+    font-style: italic;
+    text-align: center;
+}
+```
+
+最终可以得到效果：
+
+![](https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202306270752899.png)
 
 # 测试
+
+
 
 # 部署
 
