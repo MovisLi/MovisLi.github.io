@@ -357,7 +357,7 @@ async def main(c: Optional[str] = Cookie(None)):
 
 URL 里是没有传 Cookie 的信息的。
 
-具体可以见 [Cookie Parameters - FastAPI](https://fastapi.tiangolo.com/tutorial/cookie-params/) 。
+具体可以见 [Cookie Parameters - FastAPI](https://fastapi.tiangolo.com/tutorial/cookie-params/) 与 [Responses - Set Cookie - Starlette](https://www.starlette.io/responses/#set-cookie)。
 
 ## 请求头
 
@@ -1438,7 +1438,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 
 ## GIL
 
-Python 是一种动态解释型语言。动态指代码跑到有错的地方才会停，解释指不需要编译直接运行（个人理解就是因为是解释所以才动态）。因此运行 `.py` 文件的代码需要一个 Python 解释器。
+Python 是一种动态解释型语言。动态指值的类型是在运行时确定，解释指不需要编译直接运行。运行 `.py` 文件的代码需要一个 Python 解释器。
 
 GIL 全称 Global Interpreter Lock ，全局解释器锁，是一种全局互斥锁。作用是每个线程在执行的过程中都需要先获取 GIL ，保证同一时刻只有一个线程能控制 Python 解释器。好处显然是保证了数据的线程安全，坏处就是效率比较低，没有充分运用 CPU 多核的优势。
 
