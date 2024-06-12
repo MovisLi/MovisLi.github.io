@@ -1,0 +1,1237 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.jpg">
+  <link rel="icon" href="/img/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414142">
+  <meta name="author" content="MovisLi">
+  <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
+  
+    <meta name="description" content="SQLModel 是一个使用 Python 对象与 SQL 数据库交互的库。它与 FastAPI 的作者是同一个人，旨在简化 FastAPI 应用程序中与数据库的交互。 本文是 SQL 官方文档的阅读笔记。用 Python 的 FastAPI 框架， MySQL 提供演示。 ORM ORM 的全称为 Object–Relational Mapping ，中文叫对象关系映射，是一种程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLModel">
+<meta property="og:url" content="https://movisli.github.io/2022/12/06/sqlmodel/index.html">
+<meta property="og:site_name" content="movis">
+<meta property="og:description" content="SQLModel 是一个使用 Python 对象与 SQL 数据库交互的库。它与 FastAPI 的作者是同一个人，旨在简化 FastAPI 应用程序中与数据库的交互。 本文是 SQL 官方文档的阅读笔记。用 Python 的 FastAPI 框架， MySQL 提供演示。 ORM ORM 的全称为 Object–Relational Mapping ，中文叫对象关系映射，是一种程序">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-06T08:51:53.000Z">
+<meta property="article:modified_time" content="2024-06-07T08:32:58.968Z">
+<meta property="article:author" content="MovisLi">
+<meta property="article:tag" content="fastapi">
+<meta property="article:tag" content="sqlmodel">
+<meta property="article:tag" content="orm">
+<meta property="article:tag" content="sqlalchemy">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>SQLModel - movis</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Movis</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SQLModel"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        MovisLi
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-06 16:51" pubdate>
+          December 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.9k words
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SQLModel</h1>
+            
+            <div class="markdown-body">
+              
+              <p>SQLModel 是一个使用 Python 对象与 SQL 数据库交互的库。它与 FastAPI
+的作者是同一个人，旨在简化 FastAPI 应用程序中与数据库的交互。</p>
+<p>本文是 SQL 官方文档的阅读笔记。用 Python 的 FastAPI 框架， MySQL
+提供演示。</p>
+<h1 id="orm">ORM</h1>
+<p>ORM 的全称为 <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">Object–Relational
+Mapping</a>
+，中文叫对象关系映射，是一种程序设计技术，用于实现面向对象编程语言与不同类型资料间的转换。经过对象关系映射这种技术后，一个类就对应着一张表，一个对象（这个类的实例）就对应着一条记录（一行数据），一个类的属性就对应着一个字段（一列）。</p>
+<p>比如我一张表长这样：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212060551369.png" srcset="/img/loading.gif" lazyload /></p>
+<p>那么在 Python 里它的数据类是：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sqlalchemy <span class="hljs-keyword">import</span> Boolean, Column, ForeignKey, Integer, String
+<span class="hljs-keyword">from</span> sqlalchemy.ext.declarative <span class="hljs-keyword">import</span> declarative_base
+
+Base = declarative_base()
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span>(<span class="hljs-title class_ inherited__">Base</span>):
+    __tablename__ = <span class="hljs-string">&quot;users&quot;</span>
+
+    <span class="hljs-built_in">id</span> = Column(Integer, primary_key=<span class="hljs-literal">True</span>, index=<span class="hljs-literal">True</span>)
+    email = Column(String(<span class="hljs-number">256</span>), unique=<span class="hljs-literal">True</span>, index=<span class="hljs-literal">True</span>)
+    hashed_password = Column(String(<span class="hljs-number">256</span>))
+    is_active = Column(Boolean, default=<span class="hljs-literal">True</span>)</code></pre></div>
+<p>ORM 这种技术有好处也有坏处。</p>
+<p>好处就是方便开发。举个例子，如果你在开发系统中不用 ORM
+，那么你后端可能需要写大量的原生 SQL 比如
+MySQL，然后当你需要把你的数据库换成 PostgreSQL 时，你需要重写所有的 SQL
+代码，这在项目大的时候是一件比较头疼的事情。</p>
+<p>坏处是<strong>性能是不如原生 SQL</strong>
+的，有的复杂查询可能无法表达。</p>
+<p>在 Python 中有很多 ORM
+框架，它们可以帮助开发者实现对象关系映射而不必关注细节，如 DjangoORM,
+SQLAlchemy 以及本文学习的 SQLModel 等。</p>
+<p>SQLModel 的官方</p>
+<h1 id="基础教程">基础教程</h1>
+<h2 id="使用-sql-创建表">使用 SQL 创建表</h2>
+<div class="code-wrapper"><pre><code class="hljs mysql">CREATE TABLE `test` (
+  `id` bigint NOT NULL,
+  `numeric_field` int DEFAULT NULL,
+  `string_field` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)</code></pre></div>
+<p>可以看到表已经创建好。</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212060731781.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="使用-sqlmodel-创建表">使用 SQLModel 创建表</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Optional</span>
+<span class="hljs-keyword">from</span> sqlmodel <span class="hljs-keyword">import</span> create_engine, Field, SQLModel
+<span class="hljs-comment"># mysql 的数据类型，为了和上面一样所以用 mysql 的数据类型</span>
+<span class="hljs-keyword">from</span> sqlalchemy.dialects.mysql <span class="hljs-keyword">import</span> BIGINT, VARCHAR
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span>(SQLModel, table=<span class="hljs-literal">True</span>):
+    <span class="hljs-built_in">id</span>: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = Field(BIGINT(<span class="hljs-number">19</span>), primary_key=<span class="hljs-literal">True</span>)
+    numeric_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>]
+    string_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = Field(VARCHAR(<span class="hljs-number">256</span>))
+
+
+MYSQL_URL = <span class="hljs-string">&#x27;mysql://root:123456@localhost:3306/test&#x27;</span>
+engine = create_engine(MYSQL_URL, echo=<span class="hljs-literal">True</span>)
+SQLModel.metadata.create_all(engine)</code></pre></div>
+<p>这样就行了。不过这个地方有个坑，如图：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212060906280.png" srcset="/img/loading.gif" lazyload /></p>
+<p>好像不能创建 BIGINT 类型的字段。然后我看了下源码。</p>
+<p>这个 BIGINT 继承了 <code>sqlalchemy.types.BigInteger</code>
+这个类，在<a
+target="_blank" rel="noopener" href="https://docs.sqlalchemy.org/en/14/core/type_basics.html#sqlalchemy.types.BigInteger">官方文档</a>里有一段：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212060934932.png" srcset="/img/loading.gif" lazyload /></p>
+<p>大意就是说 BIGINT
+这种写法实现不了它字面意思的效果，这是我没想到的。</p>
+<p>经过搜索，发现要这样写才行：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Optional</span>
+<span class="hljs-keyword">from</span> sqlmodel <span class="hljs-keyword">import</span> create_engine, Field, SQLModel, VARCHAR
+<span class="hljs-keyword">from</span> sqlalchemy.dialects.mysql <span class="hljs-keyword">import</span> BIGINT
+<span class="hljs-keyword">from</span> sqlalchemy <span class="hljs-keyword">import</span> Column
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span>(SQLModel, table=<span class="hljs-literal">True</span>):
+    <span class="hljs-comment"># primary_key=True 必须放在 Column 里面</span>
+    <span class="hljs-built_in">id</span>: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = Field(default=<span class="hljs-literal">None</span>, sa_column=Column(BIGINT(<span class="hljs-number">19</span>), primary_key=<span class="hljs-literal">True</span>))
+    numeric_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>]
+    string_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = Field(VARCHAR(<span class="hljs-number">256</span>))
+
+
+MYSQL_URL = <span class="hljs-string">&#x27;mysql://root:123456@localhost:3306/test&#x27;</span>
+engine = create_engine(MYSQL_URL, echo=<span class="hljs-literal">True</span>)
+SQLModel.metadata.create_all(engine)</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212060949238.png" srcset="/img/loading.gif" lazyload /></p>
+<p>额，还是建议建表这块直接用 DDL 在数据库里建。</p>
+<h2 id="创建行---insert">创建行 - INSERT</h2>
+<p>SQL 创建行（插入数据）：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">INSERT INTO test(numeric_field, string_field) VALUES (1, &#x27;raw_sql&#x27;)</code></pre></div>
+<p>用 SQLModel 插入（包含上面的创建）：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Optional</span>
+<span class="hljs-keyword">from</span> sqlmodel <span class="hljs-keyword">import</span> create_engine, Field, SQLModel, Session, VARCHAR
+<span class="hljs-keyword">from</span> sqlalchemy.dialects.mysql <span class="hljs-keyword">import</span> BIGINT
+<span class="hljs-keyword">from</span> sqlalchemy <span class="hljs-keyword">import</span> Column
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span>(SQLModel, table=<span class="hljs-literal">True</span>):
+    <span class="hljs-built_in">id</span>: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = Field(default=<span class="hljs-literal">None</span>, sa_column=Column(BIGINT(<span class="hljs-number">19</span>), primary_key=<span class="hljs-literal">True</span>))
+    numeric_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>]
+    string_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = Field(VARCHAR(<span class="hljs-number">256</span>))
+
+
+MYSQL_URL = <span class="hljs-string">&#x27;mysql://root:123456@localhost:3306/test&#x27;</span>
+engine = create_engine(MYSQL_URL, echo=<span class="hljs-literal">True</span>)
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">create_table_test</span>():
+    SQLModel.metadata.create_all(engine)
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">create_test_record</span>():
+    test_1 = Test(numeric_field=<span class="hljs-number">2</span>, string_field=<span class="hljs-string">&#x27;sqlmodel&#x27;</span>)
+
+    <span class="hljs-comment"># 创建会话</span>
+    session = Session(engine)
+    <span class="hljs-comment"># 添加更改</span>
+    session.add(test_1)
+    <span class="hljs-comment"># 提交更改</span>
+    session.commit()
+    <span class="hljs-comment"># 关闭会话</span>
+    session.close()
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">create_test_record2</span>():
+    <span class="hljs-string">&#x27;&#x27;&#x27; 第二种创建行的方法 &#x27;&#x27;&#x27;</span>
+    test_1 = Test(numeric_field=<span class="hljs-number">2</span>, string_field=<span class="hljs-string">&#x27;sqlmodel&#x27;</span>)
+
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        session.add(test_1)
+        session.commit()
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:
+    create_table_test()
+    create_test_record()</code></pre></div>
+<p>结果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061008631.png" srcset="/img/loading.gif" lazyload /></p>
+<p>从 <code>create_test_record</code> 这个函数我们可以看到添加数据分为 2
+步，第一步是 <code>add</code> ，第二步是 <code>commit</code>
+，这个有点像 <code>git</code> 。</p>
+<h2 id="自增-id默认值与刷新数据">自增 ID、默认值与刷新数据</h2>
+<p>在上文的代码中：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061031451.png" srcset="/img/loading.gif" lazyload /></p>
+<p>这两个框之前，我们都创建了一个 <code>test_1</code>
+对象，相当于数据库一条记录，并且没有在代码里写主键 <code>id</code>
+。我们知道主键都是非空的，所以经过打印，发现使用 SQLModel
+创建行之前，实际上的 <code>test_1</code> 对象的 <code>id</code> 是
+<code>None</code> ，类型就是 <code>NoneType</code> 而不是
+<code>int</code> 。但是在 Python
+代码里，这个值是空的，所以很显然设置了主键自增。</p>
+<p>看源码可以发现 <code>SQLAlchemy</code> 的 <code>Column</code>
+有一个参数叫 <code>autoincrement</code>
+，所以这个字段其实就是用来控制是否自增，<a
+target="_blank" rel="noopener" href="https://docs.sqlalchemy.org/en/14/core/metadata.html#sqlalchemy.schema.Column.params.autoincrement">原文文档</a>。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">create_test_record</span>():
+    test_2 = Test(numeric_field=<span class="hljs-number">3</span>, string_field=<span class="hljs-string">&#x27;sqlmodel&#x27;</span>)
+
+    <span class="hljs-comment"># 创建会话</span>
+    session = Session(engine)
+    <span class="hljs-comment"># 添加更改</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;before add&#x27;</span>, test_2)
+    session.add(test_2)
+    <span class="hljs-comment"># 提交更改</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;before commit&#x27;</span>, test_2)
+    session.commit()
+    <span class="hljs-comment"># 关闭会话</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;before close&#x27;</span>, test_2)
+    session.close()</code></pre></div>
+<p>把创建新的行写成这样，去观察什么时候更新的自增 <code>id</code>
+，可以看到：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061100119.png" srcset="/img/loading.gif" lazyload /></p>
+<p>自增是数据库的行为，发生在提交代码的 <code>commit</code> 之后。</p>
+<p>实际上有个主动刷新的功能，代码如下：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">create_test_record</span>():
+    test_2 = Test(numeric_field=<span class="hljs-number">5</span>, string_field=<span class="hljs-string">&#x27;sqlmodel&#x27;</span>)
+
+    session = Session(engine)
+    
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;before add&#x27;</span>, test_2)
+    session.add(test_2)
+    
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;before commit&#x27;</span>, test_2)
+    session.commit()
+    
+    <span class="hljs-comment"># 主动刷新</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;before refresh&#x27;</span>, test_2)
+    session.refresh(test_2)
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;before close&#x27;</span>, test_2)
+    session.close()</code></pre></div>
+<p>可以得到：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061105795.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="查询---select">查询 - SELECT</h2>
+<p>查询刚刚创建的数据，用 SQL ：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	id,
+	numeric_field,
+	string_field
+FROM
+	test;</code></pre></div>
+<p>可以看到：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061115758.png" srcset="/img/loading.gif" lazyload /></p>
+<p>在 SQLModel 里只需要再添加如下代码：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sqlmodel <span class="hljs-keyword">import</span> select
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">read_test_record</span>():
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        statement = select(Test)
+        results = session.<span class="hljs-built_in">exec</span>(statement)
+        <span class="hljs-keyword">for</span> test <span class="hljs-keyword">in</span> results:
+            <span class="hljs-built_in">print</span>(test)</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061121588.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>注意这里返回的 <code>test</code> 就是一个 <code>Test</code>
+的实例化对象，而不是字符串。</strong></p>
+<p>这里就完成了关系到对象的反映射。</p>
+<p>不过一般这么写：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">read_test_record</span>():
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        results = session.<span class="hljs-built_in">exec</span>(select(Test)).<span class="hljs-built_in">all</span>()
+        <span class="hljs-built_in">print</span>(results)
+        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(results))</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061125644.png" srcset="/img/loading.gif" lazyload /></p>
+<p>可以看到这次返回的是一个 <code>list</code> 。</p>
+<p>这里作者专门提到了 SQLModel 与 SQLAlchemy 在这里的不同之处，意思就是
+SQLModel 虽然是基于 SQLAlchemy 与 Pydantic
+的，依然有自己的封装。除了上文里其实已经遇见的 <code>Field</code> 和
+<code>Column</code> ，还有就是查询的时候方法名并不一样：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># SQLAlchemy</span>
+session.execute(select(Test)).scalars().<span class="hljs-built_in">all</span>()
+
+<span class="hljs-comment"># SQLModel</span>
+session.<span class="hljs-built_in">exec</span>(select(Test)).<span class="hljs-built_in">all</span>()</code></pre></div>
+<p>但是 SQLModel <code>Session</code> 仍然可以访问
+<code>session.execute()</code> 。</p>
+<p>我的感觉就是说如果你在使用 SQLModel 中遇到一些问题，你可以直接去看
+SQLAlchemy
+的文档（我没有专门学这个框架因为它的文档实在太长了），事实上我已经这么做了（比如上面对表字段的类型定义）。</p>
+<h2 id="过滤---where">过滤 - WHERE</h2>
+<p>在 SQL 中，我们可以用 WHERE 来进行数据的过滤与筛选，比如：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	id,
+	numeric_field,
+	string_field
+FROM
+	test
+WHERE
+	numeric_field = 3;</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061148484.png" srcset="/img/loading.gif" lazyload /></p>
+<p>作者在这里贴心地提示了：</p>
+<ul>
+<li>SELECT - 用于告诉数据库返回哪些列。</li>
+<li>WHERE - 用于告诉数据库返回哪些行。</li>
+</ul>
+<p>上述 SQL 用 SQLModel 实现就是：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">read_test_record</span>():
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        results = session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.numeric_field == <span class="hljs-number">3</span>)).<span class="hljs-built_in">all</span>()
+        <span class="hljs-built_in">print</span>(results)</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212061237791.png" srcset="/img/loading.gif" lazyload /></p>
+<p>对于逻辑运算符：</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>逻辑运算符</th>
+<th>SQL</th>
+<th>SQLModel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AND</td>
+<td>WHRER condition1 AND condition2</td>
+<td>where(condition1).where(condition2) 或者 where(condition1,
+condition2)</td>
+</tr>
+<tr class="even">
+<td>OR</td>
+<td>WHERE condition1 OR condition2</td>
+<td>where(or_(condition1, cindition2))</td>
+</tr>
+</tbody>
+</table>
+<p>然后作者这里提到了说 Python 解释器可能会对
+<code>where(Test.id &gt; 3)</code> 这种写法报错，因为在创建的时候用了
+<code>Optional[int]</code> 这样的声明。解决方案是写成
+<code>where(col(Test.id) &gt; 3)</code>
+。我没有遇到这个问题，这里就不作展示。</p>
+<h2 id="索引---index">索引 - INDEX</h2>
+<p>索引是一种加速查询的技术，优点：</p>
+<ul>
+<li>查询快</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>需要额外物理空间</li>
+<li>增删改慢</li>
+</ul>
+<p>在 SQL 中，如果是上面的例子，要对 <code>numeric_field</code>
+创建索引：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">CREATE INDEX 
+	idx_test_numeric_field 
+ON 
+	test(numeric_field)</code></pre></div>
+<p>在 SQLModel 中：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span>(SQLModel, table=<span class="hljs-literal">True</span>):
+    <span class="hljs-built_in">id</span>: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = Field(BIGINT(<span class="hljs-number">19</span>), primary_key=<span class="hljs-literal">True</span>)
+    numeric_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = Field(index=<span class="hljs-literal">True</span>) <span class="hljs-comment"># 只需要在这里进行小的修改</span>
+    string_field: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = Field(VARCHAR(<span class="hljs-number">256</span>))</code></pre></div>
+<blockquote>
+<p>数据库会为主键创建一个内部索引，因此主键不需要索引。</p>
+</blockquote>
+<h2 id="查询一行数据">查询一行数据</h2>
+<p>在上文查询或过滤那里我们都查询了所有数据，这里讲如果我们只需要查询一行数据时的操作和会遇到的情况。</p>
+<p>其实很简单，把
+<code>session.exec(select(Test).where(Test.id&gt;3))</code>
+当作一个返回结果的话，在上文调用了 <code>.all()</code> 方法返回了一个
+<code>list</code> ，如果不调用返回的是一个可迭代对象，这里我们可以调用
+<code>.first()</code> 等方法来查询一行数据，比如：</p>
+<div class="code-wrapper"><pre><code class="hljs python">session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.<span class="hljs-built_in">id</span>&gt;<span class="hljs-number">3</span>)).first()</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070504699.png" srcset="/img/loading.gif" lazyload /></p>
+<p>在这里也可能查询不到任何行，也就是没有满足条件的数据，比如：</p>
+<div class="code-wrapper"><pre><code class="hljs python">session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.<span class="hljs-built_in">id</span>&lt;<span class="hljs-number">0</span>)).first()</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070505626.png" srcset="/img/loading.gif" lazyload /></p>
+<p>除了 <code>.first()</code> ，还有一个 <code>.one()</code>
+也类似，这里列出它们的差异：</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>情况</th>
+<th>有多行满足条件时返回</th>
+<th>只有一行满足条件时返回</th>
+<th>没有满足条件的数据时返回</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.first()</code></td>
+<td>一个 Test 实例对象</td>
+<td>一个 Test 实例对象</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td><code>.one()</code></td>
+<td>报错 <code>MultipleResultsFound</code></td>
+<td>一个 Test 实例对象</td>
+<td>报错 <code>NoResultFound</code></td>
+</tr>
+</tbody>
+</table>
+<p>如果只用主键选择单行，由于主键是唯一的，还有个 <code>.get()</code>
+方法：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># get()</span>
+session.get(Test, <span class="hljs-number">3</span>)
+<span class="hljs-comment"># first()</span>
+session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.<span class="hljs-built_in">id</span> == <span class="hljs-number">3</span>)).first()
+<span class="hljs-comment"># one()</span>
+session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.<span class="hljs-built_in">id</span> == <span class="hljs-number">3</span>)).one()</code></pre></div>
+<p>上面 3 句话结果是一样的。如果用 <code>.get()</code>
+方法去查询一个不存在的主键，会返回 <code>None</code> 。</p>
+<h2 id="limit-与-offset">LIMIT 与 OFFSET</h2>
+<p>限制查询满足某种条件的数据 3 条，在 SQL 里：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	*
+FROM
+	test
+WHERE
+	numeric_field &gt;= 3
+LIMIT
+	3</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070532914.png" srcset="/img/loading.gif" lazyload /></p>
+<p>在 SQLModel 里：</p>
+<div class="code-wrapper"><pre><code class="hljs python">session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.numeric_field &gt;= <span class="hljs-number">3</span>).limit(<span class="hljs-number">3</span>)).<span class="hljs-built_in">all</span>()</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070532521.png" srcset="/img/loading.gif" lazyload /></p>
+<p>这个地方我个人觉得要注意的就是 <code>limit()</code> 的位置，是放在
+<code>exec()</code> 里面的，也就是对 <code>select().where()</code>
+返回的对象做了 <code>limit()</code> 操作。</p>
+<p>增加 <code>offset</code> 偏移量也是一样，在 SQL 里：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">SELECT
+	*
+FROM
+	test
+WHERE
+	numeric_field &gt;= 3
+LIMIT
+	2
+OFFSET
+	2</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070534313.png" srcset="/img/loading.gif" lazyload /></p>
+<p>这里注意总共满足条件的数据只有 3 条，在跳过 2 条后（
+<code>OFFSET 2</code> ）只剩下 1 条数据可查询，所以这里即使
+<code>LIMIT 2</code> ，也只返回了一条数据。</p>
+<p>在 SQLModel 里：</p>
+<div class="code-wrapper"><pre><code class="hljs python">session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.numeric_field &gt;= <span class="hljs-number">3</span>).offset(<span class="hljs-number">2</span>).limit(<span class="hljs-number">2</span>)).<span class="hljs-built_in">all</span>()
+<span class="hljs-comment"># 或</span>
+session.<span class="hljs-built_in">exec</span>(select(Test).where(Test.numeric_field &gt;= <span class="hljs-number">3</span>).limit(<span class="hljs-number">2</span>).offset(<span class="hljs-number">2</span>)).<span class="hljs-built_in">all</span>()</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212070539528.png" srcset="/img/loading.gif" lazyload /></p>
+<p>这里 <code>offset()</code> 和 <code>limit()</code>
+的顺序没关系，不影响结果。</p>
+<h2 id="更新---update">更新 - UPDATE</h2>
+<p>在 SQL 中：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">UPDATE
+	test
+SET
+	string_field = &#x27;SQL_UPDATE_ID_3&#x27;
+WHERE
+	id = 3</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071335853.png" srcset="/img/loading.gif" lazyload /></p>
+<p>在 SQLModel 中：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">update_test_record</span>():
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        result = session.get(Test, <span class="hljs-number">4</span>)
+        result.string_field = <span class="hljs-string">&#x27;SQLMODEL_UPDATE_ID_4&#x27;</span>
+        session.add(result)
+        session.commit()</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071339300.png" srcset="/img/loading.gif" lazyload /></p>
+<p>可以看到， <code>id=4</code>
+这条记录的字段已经更新成功。不过这种写法与其说是更新，不如说是覆盖，因为我感觉这代码几乎和
+<code>INSERT</code> 操作一样。因此我做个尝试，如下：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">update_test_record</span>():
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        result = Test(<span class="hljs-built_in">id</span>=<span class="hljs-number">5</span>, numeric_field=<span class="hljs-number">5</span>, string_field=<span class="hljs-string">&#x27;CUSTOM_ID_5&#x27;</span>)
+        result.string_field = <span class="hljs-string">&#x27;SQLMODEL_UPDATE_ID_5&#x27;</span>
+        session.add(result)
+        session.commit()</code></pre></div>
+<p>然而报错了，是在 <code>session.commit()</code>
+时出错的，错误信息如下：</p>
+<div class="code-wrapper"><pre><code class="hljs sas">sqlalchemy.exc.IntegrityError: (MySQLdb.IntegrityError) (1062, <span class="hljs-string">&quot;Duplicate entry &#x27;5&#x27; for key &#x27;test.PRIMARY&#x27;&quot;</span>)
+[SQL: <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> test (id, numeric_field, string_field) VALUES (<span class="hljs-title function_">%s</span>, <span class="hljs-title function_">%s</span>, <span class="hljs-title function_">%s</span>)]
+[parameters: (5, 5, <span class="hljs-string">&#x27;CUSTOM_ID_5&#x27;</span>)]
+(Background <span class="hljs-keyword">on</span> this <span class="hljs-keyword">error</span> at: https://sqlalche.me/e/14/gkpj)</code></pre></div>
+<p>SQLAlchemy 与 MySQLdb 官方文档给出的解释是：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071523782.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212071525723.png" srcset="/img/loading.gif" lazyload /></p>
+<p>还是不太明白这里为啥会有问题。</p>
+<p>不过如果非要做这样的操作，可以使用 <code>merge()</code> ，这样：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">custom_update</span>():
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        test = Test(<span class="hljs-built_in">id</span>=<span class="hljs-number">5</span>, numeric_field=<span class="hljs-number">5</span>, string_field=<span class="hljs-string">&#x27;CUSTOM_ID_5&#x27;</span>)
+        session.merge(test)
+        session.commit()</code></pre></div>
+<p>这样无论是更新数据还是插入数据都可以。</p>
+<h2 id="删除---delete">删除 - DELETE</h2>
+<p>在 SQL 里：</p>
+<div class="code-wrapper"><pre><code class="hljs mysql">DELETE
+FROM
+	test
+WHERE
+	id = 7</code></pre></div>
+<p>删前：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212081124913.png" srcset="/img/loading.gif" lazyload /></p>
+<p>删后：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212081125097.png" srcset="/img/loading.gif" lazyload /></p>
+<p>在 SQLModel 里：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">delete_test_record</span>():
+    <span class="hljs-keyword">with</span> Session(engine) <span class="hljs-keyword">as</span> session:
+        result = session.get(Test, <span class="hljs-number">6</span>)
+        session.delete(result)
+        session.commit()</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202212081129966.png" srcset="/img/loading.gif" lazyload /></p>
+<p>跟 <code>INSERT</code> 数据类似，这里在调用 <code>.delete()</code>
+后也需要 <code>commit()</code> 。</p>
+<h2 id="连接---join">连接 - JOIN</h2>
+<h3 id="创建连接表">创建连接表</h3>
+<p>这里主要是讲的外键。</p>
+<p>这里比如我需要建一张表叫 <code>test2</code> ，其中主键是
+<code>id</code> ，还有一个字段是 <code>test_id</code> ，但这个字段与
+<code>test</code> 表的字段具有外键关系。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test2</span>(SQLModel, table=<span class="hljs-literal">True</span>):
+    <span class="hljs-built_in">id</span>: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = Field(default=<span class="hljs-literal">None</span>, primary_key=<span class="hljs-literal">True</span>)
+    test_id: <span class="hljs-built_in">int</span> = Field(foreign_key=<span class="hljs-string">&#x27;test.id&#x27;</span>)</code></pre></div>
+<p>这样就可以了。</p>
+<h3 id="创建">创建</h3>
+<p>跟正常的一样。</p>
+<h3 id="查询">查询</h3>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/DataScience/" class="category-chain-item">DataScience</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/DataScience/Database/" class="category-chain-item">Database</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/fastapi/">#fastapi</a>
+      
+        <a href="/tags/sqlmodel/">#sqlmodel</a>
+      
+        <a href="/tags/orm/">#orm</a>
+      
+        <a href="/tags/sqlalchemy/">#sqlalchemy</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SQLModel</div>
+      <div>https://movisli.github.io/2022/12/06/sqlmodel/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>MovisLi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>December 6, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/12/07/leetcode20221207/" title="LeetCode 661 674 680 682 693">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LeetCode 661 674 680 682 693</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/12/04/postgresql/" title="PostgreSQL 15.1">
+                        <span class="hidden-mobile">PostgreSQL 15.1</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

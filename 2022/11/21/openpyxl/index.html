@@ -1,0 +1,1824 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.jpg">
+  <link rel="icon" href="/img/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414142">
+  <meta name="author" content="MovisLi">
+  <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
+  
+    <meta name="description" content="学习资源 官方文档 openpyxl - A Python library to read&#x2F;write Excel 2010 xlsx&#x2F;xlsm files 文档给出了一个简单的示例。 from openpyxl import Workbook  # 创建一个工作簿对象 wb &#x3D; Workbook()  # 获取默认工作表 ws &#x3D; wb.active  # 修改单元格的值 ws[&amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openpyxl 包的学习">
+<meta property="og:url" content="https://movisli.github.io/2022/11/21/openpyxl/index.html">
+<meta property="og:site_name" content="movis">
+<meta property="og:description" content="学习资源 官方文档 openpyxl - A Python library to read&#x2F;write Excel 2010 xlsx&#x2F;xlsm files 文档给出了一个简单的示例。 from openpyxl import Workbook  # 创建一个工作簿对象 wb &#x3D; Workbook()  # 获取默认工作表 ws &#x3D; wb.active  # 修改单元格的值 ws[&amp;#x2">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-21T09:47:23.000Z">
+<meta property="article:modified_time" content="2024-06-07T08:32:58.968Z">
+<meta property="article:author" content="MovisLi">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="excel">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>openpyxl 包的学习 - movis</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Movis</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="openpyxl 包的学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        MovisLi
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-21 17:47" pubdate>
+          November 21, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">openpyxl 包的学习</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="学习资源">学习资源</h1>
+<p>官方文档 <a
+target="_blank" rel="noopener" href="https://openpyxl.readthedocs.io/en/stable/">openpyxl - A Python
+library to read/write Excel 2010 xlsx/xlsm files</a></p>
+<p>文档给出了一个简单的示例。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-comment"># 创建一个工作簿对象</span>
+wb = Workbook()
+
+<span class="hljs-comment"># 获取默认工作表</span>
+ws = wb.active
+
+<span class="hljs-comment"># 修改单元格的值</span>
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>] = <span class="hljs-number">42</span>
+
+<span class="hljs-comment"># 添加行</span>
+ws.append([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+
+<span class="hljs-comment"># Python 类型会被自动转换</span>
+<span class="hljs-keyword">import</span> datetime
+ws[<span class="hljs-string">&#x27;A2&#x27;</span>] = datetime.datetime.now()
+
+<span class="hljs-comment"># 保存文件</span>
+wb.save(<span class="hljs-string">&quot;sample.xlsx&quot;</span>)</code></pre></div>
+<p>最终得到一个这样的表格：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209052217498.png" srcset="/img/loading.gif" lazyload /></p>
+<p>接下来我跟着 OpenPyXL 的文档学习。</p>
+<h1 id="教程">教程</h1>
+<h2 id="创建工作簿">创建工作簿</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = Workbook()</code></pre></div>
+<p>这里的 <code>wb</code>
+是一个工作簿对象而不是工作表对象，一个工作簿里可能有很多工作表。所以接下来就是获取工作表对象。</p>
+<h2 id="打开工作簿">打开工作簿</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = loan_workbook(<span class="hljs-string">r&#x27;sample.xlsx&#x27;</span>)</code></pre></div>
+<p>打开一个已存在的工作簿用这种方式。至于用哪种方法获取工作簿对象就看需求了。</p>
+<h2 id="获取工作表">获取工作表</h2>
+<div class="code-wrapper"><pre><code class="hljs python">ws = wb.active</code></pre></div>
+<p>默认获取最左边（下标为 0 ）的工作表。</p>
+<p>当然，如果是读取一个 Excel
+，它可能本身就有工作表，也可以这样获取工作表对象。</p>
+<div class="code-wrapper"><pre><code class="hljs python">ws = wb[<span class="hljs-string">&#x27;Sheet1&#x27;</span>]</code></pre></div>
+<p>如果要获取工作簿里所有工作表的名称，则可以用工作簿对象的
+<code>sheetnames</code> 这个属性。</p>
+<div class="code-wrapper"><pre><code class="hljs python">wb.sheetnames</code></pre></div>
+<h2 id="创建工作表">创建工作表</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>ws1 = wb.create_sheet(<span class="hljs-string">&quot;Mysheet&quot;</span>) <span class="hljs-comment"># 在最后的位置插入工作表，类似 list 的 append 方法</span>
+<span class="hljs-comment"># or</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>ws2 = wb.create_sheet(<span class="hljs-string">&quot;Mysheet&quot;</span>, <span class="hljs-number">0</span>) <span class="hljs-comment"># 在第一个位置插入工作表</span>
+<span class="hljs-comment"># or</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>ws3 = wb.create_sheet(<span class="hljs-string">&quot;Mysheet&quot;</span>, -<span class="hljs-number">1</span>) <span class="hljs-comment"># 在倒数第二个位置插入工作表，因为不写才是在最后插入</span></code></pre></div>
+<h2 id="复制工作表">复制工作表</h2>
+<div class="code-wrapper"><pre><code class="hljs python">copy_sheet = wb.copy_worksheet(ws)</code></pre></div>
+<p>得到这样的新工作表：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209052242561.png" srcset="/img/loading.gif" lazyload /></p>
+<blockquote>
+<p>仅复制单元格（包括值、样式、超链接和注释）和某些工作表属性（包括尺寸、格式和属性）。不复制所有其他工作簿/工作表属性
+- 例如图像，图表。</p>
+<p>也不能在工作簿之间复制工作表。如果工作簿以只读或只写模式打开，则无法复制工作表。</p>
+</blockquote>
+<h2 id="工作表的属性">工作表的属性</h2>
+<h3 id="工作表的名称">工作表的名称</h3>
+<div class="code-wrapper"><pre><code class="hljs python">ws.title</code></pre></div>
+<h3 id="工作表标签的颜色">工作表标签的颜色</h3>
+<div class="code-wrapper"><pre><code class="hljs python">ws.sheet_properties.tabColor = <span class="hljs-string">&quot;FF0000&quot;</span> <span class="hljs-comment"># 比如我用红色</span></code></pre></div>
+<p>结果就是：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209052237731.png" srcset="/img/loading.gif" lazyload /></p>
+<p>好像也没有那么红，不过确实跟白色不同。</p>
+<h2 id="获取单元格">获取单元格</h2>
+<h3 id="单个单元格">单个单元格</h3>
+<div class="code-wrapper"><pre><code class="hljs python">ws[<span class="hljs-string">&#x27;A1&#x27;</span>] <span class="hljs-comment"># 获取 A1 这个单元格</span>
+<span class="hljs-comment"># or</span>
+ws.cell(row=<span class="hljs-number">1</span>, column=<span class="hljs-number">1</span>) <span class="hljs-comment"># 获取第一行第一列这个单元格</span>
+
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>] = <span class="hljs-number">1</span> <span class="hljs-comment"># 更改 A1 这个表格的值</span>
+<span class="hljs-comment"># or</span>
+ws.cell(row=<span class="hljs-number">1</span>, column=<span class="hljs-number">1</span>, value=<span class="hljs-number">1</span>)</code></pre></div>
+<p>其实就是一个是以单元格名获取单元格，另一个以行名和列名获取单元格。</p>
+<blockquote>
+<p>值得注意的是，单元格是在首次访问它时创建的，只要访问过了，不赋值也会创建。</p>
+<p>这个跟表格的最大行数最大列数会有关系。</p>
+</blockquote>
+<h3 id="多个单元格">多个单元格</h3>
+<div class="code-wrapper"><pre><code class="hljs python">ws[<span class="hljs-string">&#x27;A1&#x27;</span>:<span class="hljs-string">&#x27;C2&#x27;</span>] <span class="hljs-comment"># 获取 A1 到 C2 这个范围的单元格</span>
+ws[<span class="hljs-string">&#x27;A&#x27;</span>:<span class="hljs-string">&#x27;C&#x27;</span>] <span class="hljs-comment"># 获取 A 列到 C 列的单元格</span>
+ws[<span class="hljs-number">1</span>:<span class="hljs-number">2</span>] <span class="hljs-comment"># 获取 1,2 行单元格</span></code></pre></div>
+<p>当然也可以用迭代器获取：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 行优先获取</span>
+ws.iter_rows(min_row, min_col, max_row, max_col)
+
+<span class="hljs-comment"># 列优先获取</span>
+ws.iter_rows(min_row, min_col, max_row, max_col)</code></pre></div>
+<p>一般使用 <code>for cells in iterator</code>
+，返回的是行或列的元组而并非每一个格子。</p>
+<p>比如：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">for</span> cells <span class="hljs-keyword">in</span> ws.iter_rows(min_row=<span class="hljs-number">1</span>, min_col=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">3</span>, max_col=<span class="hljs-number">3</span>):
+	<span class="hljs-built_in">print</span>(cells)</code></pre></div>
+<p>结果是这样的：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209052313081.png" srcset="/img/loading.gif" lazyload /></p>
+<p>如果想要直接看值，可以为生成器传入 <code>values_only=True</code>
+生成全是值的迭代器。</p>
+<div class="code-wrapper"><pre><code class="hljs python">ws.iter_rows(min_row=<span class="hljs-number">1</span>, max_col=<span class="hljs-number">3</span>, max_row=<span class="hljs-number">2</span>, values_only=<span class="hljs-literal">True</span>)</code></pre></div>
+<p>当然如果是想获取全部的行列也可以用：</p>
+<div class="code-wrapper"><pre><code class="hljs python">ws.rows
+ws.columns</code></pre></div>
+<h2 id="保存文件">保存文件</h2>
+<div class="code-wrapper"><pre><code class="hljs python">wb.save(<span class="hljs-string">r&#x27;/openpyxl_sample/sample.xlsx&#x27;</span>) <span class="hljs-comment"># 保存到路径</span></code></pre></div>
+<p>这样保存路径，我个人习惯加 <code>r</code>
+以免遇到反斜杠转义错误。</p>
+<blockquote>
+<p>此操作将覆盖现有文件而不发出警告。所以说要小心一点不要随便用，不过这个应该都会的吧，
+pandas 的 to_csv 这类方法也是一样的。</p>
+</blockquote>
+<h1 id="简单使用">简单使用</h1>
+<h2 id="日期格式">日期格式</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> datetime
+<span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = Workbook()
+ws = wb.active
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>] = datetime.datetime(<span class="hljs-number">2022</span>, <span class="hljs-number">9</span>, <span class="hljs-number">5</span>)
+<span class="hljs-built_in">print</span>(ws[<span class="hljs-string">&#x27;A1&#x27;</span>].value)
+<span class="hljs-built_in">print</span>(ws[<span class="hljs-string">&#x27;A1&#x27;</span>].number_format)</code></pre></div>
+<p>结果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209052342203.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="公式">公式</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+wb = Workbook()
+ws = wb.active
+
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>] = <span class="hljs-number">1</span>
+ws[<span class="hljs-string">&#x27;B1&#x27;</span>] = <span class="hljs-number">1</span>
+ws[<span class="hljs-string">&#x27;C1&#x27;</span>] = <span class="hljs-string">&#x27;=SUM(A1:B1)&#x27;</span>
+<span class="hljs-built_in">print</span>(ws[<span class="hljs-string">&#x27;C1&#x27;</span>].value)</code></pre></div>
+<p>输出如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209062142285.png" srcset="/img/loading.gif" lazyload /></p>
+<p>不过在表格中是有效的，如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209052348329.png" srcset="/img/loading.gif" lazyload /></p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl.utils <span class="hljs-keyword">import</span> FORMULAE
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;SUM&#x27;</span> <span class="hljs-keyword">in</span> FORMULAE)</code></pre></div>
+<p>可以用 <code>FORMULAE</code> 检验是否公式可识别。</p>
+<h2 id="合并取消合并单元格">合并/取消合并单元格</h2>
+<p>合并单元格时，除了左上角的所有单元格都将从工作表中删除。</p>
+<div class="code-wrapper"><pre><code class="hljs python">ws.merge_cells(start_row, start_column, end_row, end_column)
+ws.unmerge_cells(start_row, start_column, end_row, end_column)
+<span class="hljs-comment"># or</span>
+ws.merge_cells(<span class="hljs-string">&#x27;A1:C3&#x27;</span>)
+ws.unmerge_cells(<span class="hljs-string">&#x27;A1:C3&#x27;</span>)</code></pre></div>
+<p>取消合并的范围必须是已经合并的范围，否则会报错。</p>
+<h2 id="插入图像">插入图像</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+<span class="hljs-keyword">from</span> openpyxl.drawing.image <span class="hljs-keyword">import</span> Image
+
+wb = Workbook()
+ws = wb.active
+img = Image(<span class="hljs-string">&#x27;logo.jpg&#x27;</span>) <span class="hljs-comment"># 加载图像</span>
+ws.add_image(img, <span class="hljs-string">&#x27;A1&#x27;</span>) <span class="hljs-comment"># 插入图像至工作表</span>
+wb.save(<span class="hljs-string">&#x27;simple_usage.xlsx&#x27;</span>)</code></pre></div>
+<p>我也随便插入了张图片，效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209060222333.png" srcset="/img/loading.gif" lazyload /></p>
+<p>看了下源码， openpyxl
+这个库本身没有提供处理图片的方法（包括调整大小这种也没有）。不过它是用的
+Pillow 导入的图片，应该也能用 Pillow 操作，这里暂时不研究了。</p>
+<h2 id="折叠表格">折叠表格</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 按列折叠</span>
+ws.column_dimensions.group(<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-string">&#x27;D&#x27;</span>, hidden=<span class="hljs-literal">True</span>)
+<span class="hljs-comment"># 按行折叠</span>
+ws.row_dimensions.group(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>, hidden=<span class="hljs-literal">True</span>)</code></pre></div>
+<p>这个折叠好像跟我想的有点不太一样，我以为是隐藏那个功能但不是，结果长这样：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209060234278.png" srcset="/img/loading.gif" lazyload /></p>
+<p>可以通过图上的 <code>+</code> 与 <code>-</code> 折叠与展开。</p>
+<p>我查了一下它是用的这个功能：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209060242781.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="优化模式">优化模式</h1>
+<h2 id="只读模式">只读模式</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> load_workbook
+
+wb = load_workbook(filename=<span class="hljs-string">&#x27;sample.xlsx&#x27;</span>, read_only=<span class="hljs-literal">True</span>)
+
+<span class="hljs-comment"># 关闭工作簿</span>
+wb.close()</code></pre></div>
+<blockquote>
+<p>只读模式的工作簿必须使用 <code>close()</code>
+方法显式关闭工作簿。</p>
+</blockquote>
+<h2 id="只写模式">只写模式</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = Workbook(write_only=<span class="hljs-literal">True</span>)</code></pre></div>
+<blockquote>
+<ul>
+<li>只写模式的工作簿必须使用 <code>wb.create_sheet()</code>
+方法创建新的工作表，而不能用 <code>wb.active</code> 。</li>
+<li>只写模式工作簿的工作表中，只能使用 <code>append()</code>
+方法添加行，不能使用 <code>cell()</code> 或 <code>iter_rows()</code>
+操作单元格。</li>
+<li>只写工作簿只能保存一次。之后，每次将工作簿或 <code>append()</code>
+保存到现有工作表的尝试都会抛出异常。</li>
+</ul>
+</blockquote>
+<h1 id="插入删除行列与移动表格">插入删除行列与移动表格</h1>
+<h2 id="插入行列">插入行列</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 插入行</span>
+ws.insert_rows()
+<span class="hljs-comment"># 插入列</span>
+ws.insert_cols()</code></pre></div>
+<p>像插入删除移动这种操作需要记住的是下标这个问题。比如：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = Workbook()
+ws = wb.active
+
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>] = <span class="hljs-number">1</span>
+
+<span class="hljs-comment"># ws.insert_rows(0)</span>
+<span class="hljs-comment"># ws.insert_cols(0)</span>
+<span class="hljs-comment"># or</span>
+<span class="hljs-comment"># ws.insert_rows(1)</span>
+<span class="hljs-comment"># ws.insert_cols(1)</span>
+
+wb.save(<span class="hljs-string">&#x27;insert_delete_move.xlsx&#x27;</span>)</code></pre></div>
+<p>以上代表不管是以 0 这个位置还是 1 这个位置结果都长这样：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070009244.png" srcset="/img/loading.gif" lazyload /></p>
+<p>所以说就是在你的第 n 行/列前插入行列。 Excel
+的插入行或者插入列也是在选择的行列之前。</p>
+<h2 id="删除行列">删除行列</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 删除行</span>
+ws.delete_rows()
+<span class="hljs-comment"># 删除列</span>
+ws.delete_cols()</code></pre></div>
+<p>当然这个方法可以删多行或者多列，比如：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = Workbook()
+ws = wb.active
+
+<span class="hljs-comment"># 每个格子填自己的单元格坐标</span>
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>):
+    <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>):
+        ws.cell(row=row, column=col, value=<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-built_in">chr</span>(<span class="hljs-number">64</span>+col)&#125;</span><span class="hljs-subst">&#123;row&#125;</span>&#x27;</span>)
+
+<span class="hljs-comment"># 从第 3 列开始，删除 4 列（即 3(C)、4(D)、5(E)、6(F) 列）</span>
+ws.delete_cols(<span class="hljs-number">3</span>,<span class="hljs-number">4</span>)
+<span class="hljs-built_in">print</span>(ws.max_column)
+
+wb.save(<span class="hljs-string">&#x27;insert_delete_move.xlsx&#x27;</span>)</code></pre></div>
+<p>像这样，打印结果是 6 ，表格结果就是：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070023828.png" srcset="/img/loading.gif" lazyload /></p>
+<p>可以看到 C、D、E、F 本来的数据被删了导致后面的列放到前面来了。</p>
+<h2 id="单元格组的移动">单元格组的移动</h2>
+<div class="code-wrapper"><pre><code class="hljs python">ws.move_range(<span class="hljs-string">&#x27;B4:C5&#x27;</span>, rows=-<span class="hljs-number">1</span>, cols=<span class="hljs-number">1</span>)</code></pre></div>
+<ul>
+<li>在行这个维度上，负数代表向上移动，正数代表向下移动。</li>
+<li>在列这个维度上，负数代表向左移动，正数代表向右移动。</li>
+</ul>
+<p>比如：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = Workbook()
+ws = wb.active
+
+<span class="hljs-comment"># 每个格子填自己的单元格坐标</span>
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>):
+    <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>):
+        ws.cell(row=row, column=col, value=<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-built_in">chr</span>(<span class="hljs-number">64</span>+col)&#125;</span><span class="hljs-subst">&#123;row&#125;</span>&#x27;</span>)
+
+<span class="hljs-comment"># B4:C5 向右下移动一格</span>
+ws.move_range(<span class="hljs-string">&#x27;B4:C5&#x27;</span>, rows=<span class="hljs-number">1</span>, cols=<span class="hljs-number">1</span>)
+
+wb.save(<span class="hljs-string">&#x27;insert_delete_move.xlsx&#x27;</span>)</code></pre></div>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070030284.png" srcset="/img/loading.gif" lazyload /></p>
+<p>看，<code>B4:C5</code> 向右下移动了一位吧。</p>
+<p>如果你不希望你的公式乱掉，你可以：</p>
+<div class="code-wrapper"><pre><code class="hljs python">ws.move_range(<span class="hljs-string">&#x27;B4:C5&#x27;</span>, rows=<span class="hljs-number">1</span>, cols=<span class="hljs-number">1</span>, translate=<span class="hljs-literal">True</span>)</code></pre></div>
+<h1 id="numpy-和-pandas-相关">NumPy 和 Pandas 相关</h1>
+<p><strong>这里是非常重要的一部分</strong>。因为用 openpyxl
+的目的就是为了展示数据统计或分析之后的成果，在 Python
+里处理数据一般都是用 Pandas 或者 NumPy 。</p>
+<h2 id="worksheet-添加-dataframe">Worksheet 添加 DataFrame</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+<span class="hljs-keyword">from</span> openpyxl.utils.dataframe <span class="hljs-keyword">import</span> dataframe_to_rows
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+wb = Workbook()
+ws = wb.active
+
+df = pd.DataFrame(&#123;<span class="hljs-string">&#x27;number&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], <span class="hljs-string">&#x27;str&#x27;</span>: [<span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>]&#125;)
+
+<span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> dataframe_to_rows(df, header=<span class="hljs-literal">True</span>, index=<span class="hljs-literal">False</span>):
+    ws.append(r)
+
+wb.save(<span class="hljs-string">&#x27;numpy_pandas.xlsx&#x27;</span>)</code></pre></div>
+<p>结果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070111115.png" srcset="/img/loading.gif" lazyload /></p>
+<p>其实就是利用 <code>dataframe_to_rows()</code> 这个方法逐行添加。</p>
+<h2 id="worksheet-转换为-dataframe">Worksheet 转换为 DataFrame</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+df = pd.DataFrame(ws.values)</code></pre></div>
+<p>从这里我们可以看出来，取值的操作是加了 <code>values</code>
+的，所以如果是用 <code>cell</code> 单元格，也得是
+<code>cell.value</code> 才行。</p>
+<h1 id="图表">图表</h1>
+<p><strong>这里我认为是最重要的一部分。</strong>这里可以说是用 Excel
+的原因所在。</p>
+<h2 id="作图流程示例">作图流程示例</h2>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+wb = Workbook()
+ws = wb.active
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):
+    ws.append([i])
+
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> BarChart, Reference, Series
+
+values = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">1</span>, max_col=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">10</span>) <span class="hljs-comment"># 选择作图数据</span>
+chart = BarChart() <span class="hljs-comment"># 选择图表类型</span>
+chart.add_data(values) <span class="hljs-comment"># 关联数据与图表</span>
+ws.add_chart(chart, <span class="hljs-string">&#x27;B1&#x27;</span>) <span class="hljs-comment"># 将图表添加到工作表并指定位置</span>
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>完成后的效果是这样的：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070227159.png" srcset="/img/loading.gif" lazyload /></p>
+<p>那么图表的大小也是可以修改的，比如上面所用的 <code>BarChart</code>
+，它实际上继承了 <code>ChartBase</code> ，这里展示一些
+<code>ChartBase</code> 的源码。</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070157686.png" srcset="/img/loading.gif" lazyload /></p>
+<p>那很显然，这个 <code>ChartBase</code>
+里是有宽与高的属性的，要更深层的自定义图表的效果势必要研究这一块的源码。</p>
+<h2 id="图表类型">图表类型</h2>
+<h3 id="面积图---area-charts">面积图 - Area Charts</h3>
+<h4 id="二维面积图---2d-area-charts">二维面积图 - 2D Area Charts</h4>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    AreaChart,
+    Reference,
+    Series,
+)
+
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Number&#x27;</span>, <span class="hljs-string">&#x27;分支1&#x27;</span>, <span class="hljs-string">&#x27;分支2&#x27;</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">40</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">40</span>, <span class="hljs-number">25</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>, <span class="hljs-number">10</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">25</span>, <span class="hljs-number">5</span>],
+    [<span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = AreaChart()
+<span class="hljs-comment"># 图表标题</span>
+chart.title = <span class="hljs-string">&#x27;面积图&#x27;</span>
+<span class="hljs-comment"># 图表风格</span>
+chart.style = <span class="hljs-number">10</span>
+<span class="hljs-comment"># X 轴标题</span>
+chart.x_axis.title = <span class="hljs-string">&#x27;数据&#x27;</span>
+<span class="hljs-comment"># Y 轴标题</span>
+chart.y_axis.title = <span class="hljs-string">&#x27;占比&#x27;</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_col=<span class="hljs-number">3</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 将数据与图表关联</span>
+chart.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+<span class="hljs-comment"># 将 X 轴与标签关联</span>
+chart.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&quot;A10&quot;</span>)
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070216454.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="三维面积图---3d-area-charts">三维面积图 - 3D Area Charts</h4>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    AreaChart3D,
+    Reference,
+    Series,
+)
+
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Number&#x27;</span>, <span class="hljs-string">&#x27;分支1&#x27;</span>, <span class="hljs-string">&#x27;分支2&#x27;</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">40</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">40</span>, <span class="hljs-number">25</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>, <span class="hljs-number">10</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">25</span>, <span class="hljs-number">5</span>],
+    [<span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = AreaChart3D()
+<span class="hljs-comment"># 图表标题</span>
+chart.title = <span class="hljs-string">&#x27;面积图&#x27;</span>
+<span class="hljs-comment"># 图表风格</span>
+chart.style = <span class="hljs-number">10</span>
+<span class="hljs-comment"># X 轴标题</span>
+chart.x_axis.title = <span class="hljs-string">&#x27;数据&#x27;</span>
+<span class="hljs-comment"># Y 轴标题</span>
+chart.y_axis.title = <span class="hljs-string">&#x27;占比&#x27;</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_col=<span class="hljs-number">3</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 将数据与图表关联</span>
+chart.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+<span class="hljs-comment"># 将 X 轴与标签关联</span>
+chart.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&quot;A10&quot;</span>)
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209070223200.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="柱状图与条形图---bar-and-column-charts">柱状图与条形图 - Bar and
+Column Charts</h3>
+<h4
+id="二维柱状图二维条形图与堆积图">二维柱状图、二维条形图与堆积图</h4>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    BarChart,
+    Reference,
+    Series,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Number&#x27;</span>, <span class="hljs-string">&#x27;分支1&#x27;</span>, <span class="hljs-string">&#x27;分支2&#x27;</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">40</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">40</span>, <span class="hljs-number">25</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>, <span class="hljs-number">10</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">25</span>, <span class="hljs-number">5</span>],
+    [<span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart1 = BarChart()
+<span class="hljs-comment"># 图表标题</span>
+chart1.title = <span class="hljs-string">&#x27;柱状图&#x27;</span>
+<span class="hljs-comment"># 图表风格</span>
+chart1.style = <span class="hljs-number">10</span>
+<span class="hljs-comment"># X 轴标题</span>
+chart1.x_axis.title = <span class="hljs-string">&#x27;数据&#x27;</span>
+<span class="hljs-comment"># Y 轴标题</span>
+chart1.y_axis.title = <span class="hljs-string">&#x27;占比&#x27;</span>
+<span class="hljs-comment"># 选择柱状图的类型</span>
+chart1.<span class="hljs-built_in">type</span> = <span class="hljs-string">&#x27;col&#x27;</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_col=<span class="hljs-number">3</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 将数据与图表关联</span>
+chart1.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+<span class="hljs-comment"># 将 X 轴与标签关联</span>
+chart1.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart1, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+<span class="hljs-keyword">from</span> copy <span class="hljs-keyword">import</span> deepcopy
+
+chart2 = deepcopy(chart1)
+chart2.<span class="hljs-built_in">type</span> = <span class="hljs-string">&#x27;bar&#x27;</span>
+chart2.title = <span class="hljs-string">&#x27;条形图&#x27;</span>
+
+ws.add_chart(chart2, <span class="hljs-string">&#x27;J10&#x27;</span>)
+
+chart3 = deepcopy(chart1)
+chart3.grouping = <span class="hljs-string">&#x27;stacked&#x27;</span>
+chart3.overlap = <span class="hljs-number">100</span>
+chart3.title = <span class="hljs-string">&#x27;柱状堆积图&#x27;</span>
+
+ws.add_chart(chart3, <span class="hljs-string">&#x27;A27&#x27;</span>)
+
+chart4 = deepcopy(chart2)
+chart4.grouping = <span class="hljs-string">&#x27;percentStacked&#x27;</span>
+chart4.overlap = <span class="hljs-number">100</span>
+chart4.title = <span class="hljs-string">&#x27;百分比堆积图&#x27;</span>
+
+ws.add_chart(chart4, <span class="hljs-string">&#x27;J27&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209072331682.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="三维柱状图">三维柱状图</h4>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    BarChart3D,
+    Reference,
+    Series,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Number&#x27;</span>, <span class="hljs-string">&#x27;分支1&#x27;</span>, <span class="hljs-string">&#x27;分支2&#x27;</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">40</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">40</span>, <span class="hljs-number">25</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>, <span class="hljs-number">10</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">25</span>, <span class="hljs-number">5</span>],
+    [<span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart1 = BarChart3D()
+<span class="hljs-comment"># 图表标题</span>
+chart1.title = <span class="hljs-string">&#x27;三维柱状图&#x27;</span>
+<span class="hljs-comment"># 图表风格</span>
+chart1.style = <span class="hljs-number">10</span>
+<span class="hljs-comment"># X 轴标题</span>
+chart1.x_axis.title = <span class="hljs-string">&#x27;数据&#x27;</span>
+<span class="hljs-comment"># Y 轴标题</span>
+chart1.y_axis.title = <span class="hljs-string">&#x27;占比&#x27;</span>
+<span class="hljs-comment"># 选择柱状图的类型</span>
+chart1.<span class="hljs-built_in">type</span> = <span class="hljs-string">&#x27;col&#x27;</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_col=<span class="hljs-number">3</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 将数据与图表关联</span>
+chart1.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+<span class="hljs-comment"># 将 X 轴与标签关联</span>
+chart1.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart1, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209072339092.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="气泡图---bubble-charts">气泡图 - Bubble Charts</h3>
+<blockquote>
+<p>气泡图类似于散点图，但使用另一维数据来确定气泡的大小。图表可以包括多个系列。</p>
+</blockquote>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    BubbleChart,
+    Reference,
+    Series,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Number&#x27;</span>, <span class="hljs-string">&#x27;分支1&#x27;</span>, <span class="hljs-string">&#x27;分支2&#x27;</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">40</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">40</span>, <span class="hljs-number">25</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>, <span class="hljs-number">10</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">25</span>, <span class="hljs-number">5</span>],
+    [<span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = BubbleChart()
+chart.style = <span class="hljs-number">10</span>
+chart.title = <span class="hljs-string">&#x27;气泡图&#x27;</span>
+
+<span class="hljs-comment"># 定义数据的坐标</span>
+xvalues = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">7</span>)
+yvalues = Reference(ws, min_col=<span class="hljs-number">3</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 定义泡泡大小</span>
+size = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 关联图表与数据</span>
+series = Series(values=yvalues, xvalues=xvalues, zvalues=size, title=<span class="hljs-string">&#x27;Number&#x27;</span>)
+chart.series.append(series)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209080031958.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="折线图---line-charts">折线图 - Line Charts</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    LineChart,
+    Reference,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Number&#x27;</span>, <span class="hljs-string">&#x27;分支1&#x27;</span>, <span class="hljs-string">&#x27;分支2&#x27;</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">40</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">40</span>, <span class="hljs-number">25</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>, <span class="hljs-number">10</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">25</span>, <span class="hljs-number">5</span>],
+    [<span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = LineChart()
+chart.title = <span class="hljs-string">&#x27;折线图&#x27;</span>
+chart.style = <span class="hljs-number">10</span>
+<span class="hljs-comment"># X 轴标题</span>
+chart.x_axis.title = <span class="hljs-string">&#x27;数据&#x27;</span>
+<span class="hljs-comment"># Y 轴标题</span>
+chart.y_axis.title = <span class="hljs-string">&#x27;占比&#x27;</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_col=<span class="hljs-number">3</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 将数据与图表关联</span>
+chart.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+<span class="hljs-comment"># 将 X 轴与标签关联</span>
+chart.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209080056319.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="散点图---scatter-charts">散点图 - Scatter Charts</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    ScatterChart,
+    Reference,
+    Series,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Number&#x27;</span>, <span class="hljs-string">&#x27;分支1&#x27;</span>, <span class="hljs-string">&#x27;分支2&#x27;</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">40</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">40</span>, <span class="hljs-number">25</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>, <span class="hljs-number">10</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">25</span>, <span class="hljs-number">5</span>],
+    [<span class="hljs-number">7</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = ScatterChart()
+chart.title = <span class="hljs-string">&#x27;散点图&#x27;</span>
+chart.style = <span class="hljs-number">10</span>
+<span class="hljs-comment"># X 轴标题</span>
+chart.x_axis.title = <span class="hljs-string">&#x27;数据&#x27;</span>
+<span class="hljs-comment"># Y 轴标题</span>
+chart.y_axis.title = <span class="hljs-string">&#x27;占比&#x27;</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">7</span>)
+<span class="hljs-comment"># 依次添加数据</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>):
+    data = Reference(ws, min_col=i, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">7</span>)
+    series = Series(data, cats, title_from_data=<span class="hljs-literal">True</span>)
+    chart.series.append(series)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090118802.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="饼状图---pie-charts">饼状图 - Pie Charts</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    PieChart,
+    Reference,
+    Series,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Category&#x27;</span>, <span class="hljs-string">&#x27;Percentage&#x27;</span>],
+    [<span class="hljs-number">1</span>, <span class="hljs-number">20</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">50</span>]
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = PieChart()
+chart.title = <span class="hljs-string">&#x27;饼状图&#x27;</span>
+chart.style = <span class="hljs-number">10</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">4</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">4</span>)
+chart.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+chart.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090125558.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="圆环图---doughnut-charts">圆环图 - Doughnut Charts</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    DoughnutChart,
+    Reference,
+    Series,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+<span class="hljs-comment"># rows = [</span>
+<span class="hljs-comment">#     [&#x27;Number&#x27;, &#x27;分支1&#x27;, &#x27;分支2&#x27;],</span>
+<span class="hljs-comment">#     [2, 40, 30],</span>
+<span class="hljs-comment">#     [3, 40, 25],</span>
+<span class="hljs-comment">#     [4, 50, 30],</span>
+<span class="hljs-comment">#     [5, 30, 10],</span>
+<span class="hljs-comment">#     [6, 25, 5],</span>
+<span class="hljs-comment">#     [7, 50, 10],</span>
+<span class="hljs-comment"># ]</span>
+
+rows = [
+    [<span class="hljs-string">&#x27;Category&#x27;</span>, <span class="hljs-string">&#x27;Percentage&#x27;</span>],
+    [<span class="hljs-number">1</span>, <span class="hljs-number">20</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">50</span>]
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = DoughnutChart()
+chart.title = <span class="hljs-string">&#x27;圆环图&#x27;</span>
+chart.style = <span class="hljs-number">10</span>
+<span class="hljs-comment"># # X 轴标题</span>
+<span class="hljs-comment"># chart.x_axis.title = &#x27;数据&#x27;</span>
+<span class="hljs-comment"># # Y 轴标题</span>
+<span class="hljs-comment"># chart.y_axis.title = &#x27;占比&#x27;</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">4</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">4</span>)
+chart.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+chart.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090127457.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="雷达图---radar-charts">雷达图 - Radar Charts</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    RadarChart,
+    Reference,
+    Series,
+)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	数据层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+wb = Workbook()
+ws = wb.active
+
+rows = [
+    [<span class="hljs-string">&#x27;Category&#x27;</span>, <span class="hljs-string">&#x27;Percentage&#x27;</span>],
+    [<span class="hljs-number">1</span>, <span class="hljs-number">20</span>],
+    [<span class="hljs-number">2</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">3</span>, <span class="hljs-number">50</span>],
+    [<span class="hljs-number">4</span>, <span class="hljs-number">20</span>],
+    [<span class="hljs-number">5</span>, <span class="hljs-number">30</span>],
+    [<span class="hljs-number">6</span>, <span class="hljs-number">30</span>]
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows:
+    ws.append(row)
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-string">	展示层</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+<span class="hljs-comment"># 定义图表类型</span>
+chart = RadarChart()
+chart.title = <span class="hljs-string">&#x27;雷达图&#x27;</span>
+chart.style = <span class="hljs-number">10</span>
+
+<span class="hljs-comment"># 选择标签数据</span>
+cats = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">4</span>)
+<span class="hljs-comment"># 选择数据</span>
+data = Reference(ws, min_col=<span class="hljs-number">2</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">4</span>)
+chart.add_data(data, titles_from_data=<span class="hljs-literal">True</span>)
+chart.set_categories(cats)
+
+<span class="hljs-comment"># 将图表添加进工作表</span>
+ws.add_chart(chart, <span class="hljs-string">&#x27;A10&#x27;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090134136.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="股票图---stock-charts">股票图 - Stock Charts</h3>
+<p>这个暂时不用。</p>
+<h3 id="曲面图---surface-charts">曲面图 - Surface charts</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+<span class="hljs-keyword">from</span> openpyxl.chart <span class="hljs-keyword">import</span> (
+    SurfaceChart,
+    SurfaceChart3D,
+    Reference,
+    Series,
+)
+<span class="hljs-keyword">from</span> openpyxl.chart.axis <span class="hljs-keyword">import</span> SeriesAxis
+<span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">    数据层</span>
+<span class="hljs-string">&quot;&quot;&quot;</span>
+wb = Workbook()
+ws = wb.active
+
+data = [
+    [
+        <span class="hljs-literal">None</span>,
+        <span class="hljs-number">10</span>,
+        <span class="hljs-number">20</span>,
+        <span class="hljs-number">30</span>,
+        <span class="hljs-number">40</span>,
+        <span class="hljs-number">50</span>,
+    ],
+    [
+        <span class="hljs-number">0.1</span>,
+        <span class="hljs-number">15</span>,
+        <span class="hljs-number">65</span>,
+        <span class="hljs-number">105</span>,
+        <span class="hljs-number">65</span>,
+        <span class="hljs-number">15</span>,
+    ],
+    [
+        <span class="hljs-number">0.2</span>,
+        <span class="hljs-number">35</span>,
+        <span class="hljs-number">105</span>,
+        <span class="hljs-number">170</span>,
+        <span class="hljs-number">105</span>,
+        <span class="hljs-number">35</span>,
+    ],
+    [
+        <span class="hljs-number">0.3</span>,
+        <span class="hljs-number">55</span>,
+        <span class="hljs-number">135</span>,
+        <span class="hljs-number">215</span>,
+        <span class="hljs-number">135</span>,
+        <span class="hljs-number">55</span>,
+    ],
+    [
+        <span class="hljs-number">0.4</span>,
+        <span class="hljs-number">75</span>,
+        <span class="hljs-number">155</span>,
+        <span class="hljs-number">240</span>,
+        <span class="hljs-number">155</span>,
+        <span class="hljs-number">75</span>,
+    ],
+    [
+        <span class="hljs-number">0.5</span>,
+        <span class="hljs-number">80</span>,
+        <span class="hljs-number">190</span>,
+        <span class="hljs-number">245</span>,
+        <span class="hljs-number">190</span>,
+        <span class="hljs-number">80</span>,
+    ],
+    [
+        <span class="hljs-number">0.6</span>,
+        <span class="hljs-number">75</span>,
+        <span class="hljs-number">155</span>,
+        <span class="hljs-number">240</span>,
+        <span class="hljs-number">155</span>,
+        <span class="hljs-number">75</span>,
+    ],
+    [
+        <span class="hljs-number">0.7</span>,
+        <span class="hljs-number">55</span>,
+        <span class="hljs-number">135</span>,
+        <span class="hljs-number">215</span>,
+        <span class="hljs-number">135</span>,
+        <span class="hljs-number">55</span>,
+    ],
+    [
+        <span class="hljs-number">0.8</span>,
+        <span class="hljs-number">35</span>,
+        <span class="hljs-number">105</span>,
+        <span class="hljs-number">170</span>,
+        <span class="hljs-number">105</span>,
+        <span class="hljs-number">35</span>,
+    ],
+    [<span class="hljs-number">0.9</span>, <span class="hljs-number">15</span>, <span class="hljs-number">65</span>, <span class="hljs-number">105</span>, <span class="hljs-number">65</span>, <span class="hljs-number">15</span>],
+]
+
+<span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> data:
+    ws.append(row)
+
+
+<span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">    展示层</span>
+<span class="hljs-string">&quot;&quot;&quot;</span>
+c1 = SurfaceChart()
+ref = Reference(ws, min_col=<span class="hljs-number">2</span>, max_col=<span class="hljs-number">6</span>, min_row=<span class="hljs-number">1</span>, max_row=<span class="hljs-number">10</span>)
+labels = Reference(ws, min_col=<span class="hljs-number">1</span>, min_row=<span class="hljs-number">2</span>, max_row=<span class="hljs-number">10</span>)
+c1.add_data(ref, titles_from_data=<span class="hljs-literal">True</span>)
+c1.set_categories(labels)
+c1.title = <span class="hljs-string">&quot;二维曲面图&quot;</span>
+
+ws.add_chart(c1, <span class="hljs-string">&quot;G1&quot;</span>)
+
+<span class="hljs-keyword">from</span> copy <span class="hljs-keyword">import</span> deepcopy
+
+<span class="hljs-comment"># 线框</span>
+c2 = deepcopy(c1)
+c2.wireframe = <span class="hljs-literal">True</span>
+c2.title = <span class="hljs-string">&quot;二维框线图&quot;</span>
+
+ws.add_chart(c2, <span class="hljs-string">&quot;N1&quot;</span>)
+
+<span class="hljs-comment"># 3D 表面</span>
+c3 = SurfaceChart3D()
+c3.add_data(ref, titles_from_data=<span class="hljs-literal">True</span>)
+c3.set_categories(labels)
+c3.title = <span class="hljs-string">&quot;三维曲面图&quot;</span>
+
+ws.add_chart(c3, <span class="hljs-string">&quot;G17&quot;</span>)
+
+c4 = deepcopy(c3)
+c4.wireframe = <span class="hljs-literal">True</span>
+c4.title = <span class="hljs-string">&quot;三维框线图&quot;</span>
+
+ws.add_chart(c4, <span class="hljs-string">&quot;N17&quot;</span>)
+
+wb.save(<span class="hljs-string">&#x27;charts.xlsx&#x27;</span>)</code></pre></div>
+<p>效果如下：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202209090140116.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="轴的使用">轴的使用</h2>
+<h2 id="图表布局">图表布局</h2>
+<h2 id="图表样式">图表样式</h2>
+<h2 id="高级图表">高级图表</h2>
+<h2 id="图表页工作表">图表页工作表</h2>
+<h1 id="评论">评论</h1>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> openpyxl
+
+wb = openpyxl.Workbook()
+ws = wb.active
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>].comment = openpyxl.comments.Comment(<span class="hljs-string">&#x27;text&#x27;</span>,<span class="hljs-string">&#x27;author&#x27;</span>)
+wb.save(<span class="hljs-string">&#x27;comment.xlsx&#x27;</span>)</code></pre></div>
+<p>可以看到，评论就被添加上了，不过似乎没有 <code>Author</code> 。</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202211211220411.png" srcset="/img/loading.gif" lazyload /></p>
+<p>然后同时也可以编辑评论框的大小。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> openpyxl
+
+wb = openpyxl.Workbook()
+ws = wb.active
+
+<span class="hljs-comment"># 以像素为单位</span>
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>].comment = openpyxl.comments.Comment(<span class="hljs-string">&#x27;text&#x27;</span>,<span class="hljs-string">&#x27;author&#x27;</span>)
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>].comment.width = <span class="hljs-number">1000</span>
+ws[<span class="hljs-string">&#x27;A1&#x27;</span>].comment.height = <span class="hljs-number">200</span>
+
+<span class="hljs-comment"># 通过其它单位转换，需要用到 utils.units</span>
+ws[<span class="hljs-string">&#x27;B2&#x27;</span>].comment = openpyxl.comments.Comment(<span class="hljs-string">&#x27;text2&#x27;</span>, <span class="hljs-string">&#x27;author2&#x27;</span>)
+ws[<span class="hljs-string">&#x27;B2&#x27;</span>].comment.width = openpyxl.utils.units.points_to_pixels(<span class="hljs-number">1000</span>)
+ws[<span class="hljs-string">&#x27;B2&#x27;</span>].comment.height = openpyxl.utils.units.points_to_pixels(<span class="hljs-number">200</span>)
+
+wb.save(<span class="hljs-string">&#x27;comment.xlsx&#x27;</span>)</code></pre></div>
+<p>A1：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202211211228749.png" srcset="/img/loading.gif" lazyload /></p>
+<p>B2：</p>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202211211229164.png" srcset="/img/loading.gif" lazyload /></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/DataScience/" class="category-chain-item">DataScience</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/DataScience/Excel/" class="category-chain-item">Excel</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/python/">#python</a>
+      
+        <a href="/tags/excel/">#excel</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>openpyxl 包的学习</div>
+      <div>https://movisli.github.io/2022/11/21/openpyxl/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>MovisLi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 21, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/22/leetcode20221122/" title="LeetCode 645 657">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LeetCode 645 657</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/11/18/leetcode20221118/" title="LeetCode 643">
+                        <span class="hidden-mobile">LeetCode 643</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

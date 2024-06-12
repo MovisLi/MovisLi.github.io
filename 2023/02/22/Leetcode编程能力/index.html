@@ -1,0 +1,2682 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.jpg">
+  <link rel="icon" href="/img/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414142">
+  <meta name="author" content="MovisLi">
+  <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
+  
+    <meta name="description" content="编程能力入门 基本数据类型 1523. 在区间范围内统计奇数数目 首先就分为四种情况：    low high result     奇数 奇数 \(&#x3D;(high-low)&#x2F;&#x2F;2 + 1\)   奇数 偶数 \(&#x3D;(high-low)&#x2F;&#x2F;2 + 1\)   偶数 奇数 \(&#x3D;(high-low)&#x2F;&#x2F;2 + 1\)   偶数 偶数 \(&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「编程能力」 - 学习计划">
+<meta property="og:url" content="https://movisli.github.io/2023/02/22/Leetcode%E7%BC%96%E7%A8%8B%E8%83%BD%E5%8A%9B/index.html">
+<meta property="og:site_name" content="movis">
+<meta property="og:description" content="编程能力入门 基本数据类型 1523. 在区间范围内统计奇数数目 首先就分为四种情况：    low high result     奇数 奇数 \(&#x3D;(high-low)&#x2F;&#x2F;2 + 1\)   奇数 偶数 \(&#x3D;(high-low)&#x2F;&#x2F;2 + 1\)   偶数 奇数 \(&#x3D;(high-low)&#x2F;&#x2F;2 + 1\)   偶数 偶数 \(&#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-21T16:18:45.000Z">
+<meta property="article:modified_time" content="2024-06-07T08:32:58.968Z">
+<meta property="article:author" content="MovisLi">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="hash">
+<meta property="article:tag" content="point">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>「编程能力」 - 学习计划 - movis</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Movis</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="「编程能力」 - 学习计划"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        MovisLi
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-22 00:18" pubdate>
+          February 22, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          34k words
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">「编程能力」 - 学习计划</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="编程能力入门">编程能力入门</h1>
+<h2 id="基本数据类型">基本数据类型</h2>
+<h3 id="在区间范围内统计奇数数目">1523. 在区间范围内统计奇数数目</h3>
+<p>首先就分为四种情况：</p>
+<table>
+<thead>
+<tr class="header">
+<th>low</th>
+<th>high</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>奇数</td>
+<td>奇数</td>
+<td><span class="math inline">\(=(high-low)//2 + 1\)</span></td>
+</tr>
+<tr class="even">
+<td>奇数</td>
+<td>偶数</td>
+<td><span class="math inline">\(=(high-low)//2 + 1\)</span></td>
+</tr>
+<tr class="odd">
+<td>偶数</td>
+<td>奇数</td>
+<td><span class="math inline">\(=(high-low)//2 + 1\)</span></td>
+</tr>
+<tr class="even">
+<td>偶数</td>
+<td>偶数</td>
+<td><span class="math inline">\(=(high-low)//2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>这就有了：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">countOdds</span>(<span class="hljs-params">self, low: <span class="hljs-built_in">int</span>, high: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> (high - low)//<span class="hljs-number">2</span> <span class="hljs-keyword">if</span> low&amp;<span class="hljs-number">1</span>==<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> high&amp;<span class="hljs-number">1</span>==<span class="hljs-number">0</span> <span class="hljs-keyword">else</span> (high - low)//<span class="hljs-number">2</span> + <span class="hljs-number">1</span></code></pre></div>
+<p>问题在于我发现这个算法好像不怎么快。如果要比这个更快的话只能没有这个
+<code>if</code> 的条件判断了。</p>
+<p>如果要合二为一的话，我想到一个问题，[0, 一个数 <code>x</code> ]
+的奇数个数怎么计算呢？</p>
+<p>很容易得出结果是 <span
+class="math inline">\((x+1)//2\)</span>，按照这个思路，其实就是
+<code>(high+1)//2 - (low+1)//2</code>
+，但是稍有不同的是这个式子其实没有算 <code>low</code> 这个数，如果
+<code>low</code> 这个数是个奇数的话，因此：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">countOdds</span>(<span class="hljs-params">self, low: <span class="hljs-built_in">int</span>, high: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> (high+<span class="hljs-number">1</span>)//<span class="hljs-number">2</span> - low//<span class="hljs-number">2</span></code></pre></div>
+<h3 id="去掉最低工资和最高工资后的工资平均值">1491.
+去掉最低工资和最高工资后的工资平均值</h3>
+<p>直接调用函数是比较直接的：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">average</span>(<span class="hljs-params">self, salary: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">float</span>:
+        <span class="hljs-keyword">return</span> (<span class="hljs-built_in">sum</span>(salary)-<span class="hljs-built_in">max</span>(salary)-<span class="hljs-built_in">min</span>(salary))/(<span class="hljs-built_in">len</span>(salary)-<span class="hljs-number">2</span>)</code></pre></div>
+<p>我们也可以尽量把操作放在一次循环里。</p>
+<div class="code-wrapper"><pre><code class="hljs python3">class Solution:
+    def average(self, salary: List[int]) -&gt; float:
+        salary_max = salary[0]
+        salary_min = salary[0]
+        salary_sum = 0
+        for i in salary:
+            salary_sum += i
+            if i &gt; salary_max:
+                salary_max = i
+            elif i &lt; salary_min:
+                salary_min = i
+        return (salary_sum-salary_max-salary_min)/(len(salary)-2)</code></pre></div>
+<p>这里有个小坑，假如你的初始最大值是 <code>1e3</code>
+，也就是理论上最小值，初始最小值是 <code>1e6</code>
+也就是理论上的最大值，这里不能写 <code>if elif</code>
+，因为对第一个值是最小值的情况会解答错误。</p>
+<h2 id="运算符">运算符</h2>
+<h3 id="位1的个数">191. 位1的个数</h3>
+<p>首先可以转换成字符串，然后统计字符 <code>'1'</code> 的个数。这里取
+<code>[2:]</code> 主要是用 <code>bin()</code> 这个函数转换之后是
+<code>0bxxx</code> 这种形式。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hammingWeight</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        n_str = <span class="hljs-built_in">bin</span>(n)[<span class="hljs-number">2</span>:]
+        <span class="hljs-keyword">return</span> n_str.count(<span class="hljs-string">&#x27;1&#x27;</span>)</code></pre></div>
+<p>从位运算的角度考虑，判断奇偶可以用 <code>n&amp;1==1?</code>
+相当于看最后一位是不是 <code>1</code> ，所以可以将数字不断向右移位来判断
+<code>1</code> 的个数。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hammingWeight</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> n:
+            res += n&amp;<span class="hljs-number">1</span>
+            n &gt;&gt;= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>还有个操作 <code>n&amp;(n-1)</code> 作用是将最右端的 <code>1</code>
+置 <code>0</code> ：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hammingWeight</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> n:
+            n &amp;= n-<span class="hljs-number">1</span>
+            res += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="整数的各位积和之差">1281. 整数的各位积和之差</h3>
+<p>模拟。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">subtractProductAndSum</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        bit_sum = <span class="hljs-number">0</span>
+        bit_mul = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> n:
+            temp = n%<span class="hljs-number">10</span>
+            n //= <span class="hljs-number">10</span>
+            bit_sum += temp
+            bit_mul *= temp
+        <span class="hljs-keyword">return</span> bit_mul - bit_sum</code></pre></div>
+<h2 id="条件语句">条件语句</h2>
+<h3 id="三角形的最大周长">976. 三角形的最大周长</h3>
+<p>最开始想的是列出所有排列组合然后看满足条件的排列组合，找周长最大的那个，然后
+<code>OOT</code> 了。</p>
+<p>后来发觉这个其实是个排序然后滑动窗口的问题，由大到小（逆序）排序后，从最左开始滑动包含
+3 个数的窗口，当遇到满足条件的窗口直接返回窗口内数的和，否则返回 0
+。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">largestPerimeter</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        nums = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">sorted</span>(nums, reverse=<span class="hljs-literal">True</span>))
+        x = <span class="hljs-number">0</span>
+        y = <span class="hljs-number">1</span>
+        z = <span class="hljs-number">2</span>
+        nums_len = <span class="hljs-built_in">len</span>(nums)
+        <span class="hljs-keyword">while</span> z&lt;nums_len:
+            <span class="hljs-keyword">if</span> nums[x]+nums[y]&gt;nums[z] <span class="hljs-keyword">and</span> nums[y]+nums[z]&gt;nums[x] <span class="hljs-keyword">and</span> nums[x]+nums[z]&gt;nums[y]:
+                <span class="hljs-keyword">return</span> nums[x]+nums[y]+nums[z]
+            x += <span class="hljs-number">1</span>
+            y += <span class="hljs-number">1</span>
+            z += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span></code></pre></div>
+<h3 id="找到最近的有相同-x-或-y-坐标的点">1779. 找到最近的有相同 X 或 Y
+坐标的点</h3>
+<p>简单模拟，这道题的坑在于这里的下标指的是点在 <code>points</code>
+中的位置而非点的 x 坐标。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nearestValidPoint</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span>, y: <span class="hljs-built_in">int</span>, points: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        m_dis_min = <span class="hljs-number">10001</span>
+        res = -<span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> index,point <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(points):
+            <span class="hljs-keyword">if</span> point[<span class="hljs-number">0</span>] == x <span class="hljs-keyword">or</span> point[<span class="hljs-number">1</span>] == y:
+                m_dis = <span class="hljs-built_in">abs</span>(point[<span class="hljs-number">0</span>]-x)+<span class="hljs-built_in">abs</span>(point[<span class="hljs-number">1</span>]-y)
+                <span class="hljs-keyword">if</span> m_dis &lt; m_dis_min:
+                    res = index
+                    m_dis_min = m_dis
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h2 id="循环">循环</h2>
+<h3 id="数组元素积的符号">1822. 数组元素积的符号</h3>
+<p>没有必要真的去乘，只需要关注数的正负性对结果的影响。循环遍历数组：</p>
+<ul>
+<li>如果是正数，乘积不变号，进入下次循环。</li>
+<li>如果是 0 ，乘积为 0 ，跳出循环。</li>
+<li>如果是负数，乘积变号，进入下次循环。</li>
+</ul>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">arraySign</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums:
+            <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">0</span>:
+                res *= -<span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> i == <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="判断能否形成等差数列">1502. 判断能否形成等差数列</h3>
+<p>先排序，并从前两个数求得差值，在依次遍历，如果发现某连续两个数的差值不等于之前求的差值，则说明不是等差数列，否则是等差数列。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">canMakeArithmeticProgression</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        arr = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">sorted</span>(arr))
+        diff = arr[<span class="hljs-number">1</span>]-arr[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(arr)-<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> arr[i+<span class="hljs-number">1</span>]-arr[i] != diff:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
+<h3 id="快乐数">202. 快乐数</h3>
+<p>这个过程让我想到《火影忍者》里的忍术伊邪那美，我们试想下如果处在一个循环的进程中，你什么时候会发现你循环了呢？那就是过去的东西再次重复的时候。所以这道题很显然就是用一个
+<code>set</code> 来存储过程中出现的数，如果出现的数在 <code>set</code>
+里了就说明不是快乐数，否则是快乐数。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isHappy</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        num_set = &#123;n&#125;
+        <span class="hljs-keyword">while</span> n != <span class="hljs-number">1</span>:
+            temp = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">while</span> n!=<span class="hljs-number">0</span>:
+                temp += (n%<span class="hljs-number">10</span>)*(n%<span class="hljs-number">10</span>)
+                n //= <span class="hljs-number">10</span>
+            n = temp
+            <span class="hljs-keyword">if</span> n <span class="hljs-keyword">in</span> num_set:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">else</span>:
+                num_set.add(n)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
+<h3 id="仅执行一次字符串交换能否使两个字符串相等">1790.
+仅执行一次字符串交换能否使两个字符串相等</h3>
+<p>定义一个数组记录不相同的值的下标，如果两个字符串不同，当且仅当数组长度为
+2 且字符串 <code>s1</code> 与 <code>s2</code>
+不同的数交叉相等时，满足题意。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">areAlmostEqual</span>(<span class="hljs-params">self, s1: <span class="hljs-built_in">str</span>, s2: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> s1 == s2:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        counter = []
+        <span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(s2):
+            <span class="hljs-keyword">if</span> v != s1[i]:
+                counter.append(i)
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(counter) == <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> s2[counter[<span class="hljs-number">0</span>]] == s1[counter[<span class="hljs-number">1</span>]] <span class="hljs-keyword">and</span> s2[counter[<span class="hljs-number">1</span>]] == s1[counter[<span class="hljs-number">0</span>]]:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h2 id="函数">函数</h2>
+<h3 id="n-叉树的前序遍历">589. N 叉树的前序遍历</h3>
+<p>递归，前序遍历（又称 NLR
+）其实很简单，就是先遍历根节点，遍历子节点，和深度优先搜索是一样的，所以：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">preorder</span>(<span class="hljs-params">self, root: <span class="hljs-string">&#x27;Node&#x27;</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        res = []
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">node</span>):
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+            res.append(node.val)
+            <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> node.children:
+                dfs(child)
+        dfs(root)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>非递归，用栈的思想，从根节点开始，先添加节点值进结果，在反序添加孩子的值进栈，每次循环出栈一个节点并打印，再添加。这个是更直观的深度优先搜索。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">preorder</span>(<span class="hljs-params">self, root: <span class="hljs-string">&#x27;Node&#x27;</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        <span class="hljs-keyword">if</span> root <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+        res = []
+        stack = [root]
+        <span class="hljs-keyword">while</span> stack:
+            temp = stack.pop()
+            res.append(temp.val)
+            <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(temp.children):
+                stack.append(child)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="下一个更大元素-i">496. 下一个更大元素 I</h3>
+<p>我们逆序遍历 <code>nums2</code> ，可以用一个 <code>stack</code>
+来记录比当前所有数都大的数，如果比当前数小就出栈直到比当前数大或者非空，那么遍历到下一个更大元素实际上就是栈顶元素。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextGreaterElement</span>(<span class="hljs-params">self, nums1: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], nums2: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        hashmap = &#123;&#125;
+        stack = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(nums2):
+            <span class="hljs-keyword">while</span> stack <span class="hljs-keyword">and</span> i&gt;stack[-<span class="hljs-number">1</span>]:
+                stack.pop()
+            hashmap[i] = stack[-<span class="hljs-number">1</span>] <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> -<span class="hljs-number">1</span>
+            stack.append(i)
+        <span class="hljs-keyword">return</span> [hashmap[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums1]</code></pre></div>
+<h3 id="缀点成线">1232. 缀点成线</h3>
+<p>一条直线上的点斜率相等。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">checkStraightLine</span>(<span class="hljs-params">self, coordinates: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        dy = coordinates[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]-coordinates[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]
+        dx = coordinates[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]-coordinates[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">for</span> point <span class="hljs-keyword">in</span> coordinates[<span class="hljs-number">2</span>:]:
+            <span class="hljs-keyword">if</span> (point[<span class="hljs-number">1</span>]-coordinates[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>])*dx != (point[<span class="hljs-number">0</span>]-coordinates[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>])*dy:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
+<p>这样写是为了避免除数为 0 的情况。</p>
+<h2 id="数组">数组</h2>
+<h3 id="所有奇数长度子数组的和">1588. 所有奇数长度子数组的和</h3>
+<p>很显然这必然是一道数学题。我们先用的解法，遍历数组模拟流程：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sumOddLengthSubarrays</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">0</span>
+        arr_len = <span class="hljs-built_in">len</span>(arr)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(arr_len):
+            temp = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">while</span> i+temp &lt;= arr_len:
+                <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> arr[i:i+temp]:
+                    res += v
+                temp += <span class="hljs-number">2</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>之后我们想一种数学关系，先列出一个矩阵：</p>
+<table style="width:100%;">
+
+<thead>
+<tr class="header">
+<th>长度</th>
+<th>数组</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>[1]</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>[1, 2]</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>[1, 2, 3]</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>[1, 2, 3, 4]</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>[1, 2, 3, 4, 5]</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>[1, 2, 3, 4, 5, 6]</td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>6</td>
+<td>5</td>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>[1, 2, 3, 4, 5, 6, 7]</td>
+<td>4</td>
+<td>6</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>6</td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>[1, 2, 3, 4, 5, 6, 7, 8]</td>
+<td>4</td>
+<td>6</td>
+<td>8</td>
+<td>9</td>
+<td>9</td>
+<td>8</td>
+<td>6</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>[1, 2, 3, 4, 5, 6, 7, 8, 9]</td>
+<td>5</td>
+<td>8</td>
+<td>11</td>
+<td>12</td>
+<td>13</td>
+<td>12</td>
+<td>11</td>
+<td>8</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>可以发现多项式的系数呈现对称关系。</p>
+<p>以 5 为例，呈现这样的分布经过了 1, 3, 5 这 3
+个奇数向量的相加，其中：</p>
+<ul>
+<li>1 - 1, 1, 1, 1, 1</li>
+<li>3 - 1, 2, 3, 2, 1</li>
+<li>5 - 1, 1, 1, 1, 1</li>
+</ul>
+<p>以 7 为例，呈现这样的分布经过了 1, 3, 5, 7 这 4
+个奇数向量的相加，其中：</p>
+<ul>
+<li>1 - 1, 1, 1, 1, 1, 1, 1</li>
+<li>3 - 1, 2, 3, 3, 3, 2, 1</li>
+<li>5 - 1, 2, 3, 3, 3, 2, 1</li>
+<li>7 - 1, 1, 1, 1, 1, 1, 1</li>
+</ul>
+<p>再以 9 为例，呈现这样的分布经过了 1, 3, 5, 7, 9 这 5
+个奇数向量的相加，其中：</p>
+<ul>
+<li>1 - 1, 1, 1, 1, 1, 1, 1, 1, 1</li>
+<li>3 - 1, 2, 3, 3, 3, 3, 3, 2, 1</li>
+<li>5 - 1, 2, 3, 4, 5, 4, 3, 2, 1</li>
+<li>7 - 1, 2, 3, 3, 3, 3, 3, 2, 1</li>
+<li>9 - 1, 1, 1, 1, 1, 1, 1, 1, 1</li>
+</ul>
+<p>那可以看到 5 和 9 还算是相同的规律，7 好像有所不同和 3
+有点像，那么我们去寻找 7
+哪里不同，结合上文的对称关系，我们首先找每个数组的中间的数有什么不同：</p>
+<ul>
+<li><p>3 的中间数 2 - 左右各有 1 个数，此系数为 2 = 1*1 + 1*1。左右各有
+1 个奇数， 0 个偶数。</p></li>
+<li><p>5 的中间数 3 - 左右各有 2 个数，此系数为 5 = 1*1 + 2*2。左右各有
+1 个奇数， 1 个偶数。</p></li>
+<li><p>7 的中间数 4 - 左右各有 3 个数，此系数为 8 = 2*2 + 2*2。左右各有
+2 个奇数， 1 个偶数。</p></li>
+<li><p>9 的中间数 5 - 左右各有 4 个数，此系数为 13 = 2*2 + 3*3。左右各有
+2 个奇数， 2 个偶数。</p></li>
+</ul>
+<p>可以看到其实每个中间数的系数其实=左右奇数数量的平方+左右偶数数量加 1
+的平方。</p>
+<p>然后再观察 9 的其他项发现这个公式容易推广成每个数的系数 =
+左边奇数个数*右边奇数个数 + (左边偶数个数+1)*(右边偶数个数+1)。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sumOddLengthSubarrays</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">0</span>
+        arr_len = <span class="hljs-built_in">len</span>(arr)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(arr_len):
+            left_count, right_count = i, arr_len-i-<span class="hljs-number">1</span>
+            left_odds = (left_count+<span class="hljs-number">1</span>)//<span class="hljs-number">2</span>
+            right_odds = (right_count+<span class="hljs-number">1</span>)//<span class="hljs-number">2</span>
+            left_evens = left_count//<span class="hljs-number">2</span> + <span class="hljs-number">1</span>
+            right_evens = right_count//<span class="hljs-number">2</span> + <span class="hljs-number">1</span>
+            res += arr[i]*(left_odds*right_odds+left_evens*right_evens)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="移动零">283. 移动零</h3>
+<p>这道快慢指针问题在算法专题里刷过，其核心就是慢指针记录，快指针遍历。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">moveZeroes</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-literal">None</span>:
+        slow = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> fast, value <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(nums):
+            <span class="hljs-keyword">if</span> value:
+                nums[slow] = value
+                slow += <span class="hljs-number">1</span>
+        nums[slow::] = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(slow, <span class="hljs-built_in">len</span>(nums))]
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span></code></pre></div>
+<h3 id="最富有客户的资产总量">1672. 最富有客户的资产总量</h3>
+<p>这道题就是遍历每位客户，直接求每位客户资产和求最大值就行了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maximumWealth</span>(<span class="hljs-params">self, accounts: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">sum</span>, accounts))</code></pre></div>
+<h3 id="矩阵对角线元素的和">1572. 矩阵对角线元素的和</h3>
+<p>这道题注意一下矩阵行列数为奇数和偶数时的不同情况就行了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">diagonalSum</span>(<span class="hljs-params">self, mat: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        n = <span class="hljs-built_in">len</span>(mat)
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> n&amp;<span class="hljs-number">1</span>:
+            res = -mat[n//<span class="hljs-number">2</span>][n//<span class="hljs-number">2</span>]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            res += mat[i][i]+mat[i][-i-<span class="hljs-number">1</span>]
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="重塑矩阵">566. 重塑矩阵</h3>
+<p>在数据结构的专项计划里做过。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">matrixReshape</span>(<span class="hljs-params">self, mat: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]], r: <span class="hljs-built_in">int</span>, c: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]:
+        n = <span class="hljs-built_in">len</span>(mat[<span class="hljs-number">0</span>])
+        m = <span class="hljs-built_in">len</span>(mat)
+        <span class="hljs-keyword">if</span> m*n != r*c:
+            <span class="hljs-keyword">return</span> mat
+        res = [[<span class="hljs-number">0</span>]*c <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(r)]
+        <span class="hljs-keyword">for</span> loc <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m*n):
+                res[loc//c][loc%c] = mat[loc//n][loc%n]
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h2 id="字符串">字符串</h2>
+<h3 id="交替合并字符串">1768. 交替合并字符串</h3>
+<p>简单模拟。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mergeAlternately</span>(<span class="hljs-params">self, word1: <span class="hljs-built_in">str</span>, word2: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        word1_len = <span class="hljs-built_in">len</span>(word1)
+        word2_len = <span class="hljs-built_in">len</span>(word2)
+        min_len = <span class="hljs-built_in">min</span>(word1_len, word2_len)
+        res = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(min_len):
+            res.append(word1[i])
+            res.append(word2[i])
+        <span class="hljs-keyword">if</span> min_len == word1_len:
+            res.append(word2[min_len:word2_len])
+        <span class="hljs-keyword">else</span>:
+            res.append(word1[min_len:word1_len])
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join(res)</code></pre></div>
+<h3 id="设计-goal-解析器">1678. 设计 Goal 解析器</h3>
+<p>简单替换。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">interpret</span>(<span class="hljs-params">self, command: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        command = command.replace(<span class="hljs-string">&#x27;G&#x27;</span>,<span class="hljs-string">&#x27;G&#x27;</span>)
+        command = command.replace(<span class="hljs-string">&#x27;()&#x27;</span>,<span class="hljs-string">&#x27;o&#x27;</span>)
+        command = command.replace(<span class="hljs-string">&#x27;(al)&#x27;</span>,<span class="hljs-string">&#x27;al&#x27;</span>)
+        <span class="hljs-keyword">return</span> command</code></pre></div>
+<h3 id="找不同">389. 找不同</h3>
+<p>对两个字符串计数找不同。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findTheDifference</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        s_dict = collections.Counter(s)
+        t_dict = collections.Counter(t)
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">list</span>(t_dict-s_dict)[<span class="hljs-number">0</span>]</code></pre></div>
+<p>巧用 ASCII 码。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findTheDifference</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">sum</span>(<span class="hljs-built_in">ord</span>(_) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> t)-<span class="hljs-built_in">sum</span>(<span class="hljs-built_in">ord</span>(_) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> s))</code></pre></div>
+<h3 id="转换成小写字母">709. 转换成小写字母</h3>
+<p>Python 里面的最直接用法当然是调用 <code>lower()</code> 函数了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">toLowerCase</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> s.lower()</code></pre></div>
+<p>不过做题的话我觉得可以用 ASCII 码的方式，用 <code>list</code> 和
+<code>str.join()</code> 来代替 <code>Java</code> 里类似
+<code>StringBuffer, StringBuilder</code> 这样的东西，如下：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">toLowerCase</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        res = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:
+            c_ascii = <span class="hljs-built_in">ord</span>(i)
+            <span class="hljs-keyword">if</span> <span class="hljs-number">65</span>&lt;=c_ascii&lt;=<span class="hljs-number">90</span>:
+                res.append(<span class="hljs-built_in">chr</span>(c_ascii+<span class="hljs-number">32</span>))
+            <span class="hljs-keyword">else</span>:
+                res.append(i)
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join(res)</code></pre></div>
+<p>当然字符串相加也行：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">toLowerCase</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        res = <span class="hljs-string">&#x27;&#x27;</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:
+            c_ascii = <span class="hljs-built_in">ord</span>(i)
+            <span class="hljs-keyword">if</span> <span class="hljs-number">65</span>&lt;=c_ascii&lt;=<span class="hljs-number">90</span>:
+                res += <span class="hljs-built_in">chr</span>(c_ascii+<span class="hljs-number">32</span>)
+            <span class="hljs-keyword">else</span>:
+                res += i
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="解码字母到整数映射">1309. 解码字母到整数映射</h3>
+<p>依然是 ASCII
+码完整数字和字母的转换，需要一个前探指针探一下后两位是不是
+<code>#</code> 。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">freqAlphabets</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        res = <span class="hljs-string">&#x27;&#x27;</span>
+        s_len = <span class="hljs-built_in">len</span>(s)
+        i = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> i&lt;s_len:
+            <span class="hljs-keyword">if</span> (s[i] == <span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-keyword">or</span> s[i] == <span class="hljs-string">&#x27;2&#x27;</span>) <span class="hljs-keyword">and</span> i+<span class="hljs-number">2</span>&lt;s_len <span class="hljs-keyword">and</span> s[i+<span class="hljs-number">2</span>]==<span class="hljs-string">&#x27;#&#x27;</span>:
+                res += <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">int</span>(s[i:i+<span class="hljs-number">2</span>])+<span class="hljs-number">96</span>)
+                i += <span class="hljs-number">3</span>
+            <span class="hljs-keyword">else</span>:
+                res += <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(s[i])+<span class="hljs-number">48</span>)
+                i += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="验证外星语词典">953. 验证外星语词典</h3>
+<p>模拟逻辑。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAlienSorted</span>(<span class="hljs-params">self, words: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>], order: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(order):
+            hashmap[v] = i
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(words)-<span class="hljs-number">1</span>):
+            s1 = words[i]
+            s2 = words[i+<span class="hljs-number">1</span>]
+            flag = <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(s1) &gt; <span class="hljs-built_in">len</span>(s2):
+                flag = <span class="hljs-literal">True</span>
+                min_len = <span class="hljs-built_in">len</span>(s2)
+            <span class="hljs-keyword">else</span>:
+                min_len = <span class="hljs-built_in">len</span>(s1)
+            j = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">while</span> j&lt;min_len:
+                <span class="hljs-keyword">if</span> hashmap[s2[j]] &gt; hashmap[s1[j]]:
+                    flag = <span class="hljs-literal">False</span>
+                    <span class="hljs-keyword">break</span>
+                <span class="hljs-keyword">elif</span> hashmap[s2[j]] &lt; hashmap[s1[j]]:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+                j += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> flag:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
+<h2 id="链表-树">链表 &amp; 树</h2>
+<h3 id="二进制链表转整数">1290. 二进制链表转整数</h3>
+<p>最直观的用 <code>list</code>
+存储链表每个节点的值，最后再调用进制转换的方法。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getDecimalValue</span>(<span class="hljs-params">self, head: ListNode</span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = []
+        <span class="hljs-keyword">while</span> head:
+            res.append(<span class="hljs-built_in">str</span>(head.val))
+            head = head.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(res), <span class="hljs-number">2</span>)</code></pre></div>
+<p>好像用字符串快一些。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getDecimalValue</span>(<span class="hljs-params">self, head: ListNode</span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = []
+        <span class="hljs-keyword">while</span> head:
+            res.append(<span class="hljs-built_in">str</span>(head.val))
+            head = head.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(res), <span class="hljs-number">2</span>)</code></pre></div>
+<p>递归。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getDecimalValue</span>(<span class="hljs-params">self, head: ListNode</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_dec</span>(<span class="hljs-params">node:ListNode</span>)-&gt;<span class="hljs-built_in">tuple</span>:
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node.<span class="hljs-built_in">next</span>:
+                <span class="hljs-keyword">return</span> node.val, <span class="hljs-number">0</span>
+            res, count = get_dec(node.<span class="hljs-built_in">next</span>)
+            count += <span class="hljs-number">1</span>
+            res += node.val&lt;&lt;count
+            <span class="hljs-keyword">return</span> res, count
+        <span class="hljs-keyword">return</span> get_dec(head)[<span class="hljs-number">0</span>]</code></pre></div>
+<p>还有就是从前到后找时，每次先把前面的和乘 2，相当于一个 n
+位的二进制数，最左已经乘了 n-1 次。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getDecimalValue</span>(<span class="hljs-params">self, head: ListNode</span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> head:
+            res = (res&lt;&lt;<span class="hljs-number">1</span>) + head.val
+            head = head.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="链表的中间结点">876. 链表的中间结点</h3>
+<p>在算法的学习计划里做过，就是快慢指针。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">middleNode</span>(<span class="hljs-params">self, head: <span class="hljs-type">Optional</span>[ListNode]</span>) -&gt; <span class="hljs-type">Optional</span>[ListNode]:
+        slow = head
+        fast = head
+        <span class="hljs-keyword">while</span> fast <span class="hljs-keyword">and</span> fast.<span class="hljs-built_in">next</span>:
+            slow = slow.<span class="hljs-built_in">next</span>
+            fast = fast.<span class="hljs-built_in">next</span>.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">return</span> slow</code></pre></div>
+<h3 id="二叉树的最大深度">104. 二叉树的最大深度</h3>
+<p>广度优先搜索。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maxDepth</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        queue = collections.deque()
+        queue.append(root)
+        depth = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> queue:
+            <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(queue)):
+                node = queue.popleft()
+                <span class="hljs-keyword">if</span> node.left: queue.append(node.left)
+                <span class="hljs-keyword">if</span> node.right: queue.append(node.right)
+            depth += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> depth</code></pre></div>
+<p>深度优先搜索，递归。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maxDepth</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> root:
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(self.maxDepth(root.left), self.maxDepth(root.right))+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span></code></pre></div>
+<h3 id="左叶子之和">404. 左叶子之和</h3>
+<p>广度优先搜索加一个标志位。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sumOfLeftLeaves</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        queue = collections.deque()
+        queue.append((root, <span class="hljs-number">0</span>))
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> queue:
+            node, is_left = queue.popleft()
+            <span class="hljs-keyword">if</span> node.left: queue.append((node.left, <span class="hljs-number">1</span>))
+            <span class="hljs-keyword">if</span> node.right: queue.append((node.right, <span class="hljs-number">0</span>))
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node.left <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> node.right <span class="hljs-keyword">and</span> is_left: res += node.val
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h2 id="容器-库">容器 &amp; 库</h2>
+<h3 id="根据数字二进制下-1-的数目排序">1356. 根据数字二进制下 1
+的数目排序</h3>
+<p>我们需要一个 <code>dict</code> ，以 1 的数量为 <code>key</code>
+，<code>value</code> 则是一个 <code>list</code> 用来记录同 1
+的数量的数字。</p>
+<p>首先我们遍历数组可以将这个 <code>dict</code> 填充好数据。</p>
+<p>然后对 <code>dict</code> 的 <code>value</code> 里每个
+<code>list</code> 排序，处理相同 1 数量的顺序。</p>
+<p>然后根据 <code>dict</code> 的 <code>key</code> 的顺序将
+<code>list</code> 放入结果中。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sortByBits</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">one_count</span>(<span class="hljs-params">num: <span class="hljs-built_in">int</span></span>)-&gt;<span class="hljs-built_in">int</span>:
+            res = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">while</span> num:
+                res += <span class="hljs-number">1</span>
+                num &amp;= num-<span class="hljs-number">1</span>
+            <span class="hljs-keyword">return</span> res
+        
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> arr:
+            count = one_count(i)
+            <span class="hljs-keyword">if</span> count <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                hashmap[count] = [i]
+            <span class="hljs-keyword">else</span>:
+                hashmap[count].append(i)
+        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> hashmap.keys():
+            unsort_value = hashmap[k]
+            hashmap[k] = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">sorted</span>(unsort_value))
+        res = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">sorted</span>(hashmap, key=<span class="hljs-keyword">lambda</span> x:x):
+            res += hashmap[i]
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>也可以调用 Python 的 <code>sorted</code> 函数修改排序规则。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sortByBits</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:     
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sorted</span>(arr, key=<span class="hljs-keyword">lambda</span> x: (<span class="hljs-built_in">bin</span>(x).count(<span class="hljs-string">&#x27;1&#x27;</span>), x))</code></pre></div>
+<h3 id="用栈实现队列">232. 用栈实现队列</h3>
+<p>在数据结构学习计划里做过了，这里不再赘述。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyQueue</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.stack_in = []
+        self.stack_out = []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">push</span>(<span class="hljs-params">self, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">while</span> self.stack_out:
+            self.stack_in.append(self.stack_out.pop())
+        self.stack_in.append(x)
+        <span class="hljs-keyword">while</span> self.stack_in:
+            self.stack_out.append(self.stack_in.pop())
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">pop</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.stack_out.pop()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">peek</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.stack_out[-<span class="hljs-number">1</span>]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">empty</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(self.stack_out) == <span class="hljs-number">0</span></code></pre></div>
+<h3 id="有效的字母异位词">242. 有效的字母异位词</h3>
+<p>也在数据结构学习计划里做过，这里展示一下用
+<code>collections.Counter</code>
+的方法，这种计数的问题其实都可以用这个方式，效果挺好。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isAnagram</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> collections.Counter(s)==collections.Counter(t)</code></pre></div>
+<h3 id="存在重复元素">217. 存在重复元素</h3>
+<p>这个也在数据结构学习计划里做过，考察是否知道 <code>set</code>
+这个概念。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">containsDuplicate</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        hashset = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums:
+            <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashset:
+                hashset.add(i)
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h2 id="类-对象">类 &amp; 对象</h2>
+<h3 id="设计停车系统">1603. 设计停车系统</h3>
+<p>这个应该是考察面向对象的简单设计。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ParkingSystem</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, big: <span class="hljs-built_in">int</span>, medium: <span class="hljs-built_in">int</span>, small: <span class="hljs-built_in">int</span></span>):
+        self.big = big
+        self.medium = medium
+        self.small = small
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addCar</span>(<span class="hljs-params">self, carType: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        match carType:
+            case <span class="hljs-number">1</span>:
+                <span class="hljs-keyword">if</span> self.big&gt;<span class="hljs-number">0</span>:
+                    self.big -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+                <span class="hljs-keyword">else</span>:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            case <span class="hljs-number">2</span>:
+                <span class="hljs-keyword">if</span> self.medium&gt;<span class="hljs-number">0</span>:
+                    self.medium -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+                <span class="hljs-keyword">else</span>:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            case <span class="hljs-number">3</span>:
+                <span class="hljs-keyword">if</span> self.small&gt;<span class="hljs-number">0</span>:
+                    self.small -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+                <span class="hljs-keyword">else</span>:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            case _:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<p>尽量写优雅一点吧。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ParkingSystem</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, big: <span class="hljs-built_in">int</span>, medium: <span class="hljs-built_in">int</span>, small: <span class="hljs-built_in">int</span></span>):
+        self.park = [big, medium, small]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addCar</span>(<span class="hljs-params">self, carType: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> carType&gt;<span class="hljs-built_in">len</span>(self.park) <span class="hljs-keyword">or</span> carType&lt;<span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">if</span> self.park[carType-<span class="hljs-number">1</span>] &gt; <span class="hljs-number">0</span>:
+            self.park[carType-<span class="hljs-number">1</span>] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h3 id="区域和检索---数组不可变">303. 区域和检索 - 数组不可变</h3>
+<p>正常来讲应该是这样的。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NumArray</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>):
+        self.nums = nums
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sumRange</span>(<span class="hljs-params">self, left: <span class="hljs-built_in">int</span>, right: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(self.nums[left:right+<span class="hljs-number">1</span>])</code></pre></div>
+<p>但是很慢，为什么呢？作为一个类来讲，查询的次数是很多的。如果每次查询都得重新累加，就会非常慢。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NumArray</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>):
+        self.nums = [<span class="hljs-number">0</span>]
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> nums:
+            self.nums.append(self.nums[-<span class="hljs-number">1</span>]+i)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sumRange</span>(<span class="hljs-params">self, left: <span class="hljs-built_in">int</span>, right: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.nums[right+<span class="hljs-number">1</span>] - self.nums[left]</code></pre></div>
+<p>这里体现出了前缀和的思想，在初始化遍历的时候就把前缀和写好，查询会非常快。</p>
+<h1 id="编程能力基础">编程能力基础</h1>
+<h3 id="单调数列">896. 单调数列</h3>
+<p>我们用 <code>flag</code>
+来记录数列的单调性，但未知晓数列的单调性时不将它初始化，知晓之后再初始化。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isMonotonic</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        flag = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)-<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> flag:
+                <span class="hljs-keyword">if</span> flag == <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> nums[i]&gt;nums[i+<span class="hljs-number">1</span>]:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+                <span class="hljs-keyword">elif</span> flag == -<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> nums[i]&lt;nums[i+<span class="hljs-number">1</span>]:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">if</span> nums[i]&gt;nums[i+<span class="hljs-number">1</span>]:
+                    flag = -<span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> nums[i]&lt;nums[i+<span class="hljs-number">1</span>]:
+                    flag = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
+<h3 id="找出字符串中第一个匹配项的下标">28.
+找出字符串中第一个匹配项的下标</h3>
+<p>切片去匹配。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">strStr</span>(<span class="hljs-params">self, haystack: <span class="hljs-built_in">str</span>, needle: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        m = <span class="hljs-built_in">len</span>(haystack)
+        n = <span class="hljs-built_in">len</span>(needle)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m-n+<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> haystack[i:i+n] == needle:
+                <span class="hljs-keyword">return</span> i
+        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span></code></pre></div>
+<p>或者用双指针去比较。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">strStr</span>(<span class="hljs-params">self, haystack: <span class="hljs-built_in">str</span>, needle: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        m = <span class="hljs-built_in">len</span>(haystack)
+        n = <span class="hljs-built_in">len</span>(needle)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m-n+<span class="hljs-number">1</span>):
+            t = <span class="hljs-number">0</span>
+            flag = <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">if</span> haystack[i] == needle[t]:
+                flag = <span class="hljs-literal">True</span>
+                k = i
+                <span class="hljs-keyword">while</span> t&lt;n:
+                    <span class="hljs-keyword">if</span> haystack[k] != needle[t]:
+                        flag = <span class="hljs-literal">False</span>
+                    t += <span class="hljs-number">1</span>
+                    k += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> flag:
+                <span class="hljs-keyword">return</span> i
+        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span></code></pre></div>
+<h3 id="平衡二叉树">110. 平衡二叉树</h3>
+<p>第一种是自顶向下判断是否左右子树平衡，相当于我们从根节点开始，先查找左右子数的最大高度，差值
+&lt;= 1
+则说明根节点是平衡的，再去找左子节点是否平衡，右子节点是否平衡，依次遍历完。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isBalanced</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_height</span>(<span class="hljs-params">node</span>):
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node:
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+            left = get_height(node.left)
+            right = get_height(node.right)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>+<span class="hljs-built_in">max</span>(left, right)
+
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        left = get_height(root.left)
+        right = get_height(root.right)
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">abs</span>(left-right) &gt; <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> self.isBalanced(root.left) <span class="hljs-keyword">and</span> self.isBalanced(root.right)</code></pre></div>
+<p>当然自顶向下的遍历会有很多重复的计算，实际上在求最大高度的时候可以携带一个信息，来表明是否是
+AVL 树，比如如果已经不是 AVL 树就直接返回 -1
+，而不再返回当前节点的最大高度。这就叫自底向上的遍历。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isBalanced</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_height</span>(<span class="hljs-params">node</span>):
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node:
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+            left = get_height(node.left)
+            <span class="hljs-keyword">if</span> left == -<span class="hljs-number">1</span>:
+                <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+            right = get_height(node.right)
+            <span class="hljs-keyword">if</span> right == -<span class="hljs-number">1</span> <span class="hljs-keyword">or</span> <span class="hljs-built_in">abs</span>(left-right)&gt;<span class="hljs-number">1</span>:
+                <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>+<span class="hljs-built_in">max</span>(left, right)
+
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">return</span> get_height(root)&gt;=<span class="hljs-number">0</span></code></pre></div>
+<h3 id="重复的子字符串">459. 重复的子字符串</h3>
+<p>遍历扫描字符串，实际上只需要扫描一半即可，因为如果扫描一半还没有发现有重复的子字符串其实就没有了。</p>
+<p>如果左 <code>i</code> 个字符与右 <code>i</code>
+个字符相等，并且字符串等于左 <code>i</code>
+个字符的重复时，说明可以通过重复子字符串构成。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">repeatedSubstringPattern</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        s_len = <span class="hljs-built_in">len</span>(s)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_len//<span class="hljs-number">2</span>):
+            <span class="hljs-keyword">if</span> s_len%(i+<span class="hljs-number">1</span>) == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> s[:i+<span class="hljs-number">1</span>] == s[s_len-i-<span class="hljs-number">1</span>:] <span class="hljs-keyword">and</span> s[:i+<span class="hljs-number">1</span>]*(s_len//(i+<span class="hljs-number">1</span>)) == s:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<p>如果字符串能有重复子字符串构成，比如像 <code>ababab</code>
+这种，移除左边的 <code>a</code> 和右边的 <code>b</code>
+其实也还有构成的元素 <code>ab</code> 。将字符串乘 2 ，即
+<code>abababababab</code> 移除左边的 <code>a</code> 和右边的
+<code>b</code> ，可以发现 <code>ababab</code> 仍然在
+<code>bababababa</code> 里面。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">repeatedSubstringPattern</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> s <span class="hljs-keyword">in</span> (s+s)[<span class="hljs-number">1</span>:<span class="hljs-number">2</span>*<span class="hljs-built_in">len</span>(s)-<span class="hljs-number">1</span>]</code></pre></div>
+<h3 id="逆波兰表达式求值">150. 逆波兰表达式求值</h3>
+<p>后缀表达式求值，我记得是当时学数据结构时栈的测试题，当时涉及中缀表达式转后缀再求值，除了数字栈还需要有符号栈，这里一个数字栈就够了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">evalRPN</span>(<span class="hljs-params">self, tokens: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        num_stack = []
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> tokens:
+            match t:
+                case <span class="hljs-string">&#x27;+&#x27;</span>:
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(b+a)
+                case <span class="hljs-string">&#x27;-&#x27;</span>:
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(b-a)
+                case <span class="hljs-string">&#x27;*&#x27;</span>:
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(b*a)
+                case <span class="hljs-string">&#x27;/&#x27;</span>:
+                    a = num_stack.pop()
+                    b = num_stack.pop()
+                    num_stack.append(<span class="hljs-built_in">int</span>(b/a))
+                case _:
+                    num_stack.append(<span class="hljs-built_in">int</span>(t))
+        <span class="hljs-keyword">return</span> num_stack.pop()</code></pre></div>
+<h3 id="加一">66. 加一</h3>
+<p>可以考虑先求加一再生成结果数组。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> digits:
+            res = res*<span class="hljs-number">10</span>+i
+        <span class="hljs-keyword">return</span> [<span class="hljs-built_in">int</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(res+<span class="hljs-number">1</span>)]</code></pre></div>
+<p>但是其实在加的过程中就可以得到答案，那就是 digits 不进位的时候。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">plusOne</span>(<span class="hljs-params">self, digits: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(digits)-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
+            digits[i] += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> digits[i] &gt;= <span class="hljs-number">10</span>:
+                digits[i] -= <span class="hljs-number">10</span>
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">return</span> digits
+        <span class="hljs-keyword">return</span> [<span class="hljs-number">1</span>] + digits</code></pre></div>
+<h3 id="二叉树中的链表">1367. 二叉树中的链表</h3>
+<p>遍历树的时候存储下每个节点的路径，如果一个节点路径后 <code>n</code>
+位与长度为 <code>n</code>
+的链表相同，那么就满足题意，否则遍历完树之后就不存在。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isSubPath</span>(<span class="hljs-params">self, head: <span class="hljs-type">Optional</span>[ListNode], root: <span class="hljs-type">Optional</span>[TreeNode]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        stack = []
+        stack.append((root, [root.val]))
+        linked_lst = []
+        linked_len = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> head:
+            linked_lst.append(head.val)
+            linked_len += <span class="hljs-number">1</span>
+            head = head.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">while</span> stack:
+            node, path = stack.pop()
+            <span class="hljs-keyword">if</span> path[-linked_len:] == linked_lst:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+            <span class="hljs-keyword">if</span> node.left: stack.append((node.left, path+[node.left.val]))
+            <span class="hljs-keyword">if</span> node.right: stack.append((node.right, path+[node.right.val]))
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h3 id="字符串相乘">43. 字符串相乘</h3>
+<p>如果转成整数形式的话：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">multiply</span>(<span class="hljs-params">self, num1: <span class="hljs-built_in">str</span>, num2: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(num1)*<span class="hljs-built_in">int</span>(num2))</code></pre></div>
+<p>或者模拟多位数乘法运算。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">multiply</span>(<span class="hljs-params">self, num1: <span class="hljs-built_in">str</span>, num2: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        res = <span class="hljs-number">0</span>
+        flag1 = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> num1[::-<span class="hljs-number">1</span>]:
+            adv = <span class="hljs-number">0</span>
+            temp = <span class="hljs-number">0</span>
+            flag2 = <span class="hljs-number">1</span>
+            i = <span class="hljs-built_in">ord</span>(i)-<span class="hljs-number">48</span>
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> num2[::-<span class="hljs-number">1</span>]:
+                j = <span class="hljs-built_in">ord</span>(j)-<span class="hljs-number">48</span>
+                mul = (i*j+adv)
+                adv = mul//<span class="hljs-number">10</span>
+                temp += (mul%<span class="hljs-number">10</span>)*flag2
+                flag2 *= <span class="hljs-number">10</span>
+            res += (temp+adv*flag2) * flag1
+            flag1 *= <span class="hljs-number">10</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(res)</code></pre></div>
+<h3 id="二进制求和">67. 二进制求和</h3>
+<p>转成数求和。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addBinary</span>(<span class="hljs-params">self, a: <span class="hljs-built_in">str</span>, b: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">bin</span>(<span class="hljs-built_in">int</span>(a,<span class="hljs-number">2</span>)+<span class="hljs-built_in">int</span>(b,<span class="hljs-number">2</span>))[<span class="hljs-number">2</span>:]</code></pre></div>
+<p>模拟。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addBinary</span>(<span class="hljs-params">self, a: <span class="hljs-built_in">str</span>, b: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        carry = <span class="hljs-literal">False</span>
+        res = <span class="hljs-string">&#x27;&#x27;</span>
+        len_a = <span class="hljs-built_in">len</span>(a)
+        len_b = <span class="hljs-built_in">len</span>(b)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(-<span class="hljs-number">1</span>, -<span class="hljs-built_in">max</span>(len_a,len_b)-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> i&lt;-len_a:
+                temp = <span class="hljs-built_in">int</span>(b[i])
+            <span class="hljs-keyword">elif</span> i&lt;-len_b:
+                temp = <span class="hljs-built_in">int</span>(a[i])
+            <span class="hljs-keyword">else</span>:
+                temp = <span class="hljs-built_in">int</span>(a[i])+<span class="hljs-built_in">int</span>(b[i])
+            <span class="hljs-keyword">if</span> carry:
+                temp += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> temp &gt;= <span class="hljs-number">2</span>:
+                carry = <span class="hljs-literal">True</span>
+                temp -= <span class="hljs-number">2</span>
+            <span class="hljs-keyword">else</span>:
+                carry = <span class="hljs-literal">False</span>
+            res = <span class="hljs-built_in">str</span>(temp) + res
+        <span class="hljs-keyword">if</span> carry:
+            res = <span class="hljs-string">&#x27;1&#x27;</span> + res
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="数组形式的整数加法">989. 数组形式的整数加法</h3>
+<p>这道题考察的是对各种情况的处理，算是一道简单的模拟。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addToArrayForm</span>(<span class="hljs-params">self, num: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        carry = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(num)-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
+            num[i] += (k%<span class="hljs-number">10</span>)+carry
+            <span class="hljs-keyword">if</span> num[i] &gt;= <span class="hljs-number">10</span>:
+                num[i] -= <span class="hljs-number">10</span>
+                carry = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                carry = <span class="hljs-number">0</span>
+            k //= <span class="hljs-number">10</span>
+        k += carry
+        res = []
+        <span class="hljs-keyword">while</span> k:
+            res.append(k%<span class="hljs-number">10</span>)
+            k //= <span class="hljs-number">10</span>
+        <span class="hljs-keyword">return</span> res[::-<span class="hljs-number">1</span>]+num</code></pre></div>
+<h3 id="每日温度">739. 每日温度</h3>
+<p>首先上暴力，但是超时了。然后我想可能是个前缀和的问题（准确地说应该叫后缀差），然而依然没有头绪，因此从
+<a
+target="_blank" rel="noopener" href="https://programmercarl.com/0739.%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6.html">代码随想录</a>
+前辈这里学习了一下这种应该用地数据结构叫单调栈。简单来说就是我们需要维护一个单调递增栈（或者叫最小栈，从栈头到栈尾单调递增），这个栈其实记的是下标，每次遍历到一个元素有三种情况，对应操作如下：</p>
+<ul>
+<li>如果遍历到的元素小于栈顶元素 - 当前元素入栈。</li>
+<li>如果遍历到的元素等于栈顶元素 - 当前元素入栈。</li>
+<li>如果遍历到的元素大于栈顶元素
+<ul>
+<li>这种情况下如果当前元素入栈会破坏栈的单调性。</li>
+<li>首先我们需要将比当前元素小的元素都出栈，在出栈时就可以说明当前元素是出栈那个元素的下一个更大值，因此可以对结果数组赋值。</li>
+<li>当前元素进栈。</li>
+</ul></li>
+</ul>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dailyTemperatures</span>(<span class="hljs-params">self, temperatures: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        temperatures_len = <span class="hljs-built_in">len</span>(temperatures)
+        stack = [<span class="hljs-number">0</span>]
+        res = [<span class="hljs-number">0</span>] * temperatures_len
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, temperatures_len):
+            <span class="hljs-keyword">if</span> temperatures[i] &lt;= temperatures[stack[-<span class="hljs-number">1</span>]]:
+                stack.append(i)
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(stack)!=<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> temperatures[i]&gt;temperatures[stack[-<span class="hljs-number">1</span>]]:
+                    res[stack[-<span class="hljs-number">1</span>]] = i - stack[-<span class="hljs-number">1</span>]
+                    stack.pop()
+                stack.append(i)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="最后一个单词的长度">58. 最后一个单词的长度</h3>
+<p>简单的模拟计数。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lengthOfLastWord</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        count_start = <span class="hljs-literal">False</span>
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s[::-<span class="hljs-number">1</span>]:
+            <span class="hljs-keyword">if</span> i != <span class="hljs-string">&#x27; &#x27;</span>:
+                count_start = <span class="hljs-literal">True</span>
+                res += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> count_start:
+                <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="旋转图像">48. 旋转图像</h3>
+<p>两次轴对称。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">rotate</span>(<span class="hljs-params">self, matrix: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-literal">None</span>:
+        n = <span class="hljs-built_in">len</span>(matrix)
+        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n):
+            <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, c):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            matrix[r][:] = matrix[r][::-<span class="hljs-number">1</span>]</code></pre></div>
+<h3 id="判断矩阵经轮转后是否一致">1886. 判断矩阵经轮转后是否一致</h3>
+<p>应该算是上道题的进阶版吧。判断矩阵本身和旋转 3
+次有没有和目标矩阵一样就行了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findRotation</span>(<span class="hljs-params">self, mat: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]], target: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">rotate</span>(<span class="hljs-params">matrix</span>):
+            n = <span class="hljs-built_in">len</span>(matrix)
+            <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n):
+                <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, c):
+                    matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+            <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+                matrix[r][:] = matrix[r][::-<span class="hljs-number">1</span>]
+            <span class="hljs-keyword">return</span> matrix
+        <span class="hljs-keyword">if</span> mat == target:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):
+            mat = rotate(mat)
+            <span class="hljs-keyword">if</span> mat == target:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h3 id="螺旋矩阵">54. 螺旋矩阵</h3>
+<p>这是一道模拟题，考察对边界的控制。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">spiralOrder</span>(<span class="hljs-params">self, matrix: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        m, n = <span class="hljs-built_in">len</span>(matrix), <span class="hljs-built_in">len</span>(matrix[<span class="hljs-number">0</span>])
+        printed = [[<span class="hljs-number">0</span>]*n <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m)]
+        r,c = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+        res = []
+        direction = <span class="hljs-string">&#x27;r&#x27;</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+            res.append(matrix[r][c])
+            printed[r][c] = <span class="hljs-number">1</span>
+            match direction:
+                case <span class="hljs-string">&#x27;r&#x27;</span>:
+                    <span class="hljs-keyword">if</span> c+<span class="hljs-number">1</span>&lt;n <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r][c+<span class="hljs-number">1</span>]:
+                        c += <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">elif</span> r+<span class="hljs-number">1</span>&lt;m <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r+<span class="hljs-number">1</span>][c]:
+                        direction = <span class="hljs-string">&#x27;b&#x27;</span>
+                        r += <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">else</span>:
+                        <span class="hljs-keyword">break</span>
+                case <span class="hljs-string">&#x27;b&#x27;</span>:
+                    <span class="hljs-keyword">if</span> r+<span class="hljs-number">1</span>&lt;m <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r+<span class="hljs-number">1</span>][c]:
+                        r += <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">elif</span> c&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r][c-<span class="hljs-number">1</span>]:
+                        direction = <span class="hljs-string">&#x27;l&#x27;</span>
+                        c -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">else</span>:
+                        <span class="hljs-keyword">break</span>
+                case <span class="hljs-string">&#x27;l&#x27;</span>:
+                    <span class="hljs-keyword">if</span> c&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r][c-<span class="hljs-number">1</span>]:
+                        c -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">elif</span> r&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r-<span class="hljs-number">1</span>][c]:
+                        direction = <span class="hljs-string">&#x27;t&#x27;</span>
+                        r -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">else</span>:
+                        <span class="hljs-keyword">break</span>
+                case <span class="hljs-string">&#x27;t&#x27;</span>:
+                    <span class="hljs-keyword">if</span> r&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r-<span class="hljs-number">1</span>][c]:
+                        r -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">elif</span> c+<span class="hljs-number">1</span>&lt;n <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> printed[r][c+<span class="hljs-number">1</span>]:
+                        direction = <span class="hljs-string">&#x27;r&#x27;</span>
+                        c += <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">else</span>:
+                        <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="最接近原点的-k-个点">973. 最接近原点的 K 个点</h3>
+<p>用 <code>dict</code> 来统计某距离所有的点，然后对 <code>dict</code>
+进行排序，从前往后往结果里更新点，最终当更新到 k 个点时返回答案。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">kClosest</span>(<span class="hljs-params">self, points: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]], k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]:
+        hashmap = &#123;&#125;
+        res = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> points:
+            distance = i[<span class="hljs-number">0</span>]*i[<span class="hljs-number">0</span>]+i[<span class="hljs-number">1</span>]*i[<span class="hljs-number">1</span>]
+            <span class="hljs-keyword">if</span> distance <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                hashmap[distance] = [[i[<span class="hljs-number">0</span>], i[<span class="hljs-number">1</span>]]]
+            <span class="hljs-keyword">else</span>:
+                hashmap[distance] += [[i[<span class="hljs-number">0</span>], i[<span class="hljs-number">1</span>]]]
+        sorted_dis = <span class="hljs-built_in">sorted</span>(hashmap)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> sorted_dis:
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(res) &lt; k:
+                res += hashmap[i]
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>不过既然都用自带的排序了也可以直接根据距离排序后取前 k 个点。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">kClosest</span>(<span class="hljs-params">self, points: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]], k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sorted</span>(points, key=<span class="hljs-keyword">lambda</span> x:x[<span class="hljs-number">0</span>]*x[<span class="hljs-number">0</span>]+x[<span class="hljs-number">1</span>]*x[<span class="hljs-number">1</span>])[:k]</code></pre></div>
+<h3 id="等差子数组">1630. 等差子数组</h3>
+<p>暴力，对每一组取出来依次判断，判断的方法就是找到数列第一个差值，然后依次遍历看是否都等差。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">checkArithmeticSubarrays</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], l: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], r: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">bool</span>]:
+        res = []
+        <span class="hljs-keyword">for</span> i,j <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(l,r):
+            temp = nums[i:j+<span class="hljs-number">1</span>]
+            temp = <span class="hljs-built_in">sorted</span>(temp)
+            diff = temp[<span class="hljs-number">1</span>]-temp[<span class="hljs-number">0</span>]
+            flag = <span class="hljs-literal">True</span>
+            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(j-i):
+                <span class="hljs-keyword">if</span> temp[k+<span class="hljs-number">1</span>]-temp[k] != diff:
+                    flag = <span class="hljs-literal">False</span>
+                    <span class="hljs-keyword">break</span>
+            res.append(flag)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="n-叉树的层序遍历">429. N 叉树的层序遍历</h3>
+<p>经典树的广度优先搜索，跟二叉树层次遍历区别不大。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">levelOrder</span>(<span class="hljs-params">self, root: <span class="hljs-string">&#x27;Node&#x27;</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+            <span class="hljs-keyword">return</span> []
+        queue = collections.deque()
+        queue.append(root)
+        res = []
+        <span class="hljs-keyword">while</span> queue:
+            temp = []
+            <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(queue)):
+                node = queue.popleft()
+                temp.append(node.val)
+                <span class="hljs-keyword">if</span> node.children:
+                    <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> node.children:
+                        queue.append(child)
+            res.append(temp)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="下一个更大元素-ii">503. 下一个更大元素 II</h3>
+<p>单调栈。解决循环数组的方式可以是将数组看成 2
+倍长，然后从尾端开始遍历，只要遍历完成每一个数都应该找过下一个更大元素了。我们假设理论索引是
+<code>i</code> ，实际索引是 <code>j=i%len(nums)</code>
+代表实际应该判断的位置，然后用一个单调递增（栈顶 &lt;
+栈底）的单调栈。单调栈的思路见 <a
+href="###496.%20下一个更大元素%20I">496. 下一个更大元素 I</a> 与 <a
+href="###739.%20每日温度">739. 每日温度</a> 。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextGreaterElements</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        nums_len = <span class="hljs-built_in">len</span>(nums)
+        res = [-<span class="hljs-number">1</span>] * nums_len
+        stack = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>*nums_len-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
+            j = i%nums_len
+            <span class="hljs-keyword">while</span> stack <span class="hljs-keyword">and</span> nums[j]&gt;=stack[-<span class="hljs-number">1</span>]:
+                stack.pop()
+            res[j] = stack[-<span class="hljs-number">1</span>] <span class="hljs-keyword">if</span> stack <span class="hljs-keyword">else</span> -<span class="hljs-number">1</span>
+            stack.append(nums[j])
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="下一个更大元素-iii">556. 下一个更大元素 III</h3>
+<p>首先 <code>n</code> 如果小于 12
+，肯定是不存在满足题意的数的，直接返回 -1 。</p>
+<p>然后将 <code>n</code> 转换为一个 <code>List[str]</code>
+的列表，从后往前遍历，如果找到了某一位比它后一位的值小，记录这个索引，退出遍历，我们设这个索引为
+<code>flag</code> 。当然，也可能存在找不到索引的情况，也返回 -1 。</p>
+<p>此时下一个更大的值实际上是把 <code>flag</code> 位上的数和<strong>在
+<code>flag</code> 后面并且比他大的最小值交换</strong>，再对
+<code>str[flag+1:]</code> 从小到大排序。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextGreaterElement</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">12</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        digits = [_ <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(n)]
+        flag = -<span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(digits)-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> digits[i] &gt; digits[i-<span class="hljs-number">1</span>]:
+                flag = i-<span class="hljs-number">1</span>
+                <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">if</span> flag == -<span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        temp = digits[flag:]
+        target = <span class="hljs-literal">None</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(temp)):
+            <span class="hljs-keyword">if</span> temp[i] &gt; temp[<span class="hljs-number">0</span>]:
+                target = i
+        temp[<span class="hljs-number">0</span>], temp[target] = temp[target], temp[<span class="hljs-number">0</span>]
+        temp = temp[:<span class="hljs-number">1</span>] + <span class="hljs-built_in">sorted</span>(temp[<span class="hljs-number">1</span>:])
+        res = <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(digits[:flag]+temp))
+        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> res&gt;=<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">31</span> <span class="hljs-keyword">else</span> res</code></pre></div>
+<h3 id="通知所有员工所需的时间">1376. 通知所有员工所需的时间</h3>
+<p>这道题算是一个加了权的 N 叉树，或者说是一个加了权的有向无环图。</p>
+<p>首先我们不考虑树的思想，直接使用暴力解法，就是对每一个人进行遍历，去推总裁找到他们所需时间。这个时间的最大值显然就是通知所有员工所需的时间。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numOfMinutes</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span>, headID: <span class="hljs-built_in">int</span>, manager: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], informTime: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        direct_info = [_ <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> informTime]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            j = i
+            temp = informTime[j]
+            <span class="hljs-keyword">while</span> manager[j] != -<span class="hljs-number">1</span>:
+                j = manager[j]
+                temp += informTime[j]
+            direct_info[i] = temp
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(direct_info)</code></pre></div>
+<p>这个代码是很慢的，因为会去计算很多重复的通知时间，即回溯过程中上层树结构都一样了，这就是自底向上的计算思路。当然也可以优化，因为实际上去统计的是底层员工的时间，因此我们只需要计算每个底层员工就行了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numOfMinutes</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span>, headID: <span class="hljs-built_in">int</span>, manager: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], informTime: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        direct_info = [_ <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> informTime]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            <span class="hljs-keyword">if</span> informTime[i] != <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">continue</span>
+            j = i
+            temp = informTime[j]
+            <span class="hljs-keyword">while</span> manager[j] != -<span class="hljs-number">1</span>:
+                j = manager[j]
+                temp += informTime[j]
+            direct_info[i] = temp
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(direct_info)</code></pre></div>
+<p>当然其实还能再优化，我们可以用空间换时间，开一个数组专门记录当前员工是否被搜过。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numOfMinutes</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span>, headID: <span class="hljs-built_in">int</span>, manager: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], informTime: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:      
+        direct_info = [<span class="hljs-number">0</span>]*n
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">stats_time</span>(<span class="hljs-params">i</span>):
+            <span class="hljs-keyword">if</span> manager[i] != -<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> direct_info[i] == <span class="hljs-number">0</span>:
+                direct_info[i] = informTime[manager[i]] + stats_time(manager[i])
+            <span class="hljs-keyword">return</span> direct_info[i]
+        
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            <span class="hljs-keyword">if</span> informTime[i] == <span class="hljs-number">0</span>:
+               res = <span class="hljs-built_in">max</span>(res, stats_time(i)) 
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>为了避免重复计算，我们在这里还可以采用自顶向下的思路，就是树的搜索，搜过了就不再搜了。这里可以考虑用一个
+<code>dict</code> 来辅助记录上级与下级的关系。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numOfMinutes</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span>, headID: <span class="hljs-built_in">int</span>, manager: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], informTime: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">for</span> staff, boss <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(manager):
+            <span class="hljs-keyword">if</span> boss <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                hashmap[boss] = [staff]
+            <span class="hljs-keyword">else</span>:
+                hashmap[boss] += [staff]
+        stack = [(headID, informTime[headID])]
+        max_time = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> stack:
+            p,t = stack.pop()
+            max_time = <span class="hljs-built_in">max</span>(max_time, t)
+            <span class="hljs-keyword">if</span> p <span class="hljs-keyword">in</span> hashmap:
+                <span class="hljs-keyword">for</span> staff <span class="hljs-keyword">in</span> hashmap[p]:
+                    stack.append((staff, t+informTime[staff]))
+        <span class="hljs-keyword">return</span> max_time</code></pre></div>
+<h3 id="字母异位词分组">49. 字母异位词分组</h3>
+<p>这道题之前在数据结构里计划里做过，核心在于创造一个合适的
+<code>hashmap</code> 的 <code>key</code> 。</p>
+<p>第一种是数组记录（因为只有 26 个小写英文字母）转元组作为
+<code>key</code> 的方式。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">groupAnagrams</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]]:
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> strs:
+            temp = [<span class="hljs-number">0</span>]*<span class="hljs-number">26</span>
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> t:
+                temp[<span class="hljs-built_in">ord</span>(i)-<span class="hljs-number">97</span>] += <span class="hljs-number">1</span>
+            temp = <span class="hljs-built_in">tuple</span>(temp)
+            <span class="hljs-keyword">if</span> temp <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                hashmap[temp] = [t]
+            <span class="hljs-keyword">else</span>:
+                hashmap[temp] += [t]
+        <span class="hljs-keyword">return</span> [_ <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> hashmap.values()]</code></pre></div>
+<p>第二种是排序的方式。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">groupAnagrams</span>(<span class="hljs-params">self, strs: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]]:
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> strs:
+            temp = <span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">sorted</span>([_ <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> i]))
+            <span class="hljs-keyword">if</span> temp <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> hashmap:
+                hashmap[temp] = [i]
+            <span class="hljs-keyword">else</span>:
+                hashmap[temp] += [i]
+        <span class="hljs-keyword">return</span> [_ <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> hashmap.values()]</code></pre></div>
+<h3 id="找到字符串中所有字母异位词">438. 找到字符串中所有字母异位词</h3>
+<p>其实这道题就是哈希计数的题，首先最直接的比较计数结果是否一样。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findAnagrams</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, p: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        p_count = collections.Counter(p)
+        p_len = <span class="hljs-built_in">len</span>(p)
+        s_len = <span class="hljs-built_in">len</span>(s)
+        res = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_len-p_len+<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> collections.Counter(s[i:i+p_len]) == p_count:
+                res.append(i)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>这样能过，但是很慢，这里有一个显著的问题，那就是如果 <code>s</code>
+的子串和 <code>p</code>
+不是字母异位词，不需要统计完这个子串，因此我们需要在这里剪枝。</p>
+<p>但是很遗憾，速度慢似乎并不是因为剪枝引起的。因为剪枝过后居然超出时间限制了，这里可以说明
+<code>collections.Counter</code> 比我想象中要快很多。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findAnagrams</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, p: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        p_count = <span class="hljs-built_in">dict</span>(collections.Counter(p))
+        p_len = <span class="hljs-built_in">len</span>(p)
+        s_len = <span class="hljs-built_in">len</span>(s)
+        res = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_len-p_len+<span class="hljs-number">1</span>):
+            temp = deepcopy(p_count)
+            flag = <span class="hljs-literal">True</span>
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> s[i:i+p_len]:
+                <span class="hljs-keyword">if</span> j <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> temp <span class="hljs-keyword">or</span> temp[j] == <span class="hljs-number">0</span>:
+                    flag = <span class="hljs-literal">False</span>
+                    <span class="hljs-keyword">break</span>
+                temp[j] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> flag:
+                res.append(i)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>然后我考虑了滑动窗口，也是一种优化。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findAnagrams</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, p: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        p_count = collections.Counter(p)
+        s_len = <span class="hljs-built_in">len</span>(s)
+        l, r = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(p)
+        count = collections.Counter(s[:r])
+        res = []
+        <span class="hljs-keyword">while</span> r&lt;=s_len:
+            <span class="hljs-keyword">if</span> count == p_count:
+                res.append(l)
+            count.subtract(&#123;s[l]:<span class="hljs-number">1</span>&#125;)
+            <span class="hljs-keyword">if</span> r&lt;s_len:
+                count.subtract(&#123;s[r]:-<span class="hljs-number">1</span>&#125;)
+            l += <span class="hljs-number">1</span>
+            r += <span class="hljs-number">1</span>
+            count = +count
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<p>看起来不在 hash 上面做文章，这个效率是高不了了。</p>
+<p>这里建议采用 <a href="###49.%20字母异位词分组">49. 字母异位词分组</a>
+中数组记录（因为只有 26 个小写英文字母）转元组作为 <code>key</code>
+的方式。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findAnagrams</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, p: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:
+        s_len = <span class="hljs-built_in">len</span>(s)
+        l, r = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(p)
+        p_count = [<span class="hljs-number">0</span>]*<span class="hljs-number">26</span>
+        <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> p:
+            p_count[<span class="hljs-built_in">ord</span>(t)-<span class="hljs-number">97</span>] += <span class="hljs-number">1</span>
+        count = [<span class="hljs-number">0</span>]*<span class="hljs-number">26</span>
+        <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> s[l:r]:
+            count[<span class="hljs-built_in">ord</span>(t)-<span class="hljs-number">97</span>] += <span class="hljs-number">1</span>
+        res = []
+        <span class="hljs-keyword">while</span> r&lt;s_len+<span class="hljs-number">1</span>:
+            <span class="hljs-keyword">if</span> count == p_count:
+                res.append(l)
+            <span class="hljs-keyword">if</span> r&lt;s_len:
+                count[<span class="hljs-built_in">ord</span>(s[l])-<span class="hljs-number">97</span>] -= <span class="hljs-number">1</span>
+                count[<span class="hljs-built_in">ord</span>(s[r])-<span class="hljs-number">97</span>] += <span class="hljs-number">1</span>
+            l += <span class="hljs-number">1</span>
+            r += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="乘积小于-k-的子数组">713. 乘积小于 K 的子数组</h3>
+<p>我觉得这个都不能算滑动窗口了，应该是一个双指针问题，右指针指向子数组的右边，并且在每一轮循环中右指针的位置是不变的。左指针指向的位置是<strong>当前右指针下满足条件的最左位置</strong>。最后进行一个对
+<code>k</code> 值的剪枝就行了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numSubarrayProductLessThanK</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> k &lt;= <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        res, left, temp = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> right, value <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(nums):
+            temp *= value
+            <span class="hljs-keyword">while</span> temp&gt;=k:
+                temp //= nums[left]
+                left += <span class="hljs-number">1</span>
+            res += right-left+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="二维区域和检索---矩阵不可变">304. 二维区域和检索 -
+矩阵不可变</h3>
+<p>经典前缀和设计加快查询求和速度。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NumMatrix</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, matrix: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>):
+        m = <span class="hljs-built_in">len</span>(matrix)
+        n = <span class="hljs-built_in">len</span>(matrix[<span class="hljs-number">0</span>])
+        presum = [[<span class="hljs-number">0</span>]*(n+<span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m+<span class="hljs-number">1</span>)]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, m+<span class="hljs-number">1</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n+<span class="hljs-number">1</span>):
+                presum[i][j] = matrix[i-<span class="hljs-number">1</span>][j-<span class="hljs-number">1</span>] + presum[i-<span class="hljs-number">1</span>][j] + presum[i][j-<span class="hljs-number">1</span>] - presum[i-<span class="hljs-number">1</span>][j-<span class="hljs-number">1</span>]
+        self.presum = presum
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sumRegion</span>(<span class="hljs-params">self, row1: <span class="hljs-built_in">int</span>, col1: <span class="hljs-built_in">int</span>, row2: <span class="hljs-built_in">int</span>, col2: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.presum[row2+<span class="hljs-number">1</span>][col2+<span class="hljs-number">1</span>] + self.presum[row1][col1] - self.presum[row2+<span class="hljs-number">1</span>][col1] - self.presum[row1][col2+<span class="hljs-number">1</span>]</code></pre></div>
+<h3 id="最小差值-ii">910. 最小差值 II</h3>
+<p>观察一下能想到这道题就是一组数大于某个值就 <code>-k</code>
+，小于某个值就 <code>+k</code>
+，我最开始的猜测是平均值。发现不对，至少处理不了一个数等于平均值的情况。昨天刚看了一下概率论的几个流派，按照古典派的思想，当一个事件有两种可能性但我们并不清楚的时候，它的可能性都是一半。所以取特定的值肯定与这个思想冲突很大。因此我选择排序之后逐一判断，结果过了。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">smallestRangeII</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        nums = <span class="hljs-built_in">sorted</span>(nums)
+        res = nums[-<span class="hljs-number">1</span>] - nums[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(nums)):
+            num_min = <span class="hljs-built_in">min</span>(nums[<span class="hljs-number">0</span>]+k, nums[i]-k)
+            num_max = <span class="hljs-built_in">max</span>(nums[-<span class="hljs-number">1</span>]-k, nums[i-<span class="hljs-number">1</span>]+k)
+            res = <span class="hljs-built_in">min</span>(num_max-num_min, res)
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="重排链表">143. 重排链表</h3>
+<p>这道题可以用双端队列解决，先扫描链表进队，然后左出一个右出一个直至队空。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reorderList</span>(<span class="hljs-params">self, head: <span class="hljs-type">Optional</span>[ListNode]</span>) -&gt; <span class="hljs-literal">None</span>:
+        queue = collections.deque()
+        <span class="hljs-keyword">while</span> head:
+            queue.append(head)
+            head = head.<span class="hljs-built_in">next</span>
+        dummy = ListNode()
+        node = dummy
+        <span class="hljs-keyword">while</span> queue:
+            <span class="hljs-keyword">if</span> queue:
+                node.<span class="hljs-built_in">next</span> = queue.popleft()
+                node = node.<span class="hljs-built_in">next</span>
+            <span class="hljs-keyword">if</span> queue:
+                node.<span class="hljs-built_in">next</span> = queue.pop()
+                node = node.<span class="hljs-built_in">next</span>
+        node.<span class="hljs-built_in">next</span> = <span class="hljs-literal">None</span>
+        head = dummy.<span class="hljs-built_in">next</span></code></pre></div>
+<h3 id="复制带随机指针的链表">138. 复制带随机指针的链表</h3>
+<p>Python 中的 <code>deepcopy()</code> 。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">copyRandomList</span>(<span class="hljs-params">self, head: <span class="hljs-string">&#x27;Optional[Node]&#x27;</span></span>) -&gt; <span class="hljs-string">&#x27;Optional[Node]&#x27;</span>:
+        <span class="hljs-keyword">return</span> deepcopy(head)</code></pre></div>
+<p>先遍历 <code>head</code> ，同时构建新节点，同时将节点的对应关系加入
+<code>hashmap</code> 中。之后再根据 <code>hashmap</code> 添加
+<code>random</code> 。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">copyRandomList</span>(<span class="hljs-params">self, head: <span class="hljs-string">&#x27;Optional[Node]&#x27;</span></span>) -&gt; <span class="hljs-string">&#x27;Optional[Node]&#x27;</span>:
+        dummy = head
+        res = Node(<span class="hljs-number">0</span>)
+        node = res
+        hashmap = &#123;&#125;
+        <span class="hljs-keyword">while</span> dummy:
+            node.<span class="hljs-built_in">next</span> = Node(dummy.val)
+            node = node.<span class="hljs-built_in">next</span>
+            hashmap[dummy] = node
+            dummy = dummy.<span class="hljs-built_in">next</span>
+        dummy = head
+        node = res.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">while</span> dummy:
+            node.random = hashmap[dummy.random] <span class="hljs-keyword">if</span> dummy.random <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+            dummy = dummy.<span class="hljs-built_in">next</span>
+            node = node.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">return</span> res.<span class="hljs-built_in">next</span></code></pre></div>
+<h3 id="两数相加">2. 两数相加</h3>
+<p>在数据结构里做过。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addTwoNumbers</span>(<span class="hljs-params">self, l1: <span class="hljs-type">Optional</span>[ListNode], l2: <span class="hljs-type">Optional</span>[ListNode]</span>) -&gt; <span class="hljs-type">Optional</span>[ListNode]:
+        dummy = ListNode()
+        node = dummy
+        carry = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> l1 <span class="hljs-keyword">or</span> l2:
+            temp = carry
+            <span class="hljs-keyword">if</span> l1:
+                temp += l1.val
+                l1 = l1.<span class="hljs-built_in">next</span>
+            <span class="hljs-keyword">if</span> l2:
+                temp += l2.val
+                l2 = l2.<span class="hljs-built_in">next</span>
+            carry = temp // <span class="hljs-number">10</span>
+            temp %= <span class="hljs-number">10</span>
+            node.<span class="hljs-built_in">next</span> = ListNode(temp)
+            node = node.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">if</span> carry:
+            node.<span class="hljs-built_in">next</span> = ListNode(<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> dummy.<span class="hljs-built_in">next</span></code></pre></div>
+<h3 id="两数相加-ii">445. 两数相加 II</h3>
+<p>可以采用的一种思路就是先对链表取数相加再构建新链表。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addTwoNumbers</span>(<span class="hljs-params">self, l1: <span class="hljs-type">Optional</span>[ListNode], l2: <span class="hljs-type">Optional</span>[ListNode]</span>) -&gt; <span class="hljs-type">Optional</span>[ListNode]:
+        num1 = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> l1:
+            num1 = num1*<span class="hljs-number">10</span> + l1.val
+            l1 = l1.<span class="hljs-built_in">next</span>
+        num2 = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> l2:
+            num2 = num2*<span class="hljs-number">10</span> + l2.val
+            l2 = l2.<span class="hljs-built_in">next</span>
+        dummy = ListNode()
+        node = dummy
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(num1+num2):
+            node.<span class="hljs-built_in">next</span> = ListNode(<span class="hljs-built_in">int</span>(i))
+            node = node.<span class="hljs-built_in">next</span>
+        <span class="hljs-keyword">return</span> dummy.<span class="hljs-built_in">next</span></code></pre></div>
+<h3 id="旋转链表">61. 旋转链表</h3>
+<p>用一个 <code>list</code> 记录每个节点位置，再相应操作。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">rotateRight</span>(<span class="hljs-params">self, head: <span class="hljs-type">Optional</span>[ListNode], k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">Optional</span>[ListNode]:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> head:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+        lst = []
+        <span class="hljs-keyword">while</span> head:
+            lst.append(head)
+            head = head.<span class="hljs-built_in">next</span>
+        k %= <span class="hljs-built_in">len</span>(lst)
+        <span class="hljs-keyword">if</span> k == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> lst[<span class="hljs-number">0</span>]
+        node_1 = lst[-k-<span class="hljs-number">1</span>]
+        node_2 = lst[-k]
+        node_3 = lst[-<span class="hljs-number">1</span>]
+        node_4 = lst[<span class="hljs-number">0</span>]
+        node_1.<span class="hljs-built_in">next</span> = <span class="hljs-literal">None</span>
+        node_3.<span class="hljs-built_in">next</span> = node_4
+        <span class="hljs-keyword">return</span> node_2</code></pre></div>
+<h3 id="二叉搜索树迭代器">173. 二叉搜索树迭代器</h3>
+<p>数据结构里做过。首先将搜索树结果中序遍历，之后再创建迭代器输出。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">BSTIterator</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, root: <span class="hljs-type">Optional</span>[TreeNode]</span>):
+        nums = []
+        stack = []
+        <span class="hljs-keyword">while</span> stack <span class="hljs-keyword">or</span> root:
+            <span class="hljs-keyword">while</span> root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            nums.append(root.val)
+            root = root.right
+        self.index = <span class="hljs-number">0</span>
+        self.nums = nums
+        self.<span class="hljs-built_in">len</span> = <span class="hljs-built_in">len</span>(nums)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">next</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = self.nums[self.index]
+        self.index += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hasNext</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> self.index&lt;self.<span class="hljs-built_in">len</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h3 id="座位预约管理系统">1845. 座位预约管理系统</h3>
+<p>可以采用单调栈解决问题，预约的过程是出栈，解除预约是进栈。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SeatManager</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>):
+        self.stack = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reserve</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.stack.pop()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">unreserve</span>(<span class="hljs-params">self, seatNumber: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        temp = []
+        <span class="hljs-keyword">while</span> self.stack <span class="hljs-keyword">and</span> seatNumber&gt;self.stack[-<span class="hljs-number">1</span>]:
+            temp.append(self.stack.pop())
+        self.stack.append(seatNumber)
+        <span class="hljs-keyword">while</span> temp:
+            self.stack.append(temp.pop())</code></pre></div>
+<p>另一个需要用到堆队列算法，可以参考 <a
+target="_blank" rel="noopener" href="https://docs.python.org/3/library/heapq.html">heapq — Heap queue
+algorithm — Python 3.11.1 documentation</a> 。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SeatManager</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span></span>):
+        self.heap = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,n+<span class="hljs-number">1</span>))
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reserve</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> heappop(self.heap)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">unreserve</span>(<span class="hljs-params">self, seatNumber: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        heappush(self.heap, seatNumber)</code></pre></div>
+<h3 id="柠檬水找零">860. 柠檬水找零</h3>
+<p>利用 <code>dict</code> 做一个对零钱的统计模拟。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">lemonadeChange</span>(<span class="hljs-params">self, bills: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        hashmap = &#123;
+            <span class="hljs-number">5</span>:<span class="hljs-number">0</span>,
+            <span class="hljs-number">10</span>:<span class="hljs-number">0</span>
+        &#125;
+        <span class="hljs-keyword">for</span> bill <span class="hljs-keyword">in</span> bills:
+            match bill:
+                case <span class="hljs-number">5</span>:
+                    hashmap[<span class="hljs-number">5</span>] += <span class="hljs-number">1</span>
+                case <span class="hljs-number">10</span>:
+                    hashmap[<span class="hljs-number">10</span>] += <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">if</span> hashmap[<span class="hljs-number">5</span>] &gt; <span class="hljs-number">0</span>:
+                        hashmap[<span class="hljs-number">5</span>] -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">else</span>:
+                        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+                case <span class="hljs-number">20</span>:
+                    <span class="hljs-keyword">if</span> hashmap[<span class="hljs-number">10</span>] &gt; <span class="hljs-number">0</span>:
+                        hashmap[<span class="hljs-number">10</span>] -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">elif</span> hashmap[<span class="hljs-number">5</span>] &gt; <span class="hljs-number">1</span>:
+                        hashmap[<span class="hljs-number">5</span>] -= <span class="hljs-number">2</span>
+                    <span class="hljs-keyword">else</span>:
+                        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+                    <span class="hljs-keyword">if</span> hashmap[<span class="hljs-number">5</span>] &gt; <span class="hljs-number">0</span>:
+                        hashmap[<span class="hljs-number">5</span>] -= <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">else</span>:
+                        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre></div>
+<h3 id="最小栈">155. 最小栈</h3>
+<p>数据结构里做过，用两个栈解决问题，一个存顺序，一个存最小值。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MinStack</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.stack = []
+        self.minstack = []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">push</span>(<span class="hljs-params">self, val: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">if</span> self.minstack:
+            _<span class="hljs-built_in">min</span> = self.minstack[-<span class="hljs-number">1</span>]
+            _<span class="hljs-built_in">min</span> = <span class="hljs-built_in">min</span>(val, _<span class="hljs-built_in">min</span>)
+            self.minstack.append(_<span class="hljs-built_in">min</span>)
+            self.stack.append(val)
+        <span class="hljs-keyword">else</span>:
+            self.minstack.append(val)
+            self.stack.append(val)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">pop</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        self.stack.pop()
+        self.minstack.pop()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">top</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.stack[-<span class="hljs-number">1</span>]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getMin</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.minstack[-<span class="hljs-number">1</span>]</code></pre></div>
+<h3 id="扁平化嵌套列表迭代器">341. 扁平化嵌套列表迭代器</h3>
+<p>深度优先搜索，但是重点在于我们必须在 <code>hasNext()</code>
+里去维护栈，否则结果可能会有无效空值，比如 <code>[[]]</code>
+这种输入。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NestedIterator</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, nestedList: [NestedInteger]</span>):
+        self.stack = [t <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> nestedList][::-<span class="hljs-number">1</span>]
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">next</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> self.stack.pop().getInteger()
+
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hasNext</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">while</span> self.stack:
+            node = self.stack.pop()
+            <span class="hljs-keyword">if</span> node.isInteger():
+                self.stack.append(node)
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+            <span class="hljs-keyword">else</span>:
+                self.stack += node.getList()[::-<span class="hljs-number">1</span>]
+                <span class="hljs-keyword">return</span> self.hasNext()
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span></code></pre></div>
+<h3 id="设计一个验证系统">1797. 设计一个验证系统</h3>
+<p>重点在于题目中这句，过期事件<strong>优先于</strong>其他操作。
+<code>dict</code> 哈希实现。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">AuthenticationManager</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, timeToLive: <span class="hljs-built_in">int</span></span>):
+        self.timeToLive = timeToLive
+        self.hashmap = &#123;&#125;
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">generate</span>(<span class="hljs-params">self, tokenId: <span class="hljs-built_in">str</span>, currentTime: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        self.hashmap[tokenId]=self.timeToLive+currentTime
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">renew</span>(<span class="hljs-params">self, tokenId: <span class="hljs-built_in">str</span>, currentTime: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">if</span> tokenId <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> self.hashmap <span class="hljs-keyword">or</span> self.hashmap[tokenId] &lt;= currentTime:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+        self.hashmap[tokenId]=self.timeToLive+currentTime
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">countUnexpiredTokens</span>(<span class="hljs-params">self, currentTime: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        res = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> k,v <span class="hljs-keyword">in</span> self.hashmap.items():
+            <span class="hljs-keyword">if</span> v &gt; currentTime:
+                res += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> res</code></pre></div>
+<h3 id="设计链表">707. 设计链表</h3>
+<p>数据结构里做过。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyLinkedList</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.<span class="hljs-built_in">len</span> = <span class="hljs-number">0</span>
+        self.nums = []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get</span>(<span class="hljs-params">self, index: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> index &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> index &gt;= self.<span class="hljs-built_in">len</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> self.nums[index]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addAtHead</span>(<span class="hljs-params">self, val: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        self.addAtIndex(<span class="hljs-number">0</span>, val)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addAtTail</span>(<span class="hljs-params">self, val: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        self.addAtIndex(self.<span class="hljs-built_in">len</span>, val)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">addAtIndex</span>(<span class="hljs-params">self, index: <span class="hljs-built_in">int</span>, val: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">if</span> index &gt; self.<span class="hljs-built_in">len</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+        index = <span class="hljs-built_in">max</span>(index, <span class="hljs-number">0</span>)
+        self.<span class="hljs-built_in">len</span> += <span class="hljs-number">1</span>
+        self.nums.insert(index, val)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">deleteAtIndex</span>(<span class="hljs-params">self, index: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">if</span> index &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> index &gt;= self.<span class="hljs-built_in">len</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+        self.<span class="hljs-built_in">len</span> -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">del</span> self.nums[index]</code></pre></div>
+<h3 id="o1-时间插入删除和获取随机元素">380. O(1)
+时间插入、删除和获取随机元素</h3>
+<p>用 <code>set</code> , <code>random</code>
+实现插入、删除和随机获取的逻辑。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">RandomizedSet</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.<span class="hljs-built_in">set</span> = <span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;&#x27;</span>)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">insert</span>(<span class="hljs-params">self, val: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> val <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> self.<span class="hljs-built_in">set</span>:
+            self.<span class="hljs-built_in">set</span>.add(val)
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">remove</span>(<span class="hljs-params">self, val: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> val <span class="hljs-keyword">in</span> self.<span class="hljs-built_in">set</span>:
+            self.<span class="hljs-built_in">set</span>.remove(val)
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getRandom</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">return</span> random.choice(<span class="hljs-built_in">list</span>(self.<span class="hljs-built_in">set</span>))</code></pre></div>
+<h3 id="设计循环队列">622. 设计循环队列</h3>
+<p>用 <code>list</code> 模拟队列。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCircularQueue</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, k: <span class="hljs-built_in">int</span></span>):
+        self.queue = []
+        self.max_len = k
+        self.<span class="hljs-built_in">len</span> = <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">enQueue</span>(<span class="hljs-params">self, value: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> self.<span class="hljs-built_in">len</span> == self.max_len:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        self.queue.append(value)
+        self.<span class="hljs-built_in">len</span> += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">deQueue</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> self.<span class="hljs-built_in">len</span> == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        self.queue.pop(<span class="hljs-number">0</span>)
+        self.<span class="hljs-built_in">len</span> -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">Front</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> self.<span class="hljs-built_in">len</span> == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> self.queue[<span class="hljs-number">0</span>]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">Rear</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> self.<span class="hljs-built_in">len</span> == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> self.queue[-<span class="hljs-number">1</span>]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isEmpty</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> self.<span class="hljs-built_in">len</span> == <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isFull</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> self.<span class="hljs-built_in">len</span> == self.max_len</code></pre></div>
+<p>使用 <code>deque</code> 双端队列。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCircularQueue</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, k: <span class="hljs-built_in">int</span></span>):
+        self.queue = collections.deque()
+        self.max_len = k
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">enQueue</span>(<span class="hljs-params">self, value: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(self.queue) == self.max_len:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        self.queue.append(value)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">deQueue</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(self.queue) == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        self.queue.popleft()
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">Front</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(self.queue) == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        res = self.queue.popleft()
+        self.queue.appendleft(res)
+        <span class="hljs-keyword">return</span> res
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">Rear</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(self.queue) == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        res = self.queue.pop()
+        self.queue.append(res)
+        <span class="hljs-keyword">return</span> res
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isEmpty</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(self.queue) == <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isFull</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(self.queue) == self.max_len</code></pre></div>
+<h3 id="我的日程安排表-i">729. 我的日程安排表 I</h3>
+<p>用一个 <code>list</code> 里，存储元组进行简单模拟。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCalendar</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.calendar = []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">book</span>(<span class="hljs-params">self, start: <span class="hljs-built_in">int</span>, end: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">bool</span>:
+        flag = <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> self.calendar:
+            <span class="hljs-keyword">if</span> start &lt; i[<span class="hljs-number">1</span>] <span class="hljs-keyword">and</span> end &gt; i[<span class="hljs-number">0</span>]:
+                flag = <span class="hljs-literal">False</span>
+                <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">if</span> flag:
+            self.calendar.append((start, end))
+        <span class="hljs-keyword">return</span> flag</code></pre></div>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ComputerScience/" class="category-chain-item">ComputerScience</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/ComputerScience/Algorithm/" class="category-chain-item">Algorithm</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/ComputerScience/Algorithm/LeetCode/" class="category-chain-item">LeetCode</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/python/">#python</a>
+      
+        <a href="/tags/hash/">#hash</a>
+      
+        <a href="/tags/point/">#point</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>「编程能力」 - 学习计划</div>
+      <div>https://movisli.github.io/2023/02/22/Leetcode编程能力/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>MovisLi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 22, 2023</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/16/matplotlib%E4%B8%8Eseaborn/" title="matplotlib&amp;seaborn 包的学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">matplotlib&amp;seaborn 包的学习</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/21/leetcode%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="「数据结构」 - 学习计划">
+                        <span class="hidden-mobile">「数据结构」 - 学习计划</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
