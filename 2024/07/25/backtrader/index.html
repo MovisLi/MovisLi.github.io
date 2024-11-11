@@ -1,0 +1,1314 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.jpg">
+  <link rel="icon" href="/img/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414142">
+  <meta name="author" content="MovisLi">
+  <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
+  
+    <meta name="description" content="Summary Backtrader 是一个可同时用于量化交易回测（基于事件）与实盘交易的开源框架。 控制器 在 Backtrader 中，控制器叫做 Cerebro ，是一个调度中心，控制着数据、策略、执行与评估部分。 import backtrader as bt  # 实例化 Cerebro cerebro &#x3D; bt.cerebro()  # TODO: 获取数据实例 # 将数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="backtrader">
+<meta property="og:url" content="https://movisli.github.io/2024/07/25/backtrader/index.html">
+<meta property="og:site_name" content="movis">
+<meta property="og:description" content="Summary Backtrader 是一个可同时用于量化交易回测（基于事件）与实盘交易的开源框架。 控制器 在 Backtrader 中，控制器叫做 Cerebro ，是一个调度中心，控制着数据、策略、执行与评估部分。 import backtrader as bt  # 实例化 Cerebro cerebro &#x3D; bt.cerebro()  # TODO: 获取数据实例 # 将数据">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-25T04:18:39.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:54:28.776Z">
+<meta property="article:author" content="MovisLi">
+<meta property="article:tag" content="quant">
+<meta property="article:tag" content="investment">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>backtrader - movis</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Movis</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="backtrader"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        MovisLi
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-25 12:18" pubdate>
+          July 25, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k words
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">backtrader</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="summary">Summary</h1>
+<p><a target="_blank" rel="noopener" href="https://www.backtrader.com/">Backtrader</a>
+是一个可同时用于量化交易回测（基于事件）与实盘交易的开源框架。</p>
+<h1 id="控制器">控制器</h1>
+<p>在 Backtrader 中，控制器叫做 <code>Cerebro</code>
+，是一个调度中心，控制着数据、策略、执行与评估部分。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> backtrader <span class="hljs-keyword">as</span> bt
+
+<span class="hljs-comment"># 实例化 Cerebro</span>
+cerebro = bt.cerebro()
+
+<span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> 获取数据实例</span>
+<span class="hljs-comment"># 将数据添加进控制器中</span>
+cerebro.adddata(data)
+
+<span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> 编写策略类</span>
+<span class="hljs-comment"># 将策略添加进控制器中</span>
+cerebro.addstrategy(XXXStrategy)
+
+<span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> 编写头寸类</span>
+<span class="hljs-comment"># 设置交易的头寸</span>
+cerebro.addsizer(XXXSizer)
+
+<span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> 获取经纪商实例</span>
+<span class="hljs-comment"># 设置交易的经纪商</span>
+<span class="hljs-comment"># 如果不写默认用 BackBroker ，这是一个本地回测用的虚拟券商</span>
+cerebro.setbroker(xxxbroker)
+
+<span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> 编写评估指标类</span>
+<span class="hljs-comment"># 将评估指标添加进控制器</span>
+cerebro.addanalyzer(XXX)
+
+<span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> 编写观察器类</span>
+<span class="hljs-comment"># 将观察器添加进控制器，观察器和画图相关</span>
+cerebro.addobserver(XXX)
+
+<span class="hljs-comment"># 运行控制器</span>
+res = cerebro.run()
+<span class="hljs-comment"># 画图</span>
+cerebro.plot()</code></pre></div>
+<p>整个过程的模拟都是由 <code>cerebro</code> 对象去完成的。</p>
+<h1 id="数据">数据</h1>
+<h2 id="datafeeds">DataFeeds</h2>
+<p>在 Backtrader 中， <code>datafeeds</code>
+是一个用于导入数据的模块，可以将表格数据转化为一个
+<code>DataSeries</code> 对象。</p>
+<h3 id="dataseries">DataSeries</h3>
+<p><code>DataSeries</code> 是一个表格的形式的类，这个表格由 7
+列组成：</p>
+<ul>
+<li>datetime - 用于记录一个时段的开始时间。</li>
+<li>open - 此时段的开盘价。</li>
+<li>high - 此时段的最高价。</li>
+<li>low - 此时段的最低价。</li>
+<li>close - 此时段的收盘价。</li>
+<li>volume - 此时段的成交量。</li>
+<li>openinterest - 此时段未平仓的合约量。</li>
+</ul>
+<p>创建 DataFeeds 的方法有很多种，比较常用的就是通过 pandas 的 DataFrame
+创建。</p>
+<div class="code-wrapper"><pre><code class="hljs python">data = bt.feeds.PandasData(dataname=df)</code></pre></div>
+<p>在创建 <code>DataFeeds</code>
+的时候，其实不需要保证原始数据里面具有上面提到的 7
+列。假设出现这种情况，会在 <code>cerebro</code> 运行时报错。</p>
+<h3 id="lineseries-lines">LineSeries &amp; Lines</h3>
+<p>看源码可以发现 <code>DataSeries</code> 类继承了
+<code>LineSeries</code> 类（可以看作一个没有指定这些列的类），而
+<code>datetime</code>, <code>open</code>... 这些就是 <code>Lines</code>
+。</p>
+<p>因此可以理解为 <code>LineSeries</code> 相当于 pandas 中的 DataFrame
+，而 <code>Lines</code> 则相当于 pandas 中的 Series 。</p>
+<h1 id="策略">策略</h1>
+<h2 id="strategy">Strategy</h2>
+<h3 id="交易策略">交易策略</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExampleStrategy</span>(bt.Strategy):
+    
+    params = (
+        (...,...),
+    )
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">log</span>(<span class="hljs-params">self, txt: <span class="hljs-built_in">str</span>, dt=<span class="hljs-literal">None</span></span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        设定策略打印日志的格式</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        dt = dt <span class="hljs-keyword">or</span> self.datas[<span class="hljs-number">0</span>].datetime.date(<span class="hljs-number">0</span>)
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;dt.isoformat()&#125;</span>, <span class="hljs-subst">&#123;txt&#125;</span>&quot;</span>)
+        
+	<span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        初始化属性、计算指标等</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">start</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        在开始前调用</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">prenext</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        `nextstart()` 之前策略准备阶段</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextstart</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        `next()` 之前，策略运行的第一个时点</span>
+<span class="hljs-string">        </span>
+<span class="hljs-string">        只运行一次</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">next</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        策略正常运行阶段，每根 Bar 都调用</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">stop</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        策略结束，对应最后一根 Bar 结束</span>
+<span class="hljs-string"></span>
+<span class="hljs-string">        告知系统回测已完成，可以进行策略重置和回测结果整理了</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+   
+	<span class="hljs-comment"># 以下都是设定打印日志的具体内容</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_order</span>(<span class="hljs-params">self, order</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        通知订单信息</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_trade</span>(<span class="hljs-params">self, trade</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        通知交易信息</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_cashvalue</span>(<span class="hljs-params">self, cash, value</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        通知当前资金和总资产</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_fund</span>(<span class="hljs-params">self, cash, value, fundvalue, shares</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        返回当前资金、总资产、基金价值、基金份额</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_store</span>(<span class="hljs-params">self, msg, *args, **kwargs</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        返回供应商发出的信息通知</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_data</span>(<span class="hljs-params">self, data, status, *args, **kwargs</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        返回数据相关的通知</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_timer</span>(<span class="hljs-params">self, timer, when, *args, **kwargs</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        返回定时器的通知</span>
+<span class="hljs-string">        </span>
+<span class="hljs-string">        定时器可以通过函数 `add_time()` 在 `__init__()` 里添加</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span></code></pre></div>
+<p>制定好策略之后，需要将策略添加进 <code>cerebro</code> ：</p>
+<div class="code-wrapper"><pre><code class="hljs python">cerebro.addstrtegy(ExampleStrategy)</code></pre></div>
+<h3 id="交易信号">交易信号</h3>
+<p>除了编写 <code>Strategy</code> 类来编写策略，还可以编写
+<code>SingalStrategy</code> 类来编写策略。这两者的区别在于
+<code>SignalStrategy</code> 类<strong>不需要调用交易函数（ buy, sell
+）</strong>，<code>cerebro</code> 会自动将 <code>SingalStrategy</code>
+里的信号 <code>signal</code> 转换为交易指令。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 注意这里是继承的 `Indicator`</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ExampleSignal</span>(bt.Indicator):
+    
+    <span class="hljs-comment"># 声明 xxx 线，交易信号放在 xxx 这个 Lines 上</span>
+    lines = (<span class="hljs-string">&#x27;signal&#x27;</span>,)
+    params = (xxx,)
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.lines.signal = ...</code></pre></div>
+<p>这里 <code>lines.signal</code> 的取值决定了信号类型：</p>
+<ul>
+<li><code>signal</code> 大于 0 - 对应多头 long 信号</li>
+<li><code>signal</code> 小于 0 - 对应空头 short 信号</li>
+<li><code>signal</code> 等于 0 - 不发指令</li>
+</ul>
+<p>制定好信号后，需要将信号添加进 <code>cerebro</code> ：</p>
+<div class="code-wrapper"><pre><code class="hljs python">cerebro.add_signal(
+    sigtype = ,		<span class="hljs-comment"># 配置触发信号时的交易类型</span>
+    sigcls = ,		<span class="hljs-comment"># 传入交易信号类</span>
+    ...				<span class="hljs-comment"># 传入交易信号参数</span>
+)</code></pre></div>
+<p>其中可以配置的交易类型有以下等：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 多空开仓信号</span>
+<span class="hljs-comment"># 多头信号会先平仓空头，再开仓多头</span>
+<span class="hljs-comment"># 空头信号会先平仓多头，再开仓空头</span>
+bt.SIGNAL_LONGSHORT
+
+<span class="hljs-comment"># 多头开仓信号</span>
+<span class="hljs-comment"># 多头信号开仓，空头信号平仓</span>
+bt.SIGNAL_LONG
+
+<span class="hljs-comment"># 空头开仓信号</span>
+<span class="hljs-comment"># 空头信号开仓，多头信号平仓</span>
+bt.SIGNAL_SHORT
+
+<span class="hljs-comment"># 多头平仓信号</span>
+<span class="hljs-comment"># 空头信号平仓</span>
+bt.SIGNAL_LONGEXIT
+
+<span class="hljs-comment"># 空头平仓信号</span>
+<span class="hljs-comment"># 多头信号平仓</span>
+bt.SIGNAL_SHORTEXIT</code></pre></div>
+<p>由于交易信号指标通常只是技术指标之间进行加减得到，在技术指标完全已知的情况下，很容易连续不断地生成交易信号。这里会有两种特殊情况：</p>
+<ul>
+<li>订单累计 -
+即使已经在市场上，信号也会产生新的订单，进而增加头寸。</li>
+<li>订单并发 - 新订单会并行执行，而不是等待其他订单执行完毕。</li>
+</ul>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 是否允许订单累计发生</span>
+cerebro.signal_accumulate(<span class="hljs-literal">True</span>)
+<span class="hljs-comment"># 是否允许订单并发发生</span>
+cerebro.signal_concurrency(<span class="hljs-literal">True</span>)</code></pre></div>
+<h2 id="indicator">Indicator</h2>
+<h3 id="预计算指标">预计算指标</h3>
+<p>如果想要导入预计算指标，可以通过继承 <code>DataSeries</code>
+的方式添加 <code>Lines</code> （在数据部分已经提到，一个
+<code>Lines</code> 对象就是一列，这里相当于添加指标列）。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PandasDataExtend</span>(bt.feeds.PandasData):
+
+    lines = (
+        <span class="hljs-string">&#x27;indicator1&#x27;</span>,
+        <span class="hljs-string">&#x27;indicator2&#x27;</span>,
+    )
+    
+    <span class="hljs-comment"># -1 表示自动按列名匹配数据</span>
+    params = (
+        (<span class="hljs-string">&#x27;indicator1&#x27;</span>, -<span class="hljs-number">1</span>),
+        (<span class="hljs-string">&#x27;indicator2&#x27;</span>, -<span class="hljs-number">1</span>),
+    )
+    
+<span class="hljs-comment"># data 是一个 dataframe</span>
+<span class="hljs-comment"># calculate_indicator1, calculate_indicator1 都是计算指标的函数</span>
+data[<span class="hljs-string">&#x27;indicator1&#x27;</span>] = data.apply(<span class="hljs-keyword">lambda</span> x: calculate_indicator1(x), axis=<span class="hljs-number">1</span>)
+data[<span class="hljs-string">&#x27;indicator2&#x27;</span>] = data.apply(<span class="hljs-keyword">lambda</span> x: calculate_indicator2(x), axis=<span class="hljs-number">1</span>)
+datafeed = PandasDataExtend(dataname=data)
+cerebro.add(datafeed)
+...</code></pre></div>
+<h3 id="实时计算指标">实时计算指标</h3>
+<h4 id="原生指标">原生指标</h4>
+<p><a target="_blank" rel="noopener" href="https://www.backtrader.com/docu/indautoref/">Indicators -
+Reference - Backtrader</a></p>
+<div class="code-wrapper"><pre><code class="hljs python">bt.indicator.XXX</code></pre></div>
+<h4 id="ta-lib-库指标">TA-lib 库指标</h4>
+<p><a target="_blank" rel="noopener" href="https://www.backtrader.com/docu/talibindautoref/">Indicators
+- ta-lib - Reference - Backtrader</a></p>
+<div class="code-wrapper"><pre><code class="hljs python">bt.talib.XXX</code></pre></div>
+<h4 id="自定义指标">自定义指标</h4>
+<ul>
+<li><code>__init__()</code> - <strong>对整条 <code>Lines</code>
+进行计算，运算结果也以整条 <code>Lines</code>
+返回。</strong>也就是说，并不是只有最开始的数据点。</li>
+<li><code>next()</code> - 对数据点进行运算。每个 bar （ DataFeeds
+的每行）会运行一次。</li>
+<li><code>once()</code> -
+这个方法只运行一次，但是需要从头到尾循环计算指标。</li>
+</ul>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExampleIndicator</span>(bt.Indicator):
+    
+    <span class="hljs-comment"># 指标暂存的数据</span>
+    lines = (
+        <span class="hljs-string">&#x27;temp1&#x27;</span>,
+        <span class="hljs-string">&#x27;temp2&#x27;</span>,
+    )
+    
+    <span class="hljs-comment"># 指标的可选参数</span>
+    params = (
+        (<span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-number">10</span>),
+    )
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        可选</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">next</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        可选</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">once</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        可选</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-comment"># 画图用的，如果不需要画图可以不设置</span>
+    plotinfo = ...
+	plotlines = ...</code></pre></div>
+<h2 id="sizer">？Sizer</h2>
+<h2 id="order">Order</h2>
+<h3 id="订单类型">订单类型</h3>
+<ul>
+<li>Order.Market - 市价单。回测时按<strong>下一个 Bar
+的开盘价</strong>成交。</li>
+<li>Order.Close - 也是市价单。只不过回测时按<strong>下一个 Bar
+的收盘价</strong>成交。</li>
+<li>Order.Limit - 限价单。对于买方来说，如果下一个 Bar
+的开盘价更低，以下一个 Bar
+的开盘价成交；如果开盘价更高，但是订单价格限定在最高最低价之间，那么以订单价格成交；否则不成交。</li>
+<li>Order.Stop -
+止损单。一旦达到或超过特定的止损价格后，止损单即变为市价单来买或买证券或商品。止损单不担保以特定的价格执行。</li>
+<li>Order.StopLimit -
+和止损单类似。一旦达到或超过特定价格后启动，不过是以限价单的方式启动。</li>
+<li>Order.StopTrail - 跟踪止损单。一种会自动调整价格的止损单。</li>
+<li>Order.StopTrailLimit -
+跟踪止损限价单，启动后以限价单的方式执行。</li>
+</ul>
+<h3 id="创建订单">创建订单</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">这里的 self 都是指策略</span>
+<span class="hljs-string">&quot;&quot;&quot;</span>
+
+<span class="hljs-comment"># 买入/做多 long</span>
+self.order = self.buy(
+	data = xxx,				<span class="hljs-comment"># 默认为当前策略的第一个数据集 self.datas[0] 创建订单</span>
+    size = xxx,				<span class="hljs-comment"># 默认调用 getsizer() 获取头寸</span>
+    price = xxx,			<span class="hljs-comment"># 适用于限价单，止损单和止损限价单</span>
+    plimit = xxx,			<span class="hljs-comment"># limit price ，仅适用于 StopLimit</span>
+    exectype = Order.XXX,	<span class="hljs-comment"># 订单类型，默认市价单</span>
+    valid = xxx,			<span class="hljs-comment"># 订单有效期，默认撤单前有效</span>
+    tradeid = xxx,			<span class="hljs-comment"># 交易编号</span>
+)
+
+<span class="hljs-comment"># 卖出/做空 short</span>
+self.order = self.sell(...)	<span class="hljs-comment"># 和 buy 参数一样</span>
+
+<span class="hljs-comment"># 平仓 cover</span>
+self.order = self.close(...)<span class="hljs-comment"># 和 buy 参数一样</span>
+
+<span class="hljs-comment"># 目标下单函数</span>
+<span class="hljs-comment"># 按目标数量下单，多退少补</span>
+self.order = self.order_target_size(target=size)
+<span class="hljs-comment"># 按目标金额和当前金额的情况决定下单方式</span>
+self.order = self.order_target_value(target=value)
+<span class="hljs-comment"># 按当前账户总资产目标百分比下单，多退少补</span>
+self.order = self.order_target_percent(target=percent)
+
+<span class="hljs-comment"># 组合订单</span>
+self.order = self.buy_bracket()
+self.order = self.sell_bracket()</code></pre></div>
+<p><code>buy_bracket()</code> 用于long side
+的交易场景，买入证券后，在价格下跌时，希望通过止损单卖出证券，限制损失；在价格上升时，希望通过限价单卖出证券，及时获利，通过
+<code>buy_bracket()</code> 可以同时提交上述 3 个订单，而无需繁琐的调用 3
+次常规交易函数。</p>
+<p><code>sell_bracket()</code> 用于short side
+的交易场景，卖出证券做空后，在价格上升时，希望通过止损单买入证券，限制损失；在价格下降时，希望通过限价单买入证券，及时获利，<code>sell_bracket()</code>
+也是一次同时提交上述 3 个订单 。</p>
+<p>只当在主订单执行后，止损单和止盈单才会被激活，而且是同时激活；如果主订单被取消，止盈单和止损单也会被取消；在止盈单和止损单激活之后，如果取消两者中的任意一个，那另外一个也会被取消。</p>
+<h3 id="取消订单">取消订单</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 通过 broker 取消</span>
+broker.canel(order)</code></pre></div>
+<h3 id="关联订单">关联订单</h3>
+<p>通过在 <code>buy()</code> 或者 <code>sell()</code> 中给
+<code>oco</code> 参数传入订单实例来实现订单的关联。</p>
+<h3 id="订单状态">订单状态</h3>
+<ul>
+<li>Order.Created - 订单已经被创建。</li>
+<li>Order.Submitted - 订单已经被传递给经纪商。</li>
+<li>Order.Accepted - 订单已经被经纪商接收。</li>
+<li>Order.Partial - 订单已部分成交。</li>
+<li>Order.Complete - 订单已成交。</li>
+<li>Order.Rejected - 订单已被经纪商拒绝。</li>
+<li>Order.Margin - 执行该订单需要追加保证金。</li>
+<li>Order.Cancelled - 确认订单已经被撤销。</li>
+<li>Order.Expired - 订单已到期。</li>
+</ul>
+<h1 id="执行">执行</h1>
+<h2 id="broker">Broker</h2>
+<p>具体到不同的券商，会有不同的初始本金以及交易费用（包括佣金、平台费、SEC
+收取的费用等等）。对于回测来讲，还可以考虑滑点（ slippage
+）以及市场影响（ market impact ）。这些统称为交易条件。</p>
+<p>这些可以通过两种方式进行设置：</p>
+<ol type="1">
+<li>将交易条件作为参数的方式实例化 <code>Broker</code>
+类，生成新的实例，然后在 <code>cerebro</code> 里设置这个实例。</li>
+<li>调用 <code>broker</code> 对象的 <code>set_xxx</code>
+方法去修改交易条件（通过 <code>get_xxx</code> 可以查看交易条件）。</li>
+</ol>
+<h3 id="交易费用">交易费用</h3>
+<p><code>BackBroker</code> 中有一个 <code>commission</code>
+参数，用来全局设置交易手续费。</p>
+<h4 id="默认设置模板">默认设置模板</h4>
+<div class="code-wrapper"><pre><code class="hljs python">broker.setcommission(
+    commission=...,		<span class="hljs-comment"># 佣金费率，根据 commtype 确定百分比还是固定</span>
+    margin=<span class="hljs-literal">None</span>,		<span class="hljs-comment"># 期货保证金，只有 `stocklike=False` 时生效</span>
+    mult=...,			<span class="hljs-comment"># 计算期货保证金的乘数</span>
+    commtype=<span class="hljs-literal">None</span>,		<span class="hljs-comment"># 佣金类型 `COMM_PERC` 为百分比 `COMM_FIXED` 为固定 `None` 根据 margin 取值确定</span>
+    percabs=<span class="hljs-literal">True</span>,		<span class="hljs-comment"># 百分比格式 `True` 表示 0.xx 这种格式 `False` 表示 xx% 这种格式</span>
+    stocklike=<span class="hljs-literal">False</span>,	<span class="hljs-comment"># 是否为股票模式</span>
+    interest=...,		<span class="hljs-comment"># 空头头寸地年化利息</span>
+    interest_long=<span class="hljs-literal">False</span>,<span class="hljs-comment"># 多头头寸地年化利息</span>
+    leverage=...,		<span class="hljs-comment"># 杠杆比率</span>
+    automargin=<span class="hljs-literal">False</span>,	<span class="hljs-comment"># 自动计算保证金</span>
+    name=<span class="hljs-literal">None</span>,			<span class="hljs-comment"># 取值为 `None` 默认作用于全部数据集</span>
+)</code></pre></div>
+<p>这种方式其实不太灵活，还是建议自定义设置。</p>
+<h4 id="自定义设置">自定义设置</h4>
+<p>要自定义交易费用设置，需要写自己的 <code>Commission</code> 类：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExampleCommission</span>(bt.CommInfoBase):
+    
+    <span class="hljs-comment"># 对应 setcommission 中的参数，也可以增添新的全局参数</span>
+    params = (
+        (xxx, xxx),
+    )
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_getcommission</span>(<span class="hljs-params">self, size, price, pseudoexec</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        自定义交易费用计算方式</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_margin</span>(<span class="hljs-params">self, price</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        自定义佣金计算方式</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span></code></pre></div>
+<p>然后将自定义的交易费用类<strong>实例化</strong>，再传递给
+<code>broker</code> ：</p>
+<div class="code-wrapper"><pre><code class="hljs python">example_comm = ExampleCommission(...)
+<span class="hljs-comment"># `name` 参数用于指定该交易费用适用标的</span>
+broker.addcommissioninfo(example_comm, name=<span class="hljs-string">&#x27;xxx&#x27;</span>)</code></pre></div>
+<h3 id="回测">回测</h3>
+<h4 id="资金与持仓管理">资金与持仓管理</h4>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 设置初始资金</span>
+broker.set_cash(xxx)
+
+<span class="hljs-comment"># 获取当前可用资金</span>
+broker.get_cash()
+
+<span class="hljs-comment"># 添加资金</span>
+<span class="hljs-comment"># 正数表示添加，负数表示减少</span>
+broker.add_cash()
+
+<span class="hljs-comment"># 获取当前总资产</span>
+broker.get_value()
+
+<span class="hljs-comment"># 获取当前持仓情况， getposition() 需要指定具体数据集</span>
+<span class="hljs-comment"># 持仓数量</span>
+broker.getposition(data).size
+<span class="hljs-comment"># 持仓成本价</span>
+broker.getposition(data).price</code></pre></div>
+<h4 id="滑点管理">滑点管理</h4>
+<p>滑点是<strong>回测</strong>里应该考虑的额外成本，因此只有
+<code>BackBroker</code> 实现了相关方法。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 以百分比的方式估计滑点及市场影响</span>
+broker.set_slippage_perc(...)
+
+<span class="hljs-comment"># 以固定金额估计滑点及市场影响</span>
+broker.set_slippage_fixed(...)</code></pre></div>
+<p>有关滑点的其他参数如下：</p>
+<ul>
+<li><code>slip_open</code> - bool - 是否对开盘价做滑点处理。</li>
+<li><code>slip_match</code> - bool -
+是否将滑点处理后的新成交价与成交当天的价格区间最低价和最高价之间做匹配，如果为
+True ，则根据新成交价重新匹配调整价格区间，确保订单能被执行；如果为
+False
+，则不会与价格区间做匹配，订单不会执行，但会在下一日执行一个空订单。</li>
+<li><code>slip_out</code> - bool -
+如果新成交价高于最高价或低于最高价，是否以超出的价格成交，如果为 True
+，则允许以超出的价格成交；如果为 Fasle
+，实际成交价将被限制在最高最低价格区间内；默认取值为 False 。</li>
+<li><code>slip_limit</code> - bool - 是否对限价单执行滑点，如果为 True
+，即使 slip_match 为 Fasle ，也会对价格做匹配，确保订单被执行；如果为
+Fasle ，则不做价格匹配；默认取值为 True 。</li>
+</ul>
+<h4 id="成交量限制">成交量限制</h4>
+<p>这里的成交量限制并不是分配仓位，而是一种对流动性的估计。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 设置最大固定股数成交量 xxx</span>
+filler = bt.broker.fillers.FixedSize(size=xxx)
+
+<span class="hljs-comment"># 设置最大固定百分比成交量 xxx</span>
+<span class="hljs-comment"># 百分比为当前 Bar 总成交量的百分比</span>
+filler = bt.broker.fillers.FixedBarPerc(perc=xxx)
+
+<span class="hljs-comment"># 设置最大流动百分比的成交量 xxx</span>
+<span class="hljs-comment"># 其中 minmov 是可选参数，默认为 None</span>
+filler = bt.broker.fillers.BarPointPerc(perc=xxx1， minmov=xxx2)
+
+broker.set_filler(filler=filler)</code></pre></div>
+<p>前两种 <code>FixedSize</code> 与 <code>FixedBarPerc</code>
+都挺好理解，第三种 <code>BarPointPerc</code> 的计算过程为： <span
+class="math display">\[
+\begin{equation}
+\begin{aligned}
+parts&amp;=\frac{high-lowe+minmov}{minmov}\\
+volume_{max}&amp;=\frac{volume_{bar}}{parts}\times perc\\
+&amp;=\frac{minmov}{high-low+minmov}\times volume_{bar} \times perc
+\end{aligned}
+\end{equation}
+\]</span> 可以看到实际上就是在当前 Bar
+中，如果最低价最高价价差比较大，对成交量的限制就比较严格；如果最低价最高价价差比较小，限制则比较宽松。</p>
+<h4 id="交易时机管理">交易时机管理</h4>
+<p>Backtrader
+默认使用当日收盘后下单，次日以开盘价成交这种模式。但是也有当日下单，以当日价格（开盘价/收盘价）成交的选项，这种情况下是有可能使用未来数据的（比如下单的时候并不知道收盘价，但是却用收盘价来计算了订单数量和金额）。</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 以当日开盘价下单</span>
+broker.set_coo(<span class="hljs-literal">True</span>)
+
+<span class="hljs-comment"># 以当日收盘价下单</span>
+broker.set_coc(<span class="hljs-literal">True</span>)</code></pre></div>
+<p>但是值得注意的是，这里以当日开盘价下单其实意思是将下单时间放到下个交易日（本来是当前交易日下单，下个交易日成交）。</p>
+<p>这里需要将交易的逻辑写在 <code>next_open()</code>,
+<code>nextstart_open()</code>, <code>prenext_open()</code> 中，而不是
+<code>next()</code> 中。</p>
+<h3 id="实盘">？实盘</h3>
+<h1 id="评估">评估</h1>
+<h2 id="analyzer">Analyzer</h2>
+<h3 id="内置分析器">内置分析器</h3>
+<p>对于要评估的指标，在运行 <code>cerebro</code> 之前需要添加：</p>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-comment"># 添加分析器（指标）</span>
+cerebro.addanalyzer(
+    bt.analyzers.XXX,
+    _name=<span class="hljs-string">&quot;_XXX&quot;</span>,
+）
+
+<span class="hljs-comment"># 运行</span>
+result = cerebro.run()
+    
+<span class="hljs-comment"># 提取结果</span>
+xxx_result = result[<span class="hljs-number">0</span>].analyzers._XXX.get_analysis()</code></pre></div>
+<h3 id="自定义分析器">自定义分析器</h3>
+<div class="code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExampleAnalyzer</span>(bt.Analyzer):
+    
+    params = (
+        (xxx, xxx)
+    )
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">        初始化属性、计算指标等</span>
+<span class="hljs-string">        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-comment"># 以下发生时点和自定义 `Strategy` 一样</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">start</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">prenext</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">nextstart</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">next</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">stop</span>(<span class="hljs-params">self</span>):
+    
+    <span class="hljs-comment"># 与自定义 `Strategy` 一样的信息打印函数</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_order</span>(<span class="hljs-params">self, order</span>):
+        <span class="hljs-string">&#x27;&#x27;&#x27;通知订单信息&#x27;&#x27;&#x27;</span>
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_trade</span>(<span class="hljs-params">self, trade</span>):
+        <span class="hljs-string">&#x27;&#x27;&#x27;通知交易信息&#x27;&#x27;&#x27;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_cashvalue</span>(<span class="hljs-params">self, cash, value</span>):
+        <span class="hljs-string">&#x27;&#x27;&#x27;通知当前资金和总资产&#x27;&#x27;&#x27;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">notify_fund</span>(<span class="hljs-params">self, cash, value, fundvalue, shares</span>):
+        <span class="hljs-string">&#x27;&#x27;&#x27;返回当前资金、总资产、基金价值、基金份额&#x27;&#x27;&#x27;</span>
+        <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_analysis</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">pass</span></code></pre></div>
+<h2 id="observer">？Observer</h2>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Economics-Finance/" class="category-chain-item">Economics&amp;Finance</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Economics-Finance/Investment/" class="category-chain-item">Investment</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/quant/">#quant</a>
+      
+        <a href="/tags/investment/">#investment</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>backtrader</div>
+      <div>https://movisli.github.io/2024/07/25/backtrader/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>MovisLi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 25, 2024</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/03/python%20%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/" title="Python 环境管理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python 环境管理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/22/%E7%BB%8F%E6%B5%8E%E6%9C%BA%E5%99%A8%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" title="经济机器是怎样运行的">
+                        <span class="hidden-mobile">经济机器是怎样运行的</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

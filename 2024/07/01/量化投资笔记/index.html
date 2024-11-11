@@ -1,0 +1,1214 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.jpg">
+  <link rel="icon" href="/img/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414142">
+  <meta name="author" content="MovisLi">
+  <meta name="keywords" content="ComputerScience, DataScience, Economics&amp;Finance, Management">
+  
+    <meta name="description" content="概念图  量化交易的获利逻辑是通过执行交易（更改投资组合的配置）来获取利润。 利润 交易的利润也称为收益（Profit），分为 Alpha Profit（Alpha 收益）和 Beta Profit（Beta 收益）。 Alpha 收益 Alpha 收益指的是投资者得到与市场波动无关的回报。 获得 Alpha 收益的关键点是在交易中关于买卖时机的把握和持有头寸选择的技巧。 因此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="量化投资笔记">
+<meta property="og:url" content="https://movisli.github.io/2024/07/01/%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="movis">
+<meta property="og:description" content="概念图  量化交易的获利逻辑是通过执行交易（更改投资组合的配置）来获取利润。 利润 交易的利润也称为收益（Profit），分为 Alpha Profit（Alpha 收益）和 Beta Profit（Beta 收益）。 Alpha 收益 Alpha 收益指的是投资者得到与市场波动无关的回报。 获得 Alpha 收益的关键点是在交易中关于买卖时机的把握和持有头寸选择的技巧。 因此">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-01T04:18:39.000Z">
+<meta property="article:modified_time" content="2024-08-19T15:04:38.883Z">
+<meta property="article:author" content="MovisLi">
+<meta property="article:tag" content="quant">
+<meta property="article:tag" content="investment">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>量化投资笔记 - movis</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"movisli.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":false,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Movis</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="量化投资笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        MovisLi
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-01 12:18" pubdate>
+          July 1, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.1k words
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">量化投资笔记</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="概念图">概念图</h1>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202407031629653.png" srcset="/img/loading.gif" lazyload /></p>
+<p>量化交易的获利逻辑是<strong>通过执行交易（更改投资组合的配置）来获取利润</strong>。</p>
+<h1 id="利润">利润</h1>
+<p>交易的利润也称为收益（Profit），分为 Alpha Profit（Alpha 收益）和
+Beta Profit（Beta 收益）。</p>
+<h2 id="alpha-收益">Alpha 收益</h2>
+<p>Alpha 收益指的是投资者得到<strong>与市场波动无关</strong>的回报。</p>
+<p>获得 Alpha
+收益的关键点是<strong>在交易中关于买卖时机的把握和持有头寸选择的技巧</strong>。</p>
+<p>因此 Alpha
+策略被称为<strong>主动投资</strong>，研究独立于市场的超额收益。</p>
+<h2 id="beta-收益">Beta 收益</h2>
+<p>Beta 收益指的是投资者得到<strong>由市场因素带来</strong>的回报。</p>
+<p>因此 Beta
+策略被称为<strong>被动投资</strong>，研究市场的整体收益。</p>
+<p>通常，Alpha 是扣除市场基准回报之后的投资汇报率，可以写成如下的公式：
+<span class="math display">\[
+Profit=\alpha+\beta
+\]</span></p>
+<h1 id="系统">系统</h1>
+<p>量化交易系统指程序化（自动）地进行<strong>时机选择</strong>和<strong>头寸配置</strong>的系统。通常系统里面包含了数据接入与清洗的数据模块，根据预测提供投资组合的模型模块，根据分析执行交易的交易模块。</p>
+<h1 id="模型">模型</h1>
+<h2 id="alpha-模型">Alpha 模型</h2>
+<p>Alpha 模型的目的是为了获取 Alpha
+收益，一般来讲根据驱动类型的不同分为<strong>理论驱动型</strong>和<strong>数据驱动型</strong>。</p>
+<h3 id="理论驱动型-技术型">理论驱动型 / 技术型</h3>
+<p>理论驱动型模型通过经济学原理来预测市场行为。理论驱动型模型的输入数据一般分为价格（Price）和基本面（Fundamental）这两种。</p>
+<h4 id="价格">价格</h4>
+<h5 id="趋势跟随策略-动量策略">趋势跟随策略 / 动量策略</h5>
+<blockquote>
+<p>Trend Following 趋势跟随</p>
+<p>Momentum 动量</p>
+</blockquote>
+<p>趋势跟随策略的基本假定是<strong>在一定时间内市场通常是朝着同一方向变化</strong>，因此在趋势形成时买，在趋势消失时卖。其基本的经济学原理是<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/General_equilibrium_theory">市场均衡理论</a>，在市场形势逐渐明朗的过程中，会有越来越多的交易者采取相同的策略。这个策略的核心在于如何定义趋势，最常见的是使用滤波（filtering）和调理（conditioning）。缺点在于收益不稳定，比较适合趋势比较固定的时期，不太适合震荡时期。</p>
+<p>竞争对动量策略的影响主要在于会缩短趋势持续的时间，在动量策略面临竞争的情况下，越早利用趋势的交易者越能盈利。</p>
+<h5 id="反趋势策略-均值回归策略">反趋势策略 / 均值回归策略</h5>
+<blockquote>
+<p>Counter Trend 趋势反转</p>
+<p>Mean Reversion 均值回归</p>
+</blockquote>
+<p>均值回归策略认为<strong>价格终究会沿着已有趋势的反方向来运动，不可能一直延续已有的趋势</strong>，因此在价格低于均值时买，在价格高于均值时卖。其基本的经济学原理是<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Supply_and_demand">供需原理</a>，流动性带来的短期超买超卖<strong>在长期会回归均衡水平</strong>。这个策略的核心在于如何计算均值，最常见的是统计套利策略。缺点在于不太适合趋势性较强的时期，需要长期才会反转，考虑到机会成本和货币的时间成本，其实不一定能盈利。</p>
+<p>竞争对均值回归策略的影响是逐渐消除套利机会，使这个策略几乎无利可图。</p>
+<h5 id="技术情绪型策略">技术情绪型策略</h5>
+<blockquote>
+<p>Technical Sentiment 技术情绪</p>
+</blockquote>
+<p>技术情绪型策略主要通过追踪投资者情绪相关指标（交易价格、交易量以及波动性等）来判断预期回报。没有明确的经济学理论支持。</p>
+<h4 id="基本面">基本面</h4>
+<h5 id="价值型策略-收益型策略">价值型策略 / 收益型策略</h5>
+<blockquote>
+<p>Value 价值</p>
+<p>Yield 收益</p>
+</blockquote>
+<p>价值型策略认为市场倾向于高估高风险资产的风险，低估低风险资产的风险，因此在估值过低时买，在估值过高时卖。这个策略的核心在于对买/卖股票的准确估值。缺点在于可能需要长期持有低估值的股票，也就是不好判断兑现估值的时间。</p>
+<h5 id="成长型策略">成长型策略</h5>
+<blockquote>
+<p>Growth 成长</p>
+</blockquote>
+<p>成长型策略试图通过资产以往增长水平来预估未来增长的走势，因此倾向买入涨速快的资产。这个策略非常依赖市场的分析师和经济学家的观点。</p>
+<h5 id="品质型策略">品质型策略</h5>
+<blockquote>
+<p>Quality 品质/质量</p>
+</blockquote>
+<p>品质型策略认为最好买入或持有高品质的资产而做空或减持低品质的资产。其基本概念是看重资金的安全性。这个策略的核心在于要前瞻性地关注品质（杠杆、收益多样性、管理水平以及欺诈风险各方面）的变化。缺点在于适合市场惨淡的时期，不适合市场良好的时期。</p>
+<h3 id="经验驱动型-数据驱动型">经验驱动型 / 数据驱动型</h3>
+<p>数据驱动型的策略主要是通过数据挖掘试图找出一些对未来由解释能力的模式，从而基于概率去交易。隐形假设是未来和历史很相似。</p>
+<p>这种策略/模型具有两大优势：</p>
+<ol type="1">
+<li>技术门槛更高，竞争者相对更少。</li>
+<li>一定程度上可以分辨出一些没有经济理论支撑的市场行为。</li>
+</ol>
+<p>也有三大缺点：</p>
+<ol type="1">
+<li>不好定义当前的市场环境。</li>
+<li>不好确定寻找相似市场环境时的搜索算法。</li>
+<li>不好确定最优历史数据的回溯时间段。</li>
+</ol>
+<h4 id="多因子策略">多因子策略</h4>
+<p>Alpha
+因子是市场、基本面和替代数据的转化，包含预测信号。有些因子描述的是整个经济的基本变量，如增长、通胀、波动、生产率和人口风险。其他因子则代表了投资风格，如价值投资、增长投资和动量投资。还有一些因素是根据金融市场的经济学或机构设置或投资者行为（包括这种行为的已知偏差）来解释价格走势的。</p>
+<p>因子对于机器学习来说就是特征，可以想办法将理论驱动型的结论变成一个因子，比如：</p>
+<ul>
+<li>技术指标 - 可以使用如 <code>TA-Lib</code>
+之类的技术指标库，从价格、成交量等历史时序数据从中提取因子（比如
+<code>RSI</code> , <code>MACD</code> 等等）。</li>
+<li>市场数据变换 - 比如成交量加权价格最近一月的平均值、最近 x
+天的收益率、季节信息（简单的比如当前是第几个月）等等。</li>
+<li>样本基本面数据 - 像行业（ LabelEncoder 或者 OneHotEncoder
+之后）、当前财务数据等等。</li>
+<li>宏观基本面数据 - 包括各种指数及其数据变换。</li>
+<li>第三方 API - 比如 <code>Fama/French</code> 的 5
+因子模型的因子值（有点滞后）。</li>
+<li>另类数据 - 可以想办法将另类数据聚合成因子。</li>
+</ul>
+<p>因子构造的时候，不同的因子可能是属于不同量纲的时期，具体构造的时候也要注意量纲最好统一，另外也可以在这里进行头尾删除操作以增加稳定性。</p>
+<h4 id="横截面模型">横截面模型</h4>
+<p>所谓横截面模型是指在某个时点建立模型去预测<strong>未来某个时点</strong>的表现（
+Y ），这个时候每个样本的因子（ X
+）为<strong>某一支股票在某一天的数据</strong>。</p>
+<p>一般来说可以分为回归模型和分类模型：</p>
+<ul>
+<li>回归 - 比如预测 1 天后的价格变动率（模型的 Y 为 <span
+class="math inline">\(\frac{Price_{t+1}}{Price_{t}}\)</span> ）。</li>
+<li>分类 - 比如预测 1 天后的价格变动方向（模型的 Y
+为明日价格变动正负）。</li>
+</ul>
+<h3 id="策略实施的关键因素">策略实施的关键因素</h3>
+<h4 id="目标值">目标值</h4>
+<p>目标值（Label / Target）是什么：</p>
+<ul>
+<li>分类（二分类预测收益的正负）</li>
+<li>回归（预测收益的变动率）</li>
+<li>时序（预测价格变动的时间）</li>
+</ul>
+<h4 id="投资期限">投资期限</h4>
+<ul>
+<li>高频策略（high-frequency strategy） -
+预测期限不超过当日，日内交易，日末平仓。</li>
+<li>短线策略（short-term strategy） -
+预测期限为近几天，通常持仓一天到两周。</li>
+<li>中线策略（medium-term strategy） - 预测期限是几天到几个月。</li>
+<li>长线策略（long-term strategy） - 通常持仓几个月或更长。</li>
+</ul>
+<h4 id="投资结构">投资结构</h4>
+<p>预测金融产品<strong>自身</strong>的信息还是预测<strong>相对于其他</strong>产品的信息。</p>
+<h4 id="投资范围">投资范围</h4>
+<ul>
+<li>地理范围（美股、港股还是 A 股）</li>
+<li>资产种类（外汇、股票）</li>
+<li>产品类别（股票、股指）</li>
+</ul>
+<h4 id="模型设置">模型设置</h4>
+<p>特征（因子）的选择。</p>
+<h4 id="运行频率">运行频率</h4>
+<ul>
+<li>运行频率高 -
+优点是带来更多的机会，缺点是投资组合变动频繁，给经纪商的佣金比较多。</li>
+<li>运行频率低 -
+优点是留有余地大，缺点是投资组合变动时可能幅度很大，也容易错失交易机会。</li>
+</ul>
+<p>一般来说运行频率取决于很多因素。</p>
+<h2 id="风险模型">风险模型</h2>
+<p>风险管理时通过对敞口实施有目的的选择和规模控制来提高收益的质量和稳定性。</p>
+<h3 id="风险规模">风险规模</h3>
+<p>进行交易时，接受的敞口要在考虑收益和风险的保障范围内。</p>
+<h4 id="控制规模的方式">控制规模的方式</h4>
+<ol type="1">
+<li>硬性约束 - 比如规定某种产品头寸不能超过投资组合的
+3%。这种方式对临界值的处理太过武断。</li>
+<li>惩罚 -
+建立惩罚函数（边际惩罚递增）。这种方式阐述的观点是有时候机会好到足以打破规矩。</li>
+</ol>
+<h4 id="度量风险的方式">度量风险的方式</h4>
+<ol type="1">
+<li>通过纵向方式来度量不确定性的风险 -
+例如波动率，计算不同时期各个产品收益的标准差。越小越好。</li>
+<li>通过给定产品范围对各种金融产品表现的相似水平进行测量 -
+计算给定时间的金融产品的横截面标准差（cross-sectional standard
+deviation）。越大越好（说明金融产品表现种类更多样，更离散
+dispersion）。</li>
+</ol>
+<h4 id="限制值的使用范围">限制值的使用范围</h4>
+<ol type="1">
+<li>对一个/一类产品的仓位加以限制。</li>
+<li>管理投资组合整体的杠杆率，用在险价值（VaR，Value at
+Risk）估计投资组合的风险水平。</li>
+</ol>
+<h3 id="风险种类">风险种类</h3>
+<h4 id="理论驱动型风险模型">理论驱动型风险模型</h4>
+<p>经典的理论驱动型风险建模专注于已知的或<strong>系统性的风险因素</strong>。优点是囊括的风险因素有明确的意义，缺点是风险因素不会怎么变动（因为依赖理论）。</p>
+<h4 id="经验数据驱动型风险模型">经验/数据驱动型风险模型</h4>
+<p>数据驱动型风险模型是利用主成分分析（PCA）等统计方法从历史数据中识别出风险因素。优点是自适应性，因为可能发现新的风险因素，缺点是在市场环境变化的时候表现效果不好和由于满足统计学意义上的显著性需要大量数据。</p>
+<h2 id="交易成本模型">交易成本模型</h2>
+<blockquote>
+<p>Transaction Cost 交易成本</p>
+</blockquote>
+<p>交易成本模型的基本理念是：交易是有成本的，除非有足够的理由，否则不应该进行交易。</p>
+<p>交易成本主要由三部分构成：佣金和费用、滑点和市场冲击成本。</p>
+<h3 id="佣金和费用">佣金和费用</h3>
+<blockquote>
+<p>Commissions &amp; Fees 佣金和费用</p>
+</blockquote>
+<p>由于使用了券商、交易所的服务，因此需要提供佣金。另外还需要付给监管者监管费用。</p>
+<p>每个券商需要支付的费用不一样，构建交易系统计算成本的时候要分别处理计算。</p>
+<h3 id="滑点">滑点</h3>
+<blockquote>
+<p>Slippage 滑点</p>
+</blockquote>
+<p><strong>滑点</strong>是<strong>交易者决定</strong>执行交易到<strong>订单被执行</strong>期间<strong>价差</strong>。简单来讲就是不是你看到一个价格卖单你就能以这个价格（或者比它低）买的。</p>
+<p>对于市价单来讲，需要支付的是滑点成本。但是对于限价单来说，需要支付的应该叫机会成本（错失交易机会，少赚钱）。</p>
+<h3 id="市场冲击成本">市场冲击成本</h3>
+<blockquote>
+<p>Market Impact 市场影响/市场冲击</p>
+<p>Liquidity 流动性</p>
+</blockquote>
+<p>市场冲击成本是指交易者所交易的资产的供需动态而产生的成本。比如一笔流动性比较低的大额订单可能会大幅影响市场，完成交易时的价格可能不太友好。</p>
+<p>为了减小市场冲击成本，可以从流动性、市值和拆分订单三个方向对股票进行限制。</p>
+<h4 id="流动性限制">流动性限制</h4>
+<p>可以根据股票的流动性来限制订单的大小（股数）。衡量流动性的一种常见方法是平均每日交易量（可以选近一段时期）。根据经验，每个订单不应该超过平均每日交易量的
+1% 。</p>
+<h4 id="市值限制">市值限制</h4>
+<p>减少市场影响的另一种方法是根据股票的市值去调整订单规模。比如说根据市值去加权，不过这里不应该使用线性加权，因为这样做小盘股和微盘股的权重基本是
+0 ，这样会使投资组合缺乏多样性。建议大盘股和小盘股的比例不超过 10 。</p>
+<h4 id="拆单">拆单</h4>
+<p>通过把大订单拆分为小订单并随着时间推移分别执行。这种方法的副作用是可能会增加滑点。</p>
+<h3 id="交易成本模型种类">交易成本模型种类</h3>
+<p>一般来说，交易成本曲线是二次型的，因为随着交易规模增大带来的市场冲击影响更大，交易成本上升的速度会更快。</p>
+<h4 id="固定交易成本模型">固定交易成本模型</h4>
+<p>假设无论订单规模如何，交易成本保持不变。这种模型计算非常简单，但往往不符合实际。</p>
+<h4 id="线性交易成本模型">线性交易成本模型</h4>
+<p>假设交易成本是线性的，做一个线性拟合。这种模型考虑了交易规模增加带来的交易成本增大。</p>
+<h4 id="分段交易成本模型">分段交易成本模型</h4>
+<p>分段做线性拟合。这种模型是对线性模型的优化。</p>
+<h4 id="二次交易成本模型">二次交易成本模型</h4>
+<p>用二次函数拟合交易成本与交易规模的关系，这种模型最贴近事实，但是不容易拟合准确，计算比较复杂。</p>
+<h2 id="投资组合模型">投资组合模型</h2>
+<p>量化投资组合模型构建主要分为两大类：基于规则的模型和基于优化的模型。模型的输出变量就是目标投资组合：理想的头寸以及各个头寸的规模。</p>
+<h3 id="基于规则">基于规则</h3>
+<h4 id="相等头寸加权">相等头寸加权</h4>
+<p>每个产品购买一样多的金额，主要目的是通过在尽可能多的头寸上进行多样化投注来减缓风险。</p>
+<h4 id="相等风险加权">相等风险加权</h4>
+<p>基于波动率调整购买金额的比率，波动率越高，购买占比越少。</p>
+<h4 id="alpha-驱动型">Alpha 驱动型</h4>
+<p>根据 Alpha
+模型来决定购买信号强度的大小（比如上涨的概率，涨幅，涨速这些），结合波动率去做加权。</p>
+<h3 id="基于优化">基于优化</h3>
+<blockquote>
+<p>Optimization 优化</p>
+</blockquote>
+<p>基本原理是<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Modern_portfolio_theory">现代投资组合理论</a>：投资者一贯是风险厌恶型，如果两种产品收益相同但是风险水平不同，投资者倾向于选择低风险产品。由此引出风险调整收益（risk-adjusted
+return）。</p>
+<p>要考虑的因素有 3 个：</p>
+<ul>
+<li>期望收益</li>
+<li>期望波动率</li>
+<li>期望相关性 - 一般用期望相关系数矩阵表示。</li>
+</ul>
+<h2 id="执行模型">执行模型</h2>
+<h3 id="订单执行算法">订单执行算法</h3>
+<p>主要对订单类型，订单规模，下单地点进行选择。</p>
+<h4 id="订单类型">订单类型</h4>
+<ul>
+<li>市价单（进取订单） -
+一定会执行，只要有对应的相反订单就可以成交。</li>
+<li>限价单（被动订单） - 可能不执行。</li>
+</ul>
+<p>限价指令簿（limit order
+book）是所有限定价格的买卖申报指令（都是限价单）的集合。</p>
+<h4 id="订单规模">订单规模</h4>
+<p>由于大订单的交易成本会不成比例地上涨（市场影响冲击），所以可以考虑分散出单降低交易成本。</p>
+<h4 id="下单地点">下单地点</h4>
+<ul>
+<li>明交易平台 -
+市场参与者可以从限价指令簿种看到买/卖单的价格和规模等信息。</li>
+<li>暗交易平台 - 订单不会公布。</li>
+</ul>
+<h3 id="交易基础设施">交易基础设施</h3>
+<p>主要考虑以下几个因素：</p>
+<ul>
+<li>服务器位置</li>
+<li>通信协议</li>
+<li>操作系统</li>
+<li>服务器硬件配置</li>
+<li>软件及编程语言</li>
+</ul>
+<h1 id="数据">数据</h1>
+<h3 id="数据类型">数据类型</h3>
+<h4 id="市场数据">市场数据</h4>
+<h5 id="价格-1">价格</h5>
+<h5 id="交易量">交易量</h5>
+<h4 id="基本面数据">基本面数据</h4>
+<h5 id="cpi-消费者物价指数">CPI 消费者物价指数</h5>
+<p><strong>CPI 是衡量通货膨胀的主要指标之一</strong>。一般定义超过 3%
+为通货膨胀，超过 5% 就是比较严重的通货膨胀。</p>
+<p>发布时间表见 <a
+target="_blank" rel="noopener" href="https://www.bls.gov/schedule/news_release/cpi.htm">Schedule of
+Releases for the Consumer Price Index</a> 。</p>
+<h5 id="ppi-生产者物价指数">PPI 生产者物价指数</h5>
+<p>PPI
+反映了工业企业生产环节的价格变动情况，用于衡量企业为了生产而购买的原材料、劳务等费用。与
+CPI 会有联动关系。</p>
+<p>发布时间表见 <a
+target="_blank" rel="noopener" href="https://www.bls.gov/schedule/news_release/ppi.htm">Schedule of
+Releases for the Producer Price Index</a> 。</p>
+<h5 id="pmi-采购经理指数">PMI 采购经理指数</h5>
+<p>PMI 是反映经济扩张还是收缩的指标，50 是分界线。PMI
+结果于每月第一个星期一发布。</p>
+<p>PMI 高于 50 代表经济扩张，高出越多，越显示经济扩张良好；PMI 低于 50
+则代表经济收缩，低出越多，表明经济越萧条。</p>
+<h5 id="adp-national-employment-report">ADP National Employment
+Report</h5>
+<p>ADP
+俗称小非农，是对美国非农就业人口的预测，每个月第一个星期的星期三公布。</p>
+<p><a target="_blank" rel="noopener" href="https://adpemploymentreport.com/">ADP® Employment
+Report</a></p>
+<h5 id="employment-situation">Employment Situation</h5>
+<p>这个俗称大非农，指美国劳工部发布的非农业就业人数、就业率和失业率这三个数值，发布的时间为每个月第一个星期的星期五。</p>
+<p><a
+target="_blank" rel="noopener" href="https://www.bls.gov/schedule/news_release/empsit.htm">Schedule of
+Releases for the Employment Situation</a></p>
+<h4 id="另类数据">另类数据</h4>
+<blockquote>
+<p>Alternative Data 另类数据</p>
+</blockquote>
+<p>这类数据往往是非结构化的，不过从这里去获得 Alpha
+信号相当于对于仅仅依靠市场数据和基本面数据的人来讲相当于是数据层面上的竞争领先。</p>
+<h5 id="网络数据">网络数据</h5>
+<p>比如推文，类似大众点评网站的评论。</p>
+<h5 id="地理数据">地理数据</h5>
+<p>包括位置编码，卫星图像等等。</p>
+<h5 id="信用卡数据">信用卡数据</h5>
+<p>可以用来分析最近的消费趋势。</p>
+<h3 id="数据来源">数据来源</h3>
+<ul>
+<li>交易所 - 价格、交易量、时间戳、持仓量、空头持仓量、订单簿数据。</li>
+<li>监管机构 -
+各个公司的财务报表、个股的大股东持股情况以及内部买卖活动。</li>
+<li>政府 -
+宏观经济数据，如失业率（美国比较看重）、通货膨胀率（美国比较看重）和 GDP
+（中国比较看重）数据。</li>
+<li>公司 - 财务报告及其他公告（如红利的变化等）。</li>
+<li>新闻机构 - 新闻报道（主要是市场情绪相关）。</li>
+<li>数据供应商 - 做以上数据的加工。</li>
+</ul>
+<h3 id="数据清洗">数据清洗</h3>
+<ul>
+<li>缺失值</li>
+<li>异常值</li>
+</ul>
+<h4 id="分割调整">分割调整</h4>
+<blockquote>
+<p>Split Adjusted 分割调整</p>
+</blockquote>
+<p>一家公司股票被分割为 <span class="math inline">\(N\)</span>
+份，除息日为 <span class="math inline">\(T\)</span> 时，<span
+class="math inline">\(T\)</span> 之前所有价格都需要乘以 <span
+class="math inline">\(\frac{1}{N}\)</span> 。当 <span
+class="math inline">\(N\)</span> 小于 1 时，就是逆向分割。</p>
+<h4 id="派息调整">派息调整</h4>
+<blockquote>
+<p>Dividend Adjusted 派息调整</p>
+</blockquote>
+<p>本质上就是公司派发给股东利息影响的股价调整。</p>
+<p>当一家公司发行每股 <span class="math inline">\(d\)</span>
+美元的股息，除息日为 <span class="math inline">\(T\)</span> 时，<span
+class="math inline">\(T\)</span> 之前所有价格都需要乘以 <span
+class="math inline">\(\frac{Close_{T-1}-d}{Close_{T-1}}\)</span>
+。这种乘法分割方式是最常见的，比如 Yahoo Finance 就是这样做的。</p>
+<h4 id="幸存者偏差">幸存者偏差</h4>
+<blockquote>
+<p>Survivorship Bias 幸存者偏差</p>
+</blockquote>
+<p>存活下来的资产肯定更优质，可能会造成策略回测普遍比实盘效果好。解决这个问题有以下做法：</p>
+<ul>
+<li>自己创建数据库，每日更新，但这样可能需要手动做分割调整和派息调整。</li>
+<li>购买无幸存者偏差的数据库，但是一般比较贵。</li>
+<li>使用近期的数据，这样可以减小影响，但是可能会丢失信息造成过拟合。</li>
+</ul>
+<h4 id="前视偏差">前视偏差</h4>
+<blockquote>
+<p>Look-Ahead Bias 前视偏差</p>
+</blockquote>
+<p>数据的前视偏差就是机器学习里的特征穿越，指某个时点用到了那时之后的数据。</p>
+<h3 id="数据存储">数据存储</h3>
+<ul>
+<li>平面文件</li>
+<li>指针平面文件（相当于给平面文件加了一个索引）</li>
+<li>关系型数据库</li>
+</ul>
+<h1 id="评估">评估</h1>
+<h3 id="样本集划分">样本集划分</h3>
+<ul>
+<li>训练集 - 用于模型训练，参数拟合。</li>
+<li>测试集 -
+用于检验策略效果，在训练样本的时间之外。要注意的是在训练集上开发模型做特征衍生的时候<strong>不要向训练集透露测试集的特征分布情况</strong>，否则也可能会过拟合。</li>
+</ul>
+<h3 id="评价指标">评价指标</h3>
+<h4 id="累积盈利图">累积盈利图</h4>
+<h4 id="收益率">收益率</h4>
+<h5 id="收益率-1">收益率</h5>
+<p><span class="math display">\[
+R_{t}=\frac{P_{t}-P_{t-1}}{P_{t-1}}
+\]</span></p>
+<p>其中 <span class="math inline">\(R_{t}\)</span> 代表 <span
+class="math inline">\(t-1\)</span> 到 <span
+class="math inline">\(t\)</span> 时刻的收益率，<span
+class="math inline">\(P_{t}\)</span> 代表资产在 <span
+class="math inline">\(t\)</span> 时刻的价格，<span
+class="math inline">\(P_{t-1}\)</span> 代表资产在 <span
+class="math inline">\(t-1\)</span> 时刻的价格。</p>
+<h5 id="对数收益率">对数收益率</h5>
+<p><span class="math display">\[
+r_{t}=ln(1+R_{t})=ln(\frac{P_{t}}{P_{t-1}})
+\]</span></p>
+<p>其中 <span class="math inline">\(r_{t}\)</span>
+就是对数收益率，这样表示可以简化多阶段的收益，多阶段总对数收益率就是多阶段对数收益率的和。</p>
+<h5 id="年化收益">年化收益</h5>
+<p><span class="math display">\[
+R_{annual}=\frac{P_{t}-P_{t-1}}{t(days)}\times 252
+\]</span></p>
+<p>其中 252 是平均每年的交易日天数。</p>
+<h5 id="复合年增长率">复合年增长率</h5>
+<p><span class="math display">\[
+CAGR=((\frac{EV}{BV})^{\frac{1}{n}}-1)\times 100
+\]</span></p>
+<p>复合年增长率（ Compound Annual Growth Rate ）计算公式如上，其中 <span
+class="math inline">\(EV\)</span> 是投资组合的终值（ Ending Value
+，投资结束时的价值）， <span class="math inline">\(BV\)</span>
+是投资组合的初始价值（ Beginning Value ，投资开始时的价值）， <span
+class="math inline">\(n\)</span> 是投资组合的年数。</p>
+<h5 id="波动率">波动率</h5>
+<p><span class="math display">\[
+\sigma=Std(r)
+\]</span></p>
+<p>注意这里的波动率（ Volatility
+）是收益率的<strong>样本</strong>标准差而不是价格的标准差。</p>
+<blockquote>
+<p>也就是说使用 numpy 时，要使用 <code>np.std(x, ddof=1)</code></p>
+</blockquote>
+<h4 id="收益率随时间的变异性">收益率随时间的变异性</h4>
+<ul>
+<li>块度</li>
+</ul>
+<h4 id="波峰波谷间的最大回撤">波峰波谷间的最大回撤</h4>
+<p><img
+src="https://movis-blog.oss-cn-chengdu.aliyuncs.com/img/202407091808738.png" srcset="/img/loading.gif" lazyload /></p>
+<h5 id="最大回撤">最大回撤</h5>
+<p>对于最大回撤来讲，值得考虑的有<strong>最大回撤的深度</strong>（一般来说小于
+10%）和<strong>最大回撤的周期</strong>（一般来说小于 4 个月）。</p>
+<p>最大回撤深度指的是<strong>先出现的最大值</strong>与<strong>后出现的最小值</strong>的<strong>差值</strong>。（这里说的最值都是指当时而不是回溯）。</p>
+<p>最大回撤周期指的是<strong>先出现的最大值</strong>与<strong>后面再到这个值</strong>的<strong>最长时间</strong>。</p>
+<h5 id="最大回撤率">最大回撤率</h5>
+<p><span class="math display">\[
+MaxDrawdown\%=\frac{Depth}{MaxValue}
+\]</span></p>
+<h4 id="预测力">预测力</h4>
+<p>机器学习的评价指标。</p>
+<h4 id="胜率或盈利时间占比">胜率或盈利时间占比</h4>
+<h4 id="回报相对于风险的比率">回报相对于风险的比率</h4>
+<h5 id="夏普比率">夏普比率</h5>
+<p><span class="math display">\[
+SharpRatio=\frac{E(R_{p})-R_{f}}{\sigma_{p}}
+\]</span></p>
+<p>其中 <span class="math inline">\(E(R_{p})\)</span>
+代表投资组合的预期收益率， <span class="math inline">\(R_{f}\)</span>
+代表无风险利率。<strong>这里的无风险利率和收益率时间维度要一致。</strong></p>
+<p>因此， <span class="math inline">\(E(R_{p})-R_{f}\)</span>
+代表投资组合的预期超额收益率 ， <span
+class="math inline">\(\sigma_{p}\)</span>
+代表投资组合超额收益率的波动率。</p>
+<p>一般来说，夏普比率小于 1
+的策略不适合作为独立策略，保证每月盈利的策略年化夏普比率通常大于 2
+，保证每天盈利的策略年化夏普比率通常大于 3 。</p>
+<p>为了方便比较不同策略的夏普比率，可以将夏普比率转化为年化夏普比率。拿月化夏普比率和年化夏普比率转化过程来说，年化预期超额收益
+<span class="math inline">\(E(R_{p})-R_{f}\)</span>
+会变成月化预期超额收益的 12 倍，而年化波动率则会变为月化波动率的 <span
+class="math inline">\(\sqrt{12}\)</span>
+倍，因此，最终的年化夏普比率是月化夏普比率的 <span
+class="math inline">\(\sqrt{12}\)</span> 倍。</p>
+<h5 id="mar-比率">MAR 比率</h5>
+<p><span class="math display">\[
+MARRatio=\frac{CAGR}{MaxDrawdown\%}
+\]</span></p>
+<p>MAR 比率可以认为是风险调整后的复合年增长率，越高越好。</p>
+<h5 id="信息比率">信息比率</h5>
+<p><span class="math display">\[
+InformationRatio=\frac{E(R_{p}-R_{b})}{\sigma_{p-b}}
+\]</span></p>
+<p>其中 <span class="math inline">\(E(R_{p}-R_{b})\)</span>
+代表预期投资组合的超额收益率，<span
+class="math inline">\(\sigma_{p-b}\)</span> 代表超额收益的波动率。</p>
+<p>可以看到信息比率和夏普比率其实很像，夏普比率可以算是信息比率的一种特例，即以无风险利率为基准。</p>
+<ul>
+<li>杠杆率</li>
+</ul>
+<h4 id="与其他策略的关系">与其他策略的关系</h4>
+<p>该策略是基于动量的、均值回归的、市场中性的、有方向性的吗？</p>
+<h4 id="时间延迟">时间延迟</h4>
+<ul>
+<li>容量 - 比如想卖空的时候能不能卖空？</li>
+<li>流动性</li>
+</ul>
+<h4 id="特定参数的敏感性">特定参数的敏感性</h4>
+<p>这些技术是否引入了大量的参数，这可能会导致优化偏差？</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Economics-Finance/" class="category-chain-item">Economics&amp;Finance</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Economics-Finance/Investment/" class="category-chain-item">Investment</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/quant/">#quant</a>
+      
+        <a href="/tags/investment/">#investment</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>量化投资笔记</div>
+      <div>https://movisli.github.io/2024/07/01/量化投资笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>MovisLi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 1, 2024</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/22/%E7%BB%8F%E6%B5%8E%E6%9C%BA%E5%99%A8%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" title="经济机器是怎样运行的">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">经济机器是怎样运行的</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/16/neo4j/" title="Cypher 与 neo4j">
+                        <span class="hidden-mobile">Cypher 与 neo4j</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://unpkg.com/mathjax@3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
